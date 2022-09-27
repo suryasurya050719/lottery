@@ -19,13 +19,13 @@ const creatSchema = mongoose.Schema({
     type: Number,
   },
   stacrt_date: {
-    type: Date,
+    type: String,
   },
   end_date: {
-    type: Date,
+    type: String,
   },
   result_date: {
-    type: Date,
+    type: String,
   },
   color: {
     type: String,
