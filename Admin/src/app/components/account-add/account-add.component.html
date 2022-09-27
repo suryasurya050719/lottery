@@ -1,0 +1,317 @@
+<!-- Container fluid Starts -->
+<div class="container-fluid">
+  <!-- Top Bar Starts -->
+  <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_black_2">Account Add</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top Bar Ends -->
+
+  <div class="mp_panel">
+    <div class="pb-2">
+      <div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label> Choose Account Type </label>
+              <select
+                name=""
+                id=""
+                class="form-control"
+                [(ngModel)]="Type"
+                formControlName="type"
+                (change)="textfun()"
+              >
+                <option value="">Select</option>
+                <option value="BankAccount">Bank Account</option>
+                <option value="GooglePay">Google Pay</option>
+                <option value="Phone-pe">Phone-pe</option>
+                <option value="Paytm">Paytm</option>
+                <option value="UPI">UPI</option>
+              </select>
+              <div
+                class="ERR_Msg text-danger"
+                *ngIf="
+                  (form.controls['type']?.touched &&
+                    form.controls['type'].invalid) ||
+                  (isSubmited == true && form.controls['type'].invalid)
+                "
+              >
+                <p>Type is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+            <div class="form-group">
+              <label>Account Number</label>
+              <div class="pt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="AccountNumber"
+                />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['AccountNumber']?.touched &&
+                      form.controls['AccountNumber'].invalid) ||
+                    (isSubmited == true &&
+                      form.controls['AccountNumber'].invalid)
+                  "
+                >
+                  <p>Account Number is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+            <div class="form-group">
+              <label>Account Name</label>
+              <div class="pt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="AccountName"
+                />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['AccountName']?.touched &&
+                      form.controls['AccountName'].invalid) ||
+                    (isSubmited == true && form.controls['AccountName'].invalid)
+                  "
+                >
+                  <p>Account Name is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+            <div class="form-group">
+              <label>Bank Name</label>
+              <div class="pt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="BankName"
+                />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['BankName']?.touched &&
+                      form.controls['BankName'].invalid) ||
+                    (isSubmited == true && form.controls['BankName'].invalid)
+                  "
+                >
+                  <p>Bank Name is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+            <div class="form-group">
+              <label>Branch Name</label>
+              <div class="pt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="BranchName"
+                />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['BranchName']?.touched &&
+                      form.controls['BranchName'].invalid) ||
+                    (isSubmited == true && form.controls['BranchName'].invalid)
+                  "
+                >
+                  <p>Branch Name is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+            <div class="form-group">
+              <label>IFSC</label>
+              <div class="pt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="Ifsc"
+                />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['Ifsc']?.touched &&
+                      form.controls['Ifsc'].invalid) ||
+                    (isSubmited == true && form.controls['Ifsc'].invalid)
+                  "
+                >
+                  <p>IFSC is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3" *ngIf="Type == 'UPI'">
+            <div class="form-group">
+              <label>Enter UPI Id</label>
+              <div class="pt-2">
+                <input type="text" class="form-control" formControlName="Upi" />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['Upi']?.touched &&
+                      form.controls['Upi'].invalid) ||
+                    (isSubmited == true && form.controls['Upi'].invalid)
+                  "
+                >
+                  <p>Upi is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-lg-3"
+            *ngIf="Type == 'GooglePay' || Type == 'Phone-pe' || Type == 'Paytm'"
+          >
+            <div class="form-group">
+              <label>Phone Number</label>
+              <div class="pt-2">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="phone"
+                />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['phone']?.touched &&
+                      form.controls['phone'].invalid) ||
+                    (isSubmited == true && form.controls['phone'].invalid)
+                  "
+                >
+                  <p>phone is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-lg-3"
+            *ngIf="Type == 'GooglePay' || Type == 'Phone-pe' || Type == 'Paytm'"
+          >
+            <div class="form-group">
+              <label>Enter Name</label>
+              <div class="pt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="Name"
+                />
+                <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['Name']?.touched &&
+                      form.controls['Name'].invalid) ||
+                    (isSubmited == true && form.controls['Name'].invalid)
+                  "
+                >
+                  <p>Name is required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 d-flex align-items-end pb-3">
+            <button class="btn btn-primary w-100 btn_input btn-ripple">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="pb-3 pt-2">
+      <div class="mb-0 pb-0">
+        <h4 class="text-left">List Accounts</h4>
+      </div>
+
+      <div class="panel-body pb-0 table-responsive product_table">
+        <table class="table no-margin">
+          <thead>
+            <tr>
+              <th width="50" align="center">Edit</th>
+              <th>Choose Account Type</th>
+              <th>Account Number</th>
+              <th>Account Name</th>
+              <th>Bank Name</th>
+              <th>Branch Name</th>
+              <th>IFSC</th>
+              <th>Enter UPI Id</th>
+              <th>Phone Number</th>
+              <th>Enter Name</th>
+              <th>Broker Visible</th>
+              <th>Customer Visible</th>
+              <th width="50" align="center">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of OwnAccountList; let i = index">
+              <td align="center">
+                <i
+                  class="fa fa-pencil-square-o h5 text-success"
+                  (click)="Edite(i)"
+                ></i>
+              </td>
+              <td>{{ data.type }}</td>
+              <td>{{ data.account_number }}</td>
+              <td>{{ data.account_name }}</td>
+              <td>{{ data.bank_name }}</td>
+              <td>{{ data.branch_name }}</td>
+              <td>{{ data.ifsc_code }}</td>
+              <td>{{ data.upi_id }}</td>
+              <td>{{ data.phone }}</td>
+              <td>{{ data.name }}</td>
+              <td>{{ data.broker_status }}</td>
+              <td>{{ data.customer_status }}</td>
+              <td align="center">
+                <i
+                  class="fa fa-trash h5 text-danger"
+                  (click)="Remove(data.account_id)"
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- <nav class="Page navigation text-center pt-3 pb-3">
+      <ul class="pagination justify-content-center d-flex align-items-center">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">«</span>
+          </a>
+        </li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">»</span>
+          </a>
+        </li>
+      </ul>
+    </nav> -->
+  </div>
+</div>
+<!-- Container fluid ends -->

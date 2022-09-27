@@ -1,0 +1,26 @@
+.view_more_video {
+  position: relative;
+  text-align: center;
+  margin-top: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.view_more_video:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.view_more_video_btn {
+  cursor: pointer;
+  background: #131722;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px 50px;
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  border-radius: 5px;
+}

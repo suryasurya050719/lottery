@@ -1,0 +1,42 @@
+.popup_w {
+  max-width: 400px;
+  width: 100%;
+}
+.form_pop_he {
+  height: 400px;
+  overflow: auto;
+}
+.row_bank_list {
+  height: 209px;
+  overflow: auto;
+}
+.panel {
+  background: #1f5ebf !important;
+  padding: 15px !important;
+}
+.bg_white {
+  background: #ffffff !important;
+}
+.panel * {
+  color: #ffffff;
+}
+.page-title h3 {
+  color: #000000 !important;
+}
+.social-details .social-icon .round-icon {
+  border-color: #ffffff !important;
+  border-width: 1px !important;
+}
+.bank_img {
+  font-size: 25px;
+}
+.bank_option {
+  width: 100px;
+}
+.bank_icon_box {
+  background: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 0px 15px 0px 15px;
+  width: 70px;
+  height: 70px;
+}

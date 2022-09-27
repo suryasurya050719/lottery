@@ -1,0 +1,411 @@
+<!-- Container fluid Starts -->
+<div class="container-fluid">
+  <div id="load_link"></div>
+
+  <div class="pt-4 pb-4">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="page-title">
+          <h1><b>User Review</b></h1>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="form-group mb-0">
+              <label> Choose User Type </label>
+              <select
+                name=""
+                id=""
+                class="form-control"
+                [(ngModel)]="role_type"
+              >
+                <option value="">Select</option>
+                <option value="2">Broker</option>
+                <option value="3">Customer</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group mb-0">
+              <label> Enter User Id </label>
+              <input type="text" class="form-control" [(ngModel)]="user_id" />
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group mb-0">
+              <label> Phone Number </label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="phonenumber"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <label> &nbsp; </label>
+
+            <button
+              type="submit"
+              class="btn btn-primary w-100 btn_input btn-ripple shadow_none"
+              (click)="referedUser()"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-right pt-3 pb-3">
+    <div class="d-inline-flex align-items-center flex-row">
+      <div
+        class="br_1 pr-2 mr-2 text-center cursor-pointer AddUserBtn"
+        (click)="BrokerToggle(1)"
+      >
+        <img class="w-50" src="../../../assets/images/lot_icon_1.jpg" alt="" />
+        <b class="txt_bold d-block">Broker</b>
+      </div>
+      <div
+        class="pl-2 text-center cursor-pointer AddUserBtn"
+        (click)="BrokerToggle(2)"
+      >
+        <img class="w-50" src="../../../assets/images/lot_icon_1.jpg" alt="" />
+        <b class="txt_bold d-block">Customer</b>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      *ngFor="let user of AllUser; let i = index"
+      style="width: fit-content"
+      [ngClass]="
+        user.role_id !== 1 && user.isOtpVerify !== false
+          ? 'col-md-4 col-sm-6 col-xs-12'
+          : ''
+      "
+    >
+      <!-- [ngClass]="{
+        'col-md-4 col-sm-6 col-xs-12':  currentUserId !== 1
+      }" -->
+
+      <div *ngIf="user.role_id !== 1 && user.isOtpVerify !== false">
+        <div class="panel users-wrapper red position-relative">
+          <div class="menu_right">
+            <div class="dropdown">
+              <button
+                class="dropdown-toggle"
+                role="button"
+                data-toggle="dropdown"
+              >
+                <i class="fa fa-ellipsis-v"></i>
+              </button>
+
+              <div class="dropdown-menu">
+                <a
+                  class="dropdown-item"
+                  (click)="suspend(user.user_id, user.status)"
+                  >{{ user.status == "A" ? "Suspend" : "Activate" }}</a
+                >
+                <!-- <button
+                  class="dropdown-item"
+                  class="btn btn-outline-secondary"
+                  mwlConfirmationPopover
+                  popoverTitle="popoverTitle"
+                  popoverMessage="popoverMessage"
+                  placement="left"
+                  [(isOpen)]=""
+                  (confirm)="
+                    suspend(
+                      user.referaluserlist.user_id,
+                      user.referaluserlist.status
+                    )
+                  "
+                >
+                  {{
+                    user.referaluserlist.status == "A" ? "Suspend" : "Activate"
+                  }}
+                </button> -->
+                <a class="dropdown-item" (click)="delete(user.user_id)"
+                  >Delete</a
+                >
+                <a class="dropdown-item" (click)="showpopup(user.user_id)"
+                  >Credentials</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="users-info clearfix">
+            <div class="users-avatar">
+              <img
+                src="../../../assets/images/thumbs/user6.png"
+                class="img-fluid"
+                alt="Arise Admin"
+              />
+            </div>
+            <div class="users-detail">
+              <h5>{{ user.name }}</h5>
+              <p>
+                {{ user.role_id == 2 ? "Broker" : "Coustomer" }}
+              </p>
+
+              <span
+                [class]="
+                  user.status == 'A' ? 'badge bg-success' : 'badge bg-warning'
+                "
+                >{{ user.status == "A" ? "Active" : "Suspend" }}</span
+              >
+            </div>
+          </div>
+          <ul class="users-footer clearfix">
+            <li>
+              <p class="pb-1">User Id</p>
+              <p>BJCD {{ user.role_id == 2 ? "B" : "C" }}{{ user.user_id }}</p>
+            </li>
+            <li>
+              <p class="pb-1">Contact</p>
+              <p>{{ user.phone }}</p>
+            </li>
+            <li>
+              <a (click)="userReferal(user.user_id)" class="add-btn">
+                <i class="icon-plus3"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Row ends -->
+</div>
+<!-- Container fluid ends -->
+
+<section class="popup_box AddUserPopup" *ngIf="BrokerPopup">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper popup_w position-relative">
+      <span
+        class="popup_close CloseTransRefunPopup"
+        (click)="CloseBrokerPopup()"
+        >x</span
+      >
+      <div class="form_pop_he p-3">
+        <div>
+          <h4 class="py-2 txt_bold">{{ this.heading }}</h4>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="pb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="username"
+              (chang)="textfun()"
+              placeholder="Enter User Name"
+              [(ngModel)]="username"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['username']?.touched &&
+                form.controls['username'].invalid
+              "
+            >
+              <p>username is required</p>
+            </div>
+          </div>
+          <div class="pb-3">
+            <input
+              type="number"
+              class="form-control"
+              formControlName="phonenumber"
+              (change)="textfun()"
+              [(ngModel)]="phonenumber"
+              placeholder="Enter Phone Number"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['phonenumber']?.touched &&
+                form.controls['phonenumber'].invalid
+              "
+            >
+              <p>phonenumber is required</p>
+            </div>
+          </div>
+          <div class="pb-3" *ngIf="editUser !== true">
+            <div class="input-group">
+              <button class="input-group-addon" (click)="sendOtp()">
+                Generate OTP
+              </button>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="otp"
+                placeholder="Enter OTP"
+              />
+            </div>
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['otp']?.touched && form.controls['otp'].invalid
+              "
+            >
+              <p>otp is required</p>
+            </div>
+          </div>
+          <div class="pb-3" *ngIf="editUser !== true">
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Enter Password"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['password']?.touched &&
+                form.controls['password'].invalid
+              "
+            >
+              <p>password is required</p>
+            </div>
+          </div>
+          <div class="pb-3" *ngIf="editUser !== true">
+            <input
+              type="password"
+              class="form-control"
+              formControlName="confirmpassword"
+              placeholder="Confirm Password"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['confirmpassword']?.touched &&
+                form.controls['confirmpassword'].invalid
+              "
+            >
+              <p>confirmpassword is required</p>
+            </div>
+          </div>
+
+          <div class="text-center d-flex flex-row justify-content-between">
+            <button class="btn btn-primary mr-3" (click)="CloseBrokerPopup()">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!form.valid"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="popup_box AddUserPopup" *ngIf="popup">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper popup_w position-relative">
+      <span
+        class="popup_close CloseTransRefunPopup"
+        (click)="CloseBrokerPopup()"
+        >x</span
+      >
+      <div class="form_pop_he p-3">
+        <div>
+          <h4 class="py-2 txt_bold">{{ this.editHedding }}</h4>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="pb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="username"
+              placeholder="Enter User Name"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['username']?.touched &&
+                form.controls['username'].invalid
+              "
+            >
+              <p>username is required</p>
+            </div>
+          </div>
+          <div class="pb-3">
+            <input
+              type="number"
+              class="form-control"
+              formControlName="phonenumber"
+              placeholder="Enter Phone Number"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['phonenumber']?.touched &&
+                form.controls['phonenumber'].invalid
+              "
+            >
+              <p>username is required</p>
+            </div>
+          </div>
+          <!-- <div class="pb-3">
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Enter Password"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['password']?.touched &&
+                form.controls['password'].invalid
+              "
+            >
+              <p>password is required</p>
+            </div>
+          </div>
+          <div class="pb-3">
+            <input
+              type="password"
+              class="form-control"
+              formControlName="confirmpassword"
+              placeholder="Confirm Password"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['confirmpassword']?.touched &&
+                form.controls['confirmpassword'].invalid
+              "
+            >
+              <p>confirmpassword is required</p>
+            </div>
+          </div> -->
+
+          <div class="text-center d-flex flex-row justify-content-between">
+            <button class="btn btn-primary mr-3" (click)="CloseBrokerPopup()">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!form.valid"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

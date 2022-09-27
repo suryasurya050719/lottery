@@ -1,0 +1,601 @@
+<!-- Container fluid Starts -->
+<div class="container-fluid">
+  <!-- Top Bar Starts -->
+  <!-- <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title column">
+          <div>
+            <div style="margin-left: 23px">
+              <h3 class="txt_black_2">Wallet</h3>
+              <input
+                [value]="singlrUser.walletList.current_amount"
+                class="btn_input btn-ripple"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              type="submit"
+              style="width: 10%; margin: 20px"
+              class="btn btn-primary btn_input btn-ripple"
+              (click)="ownWalletEdit()"
+            >
+              Add Money
+            </button>
+
+            <button
+              type="submit"
+              style="width: 10%; margin: 20px"
+              class="btn btn-primary btn_input btn-ripple"
+              (click)="alluser(1)"
+            >
+              Refund Money
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <!-- Top Bar Ends -->
+  <!-- Top Bar Starts -->
+  <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h1 class="txt_black_2"><b>Wallet Review</b></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top Bar Ends -->
+
+  <div class="mp_panel">
+    <div class="pb-2">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> Choose User </label>
+            <select name="" id="" class="form-control" [(ngModel)]="role_type">
+              <option value="">Select</option>
+              <option value="">All</option>
+              <option value="2">Brokers</option>
+              <option value="3">Customers</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> User Id </label>
+            <input type="text" class="form-control" [(ngModel)]="user_id" />
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> User Phone Number </label>
+            <input type="text" class="form-control" [(ngModel)]="phonenumber" />
+          </div>
+        </div>
+        <div class="col-lg-3 d-flex align-items-end pb-3">
+          <button
+            type="submit"
+            class="btn btn-primary w-100 btn_input btn-ripple"
+            (click)="alluser(1)"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-2 mb-3">
+      <div class="panel panel-red">
+        <div class="panel-heading">
+          <h1 class="text-left"><b>Search Results</b></h1>
+        </div>
+
+        <div
+          class="resul_show_panel"
+          *ngFor="
+            let transection of alluserList | paginate: config;
+            let i = index
+          "
+          let
+        >
+          <span class="cnt_result">{{ i }}</span>
+
+          <div class="pb-3">
+            <div class="table-responsive product_table td_center">
+              <table class="table no-margin td-middle">
+                <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>UserName</th>
+                    <th>Phone Number</th>
+                    <th>Referral Id</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      BJCD{{ transection.role_id == 2 ? " B" : " C"
+                      }}{{ transection.user_id }}
+                    </td>
+                    <td>{{ transection.name }}</td>
+                    <td>{{ transection.phone }}</td>
+                    <td>
+                      {{
+                        transection.referalList.length > 0
+                          ? transection.referalList[0].refered_user_id
+                          : ""
+                      }}
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center pay_col">
+                        <div class="flx_1 br_1 text-left pay_col_1 p-2">
+                          <label>Available</label>
+                          <h4 class="mb-0">
+                            <b>{{
+                              transection.walletsList[0].current_amount
+                            }}</b>
+                          </h4>
+                        </div>
+                        <div class="flx_0 pay_col_2 text-center p-2">
+                          <img
+                            src="../../../assets/images/lot_icon_2.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <select
+                        id="EditWallet"
+                        class="form-control"
+                        [ngModel]="selectedDevice"
+                        (ngModelChange)="onChange($event, transection.user_id)"
+                      >
+                        <option value="0">Select</option>
+                        <option value="1">Edit Wallet</option>
+                      </select>
+                    </td>
+                    <td>
+                      <button type="submit" class="btn btn-primary btn-ripple">
+                        Submit
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pb-3 pt-2" *ngIf="singleTransectionList.length > 0">
+            <div class="mb-0 pb-0">
+              <h1 class="text-left"><b>Transaction Details</b></h1>
+              <h4></h4>
+            </div>
+
+            <div class="td_details" *ngIf="singleTransectionList.length > 0">
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <!-- <label> From date </label> -->
+                    <!-- <select name="" id="" class="form-control">
+                      <option value="">Select</option>
+                      <option value="">Day</option>
+                      <option value="">Month</option>
+                      <option value="">Year</option>
+                    </select> -->
+                    <div class="form-group">
+                      <label> From date </label>
+                      <input
+                        type="datetime-local"
+                        class="form-control"
+                        [(ngModel)]="fromDate"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label> To date </label>
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      [(ngModel)]="toDate"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3 d-flex align-items-end pb-3">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-ripple search_bt"
+                    (click)="alluser(1)"
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="panel-body pb-0 table-responsive product_table td_center"
+              *ngIf="singleTransectionList.length > 0"
+            >
+              <table class="table no-margin">
+                <thead>
+                  <tr>
+                    <th>Transaction Id</th>
+                    <th>UserId</th>
+                    <th>Referral Id</th>
+                    <th>Date &amp; Time</th>
+                    <th>Amount</th>
+                    <th>Payment From</th>
+                    <th>Payment To</th>
+                    <th>Payment For</th>
+                    <th>Transaction Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of singleTransectionList">
+                    <td>BJCD T{{ user.transection_id }}</td>
+                    <td>
+                      BJCD{{ transection.role_id == 2 ? " B" : " C"
+                      }}{{ transection.user_id }}
+                    </td>
+                    <td>
+                      {{
+                        transection.referalList.length > 0
+                          ? transection.referalList[0].refered_user_id
+                          : ""
+                      }}
+                    </td>
+                    <td>{{ user.created_on | date: "dd/MM/yyyy" }}</td>
+                    <td>
+                      <div class="input-group" style="width: 150px">
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          value="{{ user.amount }}"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      {{ user.transection_from_userid }}
+                      <span class="badge bg-primary blink_txt">{{
+                        user.transection_from_type
+                      }}</span>
+                    </td>
+                    <td>
+                      {{ user.transection_to_userid }}
+                      <span class="badge bg-primary blink_txt">{{
+                        user.transection_to_type
+                      }}</span>
+                    </td>
+
+                    <td>
+                      {{
+                        transection.referalList.length > 0
+                          ? transection.referalList[0].refered_user_id
+                          : ""
+                      }}
+                      <br />
+                      <button
+                        type="button"
+                        class="mt-2 btn btn-primary btn-sm btn-ripple ViewPaymentForBtn"
+                        (click)="
+                          PaymentForBtn(
+                            user.reason,
+                            user.amount,
+                            transection.referalList[0].refered_user_id,
+                            user.status
+                          )
+                        "
+                      >
+                        View
+                      </button>
+                    </td>
+
+                    <td>{{ user.status }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- <pagination-controls (pageChange)="q = $event"></pagination-controls> -->
+
+          <!-- <nav class="Page navigation text-center pt-3 pb-3">
+            <ul
+              class="pagination justify-content-center d-flex align-items-center"
+            >
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">«</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">»</span>
+                </a>
+              </li>
+            </ul>
+          </nav> -->
+        </div>
+        <div class="Page navigation text-center pt-3 pb-3">
+          <pagination-controls
+            (pageChange)="alluser($event)"
+            class="my-pagination"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container fluid ends -->
+
+<!-- OTP Popup Start -->
+<!-- <section class="popup_box" *ngIf="selectedDevice == '1'">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-50 position-relative">
+      <span class="popup_close" (click)="ClosePopup()">x</span>
+      <div class="otp_panel d-flex align-items-center justify-content-center">
+        <label for="" class="mb-0 pr-3">Enter OTP</label>
+        <div class="pr-2">
+          <input type="text" class="form-control" />
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary btn-ripple OtpSubmit"
+          (click)="OtpSubmitBtn()"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- OTP Popup End -->
+
+<!-- Otp submit after start -->
+<section class="popup_box EditPopupInfo" *ngIf="OtpSubmitInfo">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="ClosePopupInfo()">x</span>
+      <div class="panel-body pb-0 table-responsive product_table td_center">
+        <table class="table no-margin w-100">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Action</th>
+              <th>Reason</th>
+              <!-- <th>Charges</th>
+              <th>Type</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="flx_1 pr-2">
+                    <div class="input-group">
+                      <span class="input-group-addon">RM</span>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="amoount"
+                        [(ngModel)]="amount"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <select
+                  id=""
+                  class="form-control"
+                  [(ngModel)]="transectionType"
+                >
+                  <option value="">Select</option>
+                  <option value="">Add fund</option>
+                </select>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="reason"
+                  [(ngModel)]="reason"
+                />
+              </td>
+
+              <!-- <td>
+                <select
+                  id="EditPopYesAction"
+                  class="form-control"
+                  [(ngModel)]="charges"
+                >
+                  <option value="">Select</option>
+                  <option value="1">Yes</option>
+                  <option value="2">No</option>
+                </select>
+              </td>
+              <td>
+                <select
+                  name="charges"
+                  id=""
+                  class="form-control YesActionShow"
+                  [(ngModel)]="chargesType"
+                >
+                  <option value="">Select</option>
+                  <option value="1">Value</option>
+                  <option value="2">%</option>
+                </select>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center pt-3">
+        <button
+          type="button"
+          (click)="ClosePopupInfo()"
+          class="btn btn-primary btn-ripple CancelProceedBtn mr-2"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary btn-ripple EditProceedBtn"
+          (click)="paymenttransectionOthers()"
+        >
+          Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Otp submit after end -->
+
+<!-- Payment For start -->
+<section class="popup_box ViewPaymentForPopup" *ngIf="PaymentForPopup">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="ClosePaymentPopup()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="w-100 table-bordered table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Referral ID</th>
+                <th>Position</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ this.paymentForType }}</td>
+                <td>{{ this.paymentForAmount }}</td>
+                <td>{{ this.paymentForReferal_id }}</td>
+                <td></td>
+                <td>{{ this.paymentForStatus }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Payment For end -->
+
+<!-- Otp submit after start -->
+<section class="popup_box EditPopupInfo" *ngIf="selectedDevice">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="ClosePopupInfo()">x</span>
+      <div class="panel-body pb-0 table-responsive product_table td_center">
+        <table class="table no-margin w-100">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Action</th>
+              <th>Reason</th>
+              <!-- <th></th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="flx_1 pr-2">
+                    <div class="input-group">
+                      <span class="input-group-addon">RM</span>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="amoount"
+                        [(ngModel)]="amount"
+                      />
+                    </div>
+                    <div
+                      class="ERR_Msg text-danger"
+                      *ngIf="amountError == true"
+                    >
+                      <p>amount is required</p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <select
+                  name="type"
+                  id=""
+                  class="form-control"
+                  [(ngModel)]="transectionType"
+                >
+                  <option value="">Select</option>
+                  <option value="INC">Add fund</option>
+                </select>
+                <div class="ERR_Msg text-danger" *ngIf="TrypeError == true">
+                  <p>TransectionType is required</p>
+                </div>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="sample reason"
+                  name="reason"
+                  [(ngModel)]="reason"
+                />
+                <div class="ERR_Msg text-danger" *ngIf="reasonError == true">
+                  <p>reason is required</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center pt-3">
+        <button
+          type="button"
+          (click)="ClosePopupInfo()"
+          class="btn btn-primary btn-ripple CancelProceedBtn mr-2"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary btn-ripple EditProceedBtn"
+          (click)="AddMony()"
+        >
+          Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Otp submit after end -->

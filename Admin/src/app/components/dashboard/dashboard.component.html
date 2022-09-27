@@ -1,0 +1,737 @@
+<div class="container-fluid">
+  <!-- Top Bar Starts -->
+  <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_bold">Dashboard</h3>
+          <p>Welcome to Arise Admin Dashboard</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top Bar Ends -->
+
+  <!-- Row starts -->
+  <div class="row gutter">
+    <div class="col-lg-9 col-sm-12 col-xs-12">
+      <div class="panel height2">
+        <div class="bg_white p-3">
+          <div class="panel-heading">
+            <h3 class="text-center txt_bold">Audience Overview</h3>
+          </div>
+          <div class="panel-body">
+            <div id="audienceOverview" class="chart-height1"></div>
+            <h1 class="audience-total">
+              <i class="icon-triangle-up"></i>0<span>/ today</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-12 col-xs-12">
+      <div class="panel height1">
+        <div class="panel-heading">
+          <h3 class="text-center txt_bold">Customers</h3>
+        </div>
+        <div class="panel-body">
+          <div class="sessions">
+            <h2>0</h2>
+            <div id="users" class="graph"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel height1">
+        <div class="panel-heading">
+          <h3 class="text-center txt_bold">Brokers</h3>
+        </div>
+        <div class="panel-body">
+          <div class="sessions">
+            <h2>0</h2>
+            <div id="bouncerate" class="graph"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Row ends -->
+
+  <!-- Row starts -->
+  <div class="row gutter pb-2">
+    <div class="col-md-6">
+      <div class="panel mb-0">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-lg-8">
+              <h3 class="txt_bold text-left">Admin Account</h3>
+            </div>
+            <div class="col-lg-4 text-right">
+              <button class="btn btn-success shadow_none btn-sm AddBtn"
+              (click)="AdminAccountPopupOpen()">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body pb-0">
+          <div class="p-2 pb-0">
+            <div class="row_bank_list all_dark bg-white p-3">
+              <div class="d-flex bb_1 mb-3">
+                <div
+                  class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                >
+                  <i class="fa fa-university bank_img text-dark"></i>
+                </div>
+                <div class="flx_1">
+                  <b class="d-block mb-0 txt_blue txt_bold"
+                    >Bank Account</b
+                  >
+                  <span class="d-block">12783939030</span>
+                  <span class="d-block">Axis Bank</span>
+                </div>
+                <div class="flx_0 pr-2 text-center">
+                  <div class="pb-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pb-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Broker</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex bb_1 mb-3">
+                <div
+                  class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                >
+                  <i class="fa fa-university bank_img text-dark"></i>
+                </div>
+                <div class="flx_1">
+                  <b class="d-block mb-0 txt_blue txt_bold"
+                    >Bank Account</b
+                  >
+                  <span class="d-block">12783939030</span>
+                  <span class="d-block">Axis Bank</span>
+                </div>
+                <div class="flx_0 pr-2 text-center">
+                  <div class="pb-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pb-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Broker</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex bb_1 mb-3">
+                <div
+                  class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                >
+                  <i class="fa fa-university bank_img text-dark"></i>
+                </div>
+                <div class="flx_1">
+                  <b class="d-block mb-0 txt_blue txt_bold"
+                    >Bank Account</b
+                  >
+                  <span class="d-block">12783939030</span>
+                  <span class="d-block">Axis Bank</span>
+                </div>
+                <div class="flx_0 pr-2 text-center">
+                  <div class="pb-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pb-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Broker</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel h-100 mb-0">
+        <div class="panel-heading">
+          <h3 class="txt_bold text-left">App Download</h3>
+        </div>
+        <div class="panel-body">
+          <ul class="app-downloads">
+            <li>
+              <p class="clearfix">
+                <i class="icon-appleinc"></i>IOS<span>0</span>
+              </p>
+              <div class="progress progress-md">
+                <div
+                  class="progress-bar progress-bar-danger"
+                  role="progressbar"
+                  aria-valuenow="89"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style="width: 89%"
+                >
+                  <span class="sr-only">89% Complete (success)</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <p class="clearfix">
+                <i class="icon-android"></i>Android<span>0</span>
+              </p>
+              <div class="progress progress-md">
+                <div
+                  class="progress-bar progress-bar-warning"
+                  role="progressbar"
+                  aria-valuenow="55"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style="width: 55%"
+                >
+                  <span class="sr-only">55% Complete (success)</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row ends -->
+  <div class="broker_row mt-1 gutter">
+    <div class="panel">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="panel-heading">
+            <h3 class="text-center txt_bold mb-0">Broker Account</h3>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="d-flex">
+            <div class="flx_1">
+              <input type="text" class="form-control" />
+            </div>
+            <div class="flx_0">
+              <button class="btn bg-dark h-100 shadow_none btn-sm">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="pb-3">
+          <div class="p-2 b_1">
+            <div class="d-flex align-items-center">
+              <div class="flx_1">
+                <h4 class="mb-0 text-center">Broker ID : AZ11QQ</h4>
+              </div>
+              <div class="flx_0 d-flex flex-row">
+                <span class="pr-3 txt_bold">Customer Visibility</span>
+                <div class="active_chk d-inline-block m-auto">
+                  <label class="switch">
+                    <input
+                      class="switch-input"
+                      name="IsActive"
+                      type="checkbox"
+                    />
+                    <span
+                      class="switch-label"
+                      data-on="On"
+                      data-off="Off"
+                    ></span>
+                    <span class="switch-handle"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white all_dark p-3">
+            <div class="row">
+              <div class="col-lg-4 pb-3 pb-lg-0">
+                <div class="d-flex">
+                  <div
+                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-university bank_img text-dark"></i>
+                  </div>
+                  <div class="flx_1">
+                    <b class="d-block mb-0 txt_blue txt_bold"
+                      >Bank Account</b
+                    >
+                    <span class="d-block">12783939030</span>
+                    <span class="d-block">Axis Bank</span>
+                  </div>
+                  <div class="flx_0 pr-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 pb-3 pb-lg-0">
+                <div class="d-flex">
+                  <div
+                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-university bank_img text-dark"></i>
+                  </div>
+                  <div class="flx_1">
+                    <b class="d-block mb-0 txt_blue txt_bold"
+                      >Google Pay</b
+                    >
+                    <span class="d-block">12783939030</span>
+                    <span class="d-block">Axis Bank</span>
+                  </div>
+                  <div class="flx_0 pr-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 pb-3 pb-lg-0">
+                <div class="d-flex">
+                  <div
+                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-university bank_img text-dark"></i>
+                  </div>
+                  <div class="flx_1">
+                    <b class="d-block mb-0 txt_blue txt_bold"
+                      >Bank Account</b
+                    >
+                    <span class="d-block">12783939030</span>
+                    <span class="d-block">Axis Bank</span>
+                  </div>
+                  <div class="flx_0 pr-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pb-3">
+          <div class="p-2 b_1">
+            <div class="d-flex align-items-center">
+              <div class="flx_1">
+                <h4 class="mb-0 text-center">Broker ID : AZ11QQ</h4>
+              </div>
+              <div class="flx_0 d-flex flex-row">
+                <span class="pr-3 txt_bold">Customer Visibility</span>
+                <div class="active_chk d-inline-block m-auto">
+                  <label class="switch">
+                    <input
+                      class="switch-input"
+                      name="IsActive"
+                      type="checkbox"
+                    />
+                    <span
+                      class="switch-label"
+                      data-on="On"
+                      data-off="Off"
+                    ></span>
+                    <span class="switch-handle"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white all_dark p-3">
+            <div class="row">
+              <div class="col-lg-4 pb-3 pb-lg-0">
+                <div class="d-flex">
+                  <div
+                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-university bank_img text-dark"></i>
+                  </div>
+                  <div class="flx_1">
+                    <b class="d-block mb-0 txt_blue txt_bold"
+                      >Bank Account</b
+                    >
+                    <span class="d-block">12783939030</span>
+                    <span class="d-block">Axis Bank</span>
+                  </div>
+                  <div class="flx_0 pr-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 pb-3 pb-lg-0">
+                <div class="d-flex">
+                  <div
+                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-university bank_img text-dark"></i>
+                  </div>
+                  <div class="flx_1">
+                    <b class="d-block mb-0 txt_blue txt_bold"
+                      >Google Pay</b
+                    >
+                    <span class="d-block">12783939030</span>
+                    <span class="d-block">Axis Bank</span>
+                  </div>
+                  <div class="flx_0 pr-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 pb-3 pb-lg-0">
+                <div class="d-flex">
+                  <div
+                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-university bank_img text-dark"></i>
+                  </div>
+                  <div class="flx_1">
+                    <b class="d-block mb-0 txt_blue txt_bold"
+                      >Bank Account</b
+                    >
+                    <span class="d-block">12783939030</span>
+                    <span class="d-block">Axis Bank</span>
+                  </div>
+                  <div class="flx_0 pr-2">
+                    <b class="d-block pb-1 text-center txt_bold txt_blue"
+                      >Customer</b
+                    >
+                    <div class="d-block">
+                      <div
+                        class="active_chk dark_switch d-inline-block m-auto"
+                      >
+                        <label class="switch">
+                          <input
+                            class="switch-input"
+                            name="IsActive"
+                            type="checkbox"
+                          />
+                          <span
+                            class="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span class="switch-handle"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Account Open -->
+<section class="popup_box AdminAccountPopup" *ngIf="AdminAccountPopup">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper popup_w position-relative">
+      <span class="popup_close CloseTransRefunPopup" (click)="ClosePaymentPopup()">x</span>
+      <div class="form_pop_he p-3">
+        <form action="">
+          <div class="pb-3">
+            <label>Choose Account Type</label>
+            <div class="pt-2">
+              <select name="" id="" class="form-control">
+                <option value="">Select</option>
+                <option value="">Bank Account</option>
+                <option value="">Google Pay</option>
+                <option value="">Phone-pe</option>
+                <option value="">Paytm</option>
+                <option value="">UPI</option>
+              </select>
+            </div>
+          </div>
+          <div class="pb-3">
+            <label>Account Number</label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="pb-3">
+            <label>Account Name</label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="pb-3">
+            <label>Bank Name</label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="pb-3">
+            <label>Branch Name</label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="pb-3">
+            <label>IFSC</label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="pb-3">
+            <label>Enter Id</label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="pb-3">
+            <label>Phone Number</label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="pb-3">
+            <label> Enter Name </label>
+            <div class="pt-2">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary mr-3">Submit</button>
+            <button class="btn btn-primary" (click)="ClosePaymentPopup()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

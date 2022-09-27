@@ -1,0 +1,96 @@
+<!-- Container fluid Starts -->
+<div class="container-fluid">
+  <!-- Top Bar Starts -->
+  <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_black_2">Add Customer Care</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top Bar Ends -->
+
+  <div class="mp_panel">
+    <div class="pb-3">
+      <span class="pb-2 d-block">Enter Question</span>
+      <textarea
+        class="qus_height form-control"
+        name="Question"
+        [(ngModel)]="Question"
+      ></textarea>
+      <div class="ERR_Msg text-danger" *ngIf="QuestionError">
+        <p>GameName required</p>
+      </div>
+    </div>
+    <div class="pb-3">
+      <span class="pb-2 d-block">Enter Answer</span>
+      <textarea
+        class="qus_height form-control"
+        name="Answer"
+        [(ngModel)]="Answer"
+      ></textarea>
+      <div class="ERR_Msg text-danger" *ngIf="AnswerError">
+        <p>GameName required</p>
+      </div>
+    </div>
+    <div class="pb-3">
+      <span class="pb-2 d-block">Related Articles</span>
+      <input
+        type="file"
+        name=""
+        id=""
+        class="form-control"
+        name="File"
+        [(ngModel)]="File"
+        (change)="Filedata($event)"
+      />
+      <div class="ERR_Msg text-danger" *ngIf="FileError">
+        <p>GameName required</p>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-primary mr-2" (click)="Onsubmit()">Post</button>
+      <!-- <a [routerLink]="['/customer-care-list']" class="btn btn-primary">Back</a> -->
+    </div>
+  </div>
+</div>
+<!-- Container fluid ends -->
+
+<div class="panel-body pb-0 table-responsive product_table">
+  <table class="table no-margin pb-2">
+    <thead>
+      <tr>
+        <!-- <th width="50" align="center">Edit</th> -->
+        <th>Question</th>
+        <th>Answer</th>
+        <th>Link</th>
+        <th width="50" align="center">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of GetListDate; let i = index">
+        <!-- <td align="center">
+          <i
+            class="fa fa-pencil-square-o h5 text-success"
+            (click)="Edit(i)"
+          ></i>
+        </td> -->
+        <td>{{ data.question }}</td>
+        <td>{{ data.answer }}</td>
+        <td style="color: blue !important">
+          <a [href]="Link + data.file_name" style="color: blue !important">{{
+            Link + data.file_name
+          }}</a>
+        </td>
+        <td align="center">
+          <i
+            class="fa fa-trash h5 text-danger"
+            (click)="remove(data.customer_care_id)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

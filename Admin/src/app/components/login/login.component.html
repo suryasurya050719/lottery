@@ -1,0 +1,65 @@
+<div class="w-100 h-100 login_bg">
+  <form [formGroup]="loginform" (ngSubmit)="onSubmit()">
+    <div id="box" class="animated bounceIn">
+      <div id="top_header">
+        <h5>Sign in to access to Buy jackpots Admin Control panel</h5>
+      </div>
+      <div id="inputs">
+        <div class="form-block">
+          <input
+            type="text"
+            name="Phone"
+            required
+            formControlName="Phone"
+            placeholder="Phone Number"
+          />
+          <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="
+              (loginform.controls['Phone']?.touched &&
+                loginform.controls['Phone'].invalid) ||
+              (submitChange && loginform.controls['Phone'].invalid)
+            "
+          >
+            <p>Phone is not valid</p>
+          </div>
+          <!-- <div *ngIf="Phone.errors.minlength">
+            Name must be at least 4 characters long.
+          </div>
+          <div *ngIf="Phone.errors.forbiddenName">Name cannot be Bob.</div> -->
+        </div>
+        <div class="form-block">
+          <input
+            type="password"
+            name="Password"
+            formControlName="Password"
+            placeholder="Password"
+            required
+          />
+          <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="
+              (loginform.controls['Password']?.touched &&
+                loginform.controls['Password'].invalid) ||
+              (submitChange && loginform.controls['Password'].invalid)
+            "
+          >
+            <p>Password is not valid</p>
+          </div>
+          <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="accountStatus"
+          >
+            <p>{{ accountStatusText }}</p>
+          </div>
+        </div>
+        <button class="btn_login text-center d-block" type="submit">
+          Login
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

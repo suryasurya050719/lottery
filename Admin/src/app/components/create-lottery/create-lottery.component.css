@@ -1,0 +1,28 @@
+.game_panel {
+  padding: 15px;
+  border-radius: 7px;
+  position: relative;
+  height: 180px;
+}
+.bg_game_1 {
+  background: #41046b;
+}
+.bg_game_2 {
+  background: #ff9700;
+}
+.form_w1 {
+  max-width: 400px;
+  width: 100%;
+}
+.h_cg {
+  height: 400px;
+  overflow: auto;
+}
+.cus_rm_drop {
+  height: 220px;
+  overflow: auto;
+}
+.Price_table {
+  height: 150px;
+  overflow: auto;
+}

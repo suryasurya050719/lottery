@@ -1,0 +1,78 @@
+<!-- Container fluid Starts -->
+<div class="container-fluid">
+  <!-- Top Bar Starts -->
+  <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_black_2">Add Our Information</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top Bar Ends -->
+
+  <div class="mp_panel">
+    <div class="pb-3">
+      <span class="pb-2 d-block">Enter Title</span>
+      <textarea
+        class="qus_height form-control"
+        name="title"
+        [(ngModel)]="title"
+      ></textarea>
+      <div class="ERR_Msg text-danger" *ngIf="titleError">
+        <p>title is required</p>
+      </div>
+    </div>
+    <div class="pb-3">
+      <span class="pb-2 d-block">Information</span>
+      <textarea
+        class="qus_height form-control"
+        name="information"
+        [(ngModel)]="information"
+      ></textarea>
+      <div class="ERR_Msg text-danger" *ngIf="informationError">
+        <p>information is required</p>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn btn-primary mr-2" (click)="submit()">
+        {{ recordEdit == false ? "Post" : "Update" }}
+      </button>
+      <!-- <a [routerLink]="['/our-information']" class="btn btn-primary">Back</a> -->
+    </div>
+  </div>
+</div>
+<!-- Container fluid ends -->
+
+<div class="panel-body pb-0 table-responsive product_table">
+  <table class="table no-margin">
+    <thead>
+      <tr>
+        <th width="50" align="center">Edit</th>
+        <th>Title</th>
+        <th>Information</th>
+        <th width="50" align="center">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of list">
+        <td align="center">
+          <i
+            class="fa fa-pencil-square-o h5 text-success"
+            (click)="edit(data.ourinfo_id)"
+          ></i>
+        </td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.information }}</td>
+        <td align="center">
+          <i
+            class="fa fa-trash h5 text-danger"
+            (click)="delete(data.ourinfo_id)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

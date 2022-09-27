@@ -1,0 +1,26 @@
+.popup_w{
+  max-width: 400px;
+  width: 100%;
+}
+.menu_right {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.menu_right .dropdown-toggle {
+  background: #ffffff;
+  border: 0px;
+}
+.menu_right .dropdown-toggle::after {
+  content: none;
+}
+.menu_right .dropdown-menu {
+  background: #ffffff;
+  color: #000000 !important;
+}
+.menu_right .dropdown-item {
+  color: #000000 !important;
+}
+.users-wrapper ul.users-footer * {
+  color: #fff !important;
+}
