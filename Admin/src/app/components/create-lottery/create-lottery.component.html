@@ -133,6 +133,10 @@
             <div class="col-lg-8">
               <b class="txt_bold txt_blue">Preview</b>
             </div>
+            <div class="row" style="margin-bottom: -27px; margin-left: 14px">
+              <div>Coloe :</div>
+              <input [(colorPicker)]="color" [style.background]="color" />
+            </div>
             <div
               class="col-lg-4 d-flex align-items-center justify-content-end flex-row"
             >
@@ -148,7 +152,7 @@
           </div>
         </div>
         <div class="pb-3">
-          <div class="game_panel bg_game_1 d-flex">
+          <div class="game_panel bg_game_1 d-flex" [style.background]="color">
             <div class="flx_1 d-flex flex-column">
               <div
                 class="flx_1 d-flex align-items-center justify-content-center"

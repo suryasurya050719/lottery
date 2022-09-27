@@ -31,6 +31,8 @@ export class CreateLotteryComponent implements OnInit {
   activegamedata: any = {};
   boardEdit: boolean = false;
   activeticketPattern: number = 0;
+  color: string = '';
+  id: any = '';
   // board validation
 
   boardNameError: boolean = false;
@@ -64,6 +66,9 @@ export class CreateLotteryComponent implements OnInit {
   ngOnInit(): void {
     // this.CreateBoardBtn();
     // this.removeDubilicateletters();
+    this.id = setInterval(() => {
+      countDown(this.GameListdata);
+    }, 1000);
     this.BoardList();
     this.gameList();
     console.log('boardEdit', this.boardEdit);
@@ -235,6 +240,7 @@ export class CreateLotteryComponent implements OnInit {
       this.ticketPattenArry.splice(this.activeticketPattern, 1);
     }
   }
+  // date time countDown
 
   // create board
 
@@ -275,7 +281,7 @@ export class CreateLotteryComponent implements OnInit {
       board_id: this.BoardID,
       status: this.published,
       showCount: this.showCount,
-      color: '',
+      color: this.color,
       stacrt_date: this.startDate,
       end_date: this.endDate,
       result_date: this.resultDate,
@@ -325,7 +331,7 @@ export class CreateLotteryComponent implements OnInit {
     this.GameName = this.activegamedata.game_name;
     this.BoardID = '2';
     this.showCount = this.activegamedata.showCount;
-    //  this.color = this.activegamedata.color
+    this.color = this.activegamedata.color;
     this.startDate = this.datePipe.transform(
       this.activegamedata.stacrt_date,
       'yyyy-MM-ddTHH:mm:ss'
@@ -363,4 +369,35 @@ export class CreateLotteryComponent implements OnInit {
       });
     }
   }
+  ngOnDestroy() {
+    if (this.id) {
+      clearInterval(this.id);
+    }
+  }
+}
+function countDown(futureDate: any) {
+  let date = new Date();
+  let hourse = futureDate.getTime() - date.getTime();
+  let data = llocateTimeUnits(hourse);
+  console.log('Welcome to Programiz!', date.getTime());
+  console.log('Welcome to Programiz!', futureDate.getTime());
+  console.log('Welcome to Programiz!', hourse);
+  return data;
+}
+function llocateTimeUnits(timeDifference: any) {
+  let secondsToDday = Math.floor((timeDifference / 1000) % 60);
+  let minutesToDday = Math.floor((timeDifference / (1000 * 60)) % 60);
+  let hoursToDday = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+  let daysToDday = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  let data = {
+    secondsToDday: secondsToDday,
+    minutesToDday: minutesToDday,
+    hoursToDday: hoursToDday,
+    daysToDday: daysToDday,
+  };
+  console.log('secondsToDday', secondsToDday);
+  console.log('minutesToDday', minutesToDday);
+  console.log('hoursToDday', hoursToDday);
+  console.log('daysToDday', daysToDday);
+  return data;
 }
