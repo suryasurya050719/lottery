@@ -27,6 +27,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { DatePipe } from '@angular/common';
 import { TicketPriceDetailsComponent } from './components/ticket-price-details/ticket-price-details.component';
 import { CustomerCareAddComponent } from './components/customer-care-add/customer-care-add.component';
+import { CountdownPipe } from './pipes/countdown.pipe';
 // import {AccountAddComponent} from './components/account-add/account-add.component'
 // import { RouterModule } from '@angular/router';
 
@@ -48,6 +49,7 @@ import { CustomerCareAddComponent } from './components/customer-care-add/custome
     GameCentreComponent,
     TicketPriceDetailsComponent,
     CustomerCareAddComponent,
+    CountdownPipe,
     // ColorPickerModule,
     // NgxPaginationModule,
     // RouterModule,
