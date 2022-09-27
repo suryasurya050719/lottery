@@ -1,0 +1,207 @@
+<header id="LoadHeader" class="top_header">
+  <div class="d-sm-flex align-items-center w-100">
+    <div class="flx_0 pr-3">
+      <button class="collapse-menu">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    <div class="flx_0">
+      <a href="#" class=""> logo </a>
+    </div>
+    <div class="flx_1">
+      <!-- Header actions starts -->
+      <ul id="header-actions" class="clearfix">
+        <li class="list-box hidden-xs dropdown mr-3">
+          <a [routerLink]="['/wallet']" role="button" class="">
+            <span class="minw_auto arrow_hide hed_act_img position-relative">
+              <i class="fa fa-credit-card"></i>
+            </span>
+            <span class="d-block pt-1">Wallet</span>
+          </a>
+        </li>
+        <li class="list-box hidden-xs dropdown mr-3">
+          <a href="#" role="button" class="">
+            <span class="minw_auto arrow_hide hed_act_img position-relative">
+              <i class="fa fa-bell-o"></i>
+              <span class="info-label blue-bg">0</span>
+            </span>
+            <span class="d-block">Notifications</span>
+          </a>
+        </li>
+
+        <li
+          class="list-box user-admin hidden-xs pt-2 d-flex align-items-center dropdown"
+        >
+          <div class="admin-details pt-0 mt-0">
+            <div class="name">Buyjackpots</div>
+            <div class="designation">System Admin</div>
+          </div>
+          <a
+            id="drop4"
+            href="#"
+            role="button"
+            class="dropdown-toggle pt-0 pb-0"
+            data-toggle="dropdown"
+          >
+            <i class="fa fa-user"></i>
+          </a>
+          <ul class="dropdown-menu sm">
+            <li class="dropdown-content">
+              <a href="profile.html">Edit Profile</a>
+              <a href="forgot-pwd.html">Change Password</a>
+              <a (click)="logout()">Logout</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <button type="button" id="toggleMenu" class="toggle-menu">
+            <i class="collapse-menu-icon"></i>
+          </button>
+        </li>
+      </ul>
+      <!-- Header actions ends -->
+    </div>
+    <div></div>
+  </div>
+</header>
+<div class="vertical-nav vertical-nav-sm">
+  <div class="user-details clearfix">
+    <a href="profile.html" class="user-img">
+      <img src="../../../assets/images/thumbs/user1.png" alt="User Info" />
+      <span class="likes-info">9</span>
+    </a>
+    <h5 class="user-name">Sean</h5>
+  </div>
+  <app-aside></app-aside>
+</div>
+
+<!-- Otp submit after start -->
+<section class="popup_box EditPopupInfo" *ngIf="OtpSubmitInfo">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="ClosePopupInfo()">x</span>
+      <div class="panel-body pb-0 table-responsive product_table td_center">
+        <table class="table no-margin w-100">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Action</th>
+              <th>Reason</th>
+              <th>Charges</th>
+              <th>Type</th>
+              <!-- <th></th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="flx_1 pr-2">
+                    <div class="input-group">
+                      <span class="input-group-addon">RM</span>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="amoount"
+                        [(ngModel)]="amount"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <select
+                  name="type"
+                  id=""
+                  class="form-control"
+                  [(ngModel)]="transectionType"
+                >
+                  <option value="">Select</option>
+                  <option value="">Add fund</option>
+                </select>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="sample reason"
+                  name="reason"
+                  [(ngModel)]="reason"
+                />
+              </td>
+
+              <td>
+                <select
+                  name=""
+                  id="EditPopYesAction"
+                  class="form-control"
+                  name="persentage"
+                  [(ngModel)]="persentage"
+                >
+                  <option value="">Select</option>
+                  <option value="1">Yes</option>
+                  <option value="2">No</option>
+                </select>
+              </td>
+              <td>
+                <select
+                  name=""
+                  id=""
+                  class="form-control YesActionShow"
+                  name="percentageAmount"
+                  [(ngModel)]="percentageAmount"
+                >
+                  <option value="">Select</option>
+                  <option value="1">Value</option>
+                  <option value="2">%</option>
+                </select>
+              </td>
+              <!-- <td>
+                <div class="input-group ValueActionShow flow_hide">
+                  <span class="input-group-addon">RM</span>
+                  <input type="text" class="form-control rm_input" value="" />
+                </div>
+
+                <div class="percentshow flow_hide">
+                  <select name="" id="" class="form-control">
+                    <option value="">Select</option>
+                    <option value="">1%</option>
+                    <option value="">2%</option>
+                  </select>
+                </div>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center pt-3">
+        <button
+          type="button"
+          (click)="ClosePopupInfo()"
+          class="btn btn-primary btn-ripple CancelProceedBtn mr-2"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary btn-ripple EditProceedBtn"
+          (click)="paymenttransection()"
+        >
+          Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Otp submit after end -->
+
+<!-- ancher tag dynamiv -->
+<div *ngIf="paymenturlshow">
+  <a href="{{ paymenturl }}">{{ paymenturl }}</a>
+</div>
+
+<!-- dynamic end  -->

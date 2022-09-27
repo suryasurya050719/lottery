@@ -1,0 +1,145 @@
+<div class="w-100 h-100 login_bg">
+  <form id="wrapper" [formGroup]="signupform">
+    <div id="box" class="animated bounceIn">
+      <div id="top_header">
+        <h5>
+          Sign in to access to your<br />
+          Arise control panel.
+        </h5>
+      </div>
+      <div id="inputs">
+        <div class="form-block">
+          <input
+            type="text"
+            placeholder="Referral Code"
+            formControlName="ReferralCode"
+            [(ngModel)]="ReferralCode"
+          />
+        </div>
+        <div class="form-block">
+          <input
+            type="text"
+            placeholder="username"
+            formControlName="username"
+            [(ngModel)]="username"
+          />
+          <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="
+              (signupform.controls['username']?.touched &&
+                signupform.controls['username'].invalid) ||
+              (submitChange && signupform.controls['username'].invalid)
+            "
+          >
+            <p>username is not valid</p>
+          </div>
+        </div>
+        <div class="form-block">
+          <input
+            type="text"
+            placeholder="phonenumber"
+            formControlName="phonenumber"
+            [(ngModel)]="phonenumber"
+          />
+          <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="
+              (signupform.controls['phonenumber']?.touched &&
+                signupform.controls['phonenumber'].invalid) ||
+              (submitChange && signupform.controls['phonenumber'].invalid)
+            "
+          >
+            <p>phone is not valid</p>
+          </div>
+        </div>
+        <div class="form-block pb-3" style="width: 84%; margin-left: 24px">
+          <div class="input-group d-flex align-items-center flex-row">
+            <button
+              class="input-group-addon cus_py_1 flx_0 h-100"
+              (click)="sendOtp()"
+            >
+              Generate Code
+            </button>
+            <input
+              type="text"
+              placeholder="enter your otp"
+              class="form-control w-auto mb-0 flx_1"
+              formControlName="otp"
+              [(ngModel)]="otp"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                (signupform.controls['otp']?.touched &&
+                  signupform.controls['otp'].invalid) ||
+                (submitChange && signupform.controls['otp'].invalid)
+              "
+            >
+              <p>otp is not valid</p>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-block">
+          <input type="text" placeholder="Email"   formControlName="Email"/>
+           <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="
+              signupform.controls['Email']?.touched &&
+              signupform.controls['Email'].invalid
+            "
+          >
+            <p>Email is not valid</p>
+          </div>
+        </div> -->
+        <div class="form-block">
+          <input
+            type="password"
+            placeholder="password"
+            formControlName="password"
+            [(ngModel)]="password"
+          />
+          <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="
+              (signupform.controls['password']?.touched &&
+                signupform.controls['password'].invalid) ||
+              (submitChange && signupform.controls['password'].invalid)
+            "
+          >
+            <p>password is not valid</p>
+          </div>
+        </div>
+        <div class="form-block">
+          <input
+            type="password"
+            placeholder="confirmpassword"
+            formControlName="confirmpassword"
+            [(ngModel)]="confirmPassword"
+          />
+          <div
+            class="ERR_Msg text-danger"
+            style="margin-left: 28px"
+            *ngIf="
+              (signupform.controls['confirmpassword']?.touched &&
+                signupform.controls['confirmpassword'].invalid) ||
+              (submitChange && signupform.controls['confirmpassword'].invalid)
+            "
+          >
+            <p>confirmpassword is not valid</p>
+          </div>
+        </div>
+        <button class="btn_login text-center d-block" (click)="Submit()">
+          Signup
+        </button>
+        <!-- <a [routerLink]="['/login']" class="btn_login text-center d-block">Sign in</a> -->
+      </div>
+      <div class="clearfix text-right pr-4 pt-3 pb-3 text-decoration-underline">
+        <a [routerLink]="['/login']" class="text-dark">Login</a>
+      </div>
+    </div>
+  </form>
+</div>

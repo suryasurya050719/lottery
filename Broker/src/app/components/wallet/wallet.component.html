@@ -1,0 +1,475 @@
+<div class="page-title pb-3"><h3>Wallet</h3></div>
+<div>
+  <div class="row">
+    <div class="col-lg-3 col-md-12">
+      <div class="d-flex align-items-center pay_col">
+        <div class="flx_1 br_1 text-left pay_col_1 p-2">
+          <label>Available</label>
+          <h4 class="mb-0">
+            <b>{{ walletAmount }}</b>
+          </h4>
+        </div>
+        <div class="flx_0 pay_col_2 text-center p-2">
+          <img src="../../../assets/images/lot_icon_2.png" alt="" />
+        </div>
+      </div>
+
+      <div class="row pt-3">
+        <div class="col-lg-6">
+          <button
+            class="btn btn-primary w-100 btn_input btn-ripple"
+            (click)="ShowAddFund()"
+          >
+            Add Fund
+          </button>
+        </div>
+        <div class="col-lg-6">
+          <button
+            class="btn btn-primary w-100 btn_input btn-ripple"
+            data-toggle="modal"
+            data-target="#WithdrawPopup"
+          >
+            Withdraw
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="AddFundPanel" class="pt-3">
+    <div>
+      <div class="pb-2">
+        <b>How do you want to pay?</b>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-12">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 d-flex align-items-center">
+              <div class="pr-2">
+                <input
+                  [value]="1"
+                  [(ngModel)]="isVisible"
+                  name="isVisible"
+                  type="radio"
+                  [checked]="isSelected"
+                />
+              </div>
+              <div>
+                <img
+                  class="credit_img"
+                  src="../../../assets/images/credit-card-img.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12 d-flex align-items-center">
+              <div class="pr-2">
+                <input
+                  [value]="2"
+                  [(ngModel)]="isVisible"
+                  name="isVisible"
+                  type="radio"
+                  [checked]="!isSelected"
+                />
+              </div>
+              <div>
+                <img
+                  class="credit_img"
+                  src="../../../assets/images/bank-transfer.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-3" *ngIf="isVisible == 1">
+      <div class="row">
+        <div class="col-lg-6 col-md-12 pt-3">
+          <b>Instant Credit</b>
+          <p>Money will instanly added to your wallet</p>
+
+          <div class="amount_box pt-2 d-flex flex-wrap">
+            <!-- <span class="rs_box badge py-2 m-2 px-4 badge-primary border">
+              <b>RS</b>
+            </span> -->
+            <!-- <span
+              class="rs_box badge py-2 m-2 px-4 cursor-pointer border"
+              [ngClass]="
+                ActiveClass
+                  ? 'badge-primary'
+                  : 'bg-white border border-secondary text-dark'
+              "
+              (click)="AmountActive()"
+            >
+              <b>RS 1</b>
+            </span> -->
+            <span
+              class="rs_box badge py-2 m-2 px-4 bg-white border border-secondary text-dark cursor-pointer"
+              (click)="AmountActive(1)"
+            >
+              <b>RS 1</b>
+            </span>
+            <span
+              class="rs_box badge py-2 m-2 px-4 bg-white border border-secondary text-dark cursor-pointer"
+              (click)="AmountActive(100)"
+            >
+              <b>RS 100</b>
+            </span>
+            <span
+              class="rs_box badge py-2 m-2 px-4 bg-white border border-secondary text-dark cursor-pointer"
+              (click)="AmountActive(150)"
+            >
+              <b>RS 150</b>
+            </span>
+            <span
+              class="rs_box badge py-2 m-2 px-4 bg-white border border-secondary text-dark cursor-pointer"
+              (click)="AmountActive(200)"
+            >
+              <b>RS 200 </b>
+            </span>
+            <span
+              class="rs_box badge py-2 m-2 px-4 bg-white border border-secondary text-dark cursor-pointer"
+              (click)="AmountActive(250)"
+            >
+              <b>RS 250</b>
+            </span>
+          </div>
+          <div style="margin: 10px">
+            <b
+              ><h3>Active amount={{ Activeamount }}</h3></b
+            >
+          </div>
+          <div class="pt-3">
+            <button
+              class="btn btn-primary btn-ripple"
+              (click)="paymenttransection()"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isVisible == 2">
+      <div class="pt-3">
+        <div class="page-title"><h3>Bank transfer</h3></div>
+        <h5>
+          You can transfer any one of these Account or UPI and Share screenshot
+          to WhatsApp +91987654321
+        </h5>
+        <div>
+          <div class="row">
+            <div class="col-lg-5 col-md-12">
+              <div class="border p-2 mb-2">
+                <div class="row">
+                  <div class="col-lg-6 border-right">
+                    <b>Gpay</b>
+                  </div>
+                  <div class="col-lg-6">
+                    <b>+91 69961 2154</b>
+                  </div>
+                </div>
+              </div>
+              <div class="border p-2 mb-2">
+                <div class="row">
+                  <div class="col-lg-6 border-right">
+                    <b>Bank Details</b>
+                  </div>
+                  <div class="col-lg-6">
+                    <b>HDFC Bank</b>
+                    <p>
+                      Account no : 4654564 <br />
+                      IFSC Code : 124821 <br />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="pb-3 pt-2">
+    <div class="mb-0 pb-0">
+      <h1 class="text-left"><b>Transaction Details</b></h1>
+      <h4></h4>
+    </div>
+
+    <div class="td_details">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <!-- <label> From date </label> -->
+            <!-- <select name="" id="" class="form-control">
+                      <option value="">Select</option>
+                      <option value="">Day</option>
+                      <option value="">Month</option>
+                      <option value="">Year</option>
+                    </select> -->
+            <div class="form-group">
+              <label> From date </label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                [(ngModel)]="fromDate"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> To date </label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="toDate"
+            />
+          </div>
+        </div>
+        <div class="col-lg-3 d-flex align-items-end pb-3">
+          <button
+            type="button"
+            class="btn btn-primary btn-ripple search_bt"
+            (click)="singleTransection()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body pb-0 table-responsive product_table td_center">
+      <table class="table no-margin">
+        <thead>
+          <tr>
+            <th>Transaction Id</th>
+            <th>UserId</th>
+            <th>Referral Id</th>
+            <th>Date &amp; Time</th>
+            <th>Amount</th>
+            <th>Payment From</th>
+            <th>Payment To</th>
+            <!-- <th>Payment For</th> -->
+            <th>Transaction Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of singleTransectionList">
+            <td>{{ user.transection_id }}</td>
+            <td>{{ user.user_id }}</td>
+            <td>
+              <!-- {{
+                        transection.referalList.length > 0
+                          ? transection.referalList[0].refered_user_id
+                          : ""
+                      }} -->
+              {{ transectionlist.referalList }}
+            </td>
+            <td>{{ user.created_on | date: "dd/MM/yyyy" }}</td>
+            <td>
+              <div class="input-group" style="width: 150px">
+                <span class="input-group-addon">RS</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ user.amount }}"
+                />
+              </div>
+            </td>
+            <td>
+              {{ user.transection_from_userid }}
+              <span class="badge bg-primary blink_txt">{{
+                user.transection_from_type
+              }}</span>
+            </td>
+            <td>
+              {{ user.transection_to_userid }}
+              <span class="badge bg-primary blink_txt">{{
+                user.transection_to_type
+              }}</span>
+            </td>
+
+            <!-- <td>
+              {{
+                transectionlist[0].referalList.length > 0
+                  ? transectionlist[0].referalList[0].refered_user_id
+                  : ""
+              }}
+              <br />
+              <button
+                type="button"
+                class="mt-2 btn btn-primary btn-sm btn-ripple ViewPaymentForBtn"
+                (click)="
+                  PaymentForBtn(
+                    user.reason,
+                    user.amount,
+
+                    user.status
+                  )
+                "
+              >
+                View
+              </button>
+            </td> -->
+
+            <td>{{ user.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- <nav class="Page navigation text-center pt-3 pb-3">
+    <ul
+      class="pagination justify-content-center d-flex align-items-center"
+    >
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">«</span>
+        </a>
+      </li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">»</span>
+        </a>
+      </li>
+    </ul>
+  </nav> -->
+</div>
+
+<!-- Withdraw popup -->
+<div
+  class="modal fade"
+  id="WithdrawPopup"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">Withdraw</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="pb-3">
+            <label for="" class="d-block pb-1">Select Account</label>
+
+            <div class="d-flex align-items-center">
+              <div class="flx_1 pr-2">
+                <select name="" id="" class="form-control">
+                  <option value="">Select</option>
+                </select>
+              </div>
+              <div class="flx_0">
+                <i
+                  class="fa fa-plus-circle fs-3 text-success plus_bank_icon cursor-pointer"
+                  data-toggle="modal"
+                  data-target="#PopupBankAdd"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-ripple">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bank Add Popup popup -->
+
+<div
+  class="modal fade"
+  id="PopupBankAdd"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">Add Bank</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="pb-3">
+            <label for="" class="d-block pb-1">Bank Name</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="pb-3">
+            <label for="" class="d-block pb-1">IFSC Code</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="pb-3">
+            <label for="" class="d-block pb-1">Holder Name</label>
+            <input type="text" class="form-control" />
+          </div>
+          <button class="btn btn-primary btn-ripple">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment For start -->
+<section class="popup_box ViewPaymentForPopup" *ngIf="PaymentForPopup">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="ClosePaymentPopup()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="w-100 table-bordered table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Referral ID</th>
+                <th>Position</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ this.paymentForType }}</td>
+                <td>{{ this.paymentForAmount }}</td>
+                <td>{{ this.paymentForReferal_id }}</td>
+                <td></td>
+                <td>{{ this.paymentForStatus }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Payment For end -->

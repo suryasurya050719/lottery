@@ -1,0 +1,64 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { MainComponent } from './layout/main/main.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { AsideComponent } from './layout/aside/aside.component';
+import { LoginComponent } from './components/login/login.component';
+import { UserReviewViewComponent } from './components/user-review-view/user-review-view.component';
+import { WalletReivewComponent } from './components/wallet-review/wallet-review.component';
+import { UserReviewComponent } from './components/user-review/user-review.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { RegisterComponent } from './components/register/register.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { WalletComponent } from '../app/components/wallet/wallet.component';
+// import {RegisterComponent} from './components/register/RegisterComponent'
+// import { RouterModule } from '@angular/router';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MainComponent,
+    HeaderComponent,
+    AsideComponent,
+    LoginComponent,
+    RegisterComponent,
+    WalletReivewComponent,
+    UserReviewComponent,
+    UserReviewViewComponent,
+    ForgetPasswordComponent,
+    WalletComponent,
+    // NgxPaginationModule,
+    // RouterModule,
+  ],
+  imports: [
+    BrowserModule,
+    MatDialogModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger', // set defaults here
+    }),
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule,
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+  ],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {},
+    },
+  ],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
