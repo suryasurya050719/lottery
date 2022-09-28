@@ -1,5 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Board } from '../../service/board';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  FormControl,
+  ValidatorFn,
+} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -11,11 +18,33 @@ export class CreateLotteryComponent implements OnInit {
   constructor(
     private changeRef: ChangeDetectorRef,
     public board: Board,
-    public datePipe: DatePipe
-  ) {}
+    public datePipe: DatePipe,
+    private formBuilder: FormBuilder
+  ) {
+    this.form = this.formBuilder.group({
+      participants: new FormArray([]),
+    });
+    // this.addCheckboxes();
+  }
+  form: FormGroup;
+
   CreateBoardPopup: boolean = false;
   t: boolean = false;
-
+  array: any = [];
+  selectedValue: any = [];
+  // get participantsFormArray() {
+  //   return this.form.controls['participantIds'] as FormArray;
+  // }
+  // private addCheckboxes() {
+  //   this.participantIds.forEach((element) =>
+  //     this.participantsFormArray.push(element)
+  //   );
+  // }
+  // formgroups: any = [
+  //   { name: 'pepperoni', checked: false },
+  //   { name: 'extracheese', checked: false },
+  //   { name: 'mushroom', checked: false },
+  // ];
   // input crediential
   ticketPatern: String = '';
   boardName: String = '';
@@ -62,19 +91,30 @@ export class CreateLotteryComponent implements OnInit {
   startDateError: Boolean = false;
   endDateError: Boolean = false;
   resultDateError: Boolean = false;
-
+  result: {
+    selectedFruit: any;
+  } = { selectedFruit: [] };
   ngOnInit(): void {
     // this.CreateBoardBtn();
     // this.removeDubilicateletters();
     // this.id = setInterval(() => {
     //   countDown(this.GameListdata);
     // }, 1000);
+    // this.form = new FormGroup({
+    //   boards: new FormArray([]),
+    // });
     this.BoardList();
     this.gameList();
     console.log('boardEdit', this.boardEdit);
   }
 
-  
+  get ordersFormArray() {
+    return this.form.controls?.['orders'] as FormArray;
+  }
+  getCheckboxes() {
+    this.selectedValue = this.array.filter((x: any) => x).map((x: any) => x);
+    console.log('sdafsdf', this.selectedValue);
+  }
   change() {
     this.activeBoarddata = this.BoardListdata[this.activeBoardINdex];
     console.log('this.activeBoarddata', this.activeBoarddata);
@@ -228,9 +268,18 @@ export class CreateLotteryComponent implements OnInit {
     console.log('this.GamePrice', this.GamePrice);
   }
   BoardList() {
-    this.board.BoardList().subscribe((data: any) => {
+    this.board.BoardList().subscribe(async (data: any) => {
       this.BoardListdata = data.data;
-      console.log('this.bord list', this.BoardListdata);
+      await this.BoardListdata.forEach((element: any) => {
+        let name = element.board_name;
+        let data: any = {};
+        // this.formgroups[name] = false;
+        data['name'] = name;
+        data['checked'] = false;
+        this.array.push(data);
+        // this.checkbox.push(data);
+      });
+      // console.log('this.bord list', this.checkbox);
     });
   }
   activeletterpatters(index: any) {
@@ -247,12 +296,13 @@ export class CreateLotteryComponent implements OnInit {
   // create board
 
   GameCreate() {
+    console.log('xjfc');
     if (this.GameName == '') {
       this.GameNameError = true;
     } else {
       this.GameNameError = false;
     }
-    if (this.BoardID == '') {
+    if (this.selectedValue.length == 0) {
       this.BoardIDError = true;
     } else {
       this.BoardIDError = false;
@@ -280,7 +330,7 @@ export class CreateLotteryComponent implements OnInit {
     let data = {
       game_id: this.activegamedata.game_id,
       game_name: this.GameName,
-      board_id: this.BoardID,
+      board_id: this.array,
       status: this.published,
       showCount: this.showCount,
       color: this.color,
@@ -288,15 +338,27 @@ export class CreateLotteryComponent implements OnInit {
       end_date: this.endDate,
       result_date: this.resultDate,
     };
+    console.log(
+      '>>',
+      this.GameName,
+      this.array.length,
+      this.showCount,
+      this.startDate,
+      this.endDate,
+      this.resultDate
+    );
     if (
       this.GameName !== '' &&
-      this.BoardID !== '' &&
+      this.selectedValue.length !== 0 &&
       this.showCount !== '' &&
       this.startDate !== '' &&
       this.endDate !== '' &&
       this.resultDate !== ''
     ) {
+      console.log('asf entered');
       if (this.gameeditable == true) {
+        console.log('asj updated');
+
         this.board.GameUpdate(data).subscribe((data) => {
           this.CreateGameFormPopup = false;
           if (data.statuscode == 200) {
@@ -321,8 +383,8 @@ export class CreateLotteryComponent implements OnInit {
     this.board.GameList().subscribe((data) => {
       console.log('data', data.data);
       this.GameListdata = data.data;
-      var countDownDate = new Date("2022-09-30T19:41:00.000Z").getTime();
-      console.log(countDownDate)
+      var countDownDate = new Date('2022-09-30T19:41:00.000Z').getTime();
+      console.log(countDownDate);
     });
   }
   EditGame(index: any) {
@@ -333,7 +395,7 @@ export class CreateLotteryComponent implements OnInit {
     this.activegamedata = this.GameListdata[index];
     console.log('activegamedata', this.activegamedata);
     this.GameName = this.activegamedata.game_name;
-    this.BoardID = '2';
+    this.array = this.activegamedata.board_id;
     this.showCount = this.activegamedata.showCount;
     this.color = this.activegamedata.color;
     this.startDate = this.datePipe.transform(

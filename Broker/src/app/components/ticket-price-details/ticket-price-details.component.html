@@ -27,19 +27,23 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Sample title</td>
-                  <td>Sample Board</td>
+                <tr *ngFor="let data of DataList">
+                  <td>{{ data.title }}</td>
+                  <td>{{ data.board }}</td>
                   <td class="text-center">
                     <div class="input-group m-auto" style="width: 150px">
                       <span class="input-group-addon">RS</span>
-                      <span type="text" class="form-control">1,25,000 </span>
+                      <span type="text" class="form-control"
+                        >{{ data.ticket_price }}
+                      </span>
                     </div>
                   </td>
                   <td class="text-center">
                     <div class="input-group m-auto" style="width: 150px">
                       <span class="input-group-addon">RS</span>
-                      <span type="text" class="form-control"> 1,25,000 </span>
+                      <span type="text" class="form-control">
+                        {{ data.price_amount }}
+                      </span>
                     </div>
                   </td>
                 </tr>

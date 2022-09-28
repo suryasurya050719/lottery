@@ -28,6 +28,7 @@ import { DatePipe } from '@angular/common';
 import { TicketPriceDetailsComponent } from './components/ticket-price-details/ticket-price-details.component';
 import { CustomerCareAddComponent } from './components/customer-care-add/customer-care-add.component';
 import { CountdownPipe } from './pipes/countdown.pipe';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 // import {AccountAddComponent} from './components/account-add/account-add.component'
 // import { RouterModule } from '@angular/router';
 
@@ -62,6 +63,7 @@ import { CountdownPipe } from './pipes/countdown.pipe';
     }),
     AppRoutingModule,
     FormsModule,
+    MatCheckboxModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgxPaginationModule,

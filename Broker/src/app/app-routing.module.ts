@@ -23,6 +23,7 @@ import { PageGaurd } from '../guard/page_gaurd/pageGaurd';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 // import { BookingReviewComponent } from './components/booking-review/booking-review.component';
 import { WalletComponent } from '../app/components/wallet/wallet.component';
+import { AccountAddComponent } from './components/account-add/account-add.component';
 
 const routes: Routes = [
   // No Layouts
@@ -111,6 +112,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'payment-profile',
+        component: AccountAddComponent,
       },
 
       {

@@ -20,6 +20,10 @@ import { RouterModule } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { WalletComponent } from '../app/components/wallet/wallet.component';
+import { CustomerCareListComponent } from '../app/components/customer-care-list/customer-care-list.component';
+import { GameCentreComponent } from '../app/components/game-centre/game-centre.component';
+import { TicketPriceDetailsComponent } from '../app/components/ticket-price-details/ticket-price-details.component';
+import { AccountAddComponent } from '../app/components/account-add/account-add.component';
 // import {RegisterComponent} from './components/register/RegisterComponent'
 // import { RouterModule } from '@angular/router';
 
@@ -36,6 +40,10 @@ import { WalletComponent } from '../app/components/wallet/wallet.component';
     UserReviewViewComponent,
     ForgetPasswordComponent,
     WalletComponent,
+    CustomerCareListComponent,
+    GameCentreComponent,
+    TicketPriceDetailsComponent,
+    AccountAddComponent,
     // NgxPaginationModule,
     // RouterModule,
   ],

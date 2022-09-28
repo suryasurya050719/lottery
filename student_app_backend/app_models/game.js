@@ -7,7 +7,7 @@ const creatSchema = mongoose.Schema({
     type: Number,
   },
   board_id: {
-    type: Number,
+    type: Array,
   },
   game_name: {
     type: String,

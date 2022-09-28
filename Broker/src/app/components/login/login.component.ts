@@ -63,7 +63,11 @@ export class LoginComponent implements OnInit {
     if (this.loginform.valid) {
       this.login.Login(Phone, Password).subscribe((data) => {
         console.log('data', data);
-        if (data.statuscode == 200 && data.data.status !== 'N') {
+        if (
+          data.statuscode == 200 &&
+          data.data.status !== 'N' &&
+          data.data.role_id == 2
+        ) {
           localStorage.setItem('lottryuserid', data.data.user_id);
           localStorage.setItem('lottryroleid', data.data.role_id);
           localStorage.setItem('lottryname', data.data.name);

@@ -39,13 +39,19 @@
           class="col-lg-4 pb-4"
           *ngFor="let data of GameListdata; let i = index"
         >
-          <div class="game_panel bg_game_1 d-flex">
+          <div
+            class="game_panel bg_game_1 d-flex"
+            [style.background]="data.color"
+          >
             <div class="flx_1 d-flex flex-column">
               <div
-                class="flx_1 d-flex align-items-center justify-content-center"
+                class="flx_1 d-flex align-items-center justify-content-center flex-column"
               >
                 <h2 class="txt_bold text-uppercase text-white mb-0 text-center">
-                  {{ data.result_date | countdown | async}}
+                  {{ data.game_name }}
+                </h2>
+                <h2 class="txt_bold text-uppercase text-white mb-0 text-center">
+                  {{ data.result_date | countdown | async }}
                 </h2>
               </div>
               <div class="flx_0">
@@ -133,17 +139,17 @@
             <div class="col-lg-8">
               <b class="txt_bold txt_blue">Preview</b>
             </div>
-            <div class="row" style="margin-bottom: -27px; margin-left: 14px">
+            <!-- <div class="row" style="margin-bottom: -37px; margin-left: 14px">
               <div>Coloe :</div>
               <input [(colorPicker)]="color" [style.background]="color" />
-            </div>
+            </div> -->
             <div
               class="col-lg-4 d-flex align-items-center justify-content-end flex-row"
             >
-              <!-- <div class="text-center cursor-pointer pr-3">
-                <i class="fa fa-pencil-square-o is_1"></i>
-                Edit
-              </div> -->
+              <div class="text-center cursor-pointer pr-3">
+                <div>Coloe :</div>
+                <input [(colorPicker)]="color" [style.background]="color" />
+              </div>
               <div class="text-center cursor-pointer" (click)="removeGame()">
                 <i class="fa fa-trash is_1"></i>
                 Remove
@@ -207,7 +213,7 @@
                 </div>
               </div>
 
-              <!-- <div class="pb-2">
+              <div class="pb-2">
                 <div class="text-right">
                   <label class="px-2 bg-primary2 text-white mb-0"
                     >Create Board</label
@@ -228,22 +234,49 @@
                     aria-labelledby="dropdownMenuButton"
                   >
                     <div class="cus_rm_drop pt-2">
-                      <div class="px-2 bb_1 pb-2 mb-2 text-dark fs_1">
-                        <input type="checkbox" name="1" id="1" />
-                        <label for="1"> Sample </label>
+                      <div *ngFor="let item of array">
+                        <mat-checkbox
+                          [(ngModel)]="item.checked"
+                          (change)="getCheckboxes()"
+                          >{{ item.name }}</mat-checkbox
+                        >
                       </div>
-                      <div class="px-2 bb_1 pb-2 mb-2 text-dark fs_1">
-                        <input type="checkbox" name="1" id="2" />
-                        <label for="2"> Sample </label>
-                      </div>
+                      <!-- <div
+                        class="px-2 bb_1 pb-2 mb-2 text-dark fs_1"
+                        formArrayName="orders"
+                        *ngFor="
+                          let order of ordersFormArray.controls;
+                          let i = index
+                        "
+                      >
+                        <input type="checkbox" [formControlName]="i" />
+                        <label for="1"> {{ webData[i].name }} </label>
+                      </div> -->
+
+                      <!-- <section class="example-section" [formGroup]="form">
+                        <p>
+                          <mat-checkbox formControlName="data.checked">{{
+                            data.name
+                          }}</mat-checkbox>
+                        </p>
+                      </section>
+
+                      <button
+                        type="submit"
+                        color="danger"
+                        expand="block"
+                        (click)="sample01()"
+                      >
+                        Submit
+                      </button> -->
                     </div>
                     <div class="text-right pt-2 pb-2 pr-2">
                       <button class="btn">Submit</button>
                     </div>
                   </div>
                 </div>
-              </div> -->
-              <div class="pb-2">
+              </div>
+              <!-- <div class="pb-2">
                 <select
                   name=""
                   id=""
@@ -261,7 +294,7 @@
                 <div class="ERR_Msg text-danger" *ngIf="BoardIDError">
                   <p>Board required</p>
                 </div>
-              </div>
+              </div> -->
               <div class="pb-2">
                 <select
                   name=""
