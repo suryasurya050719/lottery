@@ -75,7 +75,11 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('lottryreferalid', data.data.referal_code);
           this.router.navigateByUrl('/user-review');
         } else {
-          if (data.data.role_id == 1 || data.data.status == 'N') {
+          if (
+            data.data?.role_id == 1 ||
+            data.data?.role_id == 3 ||
+            data.data?.status == 'N'
+          ) {
             alert(`Invalid Account`);
           } else {
             alert(`${data.status}`);

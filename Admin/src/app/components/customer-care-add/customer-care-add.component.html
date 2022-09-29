@@ -21,7 +21,7 @@
         [(ngModel)]="Question"
       ></textarea>
       <div class="ERR_Msg text-danger" *ngIf="QuestionError">
-        <p>GameName required</p>
+        <p>Question required</p>
       </div>
     </div>
     <div class="pb-3">
@@ -32,7 +32,7 @@
         [(ngModel)]="Answer"
       ></textarea>
       <div class="ERR_Msg text-danger" *ngIf="AnswerError">
-        <p>GameName required</p>
+        <p>Answer required</p>
       </div>
     </div>
     <div class="pb-3">
@@ -47,7 +47,7 @@
         (change)="Filedata($event)"
       />
       <div class="ERR_Msg text-danger" *ngIf="FileError">
-        <p>GameName required</p>
+        <p>File required</p>
       </div>
     </div>
     <div>

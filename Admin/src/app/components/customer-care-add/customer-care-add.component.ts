@@ -48,7 +48,12 @@ export class CustomerCareAddComponent implements OnInit {
     } else {
       this.AnswerError = false;
     }
-    if (Object.keys(this.imagedata).length == 0) {
+    console.log(
+      'file data',
+      this.imagedata?.name == '',
+      Object.keys(this.imagedata).length
+    );
+    if (this.imagedata?.name == '') {
       this.FileError = true;
     } else {
       this.FileError = false;
@@ -57,7 +62,7 @@ export class CustomerCareAddComponent implements OnInit {
     if (
       this.Answer !== '' &&
       this.Question !== '' &&
-      Object.keys(this.imagedata).length !== 0
+      this.imagedata?.name !== ''
     ) {
       console.log('this.Answer', this.Answer);
       console.log('this.Answer', this.Question);
@@ -70,6 +75,7 @@ export class CustomerCareAddComponent implements OnInit {
         id
       ).subscribe((data) => {
         console.log('data', data);
+        this.GetList();
       });
     }
   }

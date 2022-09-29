@@ -53,19 +53,19 @@ Your verification code for Account Activation is ${otp}. Please do not share thi
           host: "api.textlocal.in",
           path: "/send?" + data,
         };
-        // callback = function (response) {
-        //   var str = "";
-        //   //another chunk of data has been recieved, so append it to `str`
-        //   response.on("data", function (chunk) {
-        //     str += chunk;
-        //   });
-        //   //the whole response has been received, so we just print it out here
-        //   response.on("end", function () {
-        //     console.log(str);
-        //   });
-        // };
-        //console.log('hello js'))
-        //https.request(options, callback).end();
+        callback = function (response) {
+          var str = "";
+          //another chunk of data has been recieved, so append it to `str`
+          response.on("data", function (chunk) {
+            str += chunk;
+          });
+          //the whole response has been received, so we just print it out here
+          response.on("end", function () {
+            console.log(str);
+          });
+        };
+        // console.log('hello js'))
+        https.request(options, callback).end();
         //url encode instalation need to use $ npm install urlencode
         res.json({
           success: false,
@@ -99,7 +99,7 @@ router.post("/excitingUserotp", async (req, res) => {
           `Dear ${name}
 Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
         );
-        var number = data.pbone;
+        var number = data.phone;
         var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";
         console.log("message ", msg);
         var sender = "VSEMSG";
@@ -116,19 +116,19 @@ Your verification code for Account Activation is ${otp}. Please do not share thi
           host: "api.textlocal.in",
           path: "/send?" + data,
         };
-        // callback = function (response) {
-        //   var str = "";
-        //   //another chunk of data has been recieved, so append it to `str`
-        //   response.on("data", function (chunk) {
-        //     str += chunk;
-        //   });
-        //   //the whole response has been received, so we just print it out here
-        //   response.on("end", function () {
-        //     console.log(str);
-        //   });
-        // };
+        callback = function (response) {
+          var str = "";
+          //another chunk of data has been recieved, so append it to `str`
+          response.on("data", function (chunk) {
+            str += chunk;
+          });
+          //the whole response has been received, so we just print it out here
+          response.on("end", function () {
+            console.log(str);
+          });
+        };
         // console.log('hello js'))
-        // https.request(options, callback).end();
+        https.request(options, callback).end();
         // url encode instalation need to use $ npm install urlencode
       } else {
         res.json({
