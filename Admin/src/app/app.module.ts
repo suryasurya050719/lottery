@@ -29,6 +29,8 @@ import { TicketPriceDetailsComponent } from './components/ticket-price-details/t
 import { CustomerCareAddComponent } from './components/customer-care-add/customer-care-add.component';
 import { CountdownPipe } from './pipes/countdown.pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgxLoadingModule } from 'ngx-loading';
+
 // import {AccountAddComponent} from './components/account-add/account-add.component'
 // import { RouterModule } from '@angular/router';
 
@@ -69,6 +71,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     NgxPaginationModule,
     BrowserAnimationsModule,
     ColorPickerModule,
+    NgxLoadingModule.forRoot({}),
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

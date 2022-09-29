@@ -25,6 +25,7 @@
     "jquery": "^3.5.1",
     "moment": "^2.29.4",
     "ngx-color-picker": "^12.0.1",
+    "ngx-loading": "^2.0.1",
     "ngx-pagination": "^6.0.2",
     "popper.js": "^1.14.3",
     "rxjs": "~7.5.0",

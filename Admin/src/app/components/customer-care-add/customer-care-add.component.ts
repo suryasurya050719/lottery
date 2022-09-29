@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./customer-care-add.component.css'],
 })
 export class CustomerCareAddComponent implements OnInit {
+  public loading = false;
   Question: string = '';
   Answer: string = '';
   imagedata: any = {};
@@ -50,10 +51,12 @@ export class CustomerCareAddComponent implements OnInit {
     }
     console.log(
       'file data',
+      this.imagedata,
+      this.imagedata?.name !== '',
       this.imagedata?.name == '',
       Object.keys(this.imagedata).length
     );
-    if (this.imagedata?.name == '') {
+    if (this.imagedata?.name == '' && Object.keys(this.imagedata).length == 0) {
       this.FileError = true;
     } else {
       this.FileError = false;
@@ -66,8 +69,9 @@ export class CustomerCareAddComponent implements OnInit {
     ) {
       console.log('this.Answer', this.Answer);
       console.log('this.Answer', this.Question);
-      console.log('this.Answer', this.File);
+      console.log('this.Answer', this.imagedata);
       let id = localStorage.getItem('lottryuserid');
+      this.loading = true;
       this.CustomerCare.QuestionCreate(
         this.Question,
         this.Answer,
@@ -75,6 +79,7 @@ export class CustomerCareAddComponent implements OnInit {
         id
       ).subscribe((data) => {
         console.log('data', data);
+        this.loading = false;
         this.GetList();
       });
     }

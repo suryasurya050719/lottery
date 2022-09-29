@@ -25,13 +25,14 @@ export class UserReviewComponent implements OnInit {
   heading: string = '';
   editHedding: string = '';
   user_id: string = '';
-  phonenumber: string = '';
+  phone: string = '';
   role_type: string = '';
   editUser: boolean = false;
   currentUserId: any = '';
   userNumberFormat: any = '';
 
   username: string = '';
+  phonenumber: string = '';
   constructor(
     private login: Login,
     private formBuilder: FormBuilder,
@@ -91,9 +92,15 @@ export class UserReviewComponent implements OnInit {
     if (this.user_id !== '') {
       this.userNumberFormat = justNumbers(this.user_id);
     }
-    console.log('this.user_id', this.userNumberFormat, this.user_id);
+    console.log(
+      'this.user_id',
+      this.userNumberFormat,
+      this.user_id,
+      this.phone,
+      this.role_type
+    );
     this.login
-      .Alluser(this.userNumberFormat, this.phonenumber, this.role_type)
+      .Alluser(this.userNumberFormat, this.phone, this.role_type)
       .subscribe((data) => {
         console.log('data all user ', data.data);
         if (data.statuscode == 200) {

@@ -14,11 +14,11 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 router.post("", upload.single("customerImage"), function (req, res) {
-  console.log(">>>>");
+  console.log(">file", req.file);
+  console.log(">body", req.body);
   var originalFileName = req.file.filename;
   let body = req.body;
-  console.log(">>>>", originalFileName);
-  console.log(">>>>", req.body);
+  console.log(">>file name", originalFileName);
   let preparedata = {
     user_id: Number(body.id),
     question: body.question,

@@ -22,6 +22,7 @@ export class CustomerCare {
     data.append('answer', answer);
     data.append('customerImage', file);
     data.append('id', id);
+    console.log('data');
     let url = `${environment.apiurl}/customer_info`;
     return this.http.post(url, data).pipe(
       map((data) => {
