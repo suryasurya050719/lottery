@@ -19,7 +19,7 @@ router.post("/newuserotp", async (req, res) => {
   let body = req.body.query;
   user.findOne({ phone: req.body.query.phone }).then((data) => {
     console.log(data);
-    if (data == null) {
+    if (data == null || data.isOtpVerify == false) {
       let preparedata = {
         name: body.username,
         phone: body.phone,
@@ -91,7 +91,7 @@ router.post("/excitingUserotp", async (req, res) => {
       { new: true }
     )
     .then((data) => {
-      if (data !== null) {
+      if (data !== null || data.isOtpVerify == false) {
         console.log("data", data);
         let name = data.name;
         let otp = data.otp;

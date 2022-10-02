@@ -34,6 +34,7 @@ export class WalletReivewComponent implements OnInit {
   filterdata: any = {};
   currentUserId: any = '';
   ActiveWallet: string = '';
+  ActiveWallet_role_id: string = '';
   currentpage: number = 1;
   // Amount add fields
 
@@ -53,10 +54,11 @@ export class WalletReivewComponent implements OnInit {
   paymentForReferal_id: string = '';
   paymentForStatus: string = '';
 
-  onChange(newValue: string, transection: any) {
+  onChange(newValue: string, transection: any, transection_role_id: any) {
     console.log('data', transection);
     this.selectedDevice = true;
     this.ActiveWallet = transection;
+    this.ActiveWallet_role_id = transection_role_id;
   }
   ClosePopup() {
     this.selectedDevice = '';
@@ -242,7 +244,9 @@ export class WalletReivewComponent implements OnInit {
         amount: this.amount,
         user_id: this.ActiveWallet,
         transection_from_userid: localStorage.getItem('lottryuserid'),
+        transection_from_roleid: localStorage.getItem('lottryroleid'),
         transection_to_userid: this.ActiveWallet,
+        transection_to_roleid: this.ActiveWallet_role_id,
         transection_from_type: 'Wallet',
         transection_to_type: 'Wallet',
         reason: this.reason,

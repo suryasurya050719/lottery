@@ -18,10 +18,16 @@ const transectionSchema = mongoose.Schema({
   transection_from_userid: {
     type: Number,
   },
+  transection_from_roleid: {
+    type: Number,
+  },
   transection_from_type: {
     type: String,
   },
   transection_to_userid: {
+    type: Number,
+  },
+  transection_to_roleid: {
     type: Number,
   },
   transection_to_type: {

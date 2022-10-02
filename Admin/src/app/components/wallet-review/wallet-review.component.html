@@ -156,7 +156,13 @@
                         id="EditWallet"
                         class="form-control"
                         [ngModel]="selectedDevice"
-                        (ngModelChange)="onChange($event, transection.user_id)"
+                        (ngModelChange)="
+                          onChange(
+                            $event,
+                            transection.user_id,
+                            transection.role_id
+                          )
+                        "
                       >
                         <option value="0">Select</option>
                         <option value="1">Edit Wallet</option>
@@ -249,6 +255,15 @@
                     <td>
                       {{
                         transection.referalList.length > 0
+                          ? transection.referalList[0].refered_role_id == 1
+                            ? "BJCD A"
+                            : transection.referalList[0].refered_role_id == 2
+                            ? "BJCD B"
+                            : "BJCD c"
+                          : ""
+                      }}
+                      {{
+                        transection.referalList.length > 0
                           ? transection.referalList[0].refered_user_id
                           : ""
                       }}
@@ -265,12 +280,26 @@
                       </div>
                     </td>
                     <td>
+                      {{
+                        user.transection_from_roleid == 1
+                          ? "BJCD A"
+                          : user.transection_from_roleid == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}
                       {{ user.transection_from_userid }}
                       <span class="badge bg-primary blink_txt">{{
                         user.transection_from_type
                       }}</span>
                     </td>
                     <td>
+                      {{
+                        user.transection_to_roleid == 1
+                          ? "BJCD A"
+                          : user.transection_to_roleid == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}
                       {{ user.transection_to_userid }}
                       <span class="badge bg-primary blink_txt">{{
                         user.transection_to_type
@@ -278,6 +307,15 @@
                     </td>
 
                     <td>
+                      {{
+                        transection.referalList.length > 0
+                          ? transection.referalList[0].refered_role_id == 1
+                            ? "BJCD A"
+                            : transection.referalList[0].refered_role_id == 2
+                            ? "BJCD B"
+                            : "BJCD c"
+                          : ""
+                      }}
                       {{
                         transection.referalList.length > 0
                           ? transection.referalList[0].refered_user_id

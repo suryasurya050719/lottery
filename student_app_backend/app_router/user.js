@@ -35,7 +35,7 @@ router.post("/registor", async (req, res) => {
         }
       }
       if (data.otp == body.otp) {
-        let referalcode = referralCodeGenerator.alphaNumeric("uppercase", 8, 7);
+        let referalcode = referralCodeGenerator.alphaNumeric("uppercase", 4, 2);
         var hash = await bcrypt.hash(req.body.password, saltRounds);
         let preparedata = {
           password: hash,
@@ -392,6 +392,32 @@ router.put("/forgotpassword", async (req, res) => {
     })
     .catch((data) => {
       console.log("sdkjdk", data);
+    });
+});
+
+// dashboard
+router.get("/allbrokercustomercount", async (req, res) => {
+  user
+    .aggregate([
+      {
+        $facet: {
+          broker: [
+            { $match: { $and: [{ role_id: 2 }, { isOtpVerify: true }] } },
+          ],
+          customer: [
+            { $match: { $and: [{ role_id: 3 }, { isOtpVerify: true }] } },
+          ],
+        },
+      },
+    ])
+    .then((data) => {
+      console.log("dtaa", data);
+      res.json({
+        success: false,
+        data: data,
+        statuscode: 400,
+        status: "count generated",
+      });
     });
 });
 

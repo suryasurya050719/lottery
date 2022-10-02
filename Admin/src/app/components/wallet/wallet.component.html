@@ -54,7 +54,7 @@
           <tr>
             <th>Transaction Id</th>
             <th>UserId</th>
-            <th>Referral Id</th>
+            <!-- <th>Referral Id</th> -->
             <th>Date &amp; Time</th>
             <th>Amount</th>
             <th>Payment From</th>
@@ -67,14 +67,14 @@
           <tr *ngFor="let user of singleTransectionList">
             <td>{{ user.transection_id }}</td>
             <td>{{ user.user_id }}</td>
-            <td>
-              <!-- {{
+            <!-- <td>
+              {{
                         transection.referalList.length > 0
                           ? transection.referalList[0].refered_user_id
                           : ""
-                      }} -->
+                      }}
               {{ transectionlist.referalList }}
-            </td>
+            </td> -->
             <td>{{ user.created_on | date: "dd/MM/yyyy" }}</td>
             <td>
               <div class="input-group" style="width: 150px">
