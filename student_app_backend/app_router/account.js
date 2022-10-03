@@ -88,5 +88,106 @@ router.delete("/accountdelete/:id", async (req, res) => {
     });
   });
 });
+router.get("/sharedaccountlist", async (req, res) => {
+  account
+    .aggregate([
+      {
+        $facet: {
+          Admin: [
+            {
+              $lookup: {
+                from: "users",
+                localField: "user_id",
+                foreignField: "user_id",
+                pipeline: [
+                  {
+                    $match: { role_id: 1 },
+                  },
+                ],
+                as: "List",
+              },
+            },
+            {
+              $unwind: {
+                path: "$List",
+                preserveNullAndEmptyArrays: true,
+              },
+            },
+          ],
+          Broker: [
+            {
+              $lookup: {
+                from: "users",
+                localField: "user_id",
+                foreignField: "user_id",
+                pipeline: [
+                  {
+                    $match: { role_id: 2 },
+                  },
+                ],
+                as: "List",
+              },
+            },
+            {
+              $unwind: {
+                path: "$List",
+                preserveNullAndEmptyArrays: false,
+              },
+            },
+          ],
+          Customer: [
+            {
+              $lookup: {
+                from: "users",
+                localField: "user_id",
+                foreignField: "user_id",
+                pipeline: [
+                  {
+                    $match: { role_id: 3 },
+                  },
+                ],
+                as: "List",
+              },
+            },
+            {
+              $unwind: {
+                path: "$List",
+                preserveNullAndEmptyArrays: false,
+              },
+            },
+          ],
+        },
+      },
+    ])
+    .then((data) => {
+      res.send({
+        statuscode: 200,
+        status: "account updated successfully",
+        data: data,
+      });
+    });
+});
+
+router.put("/updateone", async (req, res) => {
+  let body = req.body;
+  console.log("body", body);
+  let data = {
+    customer_status: body.customer ,
+    broker_status: body.broker ,
+  };
+  console.log("bodatady", data);
+  account
+    .findOneAndUpdate({ account_id: body.id }, data, {
+      new: true,
+    })
+    .then((data) => {
+      console.log("data", data);
+      res.send({
+        statuscode: 200,
+        status: "user updated successfully",
+        data: data,
+      });
+    });
+});
 
 module.exports = router;

@@ -21,7 +21,7 @@ export class Dashboard {
   }
   AccountList(): Observable<any> {
     // console.log('filterdata service', filterdata);
-    let url = `${environment.apiurl}/shareAccount/sharedaccountlist`;
+    let url = `${environment.apiurl}/account/sharedaccountlist`;
     return this.http.get(url).pipe(
       map((data) => {
         return data;

@@ -30,8 +30,22 @@ export class DashboardComponent implements OnInit {
   getAccount() {
     this.Dashboard.AccountList().subscribe((data) => {
       console.log('data', data.data[0]);
-      this.accountListAdmin = data.data[0]?.Admin;
+      this.accountListAdmin = data.data[0].Admin;
       console.log('this.accountListAdmin', this.accountListAdmin);
     });
+  }
+  Unpublised(type:any,id:any,customer:any,broker:any){
+    alert(`${id} of ${type} of ${customer} of ${broker}` )
+    let data:any={
+      id:id
+    }
+    if(type==1){
+    data["customer"]=customer==true?false:true
+    data["broker"]=broker
+    }else if(type==2){
+      data["customer"]=customer
+    data["broker"]=broker==true?false:true
+    }
+
   }
 }
