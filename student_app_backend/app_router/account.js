@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const account = require("../app_models/account");
+const user = require("../app_models/user");
 const { route } = require("./live_result");
 
 router.post("", async (req, res) => {
   let data = req.body;
-  //   console.log("data", data);
+  console.log("data", data);
   let preparedata = {
     user_id: data.user_id,
     role_id: data.role_id,
@@ -89,72 +90,66 @@ router.delete("/accountdelete/:id", async (req, res) => {
   });
 });
 router.get("/sharedaccountlist", async (req, res) => {
-  account
+  user
     .aggregate([
       {
         $facet: {
           Admin: [
             {
+              $match: { role_id: 1 },
+            },
+            {
               $lookup: {
-                from: "users",
+                from: "accoounts",
                 localField: "user_id",
                 foreignField: "user_id",
-                pipeline: [
-                  {
-                    $match: { role_id: 1 },
-                  },
-                ],
                 as: "List",
               },
             },
-            {
-              $unwind: {
-                path: "$List",
-                preserveNullAndEmptyArrays: true,
-              },
-            },
+            // {
+            //   $unwind: {
+            //     path: "$List",
+            //     preserveNullAndEmptyArrays: false,
+            //   },
+            // },
           ],
           Broker: [
             {
+              $match: { role_id: 2 },
+            },
+            {
               $lookup: {
-                from: "users",
+                from: "accoounts",
                 localField: "user_id",
                 foreignField: "user_id",
-                pipeline: [
-                  {
-                    $match: { role_id: 2 },
-                  },
-                ],
                 as: "List",
               },
             },
-            {
-              $unwind: {
-                path: "$List",
-                preserveNullAndEmptyArrays: false,
-              },
-            },
+            // {
+            //   $unwind: {
+            //     path: "$List",
+            //     preserveNullAndEmptyArrays: false,
+            //   },
+            // },
           ],
           Customer: [
             {
+              $match: { role_id: 3 },
+            },
+            {
               $lookup: {
                 from: "users",
                 localField: "user_id",
                 foreignField: "user_id",
-                pipeline: [
-                  {
-                    $match: { role_id: 3 },
-                  },
-                ],
                 as: "List",
               },
             },
-            {
-              $unwind: {
-                path: "$List",
-                preserveNullAndEmptyArrays: false,
-              },
-            },
+            // {
+            //   $unwind: {
+            //     path: "$List",
+            //     preserveNullAndEmptyArrays: false,
+            //   },
+            // },
           ],
         },
       },
@@ -172,14 +167,38 @@ router.put("/updateone", async (req, res) => {
   let body = req.body;
   console.log("body", body);
   let data = {
-    customer_status: body.customer ,
-    broker_status: body.broker ,
+    customer_status: body.customer,
+    broker_status: body.broker,
   };
   console.log("bodatady", data);
   account
     .findOneAndUpdate({ account_id: body.id }, data, {
       new: true,
     })
+    .then((data) => {
+      console.log("data", data);
+      res.send({
+        statuscode: 200,
+        status: "user updated successfully",
+        data: data,
+      });
+    });
+});
+router.put("/updatemany", async (req, res) => {
+  let body = req.body;
+  console.log("body", body);
+  let data = {
+    customer_status: body.customer == true ? false : true,
+  };
+  console.log("bodatady", data);
+  account
+    .updateMany(
+      { user_id: body.id },
+      { $set: { customer_status: data.customer_status } },
+      {
+        multi: true /** will update all the documents matching the filter criteria and not only the first document.*/,
+      }
+    )
     .then((data) => {
       console.log("data", data);
       res.send({

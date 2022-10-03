@@ -5,15 +5,13 @@ const router = express.Router();
 
 router.post("", async (req, res) => {
   let body = req.body;
+  console.log("body", body);
   let preparedata = {
     user_id: body.user_id,
-    account_type: body.account_type,
-    account_name: body.account_name,
-    bank_name: body.bank_name,
-    branch_name: body.branch_name,
-    ifsc_code: body.ifsc_code,
-    phon: body.phon,
-    enter_name: body.enter_name,
+    account_number: body.AccountNumber,
+    account_name: body.HolderName,
+    branch_name: body.Branchname,
+    ifsc_code: body.IFSCcode,
   };
   let data = new shareAccount(preparedata);
   data.save().then((insertdata) => {

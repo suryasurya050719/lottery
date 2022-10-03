@@ -430,31 +430,21 @@
             </h5>
           </div>
           <div class="p-3 b_1 h_cg">
-            <!-- <div class="pt-2 pb-2">
+            <div class="pt-2 pb-2">
               <div class="bg-primary2 p-1 text-white text-center">
-                {{boardName}}
+                {{ activeBoarddata.board_name }}
               </div>
               <div
                 class="b_1 p-2 d-flex flex-row justify-content-center align-items-center"
               >
                 <div
                   class="flx_0 px-3 py-2 b_1 ml-3 mr-3 rounded text-uppercase txt_bold"
-                  *ngFor="let ticket of ticketPattenArry"
+                  *ngFor="let ticket of activeBoarddata.board_leter_format"
                 >
                   {{ ticket }}
                 </div>
-                <div
-                  class="flx_0 px-3 py-2 b_1 ml-3 mr-3 rounded text-uppercase txt_bold"
-                >
-                  B
-                </div>
-                <div
-                  class="flx_0 px-3 py-2 b_1 ml-3 mr-3 rounded text-uppercase txt_bold"
-                >
-                  C
-                </div>
               </div>
-            </div> -->
+            </div>
 
             <div class="bg-primary2 p-3">
               <div class="bg-white p-2">

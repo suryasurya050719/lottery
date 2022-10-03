@@ -108,28 +108,26 @@ router.put("/publice", async (req, res) => {
     });
 });
 
-// router.get("/gameandboard",async (req,res)=>{
-//   game.aggregate([
-//     {
-//       $lookup: {
-//         from:"boards",
-//               let: {board_id :"$board_id"},
-//               pipeline: [ {
-//                 $match:{
-//                  board_name:{ $in:["$$board_name"]}
-//                 }
-//               } ],
-//               as: "sample"
-//       },
-//     },
-//   ]).then((data)=>{
-//     res.send({
-//       statuscode: 200,
-//       status: "user updated successfully",
-//       data: data,
-//     });
-//   })
-// })
+router.get("/gameandboard", async (req, res) => {
+  game
+    .aggregate([
+      {
+        $lookup: {
+          from: "boards",
+          localField: "board_id.name",
+          foreignField: "board_name",
+          as: "brd",
+        },
+      },
+    ])
+    .then((data) => {
+      res.send({
+        statuscode: 200,
+        status: "user updated successfully",
+        data: data,
+      });
+    });
+});
 
 function TimeIncrement(date) {
   // date.setHours(date.getHours() + 5);

@@ -7,21 +7,22 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class Dashboard {
+export class SharedAccount {
   constructor(private http: HttpClient) {}
 
-  customerandbrokercount(): Observable<any> {
+  AccountCreate(filterdata: any): Observable<any> {
     // console.log('filterdata service', filterdata);
-    let url = `${environment.apiurl}/user/allbrokercustomercount`;
-    return this.http.get(url).pipe(
+    let data = filterdata;
+    let url = `${environment.apiurl}/shareAccount`;
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
-  AccountList(): Observable<any> {
+  OwnAccountList(id: number): Observable<any> {
     // console.log('filterdata service', filterdata);
-    let url = `${environment.apiurl}/account/sharedaccountlist`;
+    let url = `${environment.apiurl}/account/ownaccountlist/${id}`;
     return this.http.get(url).pipe(
       map((data) => {
         return data;
@@ -47,19 +48,13 @@ export class Dashboard {
       })
     );
   }
-  AccountStatusChange(data: any): Observable<any> {
-    let url = `${environment.apiurl}/account/updateone`;
-    let data01 = data;
-    return this.http.put(url, data01).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-  ManyAccountStatusChange(data: any): Observable<any> {
-    let url = `${environment.apiurl}/account/updatemany`;
-    let data01 = data;
-    return this.http.put(url, data01).pipe(
+  GameStatusChange(id: number, status: string): Observable<any> {
+    let url = `${environment.apiurl}/game/publice`;
+    let data = {
+      game_id: id,
+      status: status,
+    };
+    return this.http.put(url, data).pipe(
       map((data) => {
         return data;
       })

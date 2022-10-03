@@ -83,79 +83,43 @@
         </div>
         <div class="panel-body pb-0">
           <div class="p-2 pb-0">
-            <div class="row_bank_list all_dark bg-white p-3"  >
-              <!-- <div
+            <div class="row_bank_list all_dark bg-white p-3">
+              <div
                 class="d-flex bb_1 mb-3"
-               
+                *ngFor="let user of accountListAdmin; let i = index"
               >
                 <div
                   class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
                 >
                   <i class="fa fa-university bank_img text-dark"></i>
                 </div>
-                <div class="flx_1">
+                <div class="flx_1" *ngIf="user.type == 'BankAccount'">
                   <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
-                  <span class="d-block">12783939030</span>
-                  <span class="d-block">Axis Bank</span>
+                  <span class="d-block" style="color: balck">{{
+                    user.account_number
+                  }}</span>
+                  <span class="d-block">{{ user.account_name }}</span>
                 </div>
-                <div class="flx_0 pr-2 text-center">
-                  <div class="pb-2">
-                    <b class="d-block pb-1 text-center txt_bold txt_blue"
-                      >Customer</b
-                    >
-                    <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-2">
-                    <b class="d-block pb-1 text-center txt_bold txt_blue"
-                      >Broker</b
-                    >
-                    <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
+                <div class="flx_1" *ngIf="user.type == 'UPI'">
+                  <b class="d-block mb-0 txt_blue txt_bold">{{ user.type }}</b>
+                  <span class="d-block" style="color: balck">{{
+                    user.upi_id
+                  }}</span>
+                  <!-- <span class="d-block">{{ user.account_name }}</span> -->
                 </div>
-              </div> -->
-
-              <div class="d-flex bb_1 mb-3"  *ngFor="let user of accountListAdmin; let i = index">
                 <div
-                  class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
+                  class="flx_1"
+                  *ngIf="
+                    user.type == 'Phone-pe' ||
+                    user.type == 'GooglePay' ||
+                    user.type == 'Paytm'
+                  "
                 >
-                  <i class="fa fa-university bank_img text-dark"></i>
-                </div>
-                <div class="flx_1">
-                  <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
-                  <span class="d-block" style="color: balck;">{{user.account_number}}</span>
-                  <span class="d-block">{{user.account_name}}</span>
+                  <b class="d-block mb-0 txt_blue txt_bold">{{ user.type }}</b>
+                  <span class="d-block" style="color: balck">{{
+                    user.phone
+                  }}</span>
+                  <span class="d-block">{{ user.name }}</span>
                 </div>
                 <div class="flx_0 pr-2 text-center">
                   <div class="pb-2">
@@ -186,12 +150,23 @@
                           >
                             <i class="fa fa-ellipsis-v"></i>
                           </button>
-        
+
                           <div class="dropdown-menu">
                             <a
                               class="dropdown-item"
-                              (click)="Unpublised(1,user.account_id,user.customer_status,user.broker_status)"
-                              >{{user.customer_status==false?"Public":"Unpublice"}}</a
+                              (click)="
+                                Unpublised(
+                                  1,
+                                  user.account_id,
+                                  user.customer_status,
+                                  user.broker_status
+                                )
+                              "
+                              >{{
+                                user.customer_status == false
+                                  ? "Public"
+                                  : "Unpublice"
+                              }}</a
                             >
                           </div>
                         </div>
@@ -204,19 +179,34 @@
                     >
                     <div class="d-block">
                       <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
+                        <div class="dropdown">
+                          <button
+                            role="button"
+                            data-toggle="dropdown"
+                            style="margin-left: 52px"
+                          >
+                            <i class="fa fa-ellipsis-v"></i>
+                          </button>
+
+                          <div class="dropdown-menu">
+                            <a
+                              class="dropdown-item"
+                              (click)="
+                                Unpublised(
+                                  2,
+                                  user.account_id,
+                                  user.customer_status,
+                                  user.broker_status
+                                )
+                              "
+                              >{{
+                                user.broker_status == false
+                                  ? "Public"
+                                  : "Unpublice"
+                              }}</a
+                            >
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -337,7 +327,7 @@
   <!-- Row ends -->
   <div class="broker_row mt-1 gutter">
     <div class="panel">
-      <div class="row align-items-center">
+      <!-- <div class="row align-items-center">
         <div class="col-lg-8">
           <div class="panel-heading">
             <h3 class="text-center txt_bold mb-0">Broker Account</h3>
@@ -355,19 +345,21 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="panel-body">
-        <div class="pb-3">
+        <div class="pb-3" *ngFor="let data of accountListBroker">
           <div class="p-2 b_1">
             <div class="d-flex align-items-center">
               <div class="flx_1">
-                <h4 class="mb-0 text-center">Broker ID : AZ11QQ</h4>
+                <h4 class="mb-0 text-center">
+                  Broker ID : BJCD B{{ data.user_id }}
+                </h4>
               </div>
               <div class="flx_0 d-flex flex-row">
                 <span class="pr-3 txt_bold">Customer Visibility</span>
                 <div class="active_chk d-inline-block m-auto">
-                  <label class="switch">
+                  <!-- <label class="switch">
                     <input
                       class="switch-input"
                       name="IsActive"
@@ -379,14 +371,41 @@
                       data-off="Off"
                     ></span>
                     <span class="switch-handle"></span>
-                  </label>
+                  </label> -->
+                  <div class="dropdown">
+                    <button
+                      role="button"
+                      data-toggle="dropdown"
+                      style="margin-left: 52px"
+                    >
+                      <i class="fa fa-ellipsis-v"></i>
+                    </button>
+
+                    <div class="dropdown-menu">
+                      <a
+                        class="dropdown-item"
+                        (click)="UnpublisedMany(data.user_id, 1)"
+                      >
+                        Public
+                      </a>
+                      <a
+                        class="dropdown-item"
+                        (click)="UnpublisedMany(data.user_id, 2)"
+                      >
+                        Unpublice
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="bg-white all_dark p-3">
             <div class="row">
-              <div class="col-lg-4 pb-3 pb-lg-0">
+              <div
+                class="col-lg-4 pb-3 pb-lg-0"
+                *ngFor="let data of accountListBrokerList"
+              >
                 <div class="d-flex">
                   <div
                     class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
@@ -394,240 +413,44 @@
                     <i class="fa fa-university bank_img text-dark"></i>
                   </div>
                   <div class="flx_1">
-                    <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
-                    <span class="d-block">12783939030</span>
-                    <span class="d-block">Axis Bank</span>
+                    <b class="d-block mb-0 txt_blue txt_bold">{{
+                      data.type
+                    }}</b>
+                    <span class="d-block">{{ data.account_number }}</span>
+                    <span class="d-block">{{ data.bank_name }}</span>
                   </div>
                   <div class="flx_0 pr-2">
                     <b class="d-block pb-1 text-center txt_bold txt_blue"
                       >Customer</b
                     >
                     <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 pb-3 pb-lg-0">
-                <div class="d-flex">
-                  <div
-                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
-                  >
-                    <i class="fa fa-university bank_img text-dark"></i>
-                  </div>
-                  <div class="flx_1">
-                    <b class="d-block mb-0 txt_blue txt_bold">Google Pay</b>
-                    <span class="d-block">12783939030</span>
-                    <span class="d-block">Axis Bank</span>
-                  </div>
-                  <div class="flx_0 pr-2">
-                    <b class="d-block pb-1 text-center txt_bold txt_blue"
-                      >Customer</b
-                    >
-                    <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 pb-3 pb-lg-0">
-                <div class="d-flex">
-                  <div
-                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
-                  >
-                    <i class="fa fa-university bank_img text-dark"></i>
-                  </div>
-                  <div class="flx_1">
-                    <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
-                    <span class="d-block">12783939030</span>
-                    <span class="d-block">Axis Bank</span>
-                  </div>
-                  <div class="flx_0 pr-2">
-                    <b class="d-block pb-1 text-center txt_bold txt_blue"
-                      >Customer</b
-                    >
-                    <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="pb-3">
-          <div class="p-2 b_1">
-            <div class="d-flex align-items-center">
-              <div class="flx_1">
-                <h4 class="mb-0 text-center">Broker ID : AZ11QQ</h4>
-              </div>
-              <div class="flx_0 d-flex flex-row">
-                <span class="pr-3 txt_bold">Customer Visibility</span>
-                <div class="active_chk d-inline-block m-auto">
-                  <label class="switch">
-                    <input
-                      class="switch-input"
-                      name="IsActive"
-                      type="checkbox"
-                    />
-                    <span
-                      class="switch-label"
-                      data-on="On"
-                      data-off="Off"
-                    ></span>
-                    <span class="switch-handle"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white all_dark p-3">
-            <div class="row">
-              <div class="col-lg-4 pb-3 pb-lg-0">
-                <div class="d-flex">
-                  <div
-                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
-                  >
-                    <i class="fa fa-university bank_img text-dark"></i>
-                  </div>
-                  <div class="flx_1">
-                    <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
-                    <span class="d-block">12783939030</span>
-                    <span class="d-block">Axis Bank</span>
-                  </div>
-                  <div class="flx_0 pr-2">
-                    <b class="d-block pb-1 text-center txt_bold txt_blue"
-                      >Customer</b
-                    >
-                    <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 pb-3 pb-lg-0">
-                <div class="d-flex">
-                  <div
-                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
-                  >
-                    <i class="fa fa-university bank_img text-dark"></i>
-                  </div>
-                  <div class="flx_1">
-                    <b class="d-block mb-0 txt_blue txt_bold">Google Pay</b>
-                    <span class="d-block">12783939030</span>
-                    <span class="d-block">Axis Bank</span>
-                  </div>
-                  <div class="flx_0 pr-2">
-                    <b class="d-block pb-1 text-center txt_bold txt_blue"
-                      >Customer</b
-                    >
-                    <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 pb-3 pb-lg-0">
-                <div class="d-flex">
-                  <div
-                    class="flx_0 mr-3 bank_icon_box d-flex align-items-center justify-content-center"
-                  >
-                    <i class="fa fa-university bank_img text-dark"></i>
-                  </div>
-                  <div class="flx_1">
-                    <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
-                    <span class="d-block">12783939030</span>
-                    <span class="d-block">Axis Bank</span>
-                  </div>
-                  <div class="flx_0 pr-2">
-                    <b class="d-block pb-1 text-center txt_bold txt_blue"
-                      >Customer</b
-                    >
-                    <div class="d-block">
-                      <div class="active_chk dark_switch d-inline-block m-auto">
-                        <label class="switch">
-                          <input
-                            class="switch-input"
-                            name="IsActive"
-                            type="checkbox"
-                          />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label>
+                      <div class="dropdown">
+                        <button
+                          role="button"
+                          data-toggle="dropdown"
+                          style="margin-left: 52px"
+                        >
+                          <i class="fa fa-ellipsis-v"></i>
+                        </button>
+
+                        <div class="dropdown-menu">
+                          <a
+                            class="dropdown-item"
+                            (click)="
+                              Unpublised(
+                                1,
+                                data.account_id,
+                                data.customer_status,
+                                data.broker_status
+                              )
+                            "
+                            >{{
+                              data.customer_status == false
+                                ? "Public"
+                                : "Unpublice"
+                            }}</a
+                          >
+                        </div>
                       </div>
                     </div>
                   </div>

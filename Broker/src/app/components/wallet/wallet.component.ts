@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Transection } from '../../service/transection';
+import { Dashboard } from '../../service/dashboard';
+import { SharedAccount } from '../../service/shared_account';
 
 @Component({
   selector: 'app-wallet',
@@ -7,7 +9,11 @@ import { Transection } from '../../service/transection';
   styleUrls: ['./wallet.component.css'],
 })
 export class WalletComponent implements OnInit {
-  constructor(private transection: Transection) {}
+  constructor(
+    private transection: Transection,
+    private Dashboard: Dashboard,
+    private SharedAccount: SharedAccount
+  ) {}
   filterdata: any = {};
   alluserList: any = [];
   walletList: any = [];
@@ -18,7 +24,18 @@ export class WalletComponent implements OnInit {
   toDate: string = '';
   singleTransectionList: any = [];
   transectionlist: any = [];
+  // account
+  AccountNumber: string = '';
+  Branchname: string = '';
+  IFSCcode: string = '';
+  HolderName: string = '';
 
+  // error account
+  AccountNumberError: boolean = false;
+  BranchnameError: boolean = false;
+  IFSCcodeError: boolean = false;
+  HolderNameError: boolean = false;
+  accountListAdmin: any = [];
   //payment for details
 
   paymentForType: string = '';
@@ -31,6 +48,7 @@ export class WalletComponent implements OnInit {
     this.walletLIst();
     this.singleuser();
     this.singleTransection();
+    this.getAccount();
   }
   AddFundPanel = false;
 
@@ -157,5 +175,59 @@ export class WalletComponent implements OnInit {
       this.singleTransectionList = data.data;
       console.log('this.singleTransectionList', this.singleTransectionList);
     });
+  }
+  getAccount() {
+    this.Dashboard.AccountList().subscribe((data) => {
+      console.log('data', data.data[0]);
+      this.accountListAdmin = data.data[0].Admin[0].List;
+      console.log('this.accountListAdmin', this.accountListAdmin);
+    });
+  }
+  Addaccount() {
+    if (this.AccountNumber == '') {
+      this.AccountNumberError = true;
+    } else {
+      this.AccountNumberError = false;
+    }
+    if (this.Branchname == '') {
+      this.BranchnameError = true;
+    } else {
+      this.BranchnameError = false;
+    }
+    if (this.IFSCcode == '') {
+      this.IFSCcodeError = true;
+    } else {
+      this.IFSCcodeError = false;
+    }
+    if (this.HolderName == '') {
+      this.HolderNameError = true;
+    } else {
+      this.HolderNameError = false;
+    }
+    if (
+      this.AccountNumber !== '' &&
+      this.Branchname !== '' &&
+      this.IFSCcode !== '' &&
+      this.HolderName !== ''
+    ) {
+      let data = {
+        user_id: localStorage.getItem('lottryuserid'),
+        AccountNumber: this.AccountNumber,
+        Branchname: this.Branchname,
+        IFSCcode: this.IFSCcode,
+        HolderName: this.HolderName,
+      };
+      console.log('data', data);
+      this.SharedAccount.AccountCreate(data).subscribe((data) => {
+        console.log('data', data);
+        this.AccountReset();
+      });
+    }
+  }
+  AccountReset() {
+    this.AccountNumber = '';
+    this.Branchname = '';
+    this.IFSCcode = '';
+    this.HolderName = '';
   }
 }

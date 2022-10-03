@@ -160,29 +160,57 @@
           to WhatsApp +91987654321
         </h5>
         <div>
-          <div class="row">
+          <div class="row" *ngFor="let data of accountListAdmin">
             <div class="col-lg-5 col-md-12">
-              <div class="border p-2 mb-2">
+              <div
+                class="border p-2 mb-2"
+                *ngIf="
+                  (data.type == 'Phone-pe' ||
+                    data.type == 'GooglePay' ||
+                    data.type == 'Paytm') &&
+                  data.broker_status == true
+                "
+              >
                 <div class="row">
                   <div class="col-lg-6 border-right">
                     <b>Gpay</b>
                   </div>
                   <div class="col-lg-6">
-                    <b>+91 69961 2154</b>
+                    <b>+91 {{ data.phone }}</b>
                   </div>
                 </div>
               </div>
-              <div class="border p-2 mb-2">
+              <div
+                class="border p-2 mb-2"
+                *ngIf="data.type == 'BankAccount' && data.broker_status == true"
+              >
                 <div class="row">
                   <div class="col-lg-6 border-right">
                     <b>Bank Details</b>
                   </div>
                   <div class="col-lg-6">
-                    <b>HDFC Bank</b>
+                    <b>{{ data.bank_name }}</b>
                     <p>
-                      Account no : 4654564 <br />
-                      IFSC Code : 124821 <br />
+                      Account no : {{ data.account_number }} <br />
+                      IFSC Code : {{ data.ifsc_code }} <br />
                     </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="border p-2 mb-2"
+                *ngIf="data.type == 'UPI' && data.broker_status == true"
+              >
+                <div class="row">
+                  <div class="col-lg-6 border-right">
+                    <b>UPI Details</b>
+                  </div>
+                  <div class="col-lg-6">
+                    <b>{{ data.upi_id }}</b>
+                    <!-- <p>
+                      Account no : {{ data.account_number }} <br />
+                      IFSC Code : {{ data.ifsc_code }} <br />
+                    </p> -->
                   </div>
                 </div>
               </div>
@@ -420,18 +448,44 @@
       <div class="modal-body">
         <form>
           <div class="pb-3">
-            <label for="" class="d-block pb-1">Bank Name</label>
-            <input type="text" class="form-control" />
+            <label for="" class="d-block pb-1">Account Number</label>
+            <input
+              type="text"
+              class="form-control"
+              name="accountNumber"
+              [(ngModel)]="AccountNumber"
+            />
+          </div>
+          <div class="pb-3">
+            <label for="" class="d-block pb-1">Branch Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="Branchname"
+              [(ngModel)]="Branchname"
+            />
           </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">IFSC Code</label>
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              name="IFSCcode"
+              [(ngModel)]="IFSCcode"
+            />
           </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">Holder Name</label>
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              name="HolderName"
+              [(ngModel)]="HolderName"
+            />
           </div>
-          <button class="btn btn-primary btn-ripple">Save</button>
+          <button class="btn btn-primary btn-ripple" (click)="Addaccount()">
+            Save
+          </button>
         </form>
       </div>
     </div>
