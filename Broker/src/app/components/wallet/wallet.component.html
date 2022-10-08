@@ -403,8 +403,8 @@
 
             <div class="d-flex align-items-center">
               <div class="flx_1 pr-2">
-                <select name="" id="" class="form-control">
-                  <option value="">Select</option>
+                <select name="" id="" class="form-control" >
+                  <option value="" *ngFor="let data of ownAccountList" >{{data.account_number}}</option>
                 </select>
               </div>
               <div class="flx_0">
@@ -456,6 +456,14 @@
               [(ngModel)]="AccountNumber"
             />
           </div>
+          <div
+          class="ERR_Msg text-danger"
+          *ngIf="
+          AccountNumberError
+          "
+        >
+          <p>AccountNumber is required</p>
+        </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">Branch Name</label>
             <input
@@ -465,6 +473,14 @@
               [(ngModel)]="Branchname"
             />
           </div>
+          <div
+          class="ERR_Msg text-danger"
+          *ngIf="
+          BranchnameError
+          "
+        >
+          <p>Branchname is required</p>
+        </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">IFSC Code</label>
             <input
@@ -474,6 +490,14 @@
               [(ngModel)]="IFSCcode"
             />
           </div>
+          <div
+          class="ERR_Msg text-danger"
+          *ngIf="
+          IFSCcodeError
+          "
+        >
+          <p>IFSCcode is required</p>
+        </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">Holder Name</label>
             <input
@@ -482,6 +506,14 @@
               name="HolderName"
               [(ngModel)]="HolderName"
             />
+            <div
+            class="ERR_Msg text-danger"
+            *ngIf="
+            HolderNameError
+            "
+          >
+            <p>HolderName is required</p>
+          </div>
           </div>
           <button class="btn btn-primary btn-ripple" (click)="Addaccount()">
             Save

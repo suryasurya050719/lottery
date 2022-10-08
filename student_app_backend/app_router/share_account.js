@@ -12,6 +12,7 @@ router.post("", async (req, res) => {
     account_name: body.HolderName,
     branch_name: body.Branchname,
     ifsc_code: body.IFSCcode,
+    bank_name:body.body.bank_name
   };
   let data = new shareAccount(preparedata);
   data.save().then((insertdata) => {
@@ -29,6 +30,7 @@ router.get("/singleuserlist", async (req, res) => {
   share_account.find({ user_id: query.id }).then((data) => {
     res.json({
       success: true,
+      data:data,
       statuscode: 200,
       status: "list generate successfully",
     });

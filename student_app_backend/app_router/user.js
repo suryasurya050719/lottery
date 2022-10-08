@@ -15,7 +15,7 @@ router.post("/registor", async (req, res) => {
     .findOne({ phone: body.phone })
     .then(async (data) => {
       console.log("data", data);
-      console.log("data", data.length);
+      // console.log("data", data.length);
       // if (data.length === 0) {
       if (body.referal_code && body.referal_code !== "") {
         await user
@@ -184,6 +184,20 @@ router.get("/singleuser/:id", async (req, res) => {
           preserveNullAndEmptyArrays: true,
         },
       },
+      {
+        $lookup: {
+          from: "share_accounts",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "accountList",
+        },
+      },
+      // {
+      //   $unwind: {
+      //     path: "$walletList",
+      //     preserveNullAndEmptyArrays: true,
+      //   },
+      // },
     ])
     .then((data) => {
       res.send({

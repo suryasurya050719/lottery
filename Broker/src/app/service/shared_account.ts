@@ -22,8 +22,8 @@ export class SharedAccount {
   }
   OwnAccountList(id: number): Observable<any> {
     // console.log('filterdata service', filterdata);
-    let url = `${environment.apiurl}/account/ownaccountlist/${id}`;
-    return this.http.get(url).pipe(
+    let url = `${environment.apiurl}/shareAccount/singleuserlist`;
+    return this.http.get(url,{ params: {id} }).pipe(
       map((data) => {
         return data;
       })

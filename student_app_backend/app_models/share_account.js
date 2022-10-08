@@ -15,6 +15,9 @@ const creatSchema = mongoose.Schema({
   account_number: {
     type: String,
   },
+  bank_name:{
+  type:String
+  },
   branch_name: {
     type: String,
   },

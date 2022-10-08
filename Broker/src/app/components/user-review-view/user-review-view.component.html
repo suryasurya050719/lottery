@@ -96,18 +96,18 @@
             <div class="bank_card w-100 h-100 position-relative overflow_auto">
               <div class="bank_card_row position-relative text-white">
                 <div class="d-flex align-items-center p-3">
-                  <div class="flx_0">
-                    <!-- <img
+                  <!-- <div class="flx_0">
+                    <img
                       alt=""
                       src="../../../assets/images/144x144.png"
                       style="width: 100px"
-                    /> -->
-                  </div>
+                    />
+                  </div> -->
                   <div class="flx_1">
                     <div class="bank_name_card card_row">
                       <input
                         type="text"
-                        placeholder="Bank Name"
+                      
                         class="card_input w-100"
                       />
                     </div>
@@ -119,6 +119,7 @@
                     type="text"
                     placeholder="Enter Account Number"
                     class="card_input w-100"
+                    [(ngModel)]="accountnumber"
                   />
                 </div>
                 <div class="row card_row align-items-center">
@@ -128,6 +129,7 @@
                         type="text"
                         placeholder="IFSC Code"
                         class="card_input w-100"
+                        [(ngModel)]="ifsccode"
                       />
                     </div>
                   </div>
@@ -137,6 +139,7 @@
                         type="text"
                         placeholder="Branch Name"
                         class="card_input w-100"
+                        [(ngModel)]="branchName"
                       />
                     </div>
                   </div>
@@ -146,6 +149,7 @@
                     type="text"
                     placeholder="card holder"
                     class="card_input w-100"
+                    [(ngModel)]="cardholder"
                   />
                 </div>
               </div>

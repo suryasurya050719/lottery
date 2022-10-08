@@ -43,12 +43,15 @@ export class WalletComponent implements OnInit {
   paymentForReferal_id: string = '';
   paymentForStatus: string = '';
 
+  ownAccountList:any=[]
+
   ngOnInit(): void {
     this.alluser();
     this.walletLIst();
     this.singleuser();
     this.singleTransection();
     this.getAccount();
+    this.getwidrowaccoount()
   }
   AddFundPanel = false;
 
@@ -182,6 +185,13 @@ export class WalletComponent implements OnInit {
       this.accountListAdmin = data.data[0].Admin[0].List;
       console.log('this.accountListAdmin', this.accountListAdmin);
     });
+  }
+  getwidrowaccoount(){
+    let data =Number(localStorage.getItem("lottryuserid"))
+    this.SharedAccount.OwnAccountList(data).subscribe((data)=>{
+      console.log(">>",data)
+      this.ownAccountList=data.data
+    })
   }
   Addaccount() {
     if (this.AccountNumber == '') {

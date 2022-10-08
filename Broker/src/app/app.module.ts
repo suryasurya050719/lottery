@@ -24,6 +24,7 @@ import { CustomerCareListComponent } from '../app/components/customer-care-list/
 import { GameCentreComponent } from '../app/components/game-centre/game-centre.component';
 import { TicketPriceDetailsComponent } from '../app/components/ticket-price-details/ticket-price-details.component';
 import { AccountAddComponent } from '../app/components/account-add/account-add.component';
+import {DashboardComponent} from '../app/components/dashboard/dashboard.component'
 // import {RegisterComponent} from './components/register/RegisterComponent'
 // import { RouterModule } from '@angular/router';
 
@@ -44,6 +45,7 @@ import { AccountAddComponent } from '../app/components/account-add/account-add.c
     GameCentreComponent,
     TicketPriceDetailsComponent,
     AccountAddComponent,
+    DashboardComponent
     // NgxPaginationModule,
     // RouterModule,
   ],
