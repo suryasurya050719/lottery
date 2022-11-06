@@ -130,6 +130,11 @@ Your verification code for Account Activation is ${otp}. Please do not share thi
         // console.log('hello js'))
         https.request(options, callback).end();
         // url encode instalation need to use $ npm install urlencode
+        res.json({
+          success: false,
+          statuscode: 200,
+          status: "otp generated successfully",
+        });
       } else {
         res.json({
           success: false,

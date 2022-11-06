@@ -60,6 +60,7 @@ router.post("", async (req, res) => {
             statuscode: 200,
             // status: "Money Add successfully",
             data: data.data,
+            client_txn_id:payment.client_txn_id
           });
         });
     });
@@ -130,5 +131,77 @@ router.get("/callback", async (req, res) => {
       });
   });
 });
+
+router.post("/check_status",async (req,res)=>{
+  let body =req.body
+  let data={
+    key: "6ba06afe-c906-485e-855a-1615a6d420d8",
+    client_txn_id:body.tx_id,
+    txn_date:body.date
+  }
+  await axios
+  .post("https://merchant.upigateway.com/api/check_order_status", data)
+  .then((data) => {
+    console.log("data", data.data);
+    res.send({
+      statuscode: 200,
+      // status: "Money Add successfully",
+      data: data.data,
+    });
+  });
+})
+router.post("/mobile_callback",async (req,res)=>{
+  // console.log("dtaa", data.data);
+        let body=req.body.data
+  console.log("dtaa", body);
+
+        let item = body;
+        let preparedata = {
+          status: "success",
+          TransectionStatus: {
+            id: item.data.id,
+            customer_vpa: item.data.customer_vpa,
+            customer_name: item.data.customer_name,
+            txnAt: item.data.txnAt,
+            Merchand_Name: item.data.Merchant.name,
+            Merchand_upi_id: item.data.Merchant.upi_id,
+          },
+        };
+        await transection
+          .findOneAndUpdate(
+            { transection_id: item.data.client_txn_id },
+            preparedata,
+            { new: true }
+          )
+          .then((item01) => {
+            console.log("data", item01);
+            wallet
+              .findOneAndUpdate(
+                { user_id: item01.user_id },
+                { $inc: { current_amount: item01.amount } },
+                { new: true }
+              )
+              .then((item02) => {
+                console.log("iteam02", item02);
+                // if (data.udf1 !== "OWN" && data.udf1 !== "") {
+                  if (item02.Referal_amount_paid === false) {
+                    let preparedata = {
+                      user_id: item02.user_id,
+                      position: "INC",
+                      amount: item01.amount,
+                    };
+                    referalFunction.referalAddMony(preparedata);
+                  }
+                  res.send({
+                    statuscode: 200,
+                    status: "Money Add successfully",
+                    // data: data.data,
+                  });
+                // }
+              });
+
+            // res.redirect("http://localhost:4200/wallet");
+          });
+})
 
 module.exports = router;
