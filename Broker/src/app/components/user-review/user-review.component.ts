@@ -33,6 +33,7 @@ export class UserReviewComponent implements OnInit {
 
   username: string = '';
   phonenumber: string = '';
+  phone: string = '';
   otp: any = '';
   constructor(
     private login: Login,
@@ -52,7 +53,7 @@ export class UserReviewComponent implements OnInit {
             Validators.required,
             Validators.minLength(10),
             Validators.maxLength(10),
-            Validators.pattern(/^-?(0|[1-9]\d*)?$/),
+            Validators.pattern(/^\d{10}$/),
           ],
         ],
         otp: [
@@ -91,12 +92,7 @@ export class UserReviewComponent implements OnInit {
     // var values = JSON.parse(localStorage.getItem('lottryuserid'));
     let currentUserId = localStorage.getItem('lottryuserid');
     this.login
-      .referedUser(
-        currentUserId,
-        this.user_id,
-        this.phonenumber,
-        this.role_type
-      )
+      .referedUser(currentUserId, this.user_id, this.phone, this.role_type)
       .subscribe((data) => {
         console.log('data all user ', data.data);
         if (data.statuscode == 200) {
@@ -128,7 +124,11 @@ export class UserReviewComponent implements OnInit {
     this.popup = false;
   }
   sendOtp() {
-    if (this.username == '' || this.phonenumber == '') {
+    if (
+      this.username == '' ||
+      this.phonenumber == '' ||
+      /^\d{10}$/.test(this.phonenumber) == false
+    ) {
       alert('user name and phone number must have');
     } else {
       let data = this.form.value;

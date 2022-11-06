@@ -35,6 +35,7 @@ router.post("/registor", async (req, res) => {
         }
       }
       if (data.otp == body.otp) {
+        console.log("data.otp == body.otp", data.otp, body.otp);
         let referalcode = referralCodeGenerator.alphaNumeric("uppercase", 4, 2);
         var hash = await bcrypt.hash(req.body.password, saltRounds);
         let preparedata = {
@@ -43,7 +44,7 @@ router.post("/registor", async (req, res) => {
           modified_on: new Date(),
           isOtpVerify: true,
         };
-        user
+        await user
           .findOneAndUpdate({ phone: body.phone }, preparedata, {
             new: true,
           })

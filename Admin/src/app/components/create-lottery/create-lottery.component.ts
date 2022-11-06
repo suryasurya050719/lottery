@@ -116,7 +116,7 @@ export class CreateLotteryComponent implements OnInit {
     console.log('sdafsdf', this.selectedValue);
   }
   change() {
-    alert(">>>>>>>>>>>>>>>>>>>>")
+    // alert(">>>>>>>>>>>>>>>>>>>>")
     this.activeBoarddata = this.BoardListdata[this.activeBoardINdex];
     console.log('this.activeBoarddata', this.activeBoarddata);
   }

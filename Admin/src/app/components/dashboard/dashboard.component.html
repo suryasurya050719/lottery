@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-lg-3 col-sm-12 col-xs-12">
-      <div class="panel height1">
+      <div class="panel height1 card_height">
         <div class="panel-heading">
           <h3 class="text-center txt_bold">Customers</h3>
         </div>
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="panel height1">
+      <div class="panel height1 card_height">
         <div class="panel-heading">
           <h3 class="text-center txt_bold">Brokers</h3>
         </div>
@@ -128,21 +128,32 @@
                     >
                     <div class="d-block">
                       <div class="active_chk dark_switch d-inline-block m-auto">
-                        <!-- <label class="switch">
+                        <label class="switchlable">
                           <input
-                            class="switch-input"
-                            name="IsActive"
+                            class="switch_input toggle"
                             type="checkbox"
+                            [checked]="user.customer_status"
+                            (click)="
+                              Unpublised(
+                                1,
+                                user.account_id,
+                                user.customer_status,
+                                user.broker_status
+                              )
+                            "
                           />
-                          <span
-                            class="switch-label"
-                            data-on="On"
-                            data-off="Off"
-                          ></span>
-                          <span class="switch-handle"></span>
-                        </label> -->
+                          <span class="slider round">
+                            <span
+                              [ngClass]="{
+                                off: user.customer_status == false,
+                                on: user.customer_status == true
+                              }"
+                              >{{ user.customer_status ? "ON" : "Off" }}</span
+                            >
+                          </span>
+                        </label>
 
-                        <div class="dropdown">
+                        <!-- <div class="dropdown">
                           <button
                             role="button"
                             data-toggle="dropdown"
@@ -169,7 +180,7 @@
                               }}</a
                             >
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>

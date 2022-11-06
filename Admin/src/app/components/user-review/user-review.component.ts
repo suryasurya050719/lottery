@@ -51,7 +51,7 @@ export class UserReviewComponent implements OnInit {
             Validators.required,
             Validators.minLength(10),
             Validators.maxLength(10),
-            Validators.pattern(/^-?(0|[1-9]\d*)?$/),
+            Validators.pattern(/^\d{10}$/),
           ],
         ],
         otp: [
@@ -132,9 +132,14 @@ export class UserReviewComponent implements OnInit {
     this.popup = false;
   }
   sendOtp() {
-    if (this.username == '' || this.phonenumber == '') {
-      alert('user name and phone number must have');
+    if (
+      this.username == '' ||
+      this.phonenumber == '' ||
+      /^\d{10}$/.test(this.phonenumber) == false
+    ) {
+      alert('user name and phone number must have valid');
     } else {
+      console.log('>>>>>', /^\d{10}$/.test(this.phonenumber));
       let data = this.form.value;
       let referalID = localStorage.getItem('lottryreferalid');
       let formdata = {

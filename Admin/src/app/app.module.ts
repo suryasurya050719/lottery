@@ -30,7 +30,8 @@ import { CustomerCareAddComponent } from './components/customer-care-add/custome
 import { CountdownPipe } from './pipes/countdown.pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxLoadingModule } from 'ngx-loading';
-import {DashboardComponent} from '../app/components/dashboard/dashboard.component'
+import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
+// import { UiSwitchModule } from 'ngx-toggle-switch';
 
 // import {AccountAddComponent} from './components/account-add/account-add.component'
 // import { RouterModule } from '@angular/router';
@@ -54,7 +55,8 @@ import {DashboardComponent} from '../app/components/dashboard/dashboard.componen
     TicketPriceDetailsComponent,
     CustomerCareAddComponent,
     CountdownPipe,
-    DashboardComponent
+    DashboardComponent,
+    // UiSwitchModule,
     // ColorPickerModule,
     // NgxPaginationModule,
     // RouterModule,

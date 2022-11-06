@@ -62,6 +62,9 @@ export class ForgetPasswordComponent implements OnInit {
     };
     this.SMS.sms(data).subscribe((data) => {
       console.log(data);
+      if (data.statuscode == 200) {
+        alert('otp send successfully');
+      }
     });
   }
   onSubmit() {

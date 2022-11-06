@@ -12,10 +12,12 @@ export class DashboardComponent implements OnInit {
   accountListAdmin: any = [];
   accountListBroker: any = [];
   accountListBrokerList: any = [];
+  checkedValue: boolean = false;
 
   ngOnInit(): void {
     this.getCount();
     this.getAccount();
+    // alert(`>>>>>>>${this.checkedValue}`);
   }
   AdminAccountPopup = false;
   AdminAccountPopupOpen() {
@@ -40,6 +42,7 @@ export class DashboardComponent implements OnInit {
     });
   }
   Unpublised(type: any, id: any, customer: any, broker: any) {
+    // alert(`>>>>>>>>${this.checkedValue}`);
     if (confirm('Are you sure you want to change status')) {
       let data: any = {
         id: id,
@@ -55,6 +58,8 @@ export class DashboardComponent implements OnInit {
         console.log('data', data);
         this.getAccount();
       });
+    } else {
+      this.getAccount();
     }
   }
   UnpublisedMany(id: any, customer: any) {
