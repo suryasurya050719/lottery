@@ -18,30 +18,30 @@
         <div class="col">
           <div class="form-group">
             <label> Choose User </label>
-            <select name="" id="" class="form-control">
+            <select name="" id="" class="form-control" [(ngModel)]="user_type">
               <option value="">Select</option>
-              <option value="">All</option>
-              <option value="">Customers</option>
+              <option value="1">All</option>
+              <option value="3">Customers</option>
             </select>
           </div>
         </div>
         <div class="col">
           <div class="form-group">
             <label> Filter </label>
-            <select name="" id="" class="form-control">
+            <select name="" id="" class="form-control" [(ngModel)]="game_type">
               <option value="">Select</option>
               <option value="">All</option>
-              <option value="">Dear</option>
-              <option value="">Kerala</option>
-              <option value="">Lottery</option>
-              <option value="">Jackpot</option>
+              <option value="Dear">Dear</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Lottery">Lottery</option>
+              <option value="Jackpot">Jackpot</option>
             </select>
           </div>
         </div>
         <div class="col">
           <div class="form-group">
             <label> Filter </label>
-            <select name="" id="" class="form-control">
+            <select name="" id="" class="form-control" [(ngModel)]="board_type">
               <option value="">Select</option>
               <option value="">All</option>
               <option value="">1 digit board</option>
@@ -52,25 +52,24 @@
         <div class="col">
           <div class="form-group">
             <label> User Id </label>
-            <input type="text" class="form-control" />
+            <input type="text" class="form-control" [(ngModel)]="user_id" />
           </div>
         </div>
         <div class="col">
           <div class="form-group">
             <label> Phone Number </label>
-            <input type="text" class="form-control" />
+            <input type="text" class="form-control" [(ngModel)]="phone" />
           </div>
         </div>
         <div class="col d-flex align-items-end pb-3">
           <button
             type="submit"
             class="btn btn-primary w-100 btn_input btn-ripple"
+            (click)="searchData()"
           >
             Search
           </button>
         </div>
-
-
       </div>
     </div>
 
@@ -80,8 +79,11 @@
           <h3 class="text-left">Search Results</h3>
         </div>
 
-        <div class="resul_show_panel">
-          <span class="cnt_result">1</span>
+        <div
+          class="resul_show_panel"
+          *ngFor="let data of reviewList | paginate: config; let i = index"
+        >
+          <span class="cnt_result">{{ i + 1 }}</span>
 
           <div class="pb-3">
             <div class="table-responsive product_table td_center">
@@ -97,11 +99,17 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>sample Broker id</td>
-                    <td>sample user id</td>
-                    <td>sample user name</td>
-                    <td>sample phone</td>
-                    <td>sample Referral</td>
+                    <td>None</td>
+                    <td>{{ data.user_id }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>
+                      {{
+                        data.referalList[0]?.refered_user_id !== ""
+                          ? data.referalList[0]?.refered_user_id
+                          : "None"
+                      }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -115,7 +123,7 @@
 
             <div class="td_details">
               <div class="row">
-                <div class="col-lg-3">
+                <!-- <div class="col-lg-3">
                   <div class="form-group">
                     <label> Period </label>
                     <select name="" id="" class="form-control">
@@ -125,23 +133,32 @@
                       <option value="">Year</option>
                     </select>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label> Date from </label>
-                    <input type="date" class="form-control" />
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      [(ngModel)]="fromDate"
+                    />
                   </div>
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label> Date to </label>
-                    <input type="date" class="form-control" />
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      [(ngModel)]="toDate"
+                    />
                   </div>
                 </div>
                 <div class="col-lg-3 d-flex align-items-end pb-3">
                   <button
                     type="button"
                     class="btn btn-primary btn-ripple search_bt"
+                    (click)="searchDataSingleBooking()"
                   >
                     Search
                   </button>
@@ -160,17 +177,21 @@
                     <th>Referral Id</th>
                     <th>Date & Time</th>
                     <th>Details</th>
-
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>12 jun 2021</td>
+                  <tr *ngFor="let data of BookingListdata; let i = index">
+                    <td>None</td>
+                    <td>{{ data.user_id }}</td>
+                    <td>{{ data.referalList[0]?.refered_user_id }}</td>
+                    <td>{{ data.created_on }}</td>
                     <td>
-                      <button (click)="ViewMorePopup()" class="btn btn-primary btn-sm">View</button>
+                      <button
+                        (click)="ViewMorePopup(i)"
+                        class="btn btn-primary btn-sm"
+                      >
+                        View
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -178,7 +199,7 @@
             </div>
           </div>
 
-          <nav class="Page navigation text-center pt-3 pb-3">
+          <!-- <nav class="Page navigation text-center pt-3 pb-3">
             <ul
               class="pagination justify-content-center d-flex align-items-center"
             >
@@ -198,42 +219,25 @@
                 </a>
               </li>
             </ul>
-          </nav>
+          </nav> -->
         </div>
       </div>
     </div>
-    <div class="pl-4">
-      <nav class="Page navigation text-center pt-3 pb-3">
-        <ul
-          class="pagination justify-content-center d-flex align-items-center"
-        >
-          <li>
-            <a href="#" aria-label="Previous">
-              <span aria-hidden="true">«</span>
-            </a>
-          </li>
-          <li class="active"><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li>
-            <a href="#" aria-label="Next">
-              <span aria-hidden="true">»</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+    <div class="Page navigation text-center pt-3 pb-3">
+      <pagination-controls
+        (pageChange)="BookingReviewList($event)"
+        class="my-pagination"
+      ></pagination-controls>
     </div>
   </div>
 </div>
 <!-- Container fluid ends -->
 
-
-
 <!-- Payment For start -->
 <section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel">
-  <div class="popup_info d-flex align-items-center justify-content-center w-100 h-100">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
     <div class="pop_wrapper w-75 position-relative">
       <span class="popup_close" (click)="CloseMoreViewPopup()">x</span>
       <div class="form_pop_he p-3">
@@ -246,38 +250,44 @@
                 <th>Ticket no</th>
                 <th>Quantity</th>
                 <th>Ticket price</th>
-                <th>Total
-                  Amount</th>
-                  <th>Status</th>
+                <th>Total Amount</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>sample</td>
-                <td>sample</td>
-                <td>sample</td>
-                <td>sample</td>
+              <tr
+                *ngFor="
+                  let data of viewmorepopupdata.booking_data;
+                  let i = index
+                "
+              >
+                <td>{{ data.game_name }}</td>
+                <td>{{ data.board_name }}</td>
+                <td>{{ data.ticket_number }}</td>
+                <td>{{ data.ticket_count }}</td>
 
                 <td>
-                  <div
-                  class="input-group"
-                  style="width: 150px; margin: 0 auto"
-                >
-                  <span class="input-group-addon">RS</span>
-                  <input type="text" class="form-control" />
-                </div>
-                </td>
-                 <td>
-                  <div
-                  class="input-group"
-                  style="width: 150px; margin: 0 auto"
-                >
-                  <span class="input-group-addon">RS</span>
-                  <input type="text" class="form-control" />
-                </div>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ data.ticket_price }}"
+                    />
+                  </div>
                 </td>
                 <td>
-                  <span class="badge bg-primary blink_txt">Success</span>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ data.total_price }}"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <span class="badge bg-primary blink_txt mb-2">Success</span>
                 </td>
               </tr>
             </tbody>

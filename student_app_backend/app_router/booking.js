@@ -1,15 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const booking = require("../app_models/booking");
+const user = require("../app_models/user");
+
 const { route } = require("./live_result");
 
 router.post("/bookingCreate", async (req, res) => {
   let data = req.body;
-//   console.log("data", data);
+  //   console.log("data", data);
   let preparedata = {
     user_id: data.user_id,
     role_id: data.role_id,
     game_id: data.game_id,
+    phone: data.phone,
+    game_name: data.game_name,
     booking_data: data.booking_data,
     total_price: data.total_price,
   };
@@ -24,92 +28,103 @@ router.post("/bookingCreate", async (req, res) => {
 });
 
 router.get("/getall", async (req, res) => {
-    let query = req.query;
-    console.log("query", query);
-    let searchFilter = {};
-    let data = [];
-    if (query.user_id !== "") {
-        // data.user_id = { $in: query.user_id };
-        // data["user_id"] = { $in: query.user_id };
-        // let field = { user_id: Number(query.user_id) };
-        // data.push(field);
-        searchFilter["user_id"] = parseInt(query.user_id);
-      }
-      if (
-        query.datefrom !== "" &&
-        // query.phonenumber !== "0" &&
-        query.datefrom !== NaN
-      ) {
-        // let field = { phone: Number(query.phone) };
-        // data.push(field);
-        // searchFilter["created_on"] = $lte: new Date(query.fromdate);
-      }
-      if (
-        query.role_type !== "" &&
-        // query.role_type !== "0" &&
-        query.role_type !== NaN
-      ) {
-        // let field = { role_id: Number(query.role_id) };
-        // data.push(field);
-        searchFilter["role_id"] = Number(query.role_type);
-      }
-       //                 $lte: new Date("2022-08-11T06:25:18.118+00:00"),
-      //                 $gte: new Date("2022-08-11T05:59:33.060+00:00"),
-      //               },
-    booking.aggregate([
-        // {
-        //     $match: searchFilters,
-        // },
-        {
-            $lookup: {
-              from: "referals",
-              localField: "user_id",
-              foreignField: "user_id",
-              as: "referalList",
-            },
-          },
+  // let query = req.query;
+  let query = req.query;
+  console.log("query", query);
+  let searchFilter = {};
+  let created_on = {};
+  if (query.user_id !== "") {
+    searchFilter["user_id"] = parseInt(query.user_id);
+  }
+  if (query.phonenumber !== "" && query.phonenumber !== NaN) {
+    searchFilter["phone"] = Number(query.phonenumber);
+  }
+  if (query.fromdate !== "") {
+    created_on["$gt"] = new Date(query.fromdate);
+  }
+  if (query.todate !== "") {
+    created_on["$lt"] = new Date(query.todate);
+  }
+  if (query.game_name !== "") {
+    searchFilter["game_name"] = query.game_name;
+  }
+  let length = Object.keys(created_on).length;
+  if (length > 0) {
+    searchFilter["created_on"] = created_on;
+  }
+  let searchFilters = {};
+  searchFilters["$and"] = [searchFilter];
+  console.log("searchFilters", searchFilters);
+  booking
+    .aggregate([
+      {
+        $match: searchFilters,
+      },
+      {
+        $lookup: {
+          from: "referals",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "referalList",
+        },
+      },
     ])
-    
-    .then((data) => {
-    res.json({
-      success: true,
-      data: data,
-      statuscode: 200,
-      status: "list create successfully",
-    });
-  });
-});
 
-router.put("/updateboard", async (req, res) => {
-  let data = req.body;
-  console.log("data", data);
-  let board_id = data.board_id;
-  let preparedata = {
-    board_name: data.board_name,
-    ticket_price: data.ticket_price,
-    board_letters: data.board_letters,
-    board_leter_format: data.board_leter_format,
-    price_amount: data.price_amount,
-  };
-  board
-    .findOneAndUpdate({ board_id: board_id }, preparedata, { new: true })
     .then((data) => {
       res.json({
         success: true,
+        data: data,
         statuscode: 200,
-        status: "Board updated successfully",
+        status: "list create successfully",
       });
     });
 });
-router.delete("/boarddelete/:id", async (req, res) => {
-  let board_id = req.params.id;
-  board.deleteOne({ board_id: board_id }).then((data) => {
-    res.send({
-      statuscode: 200,
-      status: "board delete successfully",
-      data: data,
+
+router.get("/bookingReview", async (req, res) => {
+  let query = req.query;
+  console.log("query", query);
+  let searchFilter = {};
+  if (query.user_id !== "") {
+    searchFilter["user_id"] = parseInt(query.user_id);
+  }
+  if (query.phonenumber !== "" && query.phonenumber !== NaN) {
+    searchFilter["phone"] = Number(query.phonenumber);
+  }
+
+  let searchFilters = {};
+  searchFilters["$and"] = [searchFilter];
+  console.log("searchFilters", searchFilters);
+  user
+    .aggregate([
+      {
+        $match: searchFilters,
+      },
+      // {
+      //   $lookup: {
+      //     from: "bookings",
+      //     localField: "user_id",
+      //     foreignField: "user_id",
+      //     as: "bokingList",
+      //   },
+      // },
+      {
+        $lookup: {
+          from: "referals",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "referalList",
+        },
+      },
+    ])
+
+    .then((data) => {
+      res.json({
+        success: true,
+        data: data,
+        statuscode: 200,
+        status: "list create successfully",
+      });
     });
-  });
 });
 
 module.exports = router;

@@ -15,15 +15,26 @@ const creatSchema = mongoose.Schema({
   game_id: {
     type: Number,
   },
-  booking_data:[{
-    board_name:String,
-    board_letters:Array,
-    board_letter_formation:Array,
-    ticket_count:Number,
-    ticket_price:Number
-  }],
-  total_price:{
-    type:Number
+  game_name: {
+    type: String,
+  },
+  phone: {
+    type: Number,
+  },
+  booking_data: [
+    {
+      board_name: String,
+      game_name: String,
+      board_letters: Array,
+      board_letter_formation: Array,
+      ticket_count: Number,
+      ticket_number: Number,
+      ticket_price: Number,
+      total_price: Number,
+    },
+  ],
+  total_price: {
+    type: Number,
   },
   created_on: {
     type: Date,
