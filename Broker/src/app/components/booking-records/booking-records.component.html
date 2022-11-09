@@ -1,289 +1,679 @@
-  <!-- Container fluid Starts -->
-  <div class="container-fluid">
-
-
-
-    <!-- Top Bar Starts -->
-    <div class="top-bar clearfix">
-        <div class="row gutter">
-            <div class="col-lg-12">
-                <div class="page-title">
-                    <h3 class="txt_black_2">Booking Records</h3>
-                </div>
-            </div>
-
+<!-- Container fluid Starts -->
+<div class="container-fluid">
+  <!-- Top Bar Starts -->
+  <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_black_2">Booking Records</h3>
         </div>
+      </div>
     </div>
-    <!-- Top Bar Ends -->
+  </div>
+  <!-- Top Bar Ends -->
 
-
-
-
-
-
-
-
-
-    <div class="mp_panel">
-
-        <div class="pb-2">
-            <div class="row">
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label> Choose Type </label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Select</option>
-                                <option value="">Today</option>
-                                <option value="">History</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label> Duration </label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Select</option>
-                                <option value="">Day</option>
-                                <option value="">Month</option>
-                                <option value="">Year</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label> Date </label>
-                           <input type="date" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label> Choose Board </label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Select</option>
-                                <option value="">Jackpot</option>
-                                <option value="">Dear</option>
-                                <option value="">Kerala Lottery</option>
-                                <option value="">Dear</option>
-                            </select>
-                        </div>
-                    </div>
-
-            </div>
-            <div class="pt-3">
-                <h4 class="mb-0 pb-2">
-                    Advance Filter
-                </h4>
-                <div>
-                    <label class="bg_yellow px-3 py-1 mb-0 text-white">Board Details</label>
-                </div>
-            <div class="d-flex pt-3 flex-wrap">
-                <div class="loc_box d-flex loc_box_active mr-3 align-items-center flex-row px-2 py-1 mb-3">
-                    <div class="flx_1 text-center">
-                        1 Digit Board
-                    </div>
-                    <div class="flx_0">
-                        <i class="fa fa-check-circle-o"></i>
-                    </div>
-                </div>
-                <div class="loc_box d-flex loc_box_active mr-3 align-items-center flex-row px-2 py-1 mb-3">
-                    <div class="flx_1 text-center">
-                        2 Digit Board
-                    </div>
-                    <div class="flx_0">
-                        <i class="fa fa-check-circle-o"></i>
-                    </div>
-                </div>
-                <div class="loc_box d-flex mr-3 align-items-center flex-row px-2 py-1 mb-3">
-                    <div class="flx_1 text-center">
-                        3 Digit Board
-                    </div>
-                    <div class="flx_0">
-                        <i class="fa fa-check-circle-o"></i>
-                    </div>
-                </div>
-            </div>
+  <div class="mp_panel">
+    <div class="pb-2">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> Choose Type </label>
+            <select name="" id="" class="form-control" [(ngModel)]="searchType">
+              <option value="1">Select</option>
+              <option value="2">Today</option>
+              <option value="3">History</option>
+            </select>
+          </div>
         </div>
-        <div class="pt-3">
-            <div>
-                <label class="bg_yellow px-3 py-1 mb-0 text-white">Show Timings</label>
-            </div>
-        <div class="d-flex pt-3 flex-wrap">
-            <div class="loc_box d-flex loc_box_active mr-3 align-items-center flex-row px-2 py-1 mb-3">
-                <div class="flx_1 text-center">
-                    03:15 PM
-                </div>
-                <div class="flx_0">
-                    <i class="fa fa-check-circle-o"></i>
-                </div>
-            </div>
-            <div class="loc_box d-flex loc_box_active mr-3 align-items-center flex-row px-2 py-1 mb-3">
-                <div class="flx_1 text-center">
-                    05:15 PM
-                </div>
-                <div class="flx_0">
-                    <i class="fa fa-check-circle-o"></i>
-                </div>
-            </div>
-            <div class="loc_box d-flex mr-3 align-items-center flex-row px-2 py-1 mb-3">
-                <div class="flx_1 text-center">
-                    08:00 PM
-                </div>
-                <div class="flx_0">
-                    <i class="fa fa-check-circle-o"></i>
-                </div>
-            </div>
+        <!-- <div class="col-lg-3">
+          <div class="form-group">
+            <label> Duration </label>
+            <select name="" id="" class="form-control">
+              <option value="">Select</option>
+              <option value="">Day</option>
+              <option value="">Month</option>
+              <option value="">Year</option>
+            </select>
+          </div>
+        </div> -->
+        <div class="col-lg-3" *ngIf="searchType == '3'">
+          <div class="form-group">
+            <label> Date From </label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="fromDate"
+            />
+          </div>
         </div>
+        <div class="col-lg-3" *ngIf="searchType == '3'">
+          <div class="form-group">
+            <label> Date To </label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="toDate"
+            />
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> Choose Game </label>
+            <select name="" id="" class="form-control" [(ngModel)]="gameType">
+              <option value="">Select</option>
+              <option value="All">All</option>
+              <option value="Dear">Dear</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Lottery">Lottery</option>
+              <option value="Jackpot">Jackpot</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label> Choose Board </label>
+          <div class="dropdown w-100">
+            <span
+              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Select
+            </span>
+            <div
+              class="dropdown-menu chos_board_drop cus_rm_drop bg-white b_1"
+              aria-labelledby="dropdownMenuButton"
+            >
+              <div class="p-2">
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">All, Dear</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                        >1 Digit board</label
+                      >
+                    </div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                        >1 Digit board</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">Kerala Lottery</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                        >1 Digit board</label
+                      >
+                    </div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                        >1 Digit board</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">Jackpot</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                        >1 Digit board</label
+                      >
+                    </div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                        >1 Digit board</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label> Show Timing</label>
+          <div class="dropdown w-100">
+            <span
+              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Select
+            </span>
+            <div
+              class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
+              aria-labelledby="dropdownMenuButton"
+            >
+              <div class="p-2">
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">All, Dear</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-4 text-dark"
+                        for="exampleCheck1"
+                        >3:00 pm</label
+                      >
+                    </div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-4 text-dark"
+                        for="exampleCheck1"
+                        >5:00 pm</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">Kerala Lottery</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-4 text-dark"
+                        for="exampleCheck1"
+                        >5:00 pm</label
+                      >
+                    </div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-4 text-dark"
+                        for="exampleCheck1"
+                        >5:00 pm</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">Jackpot</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-4 text-dark"
+                        for="exampleCheck1"
+                        >5:00 pm</label
+                      >
+                    </div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label
+                        class="form-check-label pl-4 text-dark"
+                        for="exampleCheck1"
+                        >5:00 pm</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 d-flex align-items-end pb-3">
+          <button
+            type="submit"
+            class="btn btn-primary btn_input btn-ripple"
+            (click)="Search()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
+      <div class="pt-3">
+        <div class="d-flex align-items-center pb-2 cursor_pointer">
+          <h4 class="mb-0 pr-2">Advance Search</h4>
+          <div class="active_chk dark_switch d-inline-block">
+            <label class="switch mb-0">
+              <input class="switch-input" name="IsActive" type="checkbox" />
+              <span class="switch-label" data-on="On" data-off="Off"></span>
+              <span class="switch-handle"></span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label> Enter Broker/ Customer id </label>
+                <input type="text" class="form-control" [(ngModel)]="user_id" />
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label> Enter Phone Number </label>
+                <input type="text" class="form-control" [(ngModel)]="phone" />
+              </div>
+            </div>
+            <div class="col-lg-3 d-flex align-items-end pb-3">
+              <button
+                type="submit"
+                class="btn btn-primary btn_input btn-ripple"
+                (click)="advancesearch()"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="pt-3 pb-3">
-        <button class="btn btn-primary">Search</button>
-    </div>
+
+    <div class="pt-2 mb-3">
+      <div class="panel panel-red">
+        <div class="panel-heading">
+          <h3 class="text-left">Search Results</h3>
         </div>
 
-        <div class="pt-2 mb-3">
-            <div class="panel panel-red">
-                <div class="panel-heading">
-                    <h3 class="text-left">Search Results</h3>
-                </div>
+        <div class="resul_show_panel">
+          <span class="cnt_result">1</span>
 
+          <div class="pb-3">
+            <div class="table-responsive product_table td_center">
+              <table class="table no-margin td-middle">
+                <thead>
+                  <tr>
+                    <th>Date Details</th>
+                    <th>Game Details</th>
+                    <th>Board Details</th>
+                    <th>Show Details</th>
+                    <th>Total Amount</th>
+                    <th>Advanced Filter</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <input
+                        type="text"
+                        value="{{ fromDate }} to{{ toDate }}"
+                        class="form-control"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value="{{ gameType }}"
+                        class="form-control"
+                      />
+                    </td>
+                    <td><input type="text" value="" class="form-control" /></td>
+                    <td><input type="text" value="" class="form-control" /></td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="active_chk dark_switch d-inline-block m-auto">
+                        <span class="badge bg-primary blink_txt mb-2">On</span>
+                      </div>
+                      <div class="d-block">sample</div>
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="ViewMorePopup()"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-
-    <div class="resul_show_panel">
-    <span class="cnt_result">1</span>
-
-                <div class="pb-3">
-
-                    <div class="table-responsive product_table td_center">
-                        <table class="table no-margin td-middle">
-                           <thead>
-                                <tr>
-                                    <th>Board Details</th>
-                                    <th>Broker Details</th>
-                                    <th>Total Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                       sample data
-                                    </td>
-                                    <td>
-                                        sample data
-                                    </td>
-               <td>
-                                        <div class="input-group" style="width:150px; margin:0 auto;">
-                                            <span class="input-group-addon">RS</span>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-
-
-                <div class="pb-3 pt-2">
-      <div class="mb-0 pb-0">
-                        <h4 class="text-left">Records Preview</h4>
-                    </div>
-
-
-                    <div class="panel-body pb-0 table-responsive product_table td_center">
-
-                        <table class="table no-margin">
-                            <thead>
-                                <tr>
-                                    <th>Booking Id</th>
-                                    <th>User Id</th>
-                                    <th>Referral Id</th>
-                                    <th>Date & Time</th>
-                                    <th>Details</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Total Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-
-                                    <td>
-                                       sample
-                                    </td>
-                                    <td>
-                                        sample
-                                     </td>
-                                     <td>
-                                        sample
-                                     </td>
-                                    <td>
-                                        12 jun 2021
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm">View</button>
-                                     </td>
-                                    <td>
-                                        <div class="input-group" style="width:150px; margin:0 auto;">
-                                            <span class="input-group-addon">RS</span>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </td>
-                                    <td>
-
-                                        <span class="badge bg-primary blink_txt mb-2">In progress</span>
-                                        <br>
-                                        <button class="btn btn-primary btn-sm">View</button>
-                                    </td>
-                                    <td>
-                                        <div class="input-group" style="width:150px; margin:0 auto;">
-                                            <span class="input-group-addon">RS</span>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-
-                <nav class="Page navigation text-center pt-3 pb-3">
-                    <ul class="pagination justify-content-center d-flex align-items-center">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                            </a>
-                        </li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-</div>
-
-
-
+          <div class="pb-3 pt-2">
+            <div class="mb-0 pb-0">
+              <h4 class="text-left">Records Preview</h4>
             </div>
 
+            <div
+              class="panel-body pb-0 table-responsive product_table td_center"
+            >
+              <table class="table no-margin">
+                <thead>
+                  <tr>
+                    <th>Broker id if any</th>
+                    <th>Booking id</th>
+                    <th>User id</th>
+                    <th>Referral id</th>
+                    <th>Date and Time</th>
+                    <th>Details</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of BookingListdata; let i = index">
+                    <td>None</td>
+                    <td>{{ data.booking_id }}</td>
+                    <td>{{ data.user_id }}</td>
+                    <td>{{ data.referalList[0]?.refered_user_id }}</td>
+                    <td>{{ data.created_on }}</td>
+                    <td>
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="ViewMorePopup2(i)"
+                      >
+                        View
+                      </button>
+                    </td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-primary blink_txt mb-2"
+                        >In progress</span
+                      >
+                      <br />
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="ViewMorePopup3()"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
+          <nav class="Page navigation text-center pt-3 pb-3">
+            <ul
+              class="pagination justify-content-center d-flex align-items-center"
+            >
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">«</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">»</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
-
-
+      </div>
     </div>
 
-
-
-
+    <div class="pl-4">
+      <nav class="Page navigation text-center pt-3 pb-3">
+        <ul class="pagination justify-content-center d-flex align-items-center">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">«</span>
+            </a>
+          </li>
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">»</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 </div>
 <!-- Container fluid ends -->
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>User id</th>
+                <th>Total Tickets</th>
+                <th>Total Amount</th>
+                <th>Total Commission</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>sample</td>
+                <td>sample</td>
+
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input type="text" class="form-control" />
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input type="text" class="form-control" />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel2">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup2()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>Game Details</th>
+                <th>Board Details</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Ticket price</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let data of viewmorepopupdata.booking_data;
+                  let i = index
+                "
+              >
+                <td>{{ data.game_name }}</td>
+                <td>{{ data.board_name }}</td>
+                <td>{{ data.ticket_number }}</td>
+                <td>{{ data.ticket_count }}</td>
+
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ data.ticket_price }}"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ data.total_price }}"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <span class="badge bg-primary blink_txt mb-2">Success</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel3">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup3()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>Game Details</th>
+                <th>Board Details</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Ticket price</th>
+
+                <th>Status</th>
+                <th>winning Number</th>
+                <th>winning Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input type="text" class="form-control" />
+                  </div>
+                </td>
+
+                <td>
+                  <span class="badge bg-primary blink_txt mb-2">Win</span>
+                </td>
+                <td>sample</td>
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input type="text" class="form-control" />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

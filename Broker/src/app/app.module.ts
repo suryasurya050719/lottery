@@ -24,7 +24,9 @@ import { CustomerCareListComponent } from '../app/components/customer-care-list/
 import { GameCentreComponent } from '../app/components/game-centre/game-centre.component';
 import { TicketPriceDetailsComponent } from '../app/components/ticket-price-details/ticket-price-details.component';
 import { AccountAddComponent } from '../app/components/account-add/account-add.component';
-import {DashboardComponent} from '../app/components/dashboard/dashboard.component'
+import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
+import { BookingRecordsComponent } from './components/booking-records/booking-records.component';
+import { BookingReviewComponent } from './components/booking-review/booking-review.component';
 // import {RegisterComponent} from './components/register/RegisterComponent'
 // import { RouterModule } from '@angular/router';
 
@@ -34,6 +36,8 @@ import {DashboardComponent} from '../app/components/dashboard/dashboard.componen
     MainComponent,
     HeaderComponent,
     AsideComponent,
+    BookingRecordsComponent,
+    BookingReviewComponent,
     LoginComponent,
     RegisterComponent,
     WalletReivewComponent,
@@ -45,7 +49,7 @@ import {DashboardComponent} from '../app/components/dashboard/dashboard.componen
     GameCentreComponent,
     TicketPriceDetailsComponent,
     AccountAddComponent,
-    DashboardComponent
+    DashboardComponent,
     // NgxPaginationModule,
     // RouterModule,
   ],
