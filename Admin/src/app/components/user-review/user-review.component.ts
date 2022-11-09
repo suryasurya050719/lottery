@@ -8,6 +8,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { timer, Subscription } from 'rxjs';
+import { Pipe, PipeTransform } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-review',
@@ -33,6 +36,9 @@ export class UserReviewComponent implements OnInit {
 
   username: string = '';
   phonenumber: string = '';
+
+  // otp button status
+  otpStatus:number=1
   constructor(
     private login: Login,
     private formBuilder: FormBuilder,
@@ -40,7 +46,9 @@ export class UserReviewComponent implements OnInit {
     private route: ActivatedRoute,
     private sms: sms
   ) {}
-
+  countDown: Subscription;
+  counter = 0;
+  tick = 1000;
   ngOnInit(): void {
     this.form = this.formBuilder.group(
       {
@@ -131,7 +139,7 @@ export class UserReviewComponent implements OnInit {
     this.BrokerPopup = false;
     this.popup = false;
   }
-  sendOtp() {
+  sendOtp(index:any) {
     if (
       this.username == '' ||
       this.phonenumber == '' ||
@@ -149,6 +157,13 @@ export class UserReviewComponent implements OnInit {
       };
       console.log('dnfjksdnf', formdata);
       this.sms.newuserSms(formdata).subscribe((data) => {
+        if(data.statuscode==200){
+          this.otpStatus=index
+          if(this.otpStatus==2){
+            this.counter = 180;
+            this.otp();
+          }
+        }
         alert(`${data.status}`);
       });
     }
@@ -228,8 +243,29 @@ export class UserReviewComponent implements OnInit {
       // this.username = data.data.name;
     });
   }
+  transform(value: number): string {
+    const minutes: number = Math.floor(value / 60);
+    return (
+      ('00' + minutes).slice(-2) +
+      ':' +
+      ('00' + Math.floor(value - minutes * 60)).slice(-2)
+    );
+  }
+  otp() {
+    this.countDown = timer(0, this.tick)
+      .pipe(take(this.counter))
+      .subscribe(() => {
+        --this.counter;
+        // console.log(this.counter);
+        if (this.counter == 0) {
+          this.otpStatus = 3;
+          this.countDown.unsubscribe();
+        }
+      });
+  }
 }
 function justNumbers(value: any) {
   var numsStr = value.replace(/[^0-9]/g, '');
   return parseInt(numsStr);
 }
+

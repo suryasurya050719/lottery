@@ -8,6 +8,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { timer, Subscription } from 'rxjs';
+import { Pipe, PipeTransform } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-review',
@@ -35,6 +38,9 @@ export class UserReviewComponent implements OnInit {
   phonenumber: string = '';
   phone: string = '';
   otp: any = '';
+  countDown: Subscription;
+  counter = 0;
+  tick = 1000;
   constructor(
     private login: Login,
     private formBuilder: FormBuilder,
@@ -42,6 +48,8 @@ export class UserReviewComponent implements OnInit {
     private route: ActivatedRoute,
     private sms: sms
   ) {}
+  otpStatus:number=1
+
 
   ngOnInit(): void {
     this.form = this.formBuilder.group(
@@ -123,7 +131,7 @@ export class UserReviewComponent implements OnInit {
     this.BrokerPopup = false;
     this.popup = false;
   }
-  sendOtp() {
+  sendOtp(index:any) {
     if (
       this.username == '' ||
       this.phonenumber == '' ||
@@ -139,6 +147,13 @@ export class UserReviewComponent implements OnInit {
         role_id: this.type === 1 ? 2 : 3,
       };
       this.sms.newuserSms(formdata).subscribe((data) => {
+        if(data.statuscode==200){
+          this.otpStatus=index
+          if(this.otpStatus==2){
+            this.counter = 180;
+            this.otptimer();
+          }
+        }
         alert(`${data.status}`);
       });
     }
@@ -214,5 +229,25 @@ export class UserReviewComponent implements OnInit {
       this.form.get('username')?.patchValue(data.data[0].name);
       this.form.get('phonenumber')?.patchValue(data.data[0].phone);
     });
+  }
+  transform(value: number): string {
+    const minutes: number = Math.floor(value / 60);
+    return (
+      ('00' + minutes).slice(-2) +
+      ':' +
+      ('00' + Math.floor(value - minutes * 60)).slice(-2)
+    );
+  }
+  otptimer() {
+    this.countDown = timer(0, this.tick)
+      .pipe(take(this.counter))
+      .subscribe(() => {
+        --this.counter;
+        // console.log(this.counter);
+        if (this.counter == 0) {
+          this.otpStatus = 3;
+          this.countDown.unsubscribe();
+        }
+      });
   }
 }

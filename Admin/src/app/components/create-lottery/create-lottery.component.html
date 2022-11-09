@@ -311,7 +311,7 @@
                   <p>Show Counts is required</p>
                 </div>
               </div>
-              <div class="pb-2">
+              <div class="pb-2" >
                 <input
                   type="datetime-local"
                   placeholder="Choose Slot Start Time"
@@ -323,7 +323,7 @@
                   <p>startDate is required</p>
                 </div>
               </div>
-              <div class="pb-2">
+              <div class="pb-2"  >
                 <input
                   type="datetime-local"
                   placeholder="Choose Slot End Time"
@@ -335,7 +335,55 @@
                   <p>endDate is required</p>
                 </div>
               </div>
-              <div class="pb-2">
+              <div class="pb-2" *ngIf="showCount=='2'||showCount=='3'">
+                <input
+                  type="datetime-local"
+                  placeholder="Choose Slot Start Time"
+                  class="form-control"
+                  name="startDateone"
+                  [(ngModel)]="startDateone"
+                />
+                <div class="ERR_Msg text-danger" *ngIf="startDateError">
+                  <p>startDate is required</p>
+                </div>
+              </div>
+              <div class="pb-2" *ngIf="showCount=='2'||showCount=='3'">
+                <input
+                  type="datetime-local"
+                  placeholder="Choose Slot End Time"
+                  class="form-control"
+                  name="endDateone"
+                  [(ngModel)]="endDateone"
+                />
+                <div class="ERR_Msg text-danger" *ngIf="endDateError">
+                  <p>endDate is required</p>
+                </div>
+              </div>
+              <div class="pb-2" *ngIf="showCount=='3'">
+                <input
+                  type="datetime-local"
+                  placeholder="Choose Slot Start Time"
+                  class="form-control"
+                  name="startDatetwo"
+                  [(ngModel)]="startDatetwo"
+                />
+                <div class="ERR_Msg text-danger" *ngIf="startDateError">
+                  <p>startDate is required</p>
+                </div>
+              </div>
+              <div class="pb-2" *ngIf="showCount=='3'">
+                <input
+                  type="datetime-local"
+                  placeholder="Choose Slot End Time"
+                  class="form-control"
+                  name="endDatetwo"
+                  [(ngModel)]="endDatetwo"
+                />
+                <div class="ERR_Msg text-danger" *ngIf="endDateError">
+                  <p>endDate is required</p>
+                </div>
+              </div>
+              <!-- <div class="pb-2">
                 <input
                   type="datetime-local"
                   placeholder="Result Publish Date & Time"
@@ -346,7 +394,7 @@
                 <div class="ERR_Msg text-danger" *ngIf="resultDateError">
                   <p>resultDate is required</p>
                 </div>
-              </div>
+              </div> -->
               <div class="pb-2">
                 <!-- <div class="pb-1">
                   <input type="checkbox" /> Create Game Only

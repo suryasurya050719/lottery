@@ -34,6 +34,7 @@ const ticket_price = require("./app_router/ticketprice");
 const game = require("./app_router/game");
 const account = require("./app_router/account");
 const customer_info = require("./app_router/customer_care");
+const Booking=require("./app_router/booking")
 app.use(express.json());
 app.use("/images", express.static("assets"));
 app.use("/user", user);
@@ -48,6 +49,7 @@ app.use("/ticket_price", ticket_price);
 app.use("/game", game);
 app.use("/account", account);
 app.use("/customer_info", customer_info);
+app.use("/booking",Booking)
 
 app.listen(4001, () => {
   console.log("server connected in 4001");

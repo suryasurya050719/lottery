@@ -24,6 +24,9 @@ import { AccountAddComponent } from './components/account-add/account-add.compon
 import { OurInformationListComponent } from './components/our-information-list/our-information-list.component';
 
 import { PageGaurd } from '../guard/page_gaurd/pageGaurd';
+import { MyRequestComponent } from './components/my-request/my-request.component';
+import { MyRequestApprovedComponent } from './components/my-request-approved/my-request-approved.component';
+import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
 
 const routes: Routes = [
   // No Layouts
@@ -116,6 +119,18 @@ const routes: Routes = [
       {
         path: 'payment-profile',
         component: AccountAddComponent,
+      },
+      {
+        path:'my-request',
+        component:MyRequestComponent
+      },
+      {
+        path:'my-request-approved',
+        component:MyRequestApprovedComponent
+      },
+      {
+        path:'my-request-rejected',
+        component:MyRequestRejectedComponent
       },
       {
         path: 'user-review-view/:id',

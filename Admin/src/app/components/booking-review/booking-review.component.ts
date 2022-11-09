@@ -11,5 +11,12 @@ export class BookingReviewComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  ViewMorePopupPanel = false;
+  ViewMorePopup(){
+    this.ViewMorePopupPanel = !this.ViewMorePopupPanel
+  }
 
+  CloseMoreViewPopup(){
+    this.ViewMorePopupPanel = false;
+  }
 }

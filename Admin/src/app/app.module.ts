@@ -31,6 +31,11 @@ import { CountdownPipe } from './pipes/countdown.pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxLoadingModule } from 'ngx-loading';
 import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
+import { MyRequestComponent } from './components/my-request/my-request.component';
+import { MyRequestApprovedComponent } from './components/my-request-approved/my-request-approved.component';
+import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
+import {BookingRecordsComponent} from "./components/booking-records/booking-records.component"
+import {BookingReviewComponent} from "./components/booking-review/booking-review.component"
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 
 // import {AccountAddComponent} from './components/account-add/account-add.component'
@@ -39,6 +44,11 @@ import { DashboardComponent } from '../app/components/dashboard/dashboard.compon
 @NgModule({
   declarations: [
     AppComponent,
+    MyRequestComponent,
+    MyRequestApprovedComponent,
+    MyRequestRejectedComponent,
+    BookingRecordsComponent,
+    BookingReviewComponent,
     MainComponent,
     HeaderComponent,
     AsideComponent,

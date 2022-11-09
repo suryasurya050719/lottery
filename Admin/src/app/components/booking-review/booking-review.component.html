@@ -14,53 +14,63 @@
 
   <div class="mp_panel">
     <div class="pb-2">
-      <div class="row">
-        <div class="col-lg-3">
+      <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1">
+        <div class="col">
           <div class="form-group">
             <label> Choose User </label>
             <select name="" id="" class="form-control">
               <option value="">Select</option>
               <option value="">All</option>
-              <option value="">Brokers</option>
               <option value="">Customers</option>
             </select>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col">
           <div class="form-group">
             <label> Filter </label>
             <select name="" id="" class="form-control">
               <option value="">Select</option>
-              <option value="">Broker 1</option>
-              <option value="">Broker 2</option>
+              <option value="">All</option>
+              <option value="">Dear</option>
+              <option value="">Kerala</option>
+              <option value="">Lottery</option>
+              <option value="">Jackpot</option>
             </select>
           </div>
         </div>
-
-        <div class="col-lg-6">
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label> User Id </label>
-                <input type="text" class="form-control" />
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label> User Phone Number </label>
-                <input type="text" class="form-control" />
-              </div>
-            </div>
-            <div class="col-lg-4 d-flex align-items-end pb-3">
-              <button
-                type="submit"
-                class="btn btn-primary w-100 btn_input btn-ripple"
-              >
-                Search
-              </button>
-            </div>
+        <div class="col">
+          <div class="form-group">
+            <label> Filter </label>
+            <select name="" id="" class="form-control">
+              <option value="">Select</option>
+              <option value="">All</option>
+              <option value="">1 digit board</option>
+              <option value="">2 Digit board</option>
+            </select>
           </div>
         </div>
+        <div class="col">
+          <div class="form-group">
+            <label> User Id </label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label> Phone Number </label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="col d-flex align-items-end pb-3">
+          <button
+            type="submit"
+            class="btn btn-primary w-100 btn_input btn-ripple"
+          >
+            Search
+          </button>
+        </div>
+
+
       </div>
     </div>
 
@@ -78,14 +88,16 @@
               <table class="table no-margin td-middle">
                 <thead>
                   <tr>
-                    <th>User ID</th>
-                    <th>UserName</th>
-                    <th>Phone Number</th>
-                    <th>Referral Id</th>
+                    <th>Broker id</th>
+                    <th>User id</th>
+                    <th>User name</th>
+                    <th>Phone number</th>
+                    <th>Referral id</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                    <td>sample Broker id</td>
                     <td>sample user id</td>
                     <td>sample user name</td>
                     <td>sample phone</td>
@@ -105,7 +117,7 @@
               <div class="row">
                 <div class="col-lg-3">
                   <div class="form-group">
-                    <label> Periods </label>
+                    <label> Period </label>
                     <select name="" id="" class="form-control">
                       <option value="">Select</option>
                       <option value="">Day</option>
@@ -116,7 +128,13 @@
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
-                    <label> Date </label>
+                    <label> Date from </label>
+                    <input type="date" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label> Date to </label>
                     <input type="date" class="form-control" />
                   </div>
                 </div>
@@ -142,8 +160,7 @@
                     <th>Referral Id</th>
                     <th>Date & Time</th>
                     <th>Details</th>
-                    <th>Amount</th>
-                    <th>Status</th>
+
                   </tr>
                 </thead>
                 <tbody>
@@ -153,23 +170,7 @@
                     <td>sample</td>
                     <td>12 jun 2021</td>
                     <td>
-                      <button class="btn btn-primary btn-sm">View</button>
-                    </td>
-                    <td>
-                      <div
-                        class="input-group"
-                        style="width: 150px; margin: 0 auto"
-                      >
-                        <span class="input-group-addon">RS</span>
-                        <input type="text" class="form-control" />
-                      </div>
-                    </td>
-                    <td>
-                      <span class="badge bg-primary blink_txt mb-2"
-                        >In progress</span
-                      >
-                      <br />
-                      <button class="btn btn-primary btn-sm">View</button>
+                      <button (click)="ViewMorePopup()" class="btn btn-primary btn-sm">View</button>
                     </td>
                   </tr>
                 </tbody>
@@ -201,6 +202,89 @@
         </div>
       </div>
     </div>
+    <div class="pl-4">
+      <nav class="Page navigation text-center pt-3 pb-3">
+        <ul
+          class="pagination justify-content-center d-flex align-items-center"
+        >
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">«</span>
+            </a>
+          </li>
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">»</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>
 <!-- Container fluid ends -->
+
+
+
+<!-- Payment For start -->
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel">
+  <div class="popup_info d-flex align-items-center justify-content-center w-100 h-100">
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Game Details</th>
+                <th>Board Details</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Ticket price</th>
+                <th>Total
+                  Amount</th>
+                  <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+
+                <td>
+                  <div
+                  class="input-group"
+                  style="width: 150px; margin: 0 auto"
+                >
+                  <span class="input-group-addon">RS</span>
+                  <input type="text" class="form-control" />
+                </div>
+                </td>
+                 <td>
+                  <div
+                  class="input-group"
+                  style="width: 150px; margin: 0 auto"
+                >
+                  <span class="input-group-addon">RS</span>
+                  <input type="text" class="form-control" />
+                </div>
+                </td>
+                <td>
+                  <span class="badge bg-primary blink_txt">Success</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Payment For end -->

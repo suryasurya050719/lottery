@@ -225,8 +225,14 @@
           </div>
           <div class="pb-3" *ngIf="editUser !== true">
             <div class="input-group">
-              <button class="input-group-addon" (click)="sendOtp()">
+              <button class="input-group-addon" *ngIf="otpStatus==1" (click)="sendOtp(2)">
                 Generate OTP
+              </button>
+              <button class="input-group-addon" *ngIf="otpStatus==3"(click)="sendOtp(2)">
+                Resend OTP
+              </button>
+              <button class="input-group-addon" *ngIf="otpStatus==2">
+                {{ transform(counter) }}
               </button>
               <input
                 type="number"

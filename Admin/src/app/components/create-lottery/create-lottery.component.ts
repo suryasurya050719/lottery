@@ -79,7 +79,11 @@ export class CreateLotteryComponent implements OnInit {
   BoardID: string = '';
   showCount: string = '';
   startDate: any = '';
+  startDateone: any = '';
+  startDatetwo: any = '';
   endDate: any = '';
+  endDateone: any = '';
+  endDatetwo: any = '';
   resultDate: any = '';
   published: boolean = false;
   gameeditable: boolean = false;
@@ -328,6 +332,40 @@ export class CreateLotteryComponent implements OnInit {
     } else {
       this.resultDateError = false;
     }
+    if(this.showCount == '2'){
+      if(new Date(this.startDate)<new Date(this.startDateone)){
+         this.gamesubmit()
+      }else(
+        alert("please choose correct Date and time on second start slot")
+      )
+      if(new Date(this.endDate)<new Date(this.endDateone)){
+        this.gamesubmit()
+     }else(
+       alert("please choose correct Date and time on second end slot")
+     )
+    }
+    if(this.showCount=='3'){
+      if(new Date(this.startDate) < new Date(this.startDateone)){
+        if(new Date(this.startDateone) < new Date(this.startDatetwo)){
+          this.gamesubmit()
+        }else{
+          alert("please choose correct Date and time on third start slot ")
+        }
+      }else{
+        alert("please choose correct Date and time second start slot ")
+      }
+      if(new Date(this.endDate) < new Date(this.endDateone)){
+        if(new Date(this.endDateone) < new Date(this.endDatetwo)){
+          this.gamesubmit()
+        }else{
+          alert("please choose correct Date and time third end slot ")
+        }
+      }else{
+        alert("please choose correct Date and time second end slot ")
+      }
+    }
+  }
+  gamesubmit(){
     let data = {
       game_id: this.activegamedata.game_id,
       game_name: this.GameName,
@@ -379,7 +417,6 @@ export class CreateLotteryComponent implements OnInit {
       }
     }
   }
-
   gameList() {
     this.board.GameList().subscribe((data) => {
       console.log('data', data.data);
