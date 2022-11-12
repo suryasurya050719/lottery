@@ -15,9 +15,9 @@ const saltRounds = 10;
 const { uniqueId } = require("../common/uniqueId");
 
 router.post("/newuserotp", async (req, res) => {
-  console.log("data ", req.body.query);
-  let body = req.body.query;
-  user.findOne({ phone: req.body.query.phone }).then((data) => {
+  console.log("data ", req.body);
+  let body = req.body;
+  user.findOne({ phone: req.body.phone }).then((data) => {
     console.log(data);
     if (data == null || data.isOtpVerify == false) {
       let preparedata = {
@@ -86,7 +86,7 @@ router.post("/newuserotp", async (req, res) => {
 router.post("/excitingUserotp", async (req, res) => {
   user
     .findOneAndUpdate(
-      { phone: req.body.query.phone },
+      { phone: req.body.phone },
       { otp: uniqueId(6) },
       { new: true }
     )
