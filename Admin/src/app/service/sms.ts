@@ -14,7 +14,7 @@ export class sms {
     console.log('filterdata service', filterdata);
     let data = filterdata;
     let url = `${environment.apiurl}/sms/excitingUserotp`;
-    return this.http.post(url, { query: data }).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
@@ -22,7 +22,7 @@ export class sms {
   }
   newuserSms(data: any): Observable<any> {
     let url = `${environment.apiurl}/sms/newuserotp`;
-    return this.http.post(url, { query: data }).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })

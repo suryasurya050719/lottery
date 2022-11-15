@@ -13,6 +13,7 @@ router.post("/creategame", async (req, res) => {
     status: body.status,
     showCount: body.showCount,
     color: body.color,
+    show_date: body.show_date,
     stacrt_date: body.stacrt_date,
     end_date: body.end_date,
     result_date: body.result_date,

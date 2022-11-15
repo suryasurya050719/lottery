@@ -34,7 +34,7 @@ router.post("/newuserotp", async (req, res) => {
         let otp = data.otp;
         var msg = urlencode(
           `Dear ${name}
-           Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
+Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
         );
         var number = data.phone;
         var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";

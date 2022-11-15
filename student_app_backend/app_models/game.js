@@ -21,6 +21,7 @@ const creatSchema = mongoose.Schema({
   stacrt_date: {
     type: String,
   },
+  show_date: Array,
   end_date: {
     type: String,
   },

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { sms } from '../../service/sms';
 import { Login } from '../../service/login';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { timer, Subscription } from 'rxjs';
+import { Pipe, PipeTransform } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 import {
   AbstractControl,
@@ -28,6 +31,13 @@ export class ForgetPasswordComponent implements OnInit {
   phoneNumber: string = '';
   loginform: FormGroup;
   submitChange: boolean = false;
+
+  // otp status
+  otpStatus: number = 1;
+
+  countDown: Subscription;
+  counter = 0;
+  tick = 1000;
   ngOnInit(): void {
     this.loginform = this.formBuilder.group(
       {
@@ -52,7 +62,7 @@ export class ForgetPasswordComponent implements OnInit {
   get f(): { [key: string]: AbstractControl } {
     return this.loginform.controls;
   }
-  sendOtp() {
+  sendOtp(index: any) {
     // alert(
     //   `${this.validOtp}ffffhf ${this.phoneNumber} jnj ${this.confirmPassword} yyyy ${this.password}`
     // );
@@ -63,6 +73,14 @@ export class ForgetPasswordComponent implements OnInit {
     this.SMS.sms(data).subscribe((data) => {
       console.log(data);
       if (data.statuscode == 200) {
+        if (data.statuscode == 200) {
+          this.otpStatus = index;
+          if (this.otpStatus == 2) {
+            this.counter = 180;
+            this.otptimer();
+          }
+        }
+        alert(`${data.status}`);
         alert('otp send successfully');
       }
     });
@@ -91,5 +109,25 @@ export class ForgetPasswordComponent implements OnInit {
         });
       }
     }
+  }
+  otptimer() {
+    this.countDown = timer(0, this.tick)
+      .pipe(take(this.counter))
+      .subscribe(() => {
+        --this.counter;
+        // console.log(this.counter);
+        if (this.counter == 0) {
+          this.otpStatus = 3;
+          this.countDown.unsubscribe();
+        }
+      });
+  }
+  transform(value: number): string {
+    const minutes: number = Math.floor(value / 60);
+    return (
+      ('00' + minutes).slice(-2) +
+      ':' +
+      ('00' + Math.floor(value - minutes * 60)).slice(-2)
+    );
   }
 }
