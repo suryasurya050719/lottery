@@ -50,9 +50,11 @@ export class WalletReivewComponent implements OnInit {
   //payment for details
 
   paymentForType: string = '';
+  paymentForReason: string = '';
   paymentForAmount: number = 0;
   paymentForReferal_id: string = '';
   paymentForStatus: string = '';
+  paymentForRole_id: number = 0;
 
   onChange(newValue: string, transection: any, transection_role_id: any) {
     console.log('data', transection);
@@ -76,15 +78,19 @@ export class WalletReivewComponent implements OnInit {
 
   PaymentForPopup = false;
   PaymentForBtn(
+    reason: string,
     type: string,
     amount: number,
     referal_id: string,
-    status: string
+    status: string,
+    role_id: number
   ) {
     this.paymentForType = type;
+    this.paymentForReason = reason;
     this.paymentForAmount = amount;
     this.paymentForReferal_id = referal_id;
     this.paymentForStatus = status;
+    this.paymentForRole_id = role_id;
     this.PaymentForPopup = !this.PaymentForPopup;
   }
   ClosePaymentPopup() {
@@ -250,7 +256,7 @@ export class WalletReivewComponent implements OnInit {
         transection_from_type: 'Wallet',
         transection_to_type: 'Wallet',
         reason: this.reason,
-        position: 'INC',
+        position: this.transectionType,
       };
       this.transection.Addmony(data).subscribe((data) => {
         console.log('data for payment', data);

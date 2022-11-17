@@ -38,7 +38,7 @@ export class UserReviewComponent implements OnInit {
   phonenumber: string = '';
 
   // otp button status
-  otpStatus:number=1
+  otpStatus: number = 1;
   constructor(
     private login: Login,
     private formBuilder: FormBuilder,
@@ -129,7 +129,11 @@ export class UserReviewComponent implements OnInit {
   //       }
   //     });
   // }
+  reset() {
+    (this.username = ''), (this.phonenumber = '');
+  }
   BrokerToggle(type: number) {
+    this.reset();
     this.type = type;
     this.form.reset();
     this.heading = type === 1 ? 'Create Broker' : 'Create Customer';
@@ -139,13 +143,13 @@ export class UserReviewComponent implements OnInit {
     this.BrokerPopup = false;
     this.popup = false;
   }
-  sendOtp(index:any) {
+  sendOtp(index: any) {
     if (
       this.username == '' ||
       this.phonenumber == '' ||
       /^\d{10}$/.test(this.phonenumber) == false
     ) {
-      alert('user name and phone number must have valid');
+      alert('Username and Phone Number is Required');
     } else {
       console.log('>>>>>', /^\d{10}$/.test(this.phonenumber));
       let data = this.form.value;
@@ -155,16 +159,42 @@ export class UserReviewComponent implements OnInit {
         phone: data.phonenumber,
         role_id: this.type === 1 ? 2 : 3,
       };
-      console.log('dnfjksdnf', formdata);
       this.sms.newuserSms(formdata).subscribe((data) => {
-        if(data.statuscode==200){
-          this.otpStatus=index
-          if(this.otpStatus==2){
+        if (data.statuscode == 200) {
+          this.otpStatus = index;
+          if (this.otpStatus == 2) {
             this.counter = 180;
             this.otp();
           }
         }
         alert(`${data.status}`);
+      });
+    }
+  }
+  resendOtp(index: any) {
+    if (
+      this.username == '' ||
+      this.phonenumber == '' ||
+      /^\d{10}$/.test(this.phonenumber) == false
+    ) {
+      alert('Username and Phone Number is Required');
+    } else {
+      let data = this.form.value;
+      let referalID = localStorage.getItem('lottryreferalid');
+      let formdata = {
+        username: data.username,
+        phone: data.phonenumber,
+        role_id: this.type === 1 ? 2 : 3,
+      };
+      this.sms.sms(formdata).subscribe((data) => {
+        if (data.statuscode == 200) {
+          this.otpStatus = index;
+          if (this.otpStatus == 2) {
+            this.counter = 180;
+            this.otp();
+          }
+        }
+        alert(`Otp generated sucessfully`);
       });
     }
   }
@@ -268,4 +298,3 @@ function justNumbers(value: any) {
   var numsStr = value.replace(/[^0-9]/g, '');
   return parseInt(numsStr);
 }
-

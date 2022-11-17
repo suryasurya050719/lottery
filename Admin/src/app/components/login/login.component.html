@@ -22,8 +22,15 @@
               (submitChange && loginform.controls['Phone'].invalid)
             "
           >
-            <p>Phone is not valid</p>
+            <p>
+              {{
+                loginform.get("Phone")?.errors?.['required'] && submitChange && loginform.controls['Phone'].invalid
+                  ? "Phone Number is Required" :  loginform.get("Phone")?.errors?.['pattern'] ? "Phone Number is Required" : loginform.get("Phone")?.errors?.['minlength'] ? "Please Enter Valid Phone Number" : loginform.get("Phone")?.errors?.['maxlength'] ? "Please Enter Valid Phone Number" : ""
+
+              }}
+            </p>
           </div>
+
           <!-- <div *ngIf="Phone.errors.minlength">
             Name must be at least 4 characters long.
           </div>
@@ -46,7 +53,7 @@
               (submitChange && loginform.controls['Password'].invalid)
             "
           >
-            <p>Password is not valid</p>
+            <p>Password is Required</p>
           </div>
           <div
             class="ERR_Msg text-danger"

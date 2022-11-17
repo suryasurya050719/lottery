@@ -127,7 +127,7 @@ router.post("/login", async (req, res) => {
           res.json({
             success: false,
             statuscode: 400,
-            status: "Password is incorrect",
+            status: "Password incorrect",
           });
         }
       });
@@ -284,6 +284,7 @@ router.get("/refereduser/:id", async (req, res) => {
       },
     ])
     .then((data) => {
+      console.log("data", data);
       res.send({
         statuscode: 200,
         status: "refered user list sucessfully given",

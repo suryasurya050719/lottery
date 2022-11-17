@@ -76,16 +76,16 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/user-review');
         } else {
           if (data.statuscode == 400) {
-            console.log('dara', data.status);
+            console.log('dara', data);
             this.accountStatus = true;
             this.accountStatusText = data.status;
-            alert(`${data.status}`);
+            // alert(`${data.status}`);
           } else if (data.data.role_id !== 1) {
             this.accountStatus = true;
-            this.accountStatusText = 'Invalid Account';
+            this.accountStatusText = 'No Account Found';
             // alert(`${data.status}`);
           } else {
-            alert(`Invalid Account`);
+            alert(`No Account Found`);
           }
           this.router.navigateByUrl('/login');
         }

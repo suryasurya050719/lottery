@@ -127,6 +127,13 @@
                     <td>{{ transection.phone }}</td>
                     <td>
                       {{
+                        transection.referalList[0].refered_role_id == 1
+                          ? "BJCD A"
+                          : transection.referalList[0]?.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}
+                      {{
                         transection.referalList.length > 0
                           ? transection.referalList[0].refered_user_id
                           : ""
@@ -152,7 +159,7 @@
                     </td>
                     <td>
                       <select
-                        id="EditWallet"
+                        id=""
                         class="form-control"
                         [ngModel]="selectedDevice"
                         (ngModelChange)="
@@ -163,7 +170,7 @@
                           )
                         "
                       >
-                        <option value="0">Select</option>
+                        <option value="" selected>Select</option>
                         <option value="1">Edit Wallet</option>
                       </select>
                     </td>
@@ -327,9 +334,11 @@
                         (click)="
                           PaymentForBtn(
                             user.reason,
+                            user.position,
                             user.amount,
                             transection.referalList[0].refered_user_id,
-                            user.status
+                            user.status,
+                            transection.referalList[0].refered_role_id
                           )
                         "
                       >
@@ -524,6 +533,7 @@
                 <th>Amount</th>
                 <th>Referral ID</th>
                 <th>Position</th>
+                <th>Reason</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -531,8 +541,25 @@
               <tr>
                 <td>{{ this.paymentForType }}</td>
                 <td>{{ this.paymentForAmount }}</td>
-                <td>{{ this.paymentForReferal_id }}</td>
-                <td></td>
+                <td>
+                  {{
+                    this.paymentForRole_id == 1
+                      ? "BJCD A"
+                      : this.paymentForRole_id == 2
+                      ? "BJCD B"
+                      : "BJCD C"
+                  }}{{ this.paymentForReferal_id }}
+                </td>
+                <td>
+                  {{
+                    this.paymentForRole_id == 1
+                      ? "Admin"
+                      : this.paymentForRole_id == 2
+                      ? "Broker"
+                      : "Customer"
+                  }}
+                </td>
+                <td>{{ this.paymentForReason }}</td>
                 <td>{{ this.paymentForStatus }}</td>
               </tr>
             </tbody>
@@ -567,7 +594,7 @@
                 <div class="d-flex align-items-center">
                   <div class="flx_1 pr-2">
                     <div class="input-group">
-                      <span class="input-group-addon">RM</span>
+                      <span class="input-group-addon">RS</span>
 
                       <input
                         type="text"
@@ -594,6 +621,7 @@
                 >
                   <option value="">Select</option>
                   <option value="INC">Add fund</option>
+                  <option value="DEC">Detect fund</option>
                 </select>
                 <div class="ERR_Msg text-danger" *ngIf="TrypeError == true">
                   <p>TransectionType is required</p>

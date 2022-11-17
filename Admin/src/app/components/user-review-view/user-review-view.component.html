@@ -105,11 +105,7 @@
                   </div> -->
                   <div class="flx_1">
                     <div class="bank_name_card card_row">
-                      <input
-                        type="text"
-                      
-                        class="card_input w-100"
-                      />
+                      <input type="text" class="card_input w-100" />
                     </div>
                   </div>
                 </div>
@@ -180,7 +176,16 @@
                     this.singlrUser.referalList.refered_user_id !== ''
                   "
                 >
-                  <h1>{{ this.singlrUser.referalList.refered_user_id }}</h1>
+                  <h1 style="font-size: 23px">
+                    {{
+                      this.singlrUser.referalList.refered_role_id == 1
+                        ? "BJCD A"
+                        : this.singlrUser.referalList.refered_role_id == 2
+                        ? "BJCD B"
+                        : "BJCD C"
+                    }}
+                    {{ this.singlrUser.referalList.refered_user_id }}
+                  </h1>
                   <h5>Referral Id</h5>
                 </div>
               </div>

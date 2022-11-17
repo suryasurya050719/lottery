@@ -77,7 +77,13 @@ Your verification code for Account Activation is ${otp}. Please do not share thi
       res.json({
         success: false,
         statuscode: 400,
-        status: "This number already register with us",
+        status: `${
+          data.role_id == 2
+            ? "The number you Entered, is already registered as Broker"
+            : data.role_id == 3
+            ? "The number you Entered, is already registered as Customer"
+            : "The number you Entered, is already registered "
+        }`,
       });
     }
   });
