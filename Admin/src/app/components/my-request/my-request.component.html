@@ -60,8 +60,8 @@
 
 
 
-      <div class="resul_show_panel">
-          <span class="cnt_result">1</span>
+      <div class="resul_show_panel" *ngFor="let data of MyRequestList; let i=index">
+          <span class="cnt_result">{{i+1}}</span>
 
           <div class="pb-3">
 
@@ -92,18 +92,18 @@
                       <tbody>
                           <tr class="td_yellow">
                               <td>
-                                  <span class="d-block">sample Id</span>
+                                  <span class="d-block">BJCD W{{data.withdraw_id}}</span>
                               </td>
 
                               <td>
-                                  <span class="d-block">12 june 2021</span>
+                                  <span class="d-block">{{data.created_on | date: "dd/MM/yyyy"}}</span>
                               </td>
                               <td>
-                                  <span class="d-block">Withdraw request</span>
+                                  <span class="d-block">{{data.title}}</span>
 
                               </td>
                               <td>
-                                <span  class="badge bg-primary blink_txt mb-2">Broker</span>
+                                <span  class="badge bg-primary blink_txt mb-2">{{data.user_name}}</span>
                               </td>
 
 
@@ -115,12 +115,15 @@
 
                                       <div class='flx_1 text-left'>
                                           <div>
-                                              <b class="pr-2 flx_w1">User Id</b> : <span>sample
-                                                  Id</span>
+                                              <b class="pr-2 flx_w1">User Id</b> : <span>   {{
+                                               data.role_id == 1 ? "BJCD A" : data.role_id == 2 ? "BJCD B": "BJCD C"
+                                              }}
+                                              {{data.user_id}}
+                                                </span>
                                           </div>
                                           <div>
                                             <b class="pr-2 flx_w1">Phone</b> : <span>
-                                               978393999</span>
+                                               {{data.phone}}</span>
                                         </div>
                                       </div>
 
@@ -128,7 +131,7 @@
                               </td>
                               <td class="bg-white text-left text_dark_all">
                                   <b class="d-block pb-2 text_dark_all">Details</b>
-                                  sample details here
+                                  {{data.details}}
                               </td>
                               <td class="bg-white text_dark_all">
                                 <span>Action</span>
@@ -173,10 +176,13 @@
         <form>
           <div class="pb-2">
           <span>Upload receipt</span>
-          <input type="file" class="form-control"/>
+          <input type="file" class="form-control"  [(ngModel)]="File"/>
+          <div class="ERR_Msg text-danger" *ngIf="FileError">
+            <p>File required</p>
+          </div>
         </div>
         <div class="text-center">
-          <input type="submit" class="btn" value="submit">
+          <input type="submit" class="btn" value="submit" (click)="Onsubmit()">
         </div>
         </form>
       </div>

@@ -59,7 +59,7 @@ export class CreateLotteryComponent implements OnInit {
   activeBoarddata: any = {};
   activegamedata: any = {};
   boardEdit: boolean = false;
-  activeticketPattern: number = 0;
+  activeticketPattern: string = '';
   color: string = '';
   id: any = '';
   // board validation
@@ -88,6 +88,9 @@ export class CreateLotteryComponent implements OnInit {
   published: boolean = false;
   gameeditable: boolean = false;
   show_date: any = [];
+  // pattern edite
+
+  patternEdite:boolean=false
 
   // game error validation
   GameNameError: Boolean = false;
@@ -99,6 +102,12 @@ export class CreateLotteryComponent implements OnInit {
   result: {
     selectedFruit: any;
   } = { selectedFruit: [] };
+
+  // slot add popup credientials
+  showTime:string=''
+  closeShowTime:string=''
+  slotTimeList:any=[]
+
   ngOnInit(): void {
     // this.CreateBoardBtn();
     // this.removeDubilicateletters();
@@ -139,8 +148,18 @@ export class CreateLotteryComponent implements OnInit {
       // console.log('this.ticketLetter', this.ticketLetter);
     });
   }
+  BoardReset(){
+    this.boardName=''
+    this.ticketPatern=''
+  this.ticketValue=''
+  this.ticketname=''
+  this.ticketPrice=''
+  this.GamePrice=[]
+  this.ticketPattenArry=[]
 
+  }
   CreateBoardBtn() {
+    this.BoardReset()
     this.CreateBoardPopup = !this.CreateBoardPopup;
     this.t = !this.t;
 
@@ -170,19 +189,31 @@ export class CreateLotteryComponent implements OnInit {
   CreatePriceAmount() {
     this.CreatePriceAmountPopup = !this.CreatePriceAmountPopup;
   }
+  CreateSlotPopup=false
+  CreateSlotTime(){
+    this.CreateSlotPopup=!this.CreateSlotPopup
+  }
   ClosePricePopup() {
     this.CreatePriceAmountPopup = false;
+  }
+  closeSlotPopup(){
+    this.CreateSlotPopup=false
   }
 
   // add ticket pattern in array
 
   AddTickPattern() {
-    // alert(`add patern is working ${this.ticketPatern}`);
-    // console.log('add patern workin ');
-    if (this.ticketPatern !== '') {
+    if (this.ticketPatern !== '' && this.patternEdite==false) {
       this.ticketPattenArry.push(this.ticketPatern);
       this.ticketPatern = '';
+    }else{
+      this.ticketPattenArry[this.activeticketPattern]=this.ticketPatern
+      this.patternEdite = false;
+      this.activeticketPattern=''
+      this.ticketPatern=''
     }
+    console.log("pattern array",this.ticketPattenArry)
+    console.log(" this.boardEdit", this.boardEdit)
   }
 
   // add price amount
@@ -198,6 +229,18 @@ export class CreateLotteryComponent implements OnInit {
       this.ticketPrice = '';
     }
     console.log('game', this.GamePrice);
+  }
+  AddSlotTime(){
+   if(this.showTime!==''&&this.closeShowTime!==''){
+    let data={
+      id:this.slotTimeList.length+1,
+      showTime:this.showTime,
+      closeShowTime:this.closeShowTime
+    }
+    this.slotTimeList.push(data)
+    this.showTime=''
+    this.closeShowTime=''
+   }
   }
 
   BoardCreate() {
@@ -269,7 +312,8 @@ export class CreateLotteryComponent implements OnInit {
     }
   }
   EditBoard() {
-    this.boardEdit = true;
+    // this.boardEdit = true;
+    this.patternEdite=true
     this.boardName = this.activeBoarddata.board_name;
     this.ticketPattenArry = this.activeBoarddata.board_leter_format;
     this.GamePrice = this.activeBoarddata.price_amount;
@@ -283,6 +327,9 @@ export class CreateLotteryComponent implements OnInit {
         this.BoardList();
       });
     }
+  }
+  SlotTimeDelete(index: number){
+    this.slotTimeList.splice(index, 1);
   }
   GamePriceDelete(index: number) {
     this.GamePrice.splice(index, 1);
@@ -305,6 +352,7 @@ export class CreateLotteryComponent implements OnInit {
     });
   }
   activeletterpatters(index: any) {
+    this.patternEdite=true
     this.ticketPatern = this.ticketPattenArry[index];
     this.activeticketPattern = index;
   }
@@ -329,127 +377,117 @@ export class CreateLotteryComponent implements OnInit {
     } else {
       this.BoardIDError = false;
     }
-    if (this.showCount == '') {
+    if (this.slotTimeList.length ==0) {
       this.showCountError = true;
     } else {
       this.showCountError = false;
     }
-    if (this.startDate == '') {
-      this.startDateError = true;
-    } else {
-      this.startDateError = false;
+    if(    this.GameName !== '' &&
+    this.selectedValue.length !== 0 &&
+    this.slotTimeList.length!==0){
+      this.gamesubmit()
     }
-    if (this.endDate == '') {
-      this.endDateError = true;
-    } else {
-      this.endDateError = false;
-    }
-    if (this.resultDate == '') {
-      this.resultDateError = true;
-    } else {
-      this.resultDateError = false;
-    }
-    if (this.showCount == '1') {
-      console.log('sample', this.showCount, this.startDate, this.endDate);
-      if (new Date(this.startDate) < new Date(this.endDate)) {
-        console.log('shoe count one is working');
-        this.gamesubmit();
-      } else alert('please choose correct Date and time on First start slot');
-    }
-    if (this.showCount == '2') {
-      if (
-        new Date(this.startDate) < new Date(this.startDateone) &&
-        new Date(this.endDate) < new Date(this.endDateone)
-      ) {
-        if (new Date(this.startDate) < new Date(this.endDate)) {
-          if (new Date(this.startDateone) < new Date(this.endDateone)) {
-            this.gamesubmit();
-          } else
-            alert(
-              'please choose correct Date and time on second slot start and end date'
-            );
-        } else
-          alert(
-            'please choose correct Date and time on first slot start and end date'
-          );
-      } else alert('please choose correct Date and time on second  slot');
-    }
-    if (this.showCount == '3') {
-      if (
-        new Date(this.startDate) < new Date(this.startDateone) &&
-        new Date(this.endDate) < new Date(this.endDateone)
-      ) {
-        if (new Date(this.startDate) < new Date(this.endDate)) {
-          if (new Date(this.startDateone) < new Date(this.endDateone)) {
-            if (
-              new Date(this.startDateone) < new Date(this.startDatetwo) &&
-              new Date(this.endDateone) < new Date(this.endDatetwo)
-            ) {
-              if (new Date(this.startDatetwo) < new Date(this.endDatetwo)) {
-                this.gamesubmit();
-              } else
-                alert(
-                  'please choose correct Date and time on third start and end date '
-                );
-            } else
-              alert('please choose correct Date and time on third start slot ');
-          } else
-            alert(
-              'please choose correct Date and time on second slot start and end date'
-            );
-        } else
-          alert(
-            'please choose correct Date and time on first slot start and end date'
-          );
-      } else alert('please choose correct Date and time on second  slot');
-      // if (
-      //   new Date(this.startDate) < new Date(this.startDateone) &&
-      //   new Date(this.endDate) < new Date(this.endDateone) &&
-      //   new Date(this.startDate) < new Date(this.endDate) &&
-      //   new Date(this.startDateone) < new Date(this.endDateone)
-      // ) {
-      //   if (
-      //     new Date(this.startDateone) < new Date(this.startDatetwo) &&
-      //     new Date(this.endDateone) < new Date(this.endDatetwo) &&
-      //     new Date(this.startDateone) < new Date(this.endDateone) &&
-      //     new Date(this.startDatetwo) < new Date(this.endDatetwo)
-      //   ) {
-      //     this.gamesubmit();
-      //   } else {
-      //     alert('please choose correct Date and time on third start slot ');
-      //   }
-      // } else {
-      //   alert('please choose correct Date and time second start slot ');
-      // }
-    }
+   
+    // if (this.showCount == '1') {
+    //   console.log('sample', this.showCount, this.startDate, this.endDate);
+    //   if (new Date(this.startDate) < new Date(this.endDate)) {
+    //     console.log('shoe count one is working');
+    //     this.gamesubmit();
+    //   } else alert('please choose correct Date and time on First start slot');
+    // }
+    // if (this.showCount == '2') {
+    //   if (
+    //     new Date(this.startDate) < new Date(this.startDateone) &&
+    //     new Date(this.endDate) < new Date(this.endDateone)
+    //   ) {
+    //     if (new Date(this.startDate) < new Date(this.endDate)) {
+    //       if (new Date(this.startDateone) < new Date(this.endDateone)) {
+    //         this.gamesubmit();
+    //       } else
+    //         alert(
+    //           'please choose correct Date and time on second slot start and end date'
+    //         );
+    //     } else
+    //       alert(
+    //         'please choose correct Date and time on first slot start and end date'
+    //       );
+    //   } else alert('please choose correct Date and time on second  slot');
+    // }
+    // if (this.showCount == '3') {
+    //   if (
+    //     new Date(this.startDate) < new Date(this.startDateone) &&
+    //     new Date(this.endDate) < new Date(this.endDateone)
+    //   ) {
+    //     if (new Date(this.startDate) < new Date(this.endDate)) {
+    //       if (new Date(this.startDateone) < new Date(this.endDateone)) {
+    //         if (
+    //           new Date(this.startDateone) < new Date(this.startDatetwo) &&
+    //           new Date(this.endDateone) < new Date(this.endDatetwo)
+    //         ) {
+    //           if (new Date(this.startDatetwo) < new Date(this.endDatetwo)) {
+    //             this.gamesubmit();
+    //           } else
+    //             alert(
+    //               'please choose correct Date and time on third start and end date '
+    //             );
+    //         } else
+    //           alert('please choose correct Date and time on third start slot ');
+    //       } else
+    //         alert(
+    //           'please choose correct Date and time on second slot start and end date'
+    //         );
+    //     } else
+    //       alert(
+    //         'please choose correct Date and time on first slot start and end date'
+    //       );
+    //   } else alert('please choose correct Date and time on second  slot');
+    //   // if (
+    //   //   new Date(this.startDate) < new Date(this.startDateone) &&
+    //   //   new Date(this.endDate) < new Date(this.endDateone) &&
+    //   //   new Date(this.startDate) < new Date(this.endDate) &&
+    //   //   new Date(this.startDateone) < new Date(this.endDateone)
+    //   // ) {
+    //   //   if (
+    //   //     new Date(this.startDateone) < new Date(this.startDatetwo) &&
+    //   //     new Date(this.endDateone) < new Date(this.endDatetwo) &&
+    //   //     new Date(this.startDateone) < new Date(this.endDateone) &&
+    //   //     new Date(this.startDatetwo) < new Date(this.endDatetwo)
+    //   //   ) {
+    //   //     this.gamesubmit();
+    //   //   } else {
+    //   //     alert('please choose correct Date and time on third start slot ');
+    //   //   }
+    //   // } else {
+    //   //   alert('please choose correct Date and time second start slot ');
+    //   // }
+    // }
   }
   gamesubmit() {
-    alert('dfsdf');
-    if (
-      this.showCount == '1' ||
-      this.showCount == '2' ||
-      this.showCount == '3'
-    ) {
-      let data = {
-        startDate: this.startDate,
-        endDate: this.endDate,
-      };
-      this.show_date.push(data);
-    }
-    if (this.showCount == '2' || this.showCount == '3') {
-      let data = {
-        startDateone: this.startDateone,
-        endDateone: this.endDateone,
-      };
-      this.show_date.push(data);
-    }
-    if (this.showCount == '3') {
-      let data = {
-        startDatetwo: this.startDatetwo,
-        endDatetwo: this.endDatetwo,
-      };
-      this.show_date.push(data);
-    }
+    // if (
+    //   this.showCount == '1' ||
+    //   this.showCount == '2' ||
+    //   this.showCount == '3'
+    // ) {
+    //   let data = {
+    //     startDate: this.startDate,
+    //     endDate: this.endDate,
+    //   };
+    //   this.show_date.push(data);
+    // }
+    // if (this.showCount == '2' || this.showCount == '3') {
+    //   let data = {
+    //     startDateone: this.startDateone,
+    //     endDateone: this.endDateone,
+    //   };
+    //   this.show_date.push(data);
+    // }
+    // if (this.showCount == '3') {
+    //   let data = {
+    //     startDatetwo: this.startDatetwo,
+    //     endDatetwo: this.endDatetwo,
+    //   };
+    //   this.show_date.push(data);
+    // }
     let preparedata = {
       game_id: this.activegamedata.game_id,
       game_name: this.GameName,
@@ -457,24 +495,18 @@ export class CreateLotteryComponent implements OnInit {
       status: this.published,
       showCount: this.showCount,
       color: this.color,
-      stacrt_date: this.startDate,
-      end_date: this.endDate,
-      show_date: this.show_date,
+      show_date: this.slotTimeList,
     };
     console.log(
       '>>',
       this.GameName,
       this.array.length,
-      this.showCount,
-      this.startDate,
-      this.endDate
+      this.slotTimeList
     );
     if (
       this.GameName !== '' &&
       this.selectedValue.length !== 0 &&
-      this.showCount !== '' &&
-      this.startDate !== '' &&
-      this.endDate !== ''
+      this.slotTimeList.length!==0
     ) {
       console.log('asf entered');
       if (this.gameeditable == true) {
@@ -531,6 +563,7 @@ export class CreateLotteryComponent implements OnInit {
       'yyyy-MM-ddTHH:mm:ss'
     );
     this.published = this.activegamedata.status;
+    this.slotTimeList=this.activegamedata.show_date
   }
   removeGame() {
     if (confirm('Are you sure you want to remove this Game')) {

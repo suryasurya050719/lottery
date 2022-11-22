@@ -164,7 +164,7 @@
                 class="flx_1 d-flex align-items-center justify-content-center"
               >
                 <h2 class="txt_bold text-uppercase text-white mb-0 text-center">
-                  Dear
+                  {{GameName}}
                 </h2>
               </div>
             </div>
@@ -215,8 +215,8 @@
 
               <div class="pb-2">
                 <div class="text-right">
-                  <label class="px-2 bg-primary2 text-white mb-0"
-                    >Create Board</label
+                  <button class="px-2 bg-primary2 text-white mb-0" (click)="CreateBoardBtn()"
+                    >Create Board</button
                   >
                 </div>
                 <div class="dropdown w-100">
@@ -241,34 +241,6 @@
                           >{{ item.name }}</mat-checkbox
                         >
                       </div>
-                      <!-- <div
-                        class="px-2 bb_1 pb-2 mb-2 text-dark fs_1"
-                        formArrayName="orders"
-                        *ngFor="
-                          let order of ordersFormArray.controls;
-                          let i = index
-                        "
-                      >
-                        <input type="checkbox" [formControlName]="i" />
-                        <label for="1"> {{ webData[i].name }} </label>
-                      </div> -->
-
-                      <!-- <section class="example-section" [formGroup]="form">
-                        <p>
-                          <mat-checkbox formControlName="data.checked">{{
-                            data.name
-                          }}</mat-checkbox>
-                        </p>
-                      </section>
-
-                      <button
-                        type="submit"
-                        color="danger"
-                        expand="block"
-                        (click)="sample01()"
-                      >
-                        Submit
-                      </button> -->
                     </div>
                     <div class="text-right pt-2 pb-2 pr-2">
                       <button class="btn">Submit</button>
@@ -276,27 +248,18 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="pb-2">
-                <select
-                  name=""
-                  id=""
-                  class="form-control"
-                  [(ngModel)]="BoardID"
-                >
-                  <option value="">Choose Board</option>
-                  <option
-                    *ngFor="let list of BoardListdata; let i = index"
-                    [value]="list.board_id"
-                  >
-                    {{ list.board_name }}
-                  </option>
-                </select>
-                <div class="ERR_Msg text-danger" *ngIf="BoardIDError">
-                  <p>Board required</p>
-                </div>
-              </div> -->
               <div class="pb-2">
-                <select
+                <div class="pb-2">
+                  <span
+                    class="form-control cursor-pointer CreatePriceAmount"
+                    (click)="CreateSlotTime()"
+                    >Create Slot Price</span
+                  >
+                  <div class="ERR_Msg text-danger" *ngIf="showCountError">
+                    <p>Show Counts is required</p>
+                  </div>
+                </div>
+                <!-- <select
                   name=""
                   id=""
                   class="form-control"
@@ -309,92 +272,8 @@
                 </select>
                 <div class="ERR_Msg text-danger" *ngIf="showCountError">
                   <p>Show Counts is required</p>
-                </div>
+                </div> -->
               </div>
-              <div class="pb-2" >
-                <input
-                  type="datetime-local"
-                  placeholder="Choose Slot Start Time"
-                  class="form-control"
-                  name="startDate"
-                  [(ngModel)]="startDate"
-                />
-                <div class="ERR_Msg text-danger" *ngIf="startDateError">
-                  <p>startDate is required</p>
-                </div>
-              </div>
-              <div class="pb-2"  >
-                <input
-                  type="datetime-local"
-                  placeholder="Choose Slot End Time"
-                  class="form-control"
-                  name="endDate"
-                  [(ngModel)]="endDate"
-                />
-                <div class="ERR_Msg text-danger" *ngIf="endDateError">
-                  <p>endDate is required</p>
-                </div>
-              </div>
-              <div class="pb-2" *ngIf="showCount=='2'||showCount=='3'">
-                <input
-                  type="datetime-local"
-                  placeholder="Choose Slot Start Time"
-                  class="form-control"
-                  name="startDateone"
-                  [(ngModel)]="startDateone"
-                />
-                <div class="ERR_Msg text-danger" *ngIf="startDateError">
-                  <p>startDate is required</p>
-                </div>
-              </div>
-              <div class="pb-2" *ngIf="showCount=='2'||showCount=='3'">
-                <input
-                  type="datetime-local"
-                  placeholder="Choose Slot End Time"
-                  class="form-control"
-                  name="endDateone"
-                  [(ngModel)]="endDateone"
-                />
-                <div class="ERR_Msg text-danger" *ngIf="endDateError">
-                  <p>endDate is required</p>
-                </div>
-              </div>
-              <div class="pb-2" *ngIf="showCount=='3'">
-                <input
-                  type="datetime-local"
-                  placeholder="Choose Slot Start Time"
-                  class="form-control"
-                  name="startDatetwo"
-                  [(ngModel)]="startDatetwo"
-                />
-                <div class="ERR_Msg text-danger" *ngIf="startDateError">
-                  <p>startDate is required</p>
-                </div>
-              </div>
-              <div class="pb-2" *ngIf="showCount=='3'">
-                <input
-                  type="datetime-local"
-                  placeholder="Choose Slot End Time"
-                  class="form-control"
-                  name="endDatetwo"
-                  [(ngModel)]="endDatetwo"
-                />
-                <div class="ERR_Msg text-danger" *ngIf="endDateError">
-                  <p>endDate is required</p>
-                </div>
-              </div>
-              <!-- <div class="pb-2">
-                <input
-                  type="datetime-local"
-                  placeholder="Result Publish Date & Time"
-                  class="form-control"
-                  name="resultDate"
-                  [(ngModel)]="resultDate"
-                />
-                <div class="ERR_Msg text-danger" *ngIf="resultDateError">
-                  <p>resultDate is required</p>
-                </div>
-              </div> -->
               <div class="pb-2">
                 <!-- <div class="pb-1">
                   <input type="checkbox" /> Create Game Only
@@ -689,3 +568,92 @@
 </section>
 
 <!-- Create price end -->
+
+
+<!-- create show count start -->
+
+
+<section
+  class="popup_box CreatePriceAmountPopup"
+  *ngIf="CreateSlotPopup"
+>
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper form_w1 position-relative">
+      <span class="popup_close ClosePriceTable" (click)="closeSlotPopup()"
+        >x</span
+      >
+      <div class="bg-primary2 p-2">
+        <div class="row align-items-end">
+          <div class="col-lg-4">
+            <label class="d-block text-center text-white mb-0 mt-0 pb-2"
+              >Choose Show Time</label
+            >
+            <input
+              type="time"
+              placeholder="1st Price"
+              class="form-control bg-white"
+              name="showTime"
+              [(ngModel)]="showTime"
+            />
+          </div>
+          <div class="col-lg-5">
+            <label class="d-block text-center text-white mb-0 mt-0 pb-2"
+              >Choose Draw close from show time before</label
+            >
+            <div class="input-group">
+              <input
+              type="time"
+              placeholder="1st Price"
+              class="form-control bg-white"
+              name="showTime"
+                [(ngModel)]="closeShowTime"
+              />
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <button
+              class="bg-transparent text-white b_1 px-3 py-2 cursor-pointer"
+              (click)="AddSlotTime()"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <b class="d-block pb-2 text-white">Result</b>
+          <div class="table-responsive text-white Price_table">
+            <table class="w-100">
+              <tbody>
+                <tr *ngFor="let data of slotTimeList; let i = index">
+                  <td>{{data.id}}</td>
+                  <td>{{ data.showTime }}</td>
+                  <td>{{ data.closeShowTime }}</td>
+                  <td width="50">
+                    <i
+                      class="fa fa-trash is_1 cursor-pointer"
+                      (click)="SlotTimeDelete(i)"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn bg-white btn_dark" (click)="closeSlotPopup()">
+            Cancel
+          </button>
+          <button class="btn bg-white btn_dark" (click)="closeSlotPopup()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- create show count end -->

@@ -36,6 +36,7 @@ import { MyRequestApprovedComponent } from './components/my-request-approved/my-
 import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
 import {BookingRecordsComponent} from "./components/booking-records/booking-records.component"
 import {BookingReviewComponent} from "./components/booking-review/booking-review.component"
+// import {MyRequestComponent} from "./components/my-request/my-request.component"
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 
 // import {AccountAddComponent} from './components/account-add/account-add.component'

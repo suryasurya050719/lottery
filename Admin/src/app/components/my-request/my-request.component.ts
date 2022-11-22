@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Myrequest} from '../../service/my-request'
 
 @Component({
   selector: 'app-my-request',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyRequestComponent implements OnInit {
 
-  constructor() { }
+  constructor(  public myrequest: Myrequest,) { }
+  MyRequestList:any=[]
+  File = '';
+  FileError:boolean=false
 
   ngOnInit(): void {
+    this.myRequestlist()
+  }
+  myRequestlist(){
+    let data={
+      status:1
+    }
+    this.myrequest.MyrquestList(data).subscribe((data)=>[
+      console.log("data",data.data),
+      this.MyRequestList=data.data
+    ])
   }
   approve_popup = false;
   reject_popup = false;
@@ -27,5 +41,13 @@ CloseMoreViewPopup3(){
 }
 CloseMoreViewPopup4(){
   this.reject_popup = false
+}
+Onsubmit(){
+  console.log("console",this.File)
+  if(this.File==''){
+    this.FileError=true
+  }else{
+    console.log("this. file",this.File)
+  }
 }
 }
