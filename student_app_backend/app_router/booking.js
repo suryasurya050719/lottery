@@ -7,7 +7,7 @@ const { route } = require("./live_result");
 
 router.post("/bookingCreate", async (req, res) => {
   let data = req.body;
-  //   console.log("data", data);
+  // console.log("data", data);
   let preparedata = {
     user_id: data.user_id,
     role_id: data.role_id,

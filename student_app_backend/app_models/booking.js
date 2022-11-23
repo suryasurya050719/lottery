@@ -27,6 +27,7 @@ const creatSchema = mongoose.Schema({
       game_name: String,
       board_letters: Array,
       board_letter_formation: Array,
+      show_result_number: Array,
       ticket_count: Number,
       ticket_number: Number,
       ticket_price: Number,

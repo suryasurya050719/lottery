@@ -20,33 +20,63 @@
             <label> Choose User </label>
             <select name="" id="" class="form-control" [(ngModel)]="user_type">
               <option value="">Select</option>
-              <option value="1">All</option>
-              <option value="3">Customers</option>
+              <option value="1">Admin Referral</option>
+              <option value="2">Broker Referral</option>
+              <option value="3">Customer Referral</option>
             </select>
           </div>
         </div>
         <div class="col">
           <div class="form-group">
-            <label> Filter </label>
-            <select name="" id="" class="form-control" [(ngModel)]="game_type">
+            <label> Game Type </label>
+            <select
+              name=""
+              id=""
+              class="form-control"
+              [(ngModel)]="game_type"
+              (ngModelChange)="game()"
+            >
               <option value="">Select</option>
               <option value="">All</option>
-              <option value="Dear">Dear</option>
-              <option value="Kerala">Kerala</option>
-              <option value="Lottery">Lottery</option>
-              <option value="Jackpot">Jackpot</option>
+              <option
+                *ngFor="let data of gamelistdata; let i = index"
+                [value]="i"
+              >
+                {{ data.game_name }}
+              </option>
             </select>
           </div>
         </div>
-        <div class="col">
+        <div class="col-2">
           <div class="form-group">
-            <label> Filter </label>
-            <select name="" id="" class="form-control" [(ngModel)]="board_type">
-              <option value="">Select</option>
-              <option value="">All</option>
-              <option value="">1 digit board</option>
-              <option value="">2 Digit board</option>
-            </select>
+            <label> Show Timing </label>
+            <mat-select
+              [(ngModel)]="board_type"
+              class="form-control"
+              multiple
+              (ngModelChange)="show_time()"
+            >
+              <mat-option
+                *ngFor="let topping of toppingList.show_date"
+                [value]="topping.id"
+                >{{ topping.showTime }}</mat-option
+              >
+            </mat-select>
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Show Timing</mat-label>
+              <mat-select
+                [(ngModel)]="board_type"
+                class="form-control"
+                multiple
+                (ngModelChange)="show_time()"
+              >
+                <mat-option
+                  *ngFor="let topping of toppingList"
+                  [value]="topping"
+                  >{{ topping }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field> -->
           </div>
         </div>
         <div class="col">

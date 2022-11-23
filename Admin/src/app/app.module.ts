@@ -34,8 +34,9 @@ import { DashboardComponent } from '../app/components/dashboard/dashboard.compon
 import { MyRequestComponent } from './components/my-request/my-request.component';
 import { MyRequestApprovedComponent } from './components/my-request-approved/my-request-approved.component';
 import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
-import {BookingRecordsComponent} from "./components/booking-records/booking-records.component"
-import {BookingReviewComponent} from "./components/booking-review/booking-review.component"
+import { BookingRecordsComponent } from './components/booking-records/booking-records.component';
+import { BookingReviewComponent } from './components/booking-review/booking-review.component';
+import { MatSelectModule } from '@angular/material/select';
 // import {MyRequestComponent} from "./components/my-request/my-request.component"
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 
@@ -45,6 +46,7 @@ import {BookingReviewComponent} from "./components/booking-review/booking-review
 @NgModule({
   declarations: [
     AppComponent,
+    // MatSelectModule,
     MyRequestComponent,
     MyRequestApprovedComponent,
     MyRequestRejectedComponent,
@@ -75,6 +77,7 @@ import {BookingReviewComponent} from "./components/booking-review/booking-review
   imports: [
     BrowserModule,
     MatDialogModule,
+    MatSelectModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger', // set defaults here
     }),
