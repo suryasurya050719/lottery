@@ -135,7 +135,7 @@
                               </td>
                               <td class="bg-white text_dark_all">
                                 <span>Action</span>
-                                <select name="" id="" class="form-control" (change)="onChange($event)">
+                                <select name="" id="" class="form-control" (change)="onChange($event,data._id)">
                                   <option value="0">Select</option>
                                   <option value="1">Approve</option>
                                   <option value="2">Reject</option>
@@ -176,7 +176,7 @@
         <form>
           <div class="pb-2">
           <span>Upload receipt</span>
-          <input type="file" class="form-control"  [(ngModel)]="File"/>
+          <input type="file" class="form-control"  [(ngModel)]="File" (change)="Filedata($event)"/>
           <div class="ERR_Msg text-danger" *ngIf="FileError">
             <p>File required</p>
           </div>
@@ -200,10 +200,13 @@
         <form>
           <div class="pb-2">
           <span>Reason</span>
-          <textarea class="form-control" style="height: 100px;"></textarea>
+          <textarea class="form-control" style="height: 100px;" [(ngModel)]="Reason"></textarea>
+          <div class="ERR_Msg text-danger" *ngIf="reasonError">
+            <p>Reason required</p>
+          </div>
         </div>
         <div class="text-center">
-        <input type="submit" class="btn" value="submit">
+        <input type="submit" class="btn" value="submit" (click)="rejected()">
       </div>
         </form>
       </div>

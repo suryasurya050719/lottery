@@ -60,96 +60,96 @@
 
 
 
-      <div class="resul_show_panel">
-          <span class="cnt_result">1</span>
+      <div class="resul_show_panel" *ngFor="let data of MyRequestList; let i=index">
+        <span class="cnt_result">{{i+1}}</span>
 
-          <div class="pb-3">
-
-
-
-
-              <div class="table-responsive product_table td_center text_white_all">
-                  <table class="table no-margin">
-                      <thead>
-                          <tr>
-                              <th width="180">Withdraw id
-
-                              </th>
-                              <th width="180">Date & Time
-
-                              </th>
-                              <th>Title
-
-                              </th>
-
-                              <th width="150">User Name
-
-                              </th>
-
-
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr class="td_yellow">
-                              <td>
-                                  <span class="d-block">sample Id</span>
-                              </td>
-
-                              <td>
-                                  <span class="d-block">12 June 2021| 12:23:12</span>
-                              </td>
-                              <td>
-                                  <span class="d-block">Withdraw request</span>
-
-                              </td>
-                              <td>
-                                <span  class="badge bg-primary blink_txt mb-2">Broker</span>
-                              </td>
+        <div class="pb-3">
 
 
 
-                          </tr>
-                          <tr class="td_yellow">
-                              <td colspan="2">
-                                  <div class="d-flex">
 
-                                      <div class='flx_1 text-left'>
-                                          <div>
-                                              <b class="pr-2 flx_w1">User Id</b> : <span>sample
-                                                  Id</span>
-                                          </div>
-                                          <div>
-                                            <b class="pr-2 flx_w1">Phone</b> : <span>
-                                               978393999</span>
+            <div class="table-responsive product_table td_center text_white_all">
+                <table class="table no-margin">
+                    <thead>
+                        <tr>
+                            <th width="180">Withdraw id
+
+                            </th>
+                            <th width="180">Date & Time
+
+                            </th>
+                            <th>Title
+
+                            </th>
+
+                            <th width="150">User Name
+
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="td_yellow">
+                            <td>
+                                <span class="d-block">BJCD W{{data.withdraw_id}}</span>
+                            </td>
+
+                            <td>
+                                <span class="d-block">{{data.created_on | date: "dd/MM/yyyy"}}</span>
+                            </td>
+                            <td>
+                                <span class="d-block">{{data.title}}</span>
+
+                            </td>
+                            <td>
+                              <span  class="badge bg-primary blink_txt mb-2">{{data.user_name}}</span>
+                            </td>
+
+
+
+                        </tr>
+                        <tr class="td_yellow">
+                            <td colspan="2">
+                                <div class="d-flex">
+
+                                    <div class='flx_1 text-left'>
+                                        <div>
+                                            <b class="pr-2 flx_w1">User Id</b> : <span>   {{
+                                             data.role_id == 1 ? "BJCD A" : data.role_id == 2 ? "BJCD B": "BJCD C"
+                                            }}
+                                            {{data.user_id}}
+                                              </span>
                                         </div>
+                                        <div>
+                                          <b class="pr-2 flx_w1">Phone</b> : <span>
+                                             {{data.phone}}</span>
                                       </div>
+                                    </div>
 
-                                  </div>
-                              </td>
-                              <td class="bg-white text-left text_dark_all">
-                                  <b class="d-block pb-2 text_dark_all">Details</b>
-                                  <div class="d-flex flex-column">
-                                  <a target="_blank" class="pb-2 text_dark_all cursor_pointer">
-                                    <i class="fa fa-file-pdf-o text-danger"></i>
-                                    Attachment 1
-                                  </a>
                                 </div>
-                              </td>
-                              <td class="bg-white">
-                                <span  class="badge bg-primary blink_txt mb-2">Approved</span>
-                              </td>
-                          </tr>
+                            </td>
+                            <td class="bg-white text-left text_dark_all">
+                                <b class="d-block pb-2 text_dark_all">Details</b>
+                                {{data.details}}
+                            </td>
+                            <td class="bg-white ">
+                                
+                                    <span  class="badge bg-primary blink_txt mb-2">Approved</span>
+                                  
+                            </td>
+                        </tr>
 
 
-                      </tbody>
-                  </table>
-              </div>
-          </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
 
 
-      </div>
+    </div>
 
 
 

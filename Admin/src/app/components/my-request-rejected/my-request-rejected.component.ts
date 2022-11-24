@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Myrequest} from '../../service/my-request'
+
 
 @Component({
   selector: 'app-my-request-rejected',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyRequestRejectedComponent implements OnInit {
 
-  constructor() { }
+  constructor(public myrequest: Myrequest) { }
+  MyRequestList:any=[]
 
   ngOnInit(): void {
+    this.myRequestlist()
   }
-
+  myRequestlist(){
+    let data={
+      status:3
+    }
+    this.myrequest.MyrquestList(data).subscribe((data)=>[
+      console.log("data",data.data),
+      this.MyRequestList=data.data
+    ])
+  }
 }

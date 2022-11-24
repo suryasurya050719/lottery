@@ -29,5 +29,27 @@ export class Myrequest {
       })
     );
   }
+  Myrquesapproved(datas:any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let data = new FormData();
+    data.append('customerImage', datas.imagedata);
+    data.append('id',datas.id)
+
+    let url = `${environment.apiurl}/myrequest/approved`;
+    return this.http.put(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  Myrquesrejected(datas:any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/myrequest/rejected`;
+    return this.http.put(url,datas).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
 }

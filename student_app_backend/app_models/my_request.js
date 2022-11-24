@@ -28,6 +28,12 @@ const creatSchema = mongoose.Schema({
   phone: {
     type: Number,
   },
+  file_name: {
+    type: String,
+  },
+  rejected_reason:{
+type:String
+  },
   request_status: {
     type: Number,
     default: 1,

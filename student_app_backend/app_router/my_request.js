@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const user=require("../app_models/user")
 const myRequest = require("../app_models/my_request");
+var path = require("path");
+var multer = require("multer");
+
 
 router.post("", async (req, res) => {
   let body = req.body;
@@ -37,28 +40,27 @@ router.get("", async (req, res) => {
     });
   });
 });
-
-router.delete("/:id", (req, res) => {
-  let user_id = Number(req.params.id);
-  console.log("gshdfashg", user_id);
-  live_result.deleteOne({ live_result_id: user_id }).then((data) => {
-    res.send({
-      statuscode: 200,
-      status: "delete successfully",
-    });
-  });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./assets");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
 });
-
-router.put("", async (req, res) => {
+var upload = multer({ storage: storage });
+router.put("/approved",upload.single("customerImage"), async (req, res) => {
+  var originalFileName = req.file.originalname;
+  console.log("data",originalFileName)
   let body = req.body;
   console.log("data", body);
-  let live_result_id = body.live_result_id;
+  let _id = body.id;
   let preparedata = {
-    title: body.title,
-    url: body.url,
+    file_name: originalFileName,
+    request_status:2
   };
-  live_result
-    .findOneAndUpdate({ live_result_id: live_result_id }, preparedata, {
+  myRequest
+    .findOneAndUpdate({ _id: _id }, preparedata, {
       new: true,
     })
     .then((data) => {
@@ -66,6 +68,26 @@ router.put("", async (req, res) => {
         success: true,
         statuscode: 200,
         status: "Board updated successfully",
+      });
+    });
+});
+
+router.put("/rejected", async (req, res) => {
+  let body = req.body;
+  let _id = body.id;
+  let preparedata = {
+    rejected_reason: req.body.Reason,
+    request_status:3
+  };
+  myRequest
+    .findOneAndUpdate({ _id: _id }, preparedata, {
+      new: true,
+    })
+    .then((data) => {
+      res.json({
+        success: true,
+        statuscode: 200,
+        status: "status updated successfully",
       });
     });
 });
