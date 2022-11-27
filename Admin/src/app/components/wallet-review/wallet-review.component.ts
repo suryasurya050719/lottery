@@ -31,6 +31,7 @@ export class WalletReivewComponent implements OnInit {
   phonenumber: string = '';
   fromDate: string = '';
   toDate: string = '';
+  transection_type:string=''
   filterdata: any = {};
   currentUserId: any = '';
   ActiveWallet: string = '';
@@ -110,6 +111,7 @@ export class WalletReivewComponent implements OnInit {
 
     console.log('fromDate', this.fromDate);
     console.log('toDate', this.toDate);
+    console.log('transectionDetails',this.transectionType)
     this.currentUserId = localStorage.getItem('lottryroleid');
     this.alluser(1);
   }
@@ -128,6 +130,7 @@ export class WalletReivewComponent implements OnInit {
     this.filterdata['Page'] = newPage;
     this.currentpage = newPage;
     // this.filterdata['toDate'] = this.toDate;
+    console.log("filterdata",this.filterdata)
     this.transection.Alluser(this.filterdata).subscribe((data) => {
       console.log('transection all user ', data.data);
       let filterdata01: any = [];
@@ -141,7 +144,7 @@ export class WalletReivewComponent implements OnInit {
       console.log('this.alluserList', this.alluserList);
       this.config.currentPage = newPage;
       let transection = this.alluserList[newPage - 1];
-      console.log('transectionUser data', transection.role_id);
+      // console.log('transectionUser data', transection.role_id);
       this.transectionUser_id = transection.user_id;
       this.singleTransection();
     });
@@ -163,11 +166,14 @@ export class WalletReivewComponent implements OnInit {
     this.OtpSubmitInfos = true;
   }
   singleTransection() {
+    console.log("this.transectionType",this.transectionType)
     let data = {
       user_id: this.transectionUser_id,
       graterthan: this.toDate,
       lessthan: this.fromDate,
+      commission:this.transectionType=='2'?false:this.transectionType=='3'?true:''
     };
+    console.log("data for transection details ",data)
     this.transection.singleTransectionList(data).subscribe((data) => {
       this.singleTransectionList = data.data;
       console.log('this.singleTransectionList', this.singleTransectionList);

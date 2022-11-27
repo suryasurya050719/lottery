@@ -15,6 +15,9 @@ const transectionSchema = mongoose.Schema({
   position: {
     type: String,
   },
+  commission:{
+    type:Boolean
+  },
   transection_from_userid: {
     type: Number,
   },

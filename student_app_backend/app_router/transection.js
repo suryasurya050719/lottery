@@ -20,6 +20,7 @@ router.post("/addmony", async (req, res) => {
     amount: body.amount,
     transection_from_userid: body.transection_from_userid,
     transection_from_roleid: body.transection_from_roleid,
+    commission:false,
     transection_to_userid: body.transection_to_userid,
     transection_to_roleid: body.transection_to_roleid,
     transection_from_type: body.transection_from_type,
@@ -53,6 +54,7 @@ router.post("/addmony", async (req, res) => {
               transection_to_userid: body.transection_to_userid,
               transection_from_type: body.transection_from_type,
               transection_to_type: body.transection_to_type,
+              commission:false,
               reason: body.reason,
               status: "success",
             };
@@ -288,10 +290,14 @@ router.get("/singleUserList", async (req, res) => {
   let query = req.query;
   console.log("req.query", Number(query.user_id));
   console.log("req.query", query);
+
   let filterdata = {};
   let created_on = {};
   if (query.user_id !== "") {
     filterdata["user_id"] = query.user_id;
+  }
+  if (query.commission !== '') {
+    filterdata["commission"] = query.commission;
   }
   if (query.graterthan !== "") {
     created_on["$lte"] = new Date(query.graterthan);

@@ -38,6 +38,15 @@ export class Booking {
       })
     );
   }
+  ReferedBookingList(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/booking/referedbooking`;
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
   //   BoardUpdate(filterdata: any): Observable<any> {
   //     // console.log('filterdata service', filterdata);
   //     let data = filterdata;

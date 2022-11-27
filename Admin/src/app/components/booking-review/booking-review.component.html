@@ -26,6 +26,12 @@
             </select>
           </div>
         </div>
+        <div class="col" *ngIf="user_type=='1'||user_type=='2'||user_type=='3'">
+          <div class="form-group">
+            <label>Refered User Id </label>
+            <input type="text" class="form-control" [(ngModel)]="referal_user_id" />
+          </div>
+        </div>
         <div class="col">
           <div class="form-group">
             <label> Game Type </label>
@@ -131,13 +137,12 @@
                   <tr>
                     <td>None</td>
                     <td>{{ data.user_id }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.phone }}</td>
+                    <td>{{ data.userlist.name }}</td>
+                    <td>{{ data.userlist.phone }}</td>
                     <td>
+                      {{ data.refered_role_id==1?'BJCD A':data.refered_role_id==2?'BJCD B':'BJCD C' }}
                       {{
-                        data.referalList[0]?.refered_user_id !== ""
-                          ? data.referalList[0]?.refered_user_id
-                          : "None"
+                        data.refered_user_id
                       }}
                     </td>
                   </tr>
@@ -214,7 +219,7 @@
                     <td>None</td>
                     <td>{{ data.user_id }}</td>
                     <td>{{ data.referalList[0]?.refered_user_id }}</td>
-                    <td>{{ data.created_on }}</td>
+                    <td>{{ data.created_on | date: "dd/MM/yyyy" }}</td>
                     <td>
                       <button
                         (click)="ViewMorePopup(i)"

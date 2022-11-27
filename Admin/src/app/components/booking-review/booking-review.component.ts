@@ -16,6 +16,7 @@ export class BookingReviewComponent implements OnInit {
       itemsPerPage: 1,
     };
   }
+  referal_user_id:string=''
   reviewList: any = [];
   BookingListdata: any = [];
   viewmorepopupdata: any = [];
@@ -44,8 +45,11 @@ export class BookingReviewComponent implements OnInit {
     let data = {
       user_id: this.user_id,
       phonenumber: this.phone,
+      refered_role_id:this.user_type,
+      referal_user_id:this.referal_user_id
     };
-    this.booking.BookingReviewList(data).subscribe((data) => {
+    console.log("data",data)
+    this.booking.ReferedBookingList(data).subscribe((data) => {
       this.reviewList = data.data;
       console.log('this review list', this.reviewList);
       this.config.currentPage = newPage;

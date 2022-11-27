@@ -13,12 +13,34 @@ const saltRounds = 10;
 
 router.post("", async (req, res) => {
   let body = req.body;
+  if(req.body.user_id==''){
+     res.send({
+    status:false,
+    statuscode: 202,
+    message: "require user_id",
+  });
+  }
+  if(req.body.position==''){
+    res.send({
+   status:false,
+   statuscode: 202,
+   message: "require position",
+ });
+ }
+ if(req.body.amount==''){
+  res.send({
+ status:false,
+ statuscode: 202,
+ message: "require amount",
+});
+}
   // console.log("payment key", key);
   // let body = req.body;
   var preparedata = {
     user_id: body.user_id,
     position: body.position,
     amount: body.amount,
+    commission:false,
     transection_from_userid: body.transection_from_userid,
     transection_to_userid: body.transection_to_userid,
     transection_from_type: body.transection_from_type,

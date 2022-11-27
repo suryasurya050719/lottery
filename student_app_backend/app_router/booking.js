@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const booking = require("../app_models/booking");
 const user = require("../app_models/user");
+const referals = require("../app_models/referal");
+
 
 const { route } = require("./live_result");
 
@@ -12,6 +14,7 @@ router.post("/bookingCreate", async (req, res) => {
     user_id: data.user_id,
     role_id: data.role_id,
     game_id: data.game_id,
+    game_name:data.game_name,
     phone: data.phone,
     game_name: data.game_name,
     booking_data: data.booking_data,
@@ -36,9 +39,9 @@ router.get("/getall", async (req, res) => {
   if (query.user_id !== "") {
     searchFilter["user_id"] = parseInt(query.user_id);
   }
-  if (query.phonenumber !== "" && query.phonenumber !== NaN) {
-    searchFilter["phone"] = Number(query.phonenumber);
-  }
+  // if (query.phonenumber !== "" && query.phonenumber !== NaN) {
+  //   searchFilter["phone"] = Number(query.phonenumber);
+  // }
   if (query.fromdate !== "") {
     created_on["$gt"] = new Date(query.fromdate);
   }
@@ -126,5 +129,72 @@ router.get("/bookingReview", async (req, res) => {
       });
     });
 });
+router.get("/referedbooking", async (req, res) => {
+  let query = req.query;
+  console.log("query", query);
+  let searchFilter = {};
+  let userFilter={}
+  if (query.user_id !== "") {
+    searchFilter["user_id"] = parseInt(query.user_id);
+  }
+  if (query.refered_role_id !== "" && query.refered_role_id !== NaN) {
+    searchFilter["refered_role_id"] = Number(query.refered_role_id);
+  }
+  if (query.referal_user_id !== "" && query.referal_user_id !== NaN) {
+    searchFilter["refered_user_id"] = Number(query.referal_user_id);
+  }
+  if (query.phonenumber !== "" && query.phonenumber !== NaN) {
+    userFilter["phone"] = Number(query.phonenumber);
+  }
 
+  let searchFilters = {};
+  let userfilters={}
+  searchFilters["$and"] = [searchFilter];
+  userfilters["$and"]=[userFilter]
+  console.log("searchFilters", searchFilters);
+  console.log("userfilters", userfilters);
+
+  referals
+    .aggregate([
+      {
+        $match: searchFilters,
+      },
+      // {
+      //   $lookup: {
+      //     from: "bookings",
+      //     localField: "user_id",
+      //     foreignField: "user_id",
+      //     as: "bokingList",
+      //   },
+      // },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "user_id",
+          pipeline: [
+            {
+              $match: userfilters
+            },
+          ],
+          as: "userlist",
+        },
+      },
+      {
+        $unwind: {
+          path: "$userlist",
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+    ])
+
+    .then((data) => {
+      res.json({
+        success: true,
+        data: data,
+        statuscode: 200,
+        status: "list create successfully",
+      });
+    });
+});
 module.exports = router;

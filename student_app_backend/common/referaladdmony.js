@@ -42,6 +42,7 @@ function referalAddMony(formdata) {
           position: "INC",
           amount: incAmouont,
           transection_from_userid: user_id,
+          commission:true,
           transection_to_userid: referal_user_id,
           transection_from_type: "Gpay",
           transection_to_type: "Wallet",

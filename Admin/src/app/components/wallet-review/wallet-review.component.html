@@ -184,13 +184,13 @@
               </table>
             </div>
           </div>
-          <div class="pb-3 pt-2" *ngIf="singleTransectionList.length > 0">
+          <div class="pb-3 pt-2" >
             <div class="mb-0 pb-0">
               <h1 class="text-left"><b>Transaction Details</b></h1>
               <h4></h4>
             </div>
 
-            <div class="td_details" *ngIf="singleTransectionList.length > 0">
+            <div class="td_details">
               <div class="row">
                 <div class="col-lg-3">
                   <div class="form-group">
@@ -219,6 +219,17 @@
                       class="form-control"
                       [(ngModel)]="toDate"
                     />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label> Choose TYpe </label>
+            <select name="" id="" class="form-control" [(ngModel)]="transectionType">
+              <option value="">Select</option>
+              <option value="">All</option>
+              <option value="2">Transactions Only</option>
+              <option value="3">Commissions Only</option>
+            </select>
                   </div>
                 </div>
                 <div class="col-lg-3 d-flex align-items-end pb-3">
