@@ -56,17 +56,74 @@
             />
           </div>
         </div>
+        <div class="col">
+          <div class="form-group">
+            <label> Choose User </label>
+            <select name="" id="" class="form-control" [(ngModel)]="user_type">
+              <option value="">Select</option>
+              <option value="1">Admin Referral</option>
+              <option value="2">Broker Referral</option>
+              <option value="3">Customer Referral</option>
+            </select>
+          </div>
+        </div>
+        <div class="col" *ngIf="user_type=='1'||user_type=='2'||user_type=='3'">
+          <div class="form-group">
+            <label>Refered User Id </label>
+            <input type="text" class="form-control" [(ngModel)]="referal_user_id" />
+          </div>
+        </div>
         <div class="col-lg-3">
           <div class="form-group">
-            <label> Choose Game </label>
-            <select name="" id="" class="form-control" [(ngModel)]="gameType">
+            <label> Game Type </label>
+            <select
+              name=""
+              id=""
+              class="form-control"
+              [(ngModel)]="game_type"
+              (ngModelChange)="game()"
+            >
               <option value="">Select</option>
-              <option value="All">All</option>
-              <option value="Dear">Dear</option>
-              <option value="Kerala">Kerala</option>
-              <option value="Lottery">Lottery</option>
-              <option value="Jackpot">Jackpot</option>
+              <option value="">All</option>
+              <option
+                *ngFor="let data of gamelistdata; let i = index"
+                [value]="i"
+              >
+                {{ data.game_name }}
+              </option>
             </select>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label> Show Timing </label>
+            <mat-select
+              [(ngModel)]="board_type"
+              class="form-control"
+              multiple
+              (ngModelChange)="show_time()"
+            >
+              <mat-option
+                *ngFor="let topping of toppingList.show_date"
+                [value]="topping.id"
+                >{{ topping.showTime }}</mat-option
+              >
+            </mat-select>
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Show Timing</mat-label>
+              <mat-select
+                [(ngModel)]="board_type"
+                class="form-control"
+                multiple
+                (ngModelChange)="show_time()"
+              >
+                <mat-option
+                  *ngFor="let topping of toppingList"
+                  [value]="topping"
+                  >{{ topping }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field> -->
           </div>
         </div>
         <div class="col-lg-3">
@@ -177,114 +234,6 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-3">
-          <label> Show Timing</label>
-          <div class="dropdown w-100">
-            <span
-              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Select
-            </span>
-            <div
-              class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
-              aria-labelledby="dropdownMenuButton"
-            >
-              <div class="p-2">
-                <div class="pb-2">
-                  <h4 class="mb-0 pb-2">All, Dear</h4>
-                  <div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-4 text-dark"
-                        for="exampleCheck1"
-                        >3:00 pm</label
-                      >
-                    </div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-4 text-dark"
-                        for="exampleCheck1"
-                        >5:00 pm</label
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="pb-2">
-                  <h4 class="mb-0 pb-2">Kerala Lottery</h4>
-                  <div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-4 text-dark"
-                        for="exampleCheck1"
-                        >5:00 pm</label
-                      >
-                    </div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-4 text-dark"
-                        for="exampleCheck1"
-                        >5:00 pm</label
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="pb-2">
-                  <h4 class="mb-0 pb-2">Jackpot</h4>
-                  <div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-4 text-dark"
-                        for="exampleCheck1"
-                        >5:00 pm</label
-                      >
-                    </div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-4 text-dark"
-                        for="exampleCheck1"
-                        >5:00 pm</label
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="col-lg-3 d-flex align-items-end pb-3">
           <button
@@ -361,16 +310,20 @@
                 <tbody>
                   <tr>
                     <td>
-                      <input
+                      <!-- <input
                         type="text"
-                        value="{{ fromDate }} to{{ toDate }}"
+                        value="{{searchType==2?new Date():fromDate 'to' toDate}}"
                         class="form-control"
-                      />
+                      /> -->
+                      {{searchType=='2'?(newDate | date: "dd/MM/yyyy") :""}}
+                      {{searchType=='3'?(fromDate| date: "dd/MM/yyyy") :""}}
+                      {{searchType=='3'?"to" :""}}
+                      {{searchType=='3'?(toDate| date: "dd/MM/yyyy") :""}}
                     </td>
                     <td>
                       <input
                         type="text"
-                        value="{{ gameType }}"
+                        value="{{ game_name }}"
                         class="form-control"
                       />
                     </td>

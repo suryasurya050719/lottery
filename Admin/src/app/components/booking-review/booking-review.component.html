@@ -217,8 +217,8 @@
                 <tbody>
                   <tr *ngFor="let data of BookingListdata; let i = index">
                     <td>None</td>
-                    <td>{{ data.user_id }}</td>
-                    <td>{{ data.referalList[0]?.refered_user_id }}</td>
+                    <td>{{data.role_id==1?'BJCD A':data.role_id==2?'BJCD B':'BJCD C'}}{{ data.user_id }}</td>
+                    <td>{{data.referalList[0]?.refered_role_id==1?'BJCD A':data.referalList[0]?.refered_role_id==2?'BJCD B':'BJCD C'}}{{ data.referalList[0]?.refered_user_id }}</td>
                     <td>{{ data.created_on | date: "dd/MM/yyyy" }}</td>
                     <td>
                       <button

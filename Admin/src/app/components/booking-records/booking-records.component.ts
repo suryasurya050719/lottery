@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Booking } from '../../service/booking';
+import { Board } from '../../service/board';
+
 
 @Component({
   selector: 'app-booking-records',
@@ -17,13 +19,39 @@ export class BookingRecordsComponent implements OnInit {
   phone: string = '';
   user_id: string = '';
 
+  //search filter 
+  user_type: any = '';
+  referal_user_id:string=''
+  gamelistdata: any = [];
+  game_type: any = '';
+  toppingList: any = {};
+  board_type: any = [{}];
+ newDate:Date=new Date()
+game_name:string=''
+
+
   // booking list data
   BookingListdata: any = [];
   viewmorepopupdata: any = {};
-  constructor(private booking: Booking) {}
+  constructor(private booking: Booking,private board: Board) {}
 
   ngOnInit(): void {
     this.BookingList();
+    this.gameList()
+  }
+  gameList() {
+    this.board.GameList().subscribe((data) => {
+      console.log('data for game list', data.data);
+      this.gamelistdata = data.data;
+    });
+  }
+  game() {
+    this.toppingList = this.gamelistdata[this.game_type];
+    this.game_name=this.toppingList.game_name
+    console.log('game_type', this.game_type);
+  }
+  show_time() {
+    console.log('board_type', this.board_type);
   }
   BookingList() {
     let data = {
