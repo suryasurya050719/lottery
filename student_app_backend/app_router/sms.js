@@ -17,6 +17,13 @@ const { uniqueId } = require("../common/uniqueId");
 router.post("/newuserotp", async (req, res) => {
   console.log("data ", req.body);
   let body = req.body;
+  if (req.body.phone == "") {
+    res.json({
+      success: false,
+      statuscode: 400,
+      status: "Phone number is required",
+    });
+  }
   user.findOne({ phone: req.body.phone }).then((data) => {
     console.log(data);
     if (data == null || data.isOtpVerify == false) {
@@ -90,6 +97,13 @@ Your verification code for Account Activation is ${otp}. Please do not share thi
 });
 
 router.post("/excitingUserotp", async (req, res) => {
+  if (req.body.phone == "") {
+    res.json({
+      success: false,
+      statuscode: 400,
+      status: "Phone number is required",
+    });
+  }
   user
     .findOneAndUpdate(
       { phone: req.body.phone },

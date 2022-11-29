@@ -10,6 +10,20 @@ const saltRounds = 10;
 
 router.post("/registor", async (req, res) => {
   let body = req.body;
+  if (body.phone == "") {
+    res.json({
+      statuscode: 202,
+      status: "phone is required",
+      //data: data,
+    });
+  }
+  if (body.otp == "") {
+    res.json({
+      statuscode: 202,
+      status: "otp is required",
+      //data: data,
+    });
+  }
   let referal_user_data = {};
   user
     .findOne({ phone: body.phone })
@@ -144,7 +158,12 @@ router.post("/login", async (req, res) => {
 
 router.get("/singleuser/:id", async (req, res) => {
   let user_id = req.params.id;
-
+  if (user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
   // user.findOne({ user_id: user_id }).then((data) => {
   //   res.send({
   //     statuscode: 200,
@@ -211,6 +230,12 @@ router.get("/singleuser/:id", async (req, res) => {
 
 router.get("/refereduser/:id", async (req, res) => {
   let user_id = req.params.id;
+  if (user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
   let query = req.query;
   console.log("user_id", user_id, query);
   let searchFilter = {};
@@ -315,6 +340,12 @@ router.get("/all", async (req, res) => {
 
 router.delete("/delete/:id", (req, res) => {
   let user_id = req.params.id;
+  if (user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
   user.deleteOne({ user_id: user_id }).then((data) => {
     res.send({
       statuscode: 200,
@@ -331,6 +362,12 @@ router.put("/update", async (req, res) => {
     user_id: body.uset_id,
     status: body.status == "A" ? "N" : "A",
   };
+  if (data.user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
   console.log("bodatady", data);
   user
     .findOneAndUpdate(
@@ -351,6 +388,12 @@ router.put("/update", async (req, res) => {
 router.put("/userUpdate", async (req, res) => {
   let body = req.body;
   console.log("body", body);
+  if (body.user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
   let data = {
     name: body.name,
     phone: body.phone,
@@ -370,6 +413,12 @@ router.put("/userUpdate", async (req, res) => {
 
 router.put("/forgotpassword", async (req, res) => {
   let crediential = req.body;
+  if (crediential.phone == "") {
+    res.send({
+      statuscode: 202,
+      status: "phone is required",
+    });
+  }
   console.log("body", crediential);
   user
     .findOne({ phone: crediential.phone })

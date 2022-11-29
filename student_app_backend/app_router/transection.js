@@ -14,13 +14,27 @@ const saltRounds = 10;
 
 router.post("/addmony", async (req, res) => {
   let body = req.body;
+  if (body.user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+      //data: data,
+    });
+  }
+  if (body.transection_from_userid == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+      //data: data,
+    });
+  }
   var preparedata = {
     user_id: body.user_id,
     position: body.position,
     amount: body.amount,
     transection_from_userid: body.transection_from_userid,
     transection_from_roleid: body.transection_from_roleid,
-    commission:false,
+    commission: false,
     transection_to_userid: body.transection_to_userid,
     transection_to_roleid: body.transection_to_roleid,
     transection_from_type: body.transection_from_type,
@@ -54,7 +68,7 @@ router.post("/addmony", async (req, res) => {
               transection_to_userid: body.transection_to_userid,
               transection_from_type: body.transection_from_type,
               transection_to_type: body.transection_to_type,
-              commission:false,
+              commission: false,
               reason: body.reason,
               status: "success",
             };
@@ -77,6 +91,13 @@ router.post("/addmony", async (req, res) => {
 
 router.get("/singleuser/:id", async (req, res) => {
   let user_id = req.params.id;
+  if (user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+      //data: data,
+    });
+  }
   user
     .aggregate([
       {
@@ -213,6 +234,13 @@ router.get("/alluser", async (req, res) => {
 router.get("/singleuser", async (req, res) => {
   // let user_id = req.params.id;
   let query = req.query;
+  if (query.id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+      //data: data,
+    });
+  }
   // console.log("query", query);
   // let searchFilter = {
   //   id: Number(query.id),
@@ -296,7 +324,7 @@ router.get("/singleUserList", async (req, res) => {
   if (query.user_id !== "") {
     filterdata["user_id"] = query.user_id;
   }
-  if (query.commission !== '') {
+  if (query.commission !== "") {
     filterdata["commission"] = query.commission;
   }
   if (query.graterthan !== "") {
@@ -323,6 +351,13 @@ router.get("/singleUserList", async (req, res) => {
 
 router.get("/referal_user_trans_list/:id", async (req, res) => {
   let id = req.params.id;
+  if (id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+      //data: data,
+    });
+  }
   // let user_id = req.params.id;
   let query = req.query;
   console.log("user_id >>>>>>>>>>>>", query);

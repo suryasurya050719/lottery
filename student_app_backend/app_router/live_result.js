@@ -31,6 +31,13 @@ router.get("", async (req, res) => {
 
 router.delete("/:id", (req, res) => {
   let user_id = Number(req.params.id);
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "live_result_id is required",
+    });
+  }
   console.log("gshdfashg", user_id);
   live_result.deleteOne({ live_result_id: user_id }).then((data) => {
     res.send({
@@ -44,6 +51,13 @@ router.put("", async (req, res) => {
   let body = req.body;
   console.log("data", body);
   let live_result_id = body.live_result_id;
+  if (body.live_result_id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "live_result_id is required",
+    });
+  }
   let preparedata = {
     title: body.title,
     url: body.url,
