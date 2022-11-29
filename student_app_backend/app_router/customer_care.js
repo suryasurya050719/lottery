@@ -48,17 +48,31 @@ router.get("", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   let id = req.params.id;
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      sttus: "customer care id is required",
+    });
+  }
   customCare.deleteOne({ customer_care_id: id }).then((data) => {
     res.json({
       success: true,
       statuscode: 200,
-      status: "delete successfully",
+      sttus: "delete successfully",
     });
   });
 });
 
 router.put("/:id", upload.single("customerImage"), async (req, res) => {
   let id = req.params.id;
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      sttus: "customer care id is required",
+    });
+  }
   console.log(">>>>");
   var originalFileName = req.file.filename;
   let body = req.body;

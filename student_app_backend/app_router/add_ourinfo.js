@@ -32,6 +32,12 @@ router.get("", async (req, res) => {
 
 router.delete("/:id", (req, res) => {
   let user_id = Number(req.params.id);
+  if (req.params.id == "") {
+    res.send({
+      statuscode: 202,
+      status: "Add ourinfo id required",
+    });
+  }
   console.log("gshdfashg", user_id);
   add_ourinfo.deleteOne({ add_ourinfo_id: user_id }).then((data) => {
     res.send({
@@ -42,6 +48,12 @@ router.delete("/:id", (req, res) => {
 });
 router.get("/:id", async (req, res) => {
   let user_id = Number(req.params.id);
+  if (req.params.id == "") {
+    res.send({
+      statuscode: 202,
+      status: "Add ourinfo id required",
+    });
+  }
   add_ourinfo.findOne({ add_ourinfo_id: user_id }).then((data) => {
     res.send({
       data: data,
@@ -53,6 +65,12 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   let user_id = Number(req.params.id);
+  if (req.params.id == "") {
+    res.send({
+      statuscode: 202,
+      status: "Add ourinfo id required",
+    });
+  }
   let body = req.body;
   console.log("body", body, user_id);
   let preparedata = {

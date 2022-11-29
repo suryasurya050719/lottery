@@ -54,6 +54,13 @@ router.put("/updategame", async (req, res) => {
   let body = req.body;
   console.log("data", body);
   let board_id = body.game_id;
+  if (board_id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "game_id is required",
+    });
+  }
   let preparedata = {
     game_name: body.game_name,
     board_id: body.board_id,
@@ -76,6 +83,13 @@ router.put("/updategame", async (req, res) => {
 });
 router.delete("/gamedelete/:id", async (req, res) => {
   let game_id = req.params.id;
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "game_id is required",
+    });
+  }
   game.deleteOne({ game_id: game_id }).then((data) => {
     res.send({
       statuscode: 200,
@@ -88,6 +102,14 @@ router.delete("/gamedelete/:id", async (req, res) => {
 router.put("/publice", async (req, res) => {
   let body = req.body;
   console.log("body", body);
+  // let game_id = req.params.id;
+  if (body.game_id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "game_id is required",
+    });
+  }
   let data = {
     game_id: body.game_id,
     status: body.status == true ? false : true,

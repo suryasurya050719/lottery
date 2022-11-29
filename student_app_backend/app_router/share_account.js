@@ -12,7 +12,7 @@ router.post("", async (req, res) => {
     account_name: body.HolderName,
     branch_name: body.Branchname,
     ifsc_code: body.IFSCcode,
-    bank_name:body.body.bank_name
+    bank_name: body.body.bank_name,
   };
   let data = new shareAccount(preparedata);
   data.save().then((insertdata) => {
@@ -27,10 +27,17 @@ router.post("", async (req, res) => {
 
 router.get("/singleuserlist", async (req, res) => {
   let query = req.query;
+  if (query.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
   share_account.find({ user_id: query.id }).then((data) => {
     res.json({
       success: true,
-      data:data,
+      data: data,
       statuscode: 200,
       status: "list generate successfully",
     });
@@ -39,6 +46,13 @@ router.get("/singleuserlist", async (req, res) => {
 
 router.delete("/singlraccount/:id", (req, res) => {
   let user_id = req.params.id;
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
   share_account.deleteOne({ share_account_id: user_id }).then((data) => {
     res.send({
       statuscode: 200,
@@ -51,6 +65,12 @@ router.delete("/singlraccount/:id", (req, res) => {
 router.put("/update", async (req, res) => {
   let body = req.body;
   console.log("body", body);
+  if (data.share_account_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "share_account_id is required",
+    });
+  }
   let data = {
     account_type: body.account_type,
     account_name: body.account_name,
@@ -160,6 +180,12 @@ router.get("/sharedaccountlist", async (req, res) => {
 router.put("/updateone", async (req, res) => {
   let body = req.body;
   console.log("body", body);
+  if (body.share_account_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "share_account_id is required",
+    });
+  }
   let data = {
     share_broker_type: body.status == true ? false : true,
     share_customer_type: body.status == true ? false : true,
@@ -181,6 +207,12 @@ router.put("/updateone", async (req, res) => {
 
 router.put("/updatemany", async (req, res) => {
   let body = req.body;
+  if (body.share_account_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "share_account_id is required",
+    });
+  }
   console.log("body", body);
   let data = {
     share_broker_type: body.status == true ? false : true,

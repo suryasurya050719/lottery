@@ -38,6 +38,13 @@ router.put("/updateboard", async (req, res) => {
   let data = req.body;
   console.log("data", data);
   let board_id = data.board_id;
+  if (req.body.board_id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "Board_id required",
+    });
+  }
   let preparedata = {
     board_name: data.board_name,
     ticket_price: data.ticket_price,
@@ -56,6 +63,13 @@ router.put("/updateboard", async (req, res) => {
     });
 });
 router.delete("/boarddelete/:id", async (req, res) => {
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "Board_id required",
+    });
+  }
   let board_id = req.params.id;
   board.deleteOne({ board_id: board_id }).then((data) => {
     res.send({

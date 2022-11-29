@@ -42,6 +42,13 @@ router.get("/allbrokerslist", async (req, res) => {
 });
 router.get("/ownaccountlist/:id", async (req, res) => {
   let user_id = req.params.id;
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "User Id Required",
+    });
+  }
   account.find({ user_id: user_id }).then((data) => {
     res.json({
       success: true,
@@ -56,6 +63,13 @@ router.put("/updateaccount", async (req, res) => {
   let data = req.body;
   console.log("data", data);
   let account_id = data.account_id;
+  if (req.body.account_id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "Account Id required",
+    });
+  }
   let preparedata = {
     user_id: data.user_id,
     role_id: data.role_id,
@@ -81,6 +95,13 @@ router.put("/updateaccount", async (req, res) => {
 });
 router.delete("/accountdelete/:id", async (req, res) => {
   let account_id = req.params.id;
+  if (req.params.id == "") {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "Account Id required",
+    });
+  }
   account.deleteOne({ account_id: account_id }).then((data) => {
     res.send({
       statuscode: 200,
@@ -166,6 +187,13 @@ router.get("/sharedaccountlist", async (req, res) => {
 router.put("/updateone", async (req, res) => {
   let body = req.body;
   console.log("body", body);
+  if (req.body.id == "") {
+    res.send({
+      statuscode: 202,
+      status: "Account id is required",
+      data: data,
+    });
+  }
   let data = {
     customer_status: body.customer,
     broker_status: body.broker,
@@ -187,6 +215,12 @@ router.put("/updateone", async (req, res) => {
 router.put("/updatemany", async (req, res) => {
   let body = req.body;
   console.log("body", body);
+  if (req.body.id == "") {
+    res.send({
+      statuscode: 202,
+      status: "User id Required",
+    });
+  }
   let data = {
     customer_status: body.customer == true ? false : true,
   };

@@ -34,6 +34,12 @@ router.get("", async (req, res) => {
 
 router.delete("/:id", (req, res) => {
   let user_id = Number(req.params.id);
+  if (user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "ticket_price_id is required",
+    });
+  }
   console.log("gshdfashg", user_id);
   ticket_price.deleteOne({ ticket_price_id: user_id }).then((data) => {
     res.send({
@@ -46,6 +52,12 @@ router.delete("/:id", (req, res) => {
 router.put("", async (req, res) => {
   let body = req.body;
   let ticket_price_id = body.ticket_price_id;
+  if (ticket_price_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "ticket_price_id is required",
+    });
+  }
   let preparedata = {
     title: body.title,
     board: body.board,
