@@ -109,8 +109,15 @@ router.post("/registor", async (req, res) => {
 router.post("/login", async (req, res) => {
   let body = req.body;
   console.log("data", body);
+  if(body.phone==''){
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: "phone is required",
+    });
+  }
   user
-    .findOne({ phone: body.phone })
+    .findOne({ phone: Number(body.phone) })
     .then((data) => {
       console.log("data", data);
       bcrypt.compare(body.password, data.password).then((isMatch) => {
