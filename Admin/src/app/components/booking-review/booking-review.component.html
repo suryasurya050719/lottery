@@ -26,10 +26,17 @@
             </select>
           </div>
         </div>
-        <div class="col" *ngIf="user_type=='1'||user_type=='2'||user_type=='3'">
+        <div
+          class="col"
+          *ngIf="user_type == '1' || user_type == '2' || user_type == '3'"
+        >
           <div class="form-group">
             <label>Refered User Id </label>
-            <input type="text" class="form-control" [(ngModel)]="referal_user_id" />
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="referal_user_id"
+            />
           </div>
         </div>
         <div class="col">
@@ -53,42 +60,109 @@
             </select>
           </div>
         </div>
-        <div class="col-2">
-          <div class="form-group">
-            <label> Show Timing </label>
-            <mat-select
-              [(ngModel)]="board_type"
-              class="form-control"
-              multiple
-              (ngModelChange)="show_time()"
+        <!-- <div class="col-lg-2">
+          <label> Choose Show time </label>
+          <div class="dropdown w-100">
+            <span
+              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              [(ngModel)]="ShowTime_details"
+            >
+              Select
+            </span>
+            <div
+              class="dropdown-menu chos_board_drop cus_rm_drop bg-white b_1"
+              aria-labelledby="dropdownMenuButton"
+            >
+              <div class="p-2">
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">All</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                        value="All"
+                        (change)="ShowTime($event)"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                      >
+                        &nbsp; All</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-2" *ngFor="let data of toppingList">
+                  <h4 class="mb-0 pb-2">{{ data.game_name }}</h4>
+                  <div>
+                    <div
+                      class="form-check d-flex align-items-center pl-0"
+                      *ngFor="let time of data['show_date']"
+                    >
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                        [value]="time.showTime.showTime"
+                        (change)="ShowTime($event)"
+                      />
+                      &nbsp;
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                      >
+                        &nbsp;{{ time.showTime }}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-lg-2" style="margin-top: -12px">
+          <h4>Show time</h4>
+          <!-- <mat-form-field
+            appearance="fill"
+            class="form-control cursor-pointer w-100 d-block"
+          > -->
+          <mat-select
+            [formControl]="pokemonControl"
+            class="form-control cursor-pointer w-100 d-block"
+            (selectionChange)="show_time()"
+            multiple
+          >
+            <mat-option>-- None --</mat-option>
+            <mat-optgroup
+              *ngFor="let group of toppingList"
+              [label]="group.game_name"
             >
               <mat-option
-                *ngFor="let topping of toppingList.show_date"
-                [value]="topping.id"
-                >{{ topping.showTime }}</mat-option
+                *ngFor="let pokemon of group.show_date"
+                [value]="pokemon"
               >
-            </mat-select>
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Show Timing</mat-label>
-              <mat-select
-                [(ngModel)]="board_type"
-                class="form-control"
-                multiple
-                (ngModelChange)="show_time()"
-              >
-                <mat-option
-                  *ngFor="let topping of toppingList"
-                  [value]="topping"
-                  >{{ topping }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field> -->
-          </div>
+                {{ pokemon.showTime }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <!-- </mat-form-field> -->
         </div>
+
         <div class="col">
           <div class="form-group">
             <label> User Id </label>
-            <input type="text" class="form-control" [(ngModel)]="user_id" />
+            <input
+              type="text"
+              name=""
+              class="form-control"
+              [(ngModel)]="user_id"
+            />
           </div>
         </div>
         <div class="col">
@@ -136,14 +210,26 @@
                 <tbody>
                   <tr>
                     <td>None</td>
-                    <td>{{data.userlist.role_id==1?'BJCD A':data.userlist.role_id==2?'BJCD B':'BJCD C'}}{{ data.user_id }}</td>
+                    <td>
+                      {{
+                        data.userlist.role_id == 1
+                          ? "BJCD A"
+                          : data.userlist.role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.user_id }}
+                    </td>
                     <td>{{ data.userlist.name }}</td>
                     <td>{{ data.userlist.phone }}</td>
                     <td>
-                      {{ data.refered_role_id==1?'BJCD A':data.refered_role_id==2?'BJCD B':'BJCD C' }}
                       {{
-                        data.refered_user_id
+                        data.refered_role_id == 1
+                          ? "BJCD A"
+                          : data.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
                       }}
+                      {{ data.refered_user_id }}
                     </td>
                   </tr>
                 </tbody>
@@ -217,8 +303,24 @@
                 <tbody>
                   <tr *ngFor="let data of BookingListdata; let i = index">
                     <td>None</td>
-                    <td>{{data.role_id==1?'BJCD A':data.role_id==2?'BJCD B':'BJCD C'}}{{ data.user_id }}</td>
-                    <td>{{data.referalList[0]?.refered_role_id==1?'BJCD A':data.referalList[0]?.refered_role_id==2?'BJCD B':'BJCD C'}}{{ data.referalList[0]?.refered_user_id }}</td>
+                    <td>
+                      {{
+                        data.role_id == 1
+                          ? "BJCD A"
+                          : data.role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.user_id }}
+                    </td>
+                    <td>
+                      {{
+                        data.referalList[0]?.refered_role_id == 1
+                          ? "BJCD A"
+                          : data.referalList[0]?.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.referalList[0]?.refered_user_id }}
+                    </td>
                     <td>{{ data.created_on | date: "dd/MM/yyyy" }}</td>
                     <td>
                       <button

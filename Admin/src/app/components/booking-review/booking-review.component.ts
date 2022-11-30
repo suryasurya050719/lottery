@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Booking } from '../../service/booking';
 import { Board } from '../../service/board';
+import { FormControl } from '@angular/forms';
 // import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -9,6 +10,7 @@ import { Board } from '../../service/board';
   styleUrls: ['./booking-review.component.css'],
 })
 export class BookingReviewComponent implements OnInit {
+  pokemonControl = new FormControl('');
   config: any;
   constructor(private booking: Booking, private board: Board) {
     this.config = {
@@ -16,7 +18,7 @@ export class BookingReviewComponent implements OnInit {
       itemsPerPage: 1,
     };
   }
-  referal_user_id:string=''
+  referal_user_id: string = '';
   reviewList: any = [];
   BookingListdata: any = [];
   viewmorepopupdata: any = [];
@@ -31,6 +33,7 @@ export class BookingReviewComponent implements OnInit {
   phone: any = '';
   toppingList: any = {};
   gamelistdata: any = [];
+  ShowTime_details: string = '';
   ngOnInit(): void {
     this.gameList();
     this.BookingReviewList(this.config.currentPage);
@@ -45,10 +48,10 @@ export class BookingReviewComponent implements OnInit {
     let data = {
       user_id: this.user_id,
       phonenumber: this.phone,
-      refered_role_id:this.user_type,
-      referal_user_id:this.referal_user_id
+      refered_role_id: this.user_type,
+      referal_user_id: this.referal_user_id,
     };
-    console.log("data",data)
+    console.log('data', data);
     this.booking.ReferedBookingList(data).subscribe((data) => {
       this.reviewList = data.data;
       console.log('this review list', this.reviewList);
@@ -59,11 +62,17 @@ export class BookingReviewComponent implements OnInit {
     });
   }
   show_time() {
-    console.log('board_type', this.board_type);
+    console.log('board_type', this.pokemonControl);
   }
   game() {
-    this.toppingList = this.gamelistdata[this.game_type];
-    console.log('game_type', this.game_type);
+    if (this.game_type == '') {
+      this.toppingList = this.gamelistdata;
+    } else {
+      this.toppingList = this.gamelistdata[this.game_type];
+    }
+  }
+  ShowTime(data: any) {
+    console.log('ShowTime_details', data);
   }
   ViewMorePopupPanel = false;
   singleBookingRecords() {
