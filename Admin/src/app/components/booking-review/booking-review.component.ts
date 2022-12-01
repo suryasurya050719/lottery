@@ -31,9 +31,10 @@ export class BookingReviewComponent implements OnInit {
   board_type: any = [{}];
   user_id: any = '';
   phone: any = '';
-  toppingList: any = {};
+  toppingList: any = [];
   gamelistdata: any = [];
   ShowTime_details: string = '';
+  GameName:string=''
   ngOnInit(): void {
     this.gameList();
     this.BookingReviewList(this.config.currentPage);
@@ -65,10 +66,15 @@ export class BookingReviewComponent implements OnInit {
     console.log('board_type', this.pokemonControl);
   }
   game() {
+    console.log("this.game_type",typeof this.game_type)
     if (this.game_type == '') {
       this.toppingList = this.gamelistdata;
+      this.GameName=""
     } else {
-      this.toppingList = this.gamelistdata[this.game_type];
+      // console.log("this.gamelistdata[this.game_type];",this.gamelistdata[this.game_type])
+      this.toppingList=[]
+      this.toppingList.push(this.gamelistdata[this.game_type]);
+      this.GameName=this.gamelistdata[this.game_type].game_name
     }
   }
   ShowTime(data: any) {
@@ -80,9 +86,11 @@ export class BookingReviewComponent implements OnInit {
       fromdate: this.fromDate !== '' ? new Date(this.fromDate) : '',
       todate: this.toDate !== '' ? new Date(this.toDate) : '',
       user_id: this.activateUserID,
-      game_name: this.game_type,
+      game_name: this.GameName,
       phonenumber: this.phone,
+      show_time:this.pokemonControl.value
     };
+    console.log("pokemonControl",this.pokemonControl.value)
     this.booking.BookingList(data).subscribe((data) => {
       this.BookingListdata = data.data;
       console.log('booking data', this.BookingListdata);

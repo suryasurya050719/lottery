@@ -231,10 +231,14 @@ export class CreateLotteryComponent implements OnInit {
     console.log('game', this.GamePrice);
   }
   AddSlotTime(){
-   if(this.showTime!==''&&this.closeShowTime!==''){
+   if(this.GameName==''){
+ alert("Game name is required")
+   }
+   if(this.showTime!==''&&this.closeShowTime!==''&&this.GameName!==''){
     let data={
       id:this.slotTimeList.length+1,
       showTime:this.showTime,
+      game_name:this.GameName,
       closeShowTime:this.closeShowTime
     }
     this.slotTimeList.push(data)

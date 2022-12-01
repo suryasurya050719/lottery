@@ -33,7 +33,9 @@ router.post("/bookingCreate", async (req, res) => {
 router.get("/getall", async (req, res) => {
   // let query = req.query;
   let query = req.query;
-  console.log("query", query);
+  console.log("query fpr getall", query);
+  console.log("query fpr getall", query.show_time[0]);
+
   let searchFilter = {};
   let created_on = {};
   if (query.user_id !== "") {

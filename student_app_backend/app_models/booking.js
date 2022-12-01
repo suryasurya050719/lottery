@@ -29,6 +29,7 @@ const creatSchema = mongoose.Schema({
       board_letter_formation: Array,
       show_result_number: Array,
       ticket_count: Number,
+      show_date:Array,
       ticket_number: Number,
       ticket_price: Number,
       total_price: Number,
