@@ -99,12 +99,12 @@ export class Board {
       })
     );
   }
-  //   newuserSms(data: any): Observable<any> {
-  //     let url = `${environment.apiurl}/sms/newuserotp`;
-  //     return this.http.post(url, { query: data }).pipe(
-  //       map((data) => {
-  //         return data;
-  //       })
-  //     );
-  //   }
+  gameandboard(): Observable<any> {
+    let url = `${environment.apiurl}/game/gameandboard`;
+    return this.http.get(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

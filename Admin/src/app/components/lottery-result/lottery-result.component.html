@@ -1,103 +1,109 @@
-
-
 <!-- Container fluid Starts -->
 <div class="container-fluid">
-    <!-- Top Bar Starts -->
-    <div class="top-bar clearfix">
-      <div class="row gutter">
-        <div class="col-lg-12">
-          <div class="page-title">
-            <h3 class="txt_black_2">Lottery Results</h3>
-          </div>
+  <!-- Top Bar Starts -->
+  <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_black_2">Lottery Results</h3>
         </div>
       </div>
     </div>
-    <!-- Top Bar Ends -->
-  
-    <div class="mp_panel">
-        <div class="pb-2">
-            <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1">
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <label> Game Name </label>
-                  <select
-                    name=""
-                    id=""
-                    class="form-control"
-                    [(ngModel)]="game_type"
-                    (ngModelChange)="game()"
-                  >
-                    <option value="">Select</option>
-                    <option value="">All</option>
-                    <option
-                      *ngFor="let data of gamelistdata; let i = index"
-                      [value]="i"
-                    >
-                      {{ data.game_name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <label> Date from </label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    [(ngModel)]="fromDate"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3" style="margin-top: -12px">
-                <h4>Show time</h4>
-                <!-- <mat-form-field
+  </div>
+  <!-- Top Bar Ends -->
+
+  <div class="mp_panel">
+    <div class="pb-2">
+      <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> Game Name </label>
+            <select
+              name=""
+              id=""
+              class="form-control"
+              [(ngModel)]="game_type"
+              (ngModelChange)="game()"
+            >
+              <option value="">Select</option>
+              <option value="">All</option>
+              <option
+                *ngFor="let data of gamelistdata; let i = index"
+                [value]="i"
+              >
+                {{ data.game_name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> Date from </label>
+            <input type="date" class="form-control" [(ngModel)]="fromDate" />
+          </div>
+        </div>
+        <div class="col-lg-3" style="margin-top: -12px">
+          <h4>Show time</h4>
+          <!-- <mat-form-field
                   appearance="fill"
                   class="form-control cursor-pointer w-100 d-block"
                 > -->
-                <mat-select
-                  [formControl]="pokemonControl"
-                  class="form-control cursor-pointer w-100 d-block"
-                  (selectionChange)="show_time()"
-                  multiple
-                >
-                  <mat-option>__All__</mat-option>
-                  <mat-optgroup
-                    *ngFor="let group of toppingList"
-                    [label]="group.game_name"
-                  >
-                    <mat-option
-                      *ngFor="let pokemon of group.show_date"
-                      [value]="pokemon"
-                    >
-                      {{ pokemon.showTime }}
-                    </mat-option>
-                  </mat-optgroup>
-                </mat-select>
-                <!-- </mat-form-field> -->
-              </div>
-              <div class="col d-flex align-items-end pb-3 col-lg-1">
-                <button
-                  type="submit"
-                  class="btn btn-primary w-100 btn_input btn-ripple"
-                  (click)="searchData()"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-          </div>
-      <div>
+          <mat-select
+            [formControl]="pokemonControl"
+            class="form-control cursor-pointer w-100 d-block"
+            (selectionChange)="show_time()"
+            multiple
+          >
+            <mat-option>__All__</mat-option>
+            <mat-optgroup
+              *ngFor="let group of toppingList"
+              [label]="group.game_name"
+            >
+              <mat-option
+                *ngFor="let pokemon of group.show_date"
+                [value]="pokemon"
+              >
+                {{ pokemon.showTime }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <!-- </mat-form-field> -->
+        </div>
+        <div class="col d-flex align-items-end pb-3 col-lg-1">
+          <button
+            type="submit"
+            class="btn btn-primary w-100 btn_input btn-ripple"
+            (click)="searchData()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
       <div class="pb-2" *ngIf="result_data">
         <div *ngFor="let data of toppingList">
-          <label class="bg_yellow px-3 py-1 mb-0 text-white"
-            >{{data.game_name}}</label
-          >
+          <label class="bg_yellow px-3 py-1 mb-0 text-white">{{
+            data.game_name
+          }}</label>
         </div>
-        <div class="d-flex pt-3 flex-wrap">
-          <div class="d-flex mr-3 align-items-center flex-row px-2 py-1 mb-3" *ngFor="let data of ">
-            <div class="input-group" style="width: 150px;">
-              <span class="input-group-addon">A</span>
-              <input type="text" class="form-control" value="1,25,610" />
+        <div>
+          <div class="d-flex pt-3 flex-wrap">
+            <!-- *ngIf="data.showTime == pokemonControl[0].showTime" -->
+            <div
+              class="d-flex mr-3 align-items-center flex-row px-2 py-1 mb-3"
+              *ngFor="let data of letterFormat"
+            >
+              <div class="input-group" style="width: 150px">
+                <span class="input-group-addon">{{ data }}</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  [name]="data"
+                  [value]=""
+                  (ngModelChange)="ResultIntSrt($event)"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -106,11 +112,9 @@
         <button class="btn btn-sm mr-3">Lock</button>
         <button class="btn btn-sm mr-3">Preview</button>
       </div>
-  
     </div>
-  
+
     <div class="pt-5">
-  
       <div class="d-flex align-items-center pb-2 cursor_pointer">
         <h4 class="mb-0 pr-2">Advance Search</h4>
         <div class="active_chk dark_switch d-inline-block pt-2">
@@ -122,351 +126,424 @@
         </div>
       </div>
       <div class="pb-3">
-      <div class="row">
-        <div class="col-lg-3">
-          <label> Choose Board </label>
-          <div class="dropdown w-100">
-            <span
-              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Select
-            </span>
-            <div
-              class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
-              aria-labelledby="dropdownMenuButton"
-            >
-            <div class="p-2">
-              <div class="pb-2">
-                <h4 class="mb-0 pb-2">All, Dear</h4>
-                <div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-2 text-dark" for="exampleCheck1">1 Digit board</label>
+        <div class="row">
+          <div class="col-lg-3">
+            <label> Choose Board </label>
+            <div class="dropdown w-100">
+              <span
+                class="form-control cursor-pointer w-100 d-block dropdown-toggle"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Select
+              </span>
+              <div
+                class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <div class="p-2">
+                  <div class="pb-2">
+                    <h4 class="mb-0 pb-2">All, Dear</h4>
+                    <div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-2 text-dark"
+                          for="exampleCheck1"
+                          >1 Digit board</label
+                        >
+                      </div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-2 text-dark"
+                          for="exampleCheck1"
+                          >1 Digit board</label
+                        >
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-2 text-dark" for="exampleCheck1">1 Digit board</label>
+                  <div class="pb-2">
+                    <h4 class="mb-0 pb-2">Kerala Lottery</h4>
+                    <div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-2 text-dark"
+                          for="exampleCheck1"
+                          >1 Digit board</label
+                        >
+                      </div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-2 text-dark"
+                          for="exampleCheck1"
+                          >1 Digit board</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pb-2">
+                    <h4 class="mb-0 pb-2">Jackpot</h4>
+                    <div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-2 text-dark"
+                          for="exampleCheck1"
+                          >1 Digit board</label
+                        >
+                      </div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-2 text-dark"
+                          for="exampleCheck1"
+                          >1 Digit board</label
+                        >
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="pb-2">
-                <h4 class="mb-0 pb-2">Kerala Lottery</h4>
-                <div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-2 text-dark" for="exampleCheck1">1 Digit board</label>
-                  </div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-2 text-dark" for="exampleCheck1">1 Digit board</label>
-                  </div>
-                </div>
-              </div>
-              <div class="pb-2">
-                <h4 class="mb-0 pb-2">Jackpot</h4>
-                <div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-2 text-dark" for="exampleCheck1">1 Digit board</label>
-                  </div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-2 text-dark" for="exampleCheck1">1 Digit board</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-  
             </div>
           </div>
-        </div>
-        <div class="col-lg-3">
-          <label> Show Timing</label>
-          <div class="dropdown w-100">
-            <span
-              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Select
-            </span>
-            <div
-              class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
-              aria-labelledby="dropdownMenuButton"
-            >
-            <div class="p-2">
-              <div class="pb-2">
-                <h4 class="mb-0 pb-2">All, Dear</h4>
-                <div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-4 text-dark" for="exampleCheck1">3:00 pm</label>
+          <div class="col-lg-3">
+            <label> Show Timing</label>
+            <div class="dropdown w-100">
+              <span
+                class="form-control cursor-pointer w-100 d-block dropdown-toggle"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Select
+              </span>
+              <div
+                class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <div class="p-2">
+                  <div class="pb-2">
+                    <h4 class="mb-0 pb-2">All, Dear</h4>
+                    <div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-4 text-dark"
+                          for="exampleCheck1"
+                          >3:00 pm</label
+                        >
+                      </div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-4 text-dark"
+                          for="exampleCheck1"
+                          >5:00 pm</label
+                        >
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-4 text-dark" for="exampleCheck1">5:00 pm</label>
+                  <div class="pb-2">
+                    <h4 class="mb-0 pb-2">Kerala Lottery</h4>
+                    <div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-4 text-dark"
+                          for="exampleCheck1"
+                          >5:00 pm</label
+                        >
+                      </div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-4 text-dark"
+                          for="exampleCheck1"
+                          >5:00 pm</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pb-2">
+                    <h4 class="mb-0 pb-2">Jackpot</h4>
+                    <div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-4 text-dark"
+                          for="exampleCheck1"
+                          >5:00 pm</label
+                        >
+                      </div>
+                      <div class="form-check d-flex align-items-center pl-0">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                        <label
+                          class="form-check-label pl-4 text-dark"
+                          for="exampleCheck1"
+                          >5:00 pm</label
+                        >
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="pb-2">
-                <h4 class="mb-0 pb-2">Kerala Lottery</h4>
-                <div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-4 text-dark" for="exampleCheck1">5:00 pm</label>
-                  </div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-4 text-dark" for="exampleCheck1">5:00 pm</label>
-                  </div>
-                </div>
-              </div>
-              <div class="pb-2">
-                <h4 class="mb-0 pb-2">Jackpot</h4>
-                <div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-4 text-dark" for="exampleCheck1">5:00 pm</label>
-                  </div>
-                  <div class="form-check d-flex align-items-center pl-0">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label pl-4 text-dark" for="exampleCheck1">5:00 pm</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-  
             </div>
           </div>
-        </div>
-        <div class="col-lg-3  d-flex align-items-end pb-1">
-  
+          <div class="col-lg-3 d-flex align-items-end pb-1">
             <button class="btn btn-sm mr-3">Submit</button>
-  
+          </div>
         </div>
       </div>
     </div>
-  
-    </div>
-  
-  
-  
-  
-      <div class="pt-2 mb-3">
-        <div class="panel panel-red">
+
+    <div class="pt-2 mb-3">
+      <div class="panel panel-red">
+        <div class="pb-3">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="panel-heading">
+                <h3 class="text-left mb-0">Search Results</h3>
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center justify-content-end">
+              <div class="pr-3 text-center">
+                <span class="d-block">Auto</span>
+                <div class="active_chk dark_switch d-inline-block m-auto">
+                  <label class="switch">
+                    <input
+                      class="switch-input"
+                      name="IsActive"
+                      type="checkbox"
+                    />
+                    <span
+                      class="switch-label"
+                      data-on="On"
+                      data-off="Off"
+                    ></span>
+                    <span class="switch-handle"></span>
+                  </label>
+                </div>
+              </div>
+              <button class="btn btn-sm mr-3">Publish</button>
+              <button class="btn btn-sm">Download</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="resul_show_panel">
+          <span class="cnt_result">1</span>
+
           <div class="pb-3">
-            <div class="row align-items-center">
-              <div class="col-lg-6">
-                <div class="panel-heading">
-                  <h3 class="text-left mb-0">Search Results</h3>
-                </div>
-              </div>
-              <div class="col-lg-6 d-flex align-items-center justify-content-end">
-                <div class="pr-3 text-center">
-                  <span class="d-block">Auto</span>
-                  <div class="active_chk dark_switch d-inline-block m-auto">
-                    <label class="switch">
-                      <input
-                        class="switch-input"
-                        name="IsActive"
-                        type="checkbox"
-                      />
-                      <span
-                        class="switch-label"
-                        data-on="On"
-                        data-off="Off"
-                      ></span>
-                      <span class="switch-handle"></span>
-                    </label>
-                  </div>
-                </div>
-                <button class="btn btn-sm mr-3">Publish</button>
-                <button class="btn btn-sm">Download</button>
-              </div>
+            <div class="table-responsive product_table td_center">
+              <table class="table no-margin td-middle">
+                <thead>
+                  <tr>
+                    <th>Game Details</th>
+                    <th>Winning Number</th>
+                    <th>Board Details</th>
+                    <th>Show Details</th>
+                    <th>Total Tickets</th>
+                    <th>Total Collection</th>
+                    <th>Total Commission Detect</th>
+                    <th>Total Amount</th>
+                    <th>Total Income</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>sample</td>
+                    <td>sample</td>
+                    <td>sample</td>
+                    <td>sample</td>
+                    <td>sample</td>
+
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          value="1,25,610"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          value="1,25,610"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          value="1,25,610"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          value="1,25,610"
+                        />
+                      </div>
+
+                      <span class="badge bg-primary blink_txt mb-2"
+                        >Profit</span
+                      >
+                    </td>
+                    <td>
+                      <span class="badge bg-primary blink_txt mb-2"
+                        >Unpublish</span
+                      >
+
+                      12 jun 2022 05:00PM
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-  
-          <div class="resul_show_panel">
-            <span class="cnt_result">1</span>
-  
-            <div class="pb-3">
-              <div class="table-responsive product_table td_center">
-                <table class="table no-margin td-middle">
-                  <thead>
-                    <tr>
-                      <th>Game Details</th>
-                      <th>Winning Number</th>
-                      <th>Board Details</th>
-                      <th>Show Details</th>
-                      <th>Total Tickets</th>
-                      <th>Total Collection</th>
-                      <th>Total Commission Detect</th>
-                      <th>Total Amount</th>
-                      <th>Total Income</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>sample</td>
-                      <td>sample</td>
-                      <td>sample</td>
-                      <td>sample</td>
-                      <td>sample</td>
-  
-                      <td>
-                        <div
-                          class="input-group"
-                          style="width: 150px; margin: 0 auto"
-                        >
-                          <span class="input-group-addon">RS</span>
-                          <input
-                            type="text"
-                            class="form-control"
-                            value="1,25,610"
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="input-group"
-                          style="width: 150px; margin: 0 auto"
-                        >
-                          <span class="input-group-addon">RS</span>
-                          <input
-                            type="text"
-                            class="form-control"
-                            value="1,25,610"
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="input-group"
-                          style="width: 150px; margin: 0 auto"
-                        >
-                          <span class="input-group-addon">RS</span>
-                          <input
-                            type="text"
-                            class="form-control"
-                            value="1,25,610"
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="input-group"
-                          style="width: 150px; margin: 0 auto"
-                        >
-                          <span class="input-group-addon">RS</span>
-                          <input
-                            type="text"
-                            class="form-control"
-                            value="1,25,610"
-                          />
-                        </div>
-  
-                        <span class="badge bg-primary blink_txt mb-2">Profit</span
-                        >
-                      </td>
-                      <td>
-  
-                        <span class="badge bg-primary blink_txt mb-2">Unpublish</span>
-  
-                        12 jun 2022 05:00PM
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+
+          <div class="pb-3 pt-2">
+            <div class="mb-0 pb-0">
+              <h4 class="text-left">Records Preview</h4>
             </div>
-  
-            <div class="pb-3 pt-2">
-              <div class="mb-0 pb-0">
-                <h4 class="text-left">Records Preview</h4>
-              </div>
-  
-              <div
-                class="panel-body pb-0 table-responsive product_table td_center"
-              >
-                <table class="table no-margin">
-                  <thead>
-                    <tr>
-                      <th>Broker id if any</th>
-                      <th>Booking id</th>
-                      <th>User id</th>
-                      <th>Referral id</th>
-                      <th>Date and Time
-                      </th>
-                      <th>Details</th>
-                      <th>Amount</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>sample</td>
-                      <td>sample</td>
-                      <td>sample</td>
-                      <td>sample</td>
-                      <td>sample</td>
-                      <td>
-                        <button class="btn btn-primary btn-sm" (click)="ViewMorePopup2()">View</button>
-                      </td>
-                      <td>
-                        <div
-                          class="input-group"
-                          style="width: 150px; margin: 0 auto"
-                        >
-                          <span class="input-group-addon">RS</span>
-                          <input type="text" class="form-control" />
-                        </div>
-                      </td>
-                      <td>
-                        <span class="badge bg-primary blink_txt mb-2"
-                          >In progress</span
-                        >
-                        <br />
-                        <button class="btn btn-primary btn-sm"  (click)="ViewMorePopup3()">View</button>
-                      </td>
-  
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+
+            <div
+              class="panel-body pb-0 table-responsive product_table td_center"
+            >
+              <table class="table no-margin">
+                <thead>
+                  <tr>
+                    <th>Broker id if any</th>
+                    <th>Booking id</th>
+                    <th>User id</th>
+                    <th>Referral id</th>
+                    <th>Date and Time</th>
+                    <th>Details</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>sample</td>
+                    <td>sample</td>
+                    <td>sample</td>
+                    <td>sample</td>
+                    <td>sample</td>
+                    <td>
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="ViewMorePopup2()"
+                      >
+                        View
+                      </button>
+                    </td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-primary blink_txt mb-2"
+                        >In progress</span
+                      >
+                      <br />
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="ViewMorePopup3()"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-  
-            <nav class="Page navigation text-center pt-3 pb-3">
-              <ul
-                class="pagination justify-content-center d-flex align-items-center"
-              >
-                <li>
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">«</span>
-                  </a>
-                </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                  <a href="#" aria-label="Next">
-                    <span aria-hidden="true">»</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
           </div>
-  <div class="pl-4">
+
           <nav class="Page navigation text-center pt-3 pb-3">
             <ul
               class="pagination justify-content-center d-flex align-items-center"
@@ -489,135 +566,137 @@
             </ul>
           </nav>
         </div>
+        <div class="pl-4">
+          <nav class="Page navigation text-center pt-3 pb-3">
+            <ul
+              class="pagination justify-content-center d-flex align-items-center"
+            >
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">«</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">»</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
   </div>
-  <!-- Container fluid ends -->
-  
-  
-  
-  
-  
-  
-  
-  <section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel2">
-    <div class="popup_info d-flex align-items-center justify-content-center w-100 h-100">
-      <div class="pop_wrapper w-75 position-relative">
-        <span class="popup_close" (click)="CloseMoreViewPopup2()">x</span>
-        <div class="form_pop_he p-3">
-          <div class="table-responsive">
-            <table class="table no-margin text-center">
-              <thead>
-                <tr>
-                  <th>Game Details</th>
-                  <th>Board Details </th>
-                  <th>Ticket no</th>
-                  <th>Quantity</th>
-                  <th>Ticket price</th>
-                  <th>Total Amount</th>
-                  <th>Status</th>
-  
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>sample</td>
-                  <td>sample</td>
-                  <td>sample</td>
-                  <td>sample</td>
-  
-  
-                  <td>
-                    <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto"
-                  >
+</div>
+<!-- Container fluid ends -->
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel2">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup2()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>Game Details</th>
+                <th>Board Details</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Ticket price</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
-                  </td>
-                  <td>
-                    <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto"
-                  >
+                </td>
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
-                  </td>
-                  <td> <span class="badge bg-primary blink_txt mb-2">Success</span></td>
-  
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                </td>
+                <td>
+                  <span class="badge bg-primary blink_txt mb-2">Success</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </section>
-  
-  
-  
-  
-  
-  
-  <section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel3">
-    <div class="popup_info d-flex align-items-center justify-content-center w-100 h-100">
-      <div class="pop_wrapper w-75 position-relative">
-        <span class="popup_close" (click)="CloseMoreViewPopup3()">x</span>
-        <div class="form_pop_he p-3">
-          <div class="table-responsive">
-            <table class="table no-margin text-center">
-              <thead>
-                <tr>
-                  <th>Game Details</th>
-                  <th>Board Details </th>
-                  <th>Ticket no</th>
-                  <th>Quantity</th>
-                  <th>Ticket price</th>
-  
-                  <th>Status</th>
-                  <th>winning Number</th>
-                  <th>winning Amount</th>
-  
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>sample</td>
-                  <td>sample</td>
-                  <td>sample</td>
-                  <td>sample</td>
-  
-  
-                  <td>
-                    <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto"
-                  >
+  </div>
+</section>
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel3">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup3()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>Game Details</th>
+                <th>Board Details</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Ticket price</th>
+
+                <th>Status</th>
+                <th>winning Number</th>
+                <th>winning Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+                <td>sample</td>
+
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
-                  </td>
-  
-                  <td> <span class="badge bg-primary blink_txt mb-2">Win</span></td>
-                  <td>sample</td>
-                  <td>
-                    <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto"
-                  >
+                </td>
+
+                <td>
+                  <span class="badge bg-primary blink_txt mb-2">Win</span>
+                </td>
+                <td>sample</td>
+                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>
