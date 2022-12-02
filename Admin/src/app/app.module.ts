@@ -37,6 +37,7 @@ import { MyRequestRejectedComponent } from './components/my-request-rejected/my-
 import { BookingRecordsComponent } from './components/booking-records/booking-records.component';
 import { BookingReviewComponent } from './components/booking-review/booking-review.component';
 import { MatSelectModule } from '@angular/material/select';
+import {LotteryResultComponent} from '../app/components/lottery-result/lottery-result.component'
 // import {MyRequestComponent} from "./components/my-request/my-request.component"
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 
@@ -48,6 +49,7 @@ import { MatSelectModule } from '@angular/material/select';
     AppComponent,
     // MatSelectModule,
     MyRequestComponent,
+    LotteryResultComponent,
     MyRequestApprovedComponent,
     MyRequestRejectedComponent,
     BookingRecordsComponent,

@@ -162,7 +162,7 @@ router.post("/check_status", async (req, res) => {
       status: "tx_id is required",
     });
   }
-  if (body.body.date == "") {
+  if (body.date == "") {
     res.send({
       statuscode: 202,
       status: "date is required",
