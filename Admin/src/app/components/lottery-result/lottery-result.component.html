@@ -36,7 +36,7 @@
             </select>
           </div>
         </div>
-        <div class="col-lg-3">
+        <!-- <div class="col-lg-3">
           <div class="form-group">
             <label> Date from </label>
             <input type="date" class="form-control" [(ngModel)]="fromDate" />
@@ -44,10 +44,10 @@
         </div>
         <div class="col-lg-3" style="margin-top: -12px">
           <h4>Show time</h4>
-          <!-- <mat-form-field
+          <mat-form-field
                   appearance="fill"
                   class="form-control cursor-pointer w-100 d-block"
-                > -->
+                >
           <mat-select
             [formControl]="pokemonControl"
             class="form-control cursor-pointer w-100 d-block"
@@ -67,8 +67,8 @@
               </mat-option>
             </mat-optgroup>
           </mat-select>
-          <!-- </mat-form-field> -->
-        </div>
+          </mat-form-field>
+        </div> -->
         <div class="col d-flex align-items-end pb-3 col-lg-1">
           <button
             type="submit"
@@ -100,8 +100,9 @@
                   type="text"
                   class="form-control"
                   [name]="data"
-                  [value]=""
-                  (ngModelChange)="ResultIntSrt($event)"
+                  value=""
+                  [disabled]="inputDisabled"
+                  (change)="ResultIntSrt($event)"
                 />
               </div>
             </div>
@@ -109,7 +110,7 @@
         </div>
       </div>
       <div *ngIf="result_data">
-        <button class="btn btn-sm mr-3">Lock</button>
+        <button class="btn btn-sm mr-3" (click)="LockInputField()">Lock</button>
         <button class="btn btn-sm mr-3">Preview</button>
       </div>
     </div>

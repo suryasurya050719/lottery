@@ -18,6 +18,13 @@ export class LotteryResultComponent implements OnInit {
   fromDate: any = '';
   toppingList: any = [];
   gamelistdata: any = [];
+  result_numerick: any = {
+    X: '',
+    A: '',
+    B: '',
+    C: '',
+  };
+  inputDisabled: boolean = false;
   ngOnInit(): void {
     this.gameList();
   }
@@ -42,7 +49,30 @@ export class LotteryResultComponent implements OnInit {
   }
   ViewMorePopupPanel2 = false;
   ResultIntSrt(event: any) {
-    console.log('event ', event);
+    let targetName = event.target.name;
+    let targetValue = event.target.value;
+    console.log('targetValue.length! > 0', targetValue.length);
+    if (targetValue.length! > 0) {
+      if (targetValue.length! < 2) {
+        let array = { ...this.result_numerick, [targetName]: targetValue };
+        console.log('array', array);
+        this.result_numerick = array;
+      } else {
+        let array = { ...this.result_numerick, [targetName]: '' };
+        console.log('array', array);
+        this.result_numerick = array;
+        alert('Must have only one Digit Numeric');
+      }
+    }
+  }
+  LockInputField() {
+    const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
+    console.log('isempty', isEmpty);
+    if (isEmpty) {
+      this.inputDisabled = true;
+    } else {
+      alert(' Please Fill All Numeric in Valid Format');
+    }
   }
   ViewMorePopup2() {
     this.ViewMorePopupPanel2 = !this.ViewMorePopupPanel2;
