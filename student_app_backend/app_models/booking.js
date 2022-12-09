@@ -9,9 +9,6 @@ const creatSchema = mongoose.Schema({
   user_id: {
     type: Number,
   },
-  role_id: {
-    type: Number,
-  },
   game_id: {
     type: Number,
   },
@@ -21,6 +18,8 @@ const creatSchema = mongoose.Schema({
   phone: {
     type: Number,
   },
+  showTime: String,
+  closeShowTime: String,
   booking_data: [
     {
       board_name: String,
@@ -29,7 +28,6 @@ const creatSchema = mongoose.Schema({
       board_letter_formation: Array,
       show_result_number: Array,
       ticket_count: Number,
-      show_date:Array,
       ticket_number: Number,
       ticket_price: Number,
       total_price: Number,

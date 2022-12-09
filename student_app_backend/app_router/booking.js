@@ -4,30 +4,38 @@ const booking = require("../app_models/booking");
 const user = require("../app_models/user");
 const referals = require("../app_models/referal");
 
-
 const { route } = require("./live_result");
 
 router.post("/bookingCreate", async (req, res) => {
-  let data = req.body;
-  // console.log("data", data);
-  let preparedata = {
-    user_id: data.user_id,
-    role_id: data.role_id,
-    game_id: data.game_id,
-    game_name:data.game_name,
-    phone: data.phone,
-    game_name: data.game_name,
-    booking_data: data.booking_data,
-    total_price: data.total_price,
-  };
-  let boardCrate = new booking(preparedata);
-  await boardCrate.save().then((data) => {
-    res.json({
-      success: true,
-      statuscode: 200,
-      status: "Booking create successfully",
+  try {
+    let data = req.body;
+    // console.log("data", data);
+    let preparedata = {
+      user_id: data.user_id,
+      role_id: data.role_id,
+      game_id: data.game_id,
+      game_name: data.game_name,
+      showTime: data.showTime,
+      phone: data.phone,
+      game_name: data.game_name,
+      booking_data: data.booking_data,
+      total_price: data.total_price,
+    };
+    let boardCrate = new booking(preparedata);
+    await boardCrate.save().then((data) => {
+      res.json({
+        success: true,
+        statuscode: 200,
+        status: "Booking create successfully",
+      });
     });
-  });
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  }
 });
 
 router.get("/getall", async (req, res) => {
@@ -138,7 +146,7 @@ router.get("/referedbooking", async (req, res) => {
   let query = req.query;
   console.log("query", query);
   let searchFilter = {};
-  let userFilter={}
+  let userFilter = {};
   if (query.user_id !== "") {
     searchFilter["user_id"] = parseInt(query.user_id);
   }
@@ -153,9 +161,9 @@ router.get("/referedbooking", async (req, res) => {
   }
 
   let searchFilters = {};
-  let userfilters={}
+  let userfilters = {};
   searchFilters["$and"] = [searchFilter];
-  userfilters["$and"]=[userFilter]
+  userfilters["$and"] = [userFilter];
   console.log("searchFilters", searchFilters);
   console.log("userfilters", userfilters);
 
@@ -179,7 +187,7 @@ router.get("/referedbooking", async (req, res) => {
           foreignField: "user_id",
           pipeline: [
             {
-              $match: userfilters
+              $match: userfilters,
             },
           ],
           as: "userlist",
