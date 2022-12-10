@@ -36,7 +36,7 @@ const account = require("./app_router/account");
 const customer_info = require("./app_router/customer_care");
 const Booking = require("./app_router/booking");
 const my_request = require("./app_router/my_request");
-const result = require("./app_router/live_result");
+const result = require("./app_router/lottery_result");
 app.use(express.json());
 app.use("/images", express.static("assets"));
 app.use("/user", user);
