@@ -210,4 +210,24 @@ router.get("/referedbooking", async (req, res) => {
       });
     });
 });
+
+router.get("/singleuserRecord",async (req,res)=>{
+  let query = req.query;
+try {
+  booking.find({user_id:query.user_id}).then((data)=>{
+    res.json({
+      success: true,
+      data: data,
+      statuscode: 200,
+      status: "list create successfully",
+    })
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 202,
+    status: error,
+  })
+}
+})
 module.exports = router;
