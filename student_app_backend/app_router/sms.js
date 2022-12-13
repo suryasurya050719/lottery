@@ -15,6 +15,7 @@ const saltRounds = 10;
 const { uniqueId } = require("../common/uniqueId");
 
 router.post("/newuserotp", async (req, res) => {
+try {
   console.log("data ", req.body);
   let body = req.body;
   if (req.body.phone == "") {
@@ -94,9 +95,17 @@ Your verification code for Account Activation is ${otp}. Please do not share thi
       });
     }
   });
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 202,
+    status: error,
+  });
+}
 });
 
 router.post("/excitingUserotp", async (req, res) => {
+try {
   if (req.body.phone == "") {
     res.json({
       success: false,
@@ -166,6 +175,13 @@ Your verification code for Account Activation is ${otp}. Please do not share thi
     .catch((data) => {
       console.log("sdkjdk", data);
     });
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 202,
+    status: error,
+  });
+}
 });
 
 module.exports = router;

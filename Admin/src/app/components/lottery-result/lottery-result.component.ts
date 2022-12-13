@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Board } from '../../service/board';
+import {LotteryResult} from "../../service/lottery_result"
 
 @Component({
   selector: 'app-lottery-result',
@@ -10,20 +11,23 @@ import { Board } from '../../service/board';
 export class LotteryResultComponent implements OnInit {
   pokemonControl = new FormControl('');
 
-  constructor(private board: Board) {}
+  constructor(private board: Board,private lotteryResult:LotteryResult) {}
   letterFormat: any = [];
+  previewData:any=[]
   game_type: any = '';
+  board_type:any=''
   result_data: boolean = false;
   GameName: any = '';
+  boardName:String=''
   fromDate: any = '';
   toppingList: any = [];
   gamelistdata: any = [];
   result_numerick: any = {
-    X: '',
     A: '',
     B: '',
     C: '',
   };
+  currentGame:any={}
   inputDisabled: boolean = false;
   ngOnInit(): void {
     this.gameList();
@@ -41,11 +45,17 @@ export class LotteryResultComponent implements OnInit {
     this.toppingList = [];
     this.toppingList.push(this.gamelistdata[this.game_type]);
     this.GameName = this.gamelistdata[this.game_type].game_name;
+    this.currentGame=this.gamelistdata[this.game_type]
     let lengthofdata = this.toppingList[0].brd.length;
     this.letterFormat = this.toppingList[0].brd[lengthofdata - 1].board_letters;
     console.log('data', this.letterFormat);
     // }
     // console.log('this.toppingList', this.toppingList);
+  }
+  activeBoard(){
+    console.log("activeBoard",this.board_type)
+    this.boardName=this.currentGame.brd[this.board_type].board_name
+    console.log("this.boardName",this.boardName)
   }
   ViewMorePopupPanel2 = false;
   ResultIntSrt(event: any) {
@@ -98,5 +108,14 @@ export class LotteryResultComponent implements OnInit {
 
   CloseMoreViewPopup3() {
     this.ViewMorePopupPanel3 = false;
+  }
+
+  // preview
+
+  Preview(){
+this.lotteryResult.Preview().subscribe((data)=>{
+  console.log("preview data===>",data.result)
+  this.previewData=data.result
+})
   }
 }

@@ -36,18 +36,31 @@
             </select>
           </div>
         </div>
-        <!-- <div class="col-lg-3">
-          <div class="form-group">
-            <label> Date from </label>
-            <input type="date" class="form-control" [(ngModel)]="fromDate" />
-          </div>
+        <div class="col-lg-3" style="margin-top: -12px">
+          <h4>Board</h4>
+          <select
+              name=""
+              id=""
+              class="form-control"
+              [(ngModel)]="board_type"
+              (ngModelChange)="activeBoard()"
+            >
+              <option value="">Select</option>
+              <option value="">All</option>
+              <option
+                *ngFor="let data of currentGame.brd; let i = index"
+                [value]="i"
+              >
+                {{ data.board_name }}
+              </option>
+            </select>
         </div>
         <div class="col-lg-3" style="margin-top: -12px">
           <h4>Show time</h4>
-          <mat-form-field
+          <!-- <mat-form-field
                   appearance="fill"
                   class="form-control cursor-pointer w-100 d-block"
-                >
+                > -->
           <mat-select
             [formControl]="pokemonControl"
             class="form-control cursor-pointer w-100 d-block"
@@ -67,8 +80,14 @@
               </mat-option>
             </mat-optgroup>
           </mat-select>
-          </mat-form-field>
-        </div> -->
+          <!-- </mat-form-field> -->
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> Date from </label>
+            <input type="date" class="form-control" [(ngModel)]="fromDate" />
+          </div>
+        </div>
         <div class="col d-flex align-items-end pb-3 col-lg-1">
           <button
             type="submit"
@@ -111,7 +130,7 @@
       </div>
       <div *ngIf="result_data">
         <button class="btn btn-sm mr-3" (click)="LockInputField()">Lock</button>
-        <button class="btn btn-sm mr-3">Preview</button>
+        <button class="btn btn-sm mr-3"(click)="Preview()">Preview</button>
       </div>
     </div>
 
@@ -407,9 +426,9 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
+                    <td>{{GameName}}</td>
+                    <td>A:{{result_numerick.A}}B:{{result_numerick.A}}C:{{result_numerick.A}}</td>
+                    <td>{{boardName}}</td>
                     <td>sample</td>
                     <td>sample</td>
 
@@ -499,15 +518,14 @@
                     <th>Referral id</th>
                     <th>Date and Time</th>
                     <th>Details</th>
-                    <th>Amount</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
+                  <tr *ngFor="let data of previewData">
+                    <td>None</td>
+                    <td>BJCD BK{{data.booking_id}}</td>
+                    <td>BJCD C{{data.user_id}}</td>
                     <td>sample</td>
                     <td>sample</td>
                     <td>
@@ -518,7 +536,7 @@
                         View
                       </button>
                     </td>
-                    <td>
+                    <!-- <td>
                       <div
                         class="input-group"
                         style="width: 150px; margin: 0 auto"
@@ -526,18 +544,18 @@
                         <span class="input-group-addon">RS</span>
                         <input type="text" class="form-control" />
                       </div>
-                    </td>
+                    </td> -->
                     <td>
                       <span class="badge bg-primary blink_txt mb-2"
                         >In progress</span
                       >
                       <br />
-                      <button
+                      <!-- <button
                         class="btn btn-primary btn-sm"
                         (click)="ViewMorePopup3()"
                       >
                         View
-                      </button>
+                      </button> -->
                     </td>
                   </tr>
                 </tbody>
