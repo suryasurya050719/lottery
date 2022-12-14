@@ -28,75 +28,96 @@ router.post("/bookingCreate", async (req, res) => {
         statuscode: 200,
         status: "Booking create successfully",
       });
-    });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: error,
+      })
+    })
   } catch (error) {
     res.json({
       success: false,
-      statuscode: 202,
+      statuscode: 500,
       status: error,
     });
   }
 });
 
 router.get("/getall", async (req, res) => {
-  // let query = req.query;
-  let query = req.query;
-  console.log("query fpr getall", query);
-  console.log("query fpr getall", query.show_time[0]);
-
-  let searchFilter = {};
-  let created_on = {};
-  if (query.user_id !== "") {
-    searchFilter["user_id"] = parseInt(query.user_id);
-  }
-  // if (query.phonenumber !== "" && query.phonenumber !== NaN) {
-  //   searchFilter["phone"] = Number(query.phonenumber);
-  // }
-  if (query.fromdate !== "") {
-    created_on["$gt"] = new Date(query.fromdate);
-  }
-  if (query.todate !== "") {
-    created_on["$lt"] = new Date(query.todate);
-  }
-  if (query.game_name !== "") {
-    searchFilter["game_name"] = query.game_name;
-  }
-  let length = Object.keys(created_on).length;
-  if (length > 0) {
-    searchFilter["created_on"] = created_on;
-  }
-  // if(show_time.length>0){
-
-  // }
-  let searchFilters = {};
-  searchFilters["$and"] = [searchFilter];
-  console.log("searchFilters", searchFilters);
-  booking
-    .aggregate([
-      {
-        $match: searchFilters,
-      },
-      {
-        $lookup: {
-          from: "referals",
-          localField: "user_id",
-          foreignField: "user_id",
-          as: "referalList",
-        },
-      },
-    ])
-
-    .then((data) => {
-      res.json({
-        success: true,
-        data: data,
-        statuscode: 200,
-        status: "list create successfully",
-      });
-    });
+ try {
+   // let query = req.query;
+   let query = req.query;
+   console.log("query fpr getall", query);
+   console.log("query fpr getall", query.show_time[0]);
+ 
+   let searchFilter = {};
+   let created_on = {};
+   if (query.user_id !== "") {
+     searchFilter["user_id"] = parseInt(query.user_id);
+   }
+   // if (query.phonenumber !== "" && query.phonenumber !== NaN) {
+   //   searchFilter["phone"] = Number(query.phonenumber);
+   // }
+   if (query.fromdate !== "") {
+     created_on["$gt"] = new Date(query.fromdate);
+   }
+   if (query.todate !== "") {
+     created_on["$lt"] = new Date(query.todate);
+   }
+   if (query.game_name !== "") {
+     searchFilter["game_name"] = query.game_name;
+   }
+   let length = Object.keys(created_on).length;
+   if (length > 0) {
+     searchFilter["created_on"] = created_on;
+   }
+   // if(show_time.length>0){
+ 
+   // }
+   let searchFilters = {};
+   searchFilters["$and"] = [searchFilter];
+   console.log("searchFilters", searchFilters);
+   booking
+     .aggregate([
+       {
+         $match: searchFilters,
+       },
+       {
+         $lookup: {
+           from: "referals",
+           localField: "user_id",
+           foreignField: "user_id",
+           as: "referalList",
+         },
+       },
+     ])
+ 
+     .then((data) => {
+       res.json({
+         success: true,
+         data: data,
+         statuscode: 200,
+         status: "list create successfully",
+       });
+     }).catch((error)=>{
+       res.json({
+         success: false,
+         statuscode: 202,
+         status: error,
+       })
+     })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  })
+ }
 });
 
 router.get("/bookingReview", async (req, res) => {
+ try {
   let query = req.query;
   console.log("query", query);
   let searchFilter = {};
@@ -140,9 +161,23 @@ router.get("/bookingReview", async (req, res) => {
         statuscode: 200,
         status: "list create successfully",
       });
-    });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: error,
+      })
+    })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  })
+ }
 });
 router.get("/referedbooking", async (req, res) => {
+ try {
   let query = req.query;
   console.log("query", query);
   let searchFilter = {};
@@ -208,12 +243,25 @@ router.get("/referedbooking", async (req, res) => {
         statuscode: 200,
         status: "list create successfully",
       });
-    });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: error,
+      })
+    })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  })
+ }
 });
 
 router.get("/singleuserRecord",async (req,res)=>{
-  let query = req.query;
 try {
+  let query = req.query;
   booking.find({user_id:query.user_id}).then((data)=>{
     res.json({
       success: true,
@@ -221,11 +269,17 @@ try {
       statuscode: 200,
       status: "list create successfully",
     })
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    })
   })
 } catch (error) {
   res.json({
     success: false,
-    statuscode: 202,
+    statuscode: 500,
     status: error,
   })
 }

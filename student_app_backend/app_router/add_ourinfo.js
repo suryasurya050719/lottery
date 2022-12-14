@@ -3,6 +3,7 @@ const router = express.Router();
 const add_ourinfo = require("../app_models/add_ourinfo");
 
 router.post("", async (req, res) => {
+try {
   let body = req.body;
   // console.log("bodt", body);
   let preparedata = {
@@ -16,10 +17,24 @@ router.post("", async (req, res) => {
       statuscode: 200,
       status: "create successfully",
     });
+  }).catch((err)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: err,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 
 router.get("", async (req, res) => {
+try {
   add_ourinfo.find().then((data) => {
     res.json({
       success: true,
@@ -27,10 +42,24 @@ router.get("", async (req, res) => {
       data: data,
       status: "list generate successfully",
     });
+  }).catch((err)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: err,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 
 router.delete("/:id", (req, res) => {
+try {
   let user_id = Number(req.params.id);
   if (req.params.id == "") {
     res.send({
@@ -38,15 +67,28 @@ router.delete("/:id", (req, res) => {
       status: "Add ourinfo id required",
     });
   }
-  console.log("gshdfashg", user_id);
   add_ourinfo.deleteOne({ add_ourinfo_id: user_id }).then((data) => {
     res.send({
       statuscode: 200,
       status: "delete successfully",
+    })
+  }).catch((err)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: err,
     });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 router.get("/:id", async (req, res) => {
+try {
   let user_id = Number(req.params.id);
   if (req.params.id == "") {
     res.send({
@@ -60,11 +102,25 @@ router.get("/:id", async (req, res) => {
       statuscode: 200,
       status: "list successfully",
     });
+  }).catch((err)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: err,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 
 router.put("/:id", async (req, res) => {
-  let user_id = Number(req.params.id);
+  try {
+    let user_id = Number(req.params.id);
   if (req.params.id == "") {
     res.send({
       statuscode: 202,
@@ -87,7 +143,20 @@ router.put("/:id", async (req, res) => {
         statuscode: 200,
         status: "updated successfully",
       });
+    }).catch((err)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: err,
+      });
+    })
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
     });
+  }
 });
 
 module.exports = router;

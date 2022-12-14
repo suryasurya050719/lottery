@@ -5,6 +5,7 @@ const user = require("../app_models/user");
 const { route } = require("./live_result");
 
 router.post("", async (req, res) => {
+try {
   let data = req.body;
   console.log("data", data);
   let preparedata = {
@@ -28,9 +29,17 @@ router.post("", async (req, res) => {
       status: "Account create successfully",
     });
   });
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+}
 });
 
 router.get("/allbrokerslist", async (req, res) => {
+ try {
   account.find({ role_id: 2 }).then((data) => {
     res.json({
       success: true,
@@ -39,8 +48,16 @@ router.get("/allbrokerslist", async (req, res) => {
       status: "Board create successfully",
     });
   });
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+ }
 });
 router.get("/ownaccountlist/:id", async (req, res) => {
+try {
   let user_id = req.params.id;
   if (req.params.id == "") {
     res.json({
@@ -57,9 +74,17 @@ router.get("/ownaccountlist/:id", async (req, res) => {
       status: "Board create successfully",
     });
   });
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+}
 });
 
 router.put("/updateaccount", async (req, res) => {
+try {
   let data = req.body;
   console.log("data", data);
   let account_id = data.account_id;
@@ -92,8 +117,16 @@ router.put("/updateaccount", async (req, res) => {
         status: "account updated successfully",
       });
     });
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+}
 });
 router.delete("/accountdelete/:id", async (req, res) => {
+try {
   let account_id = req.params.id;
   if (req.params.id == "") {
     res.json({
@@ -109,82 +142,104 @@ router.delete("/accountdelete/:id", async (req, res) => {
       data: data,
     });
   });
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+}
 });
 router.get("/sharedaccountlist", async (req, res) => {
+try {
   user
-    .aggregate([
-      {
-        $facet: {
-          Admin: [
-            {
-              $match: { role_id: 1 },
+  .aggregate([
+    {
+      $facet: {
+        Admin: [
+          {
+            $match: { role_id: 1 },
+          },
+          {
+            $lookup: {
+              from: "accoounts",
+              localField: "user_id",
+              foreignField: "user_id",
+              as: "List",
             },
-            {
-              $lookup: {
-                from: "accoounts",
-                localField: "user_id",
-                foreignField: "user_id",
-                as: "List",
-              },
+          },
+          // {
+          //   $unwind: {
+          //     path: "$List",
+          //     preserveNullAndEmptyArrays: false,
+          //   },
+          // },
+        ],
+        Broker: [
+          {
+            $match: { role_id: 2 },
+          },
+          {
+            $lookup: {
+              from: "accoounts",
+              localField: "user_id",
+              foreignField: "user_id",
+              as: "List",
             },
-            // {
-            //   $unwind: {
-            //     path: "$List",
-            //     preserveNullAndEmptyArrays: false,
-            //   },
-            // },
-          ],
-          Broker: [
-            {
-              $match: { role_id: 2 },
+          },
+          // {
+          //   $unwind: {
+          //     path: "$List",
+          //     preserveNullAndEmptyArrays: false,
+          //   },
+          // },
+        ],
+        Customer: [
+          {
+            $match: { role_id: 3 },
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "user_id",
+              foreignField: "user_id",
+              as: "List",
             },
-            {
-              $lookup: {
-                from: "accoounts",
-                localField: "user_id",
-                foreignField: "user_id",
-                as: "List",
-              },
-            },
-            // {
-            //   $unwind: {
-            //     path: "$List",
-            //     preserveNullAndEmptyArrays: false,
-            //   },
-            // },
-          ],
-          Customer: [
-            {
-              $match: { role_id: 3 },
-            },
-            {
-              $lookup: {
-                from: "users",
-                localField: "user_id",
-                foreignField: "user_id",
-                as: "List",
-              },
-            },
-            // {
-            //   $unwind: {
-            //     path: "$List",
-            //     preserveNullAndEmptyArrays: false,
-            //   },
-            // },
-          ],
-        },
+          },
+          // {
+          //   $unwind: {
+          //     path: "$List",
+          //     preserveNullAndEmptyArrays: false,
+          //   },
+          // },
+        ],
       },
-    ])
-    .then((data) => {
-      res.send({
-        statuscode: 200,
-        status: "account updated successfully",
-        data: data,
-      });
+    },
+  ])
+  .then((data) => {
+    res.send({
+      statuscode: 200,
+      status: "account updated successfully",
+      data: data,
     });
+  }).catch((err)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: err,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+}
 });
 
 router.put("/updateone", async (req, res) => {
+ try {
   let body = req.body;
   console.log("body", body);
   if (req.body.id == "") {
@@ -210,9 +265,23 @@ router.put("/updateone", async (req, res) => {
         status: "user updated successfully",
         data: data,
       });
-    });
+    }).catch((err)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: err,
+      });
+    })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+ }
 });
 router.put("/updatemany", async (req, res) => {
+ try {
   let body = req.body;
   console.log("body", body);
   if (req.body.id == "") {
@@ -240,7 +309,20 @@ router.put("/updatemany", async (req, res) => {
         status: "user updated successfully",
         data: data,
       });
-    });
+    }).catch((err)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: err,
+      });
+    })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+ }
 });
 
 module.exports = router;

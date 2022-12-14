@@ -4,6 +4,7 @@ const board = require("../app_models/board");
 const { route } = require("./live_result");
 
 router.post("/boardCreate", async (req, res) => {
+try {
   let data = req.body;
   console.log("data", data);
   let preparedata = {
@@ -20,21 +21,49 @@ router.post("/boardCreate", async (req, res) => {
       statuscode: 200,
       status: "Board create successfully",
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 
 router.get("/getall", async (req, res) => {
-  board.find().then((data) => {
+  try {
+    board.find().then((data) => {
+      res.json({
+        success: true,
+        data: data,
+        statuscode: 200,
+        status: "Board create successfully",
+      });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: error,
+      });
+    })
+  } catch (error) {
     res.json({
-      success: true,
-      data: data,
-      statuscode: 200,
-      status: "Board create successfully",
+      success: false,
+      statuscode: 500,
+      status: error,
     });
-  });
+  }
 });
 
 router.put("/updateboard", async (req, res) => {
+try {
   let data = req.body;
   console.log("data", data);
   let board_id = data.board_id;
@@ -60,9 +89,23 @@ router.put("/updateboard", async (req, res) => {
         statuscode: 200,
         status: "Board updated successfully",
       });
-    });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: error,
+      });
+    })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
+  });
+}
 });
 router.delete("/boarddelete/:id", async (req, res) => {
+try {
   if (req.params.id == "") {
     res.json({
       success: false,
@@ -77,7 +120,20 @@ router.delete("/boarddelete/:id", async (req, res) => {
       status: "board delete successfully",
       data: data,
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 
 module.exports = router;

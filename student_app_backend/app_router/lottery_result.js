@@ -41,10 +41,41 @@ router.get("/preview", async (req, res) => {
         
       }
     ])
-    .then((data) => {
-      data.forEach((data1) => {
+    .then(async(data) => {
+      var total=[]
+      var total_price=0
+      var total_refered_comission=0
+      await booking.aggregate([ {
+        $match: {
+          // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
+          $and: [{ game_name: "Dear" }, { showTime: "18:00" }],
+        },
+      },
+      {
+       $unwind:{
+        path: "$booking_data",
+        preserveNullAndEmptyArrays: true
+      } 
+      }, {
+        $group:{
+          
+            _id: "null",
+            totalTikect:{"$sum":"$booking_data.ticket_count"},
+          total_price:{"$sum":"$booking_data.total_price"}
+          }
+        
+      }]).then(async(result)=>{
+        // console.log("result for totalcount===>",result)
+        total =result
+      }).catch((error)=>{
+        res.json({
+          success: false,
+          statuscode:202,
+          status: error,
+        });
+      })
+      await data.forEach((data1) => {
         let userprice=0;
-        console.log("data1===>,",data1);
         data1.booking_data.forEach((data2) => {
           // console.log("data2", data2);
           if (data2.board_name == "1 Digit Board") {
@@ -83,15 +114,22 @@ router.get("/preview", async (req, res) => {
 
         });
         data1['userprice']=userprice;
+        total_price=total_price+userprice
+        total_refered_comission=total_refered_comission+(userprice*5/100)
       });
-      console.log("data===>",data);
-      // let results={}
-      // results["totalTikect"]=data[0].totalTikect
+      let results={}
+      results["data"]=data
+      results["overallTicket"]=total[0].totalTikect
+      results["overallTicetprice"]=total[0].total_price
+      results["overalluserprice"]=total_price
+      results["total_refered_comission"]=total_refered_comission
+
+
       res.json({
         success: true,
       statuscode: 200,
       status: "preview create successfully",
-      result:data
+      result:results
       })
     });
 });

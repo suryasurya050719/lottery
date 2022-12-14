@@ -5,6 +5,7 @@ const router = express.Router();
 const { route } = require("./live_result");
 
 router.post("/creategame", async (req, res) => {
+try {
   let body = req.body;
   console.log("data", body);
   let data = {
@@ -25,10 +26,24 @@ router.post("/creategame", async (req, res) => {
       statuscode: 200,
       status: "game create successfully",
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 
 router.get("/getall", async (req, res) => {
+ try {
   game.find().then(async (data) => {
     await data.forEach((format) => {
       if (format.stacrt_date !== "") {
@@ -47,10 +62,24 @@ router.get("/getall", async (req, res) => {
       statuscode: 200,
       status: "game list successfully",
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+ }
 });
 
 router.put("/updategame", async (req, res) => {
+try {
   let body = req.body;
   console.log("data", body);
   let board_id = body.game_id;
@@ -79,9 +108,23 @@ router.put("/updategame", async (req, res) => {
         statuscode: 200,
         status: "game updated successfully",
       });
-    });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: error,
+      });
+    })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode:500,
+    status: error,
+  });
+}
 });
 router.delete("/gamedelete/:id", async (req, res) => {
+try {
   let game_id = req.params.id;
   if (req.params.id == "") {
     res.json({
@@ -96,10 +139,24 @@ router.delete("/gamedelete/:id", async (req, res) => {
       status: "game delete successfully",
       data: data,
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode:500,
+      status: error,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode:500,
+    status: error,
   });
+}
 });
 
 router.put("/publice", async (req, res) => {
+try {
   let body = req.body;
   console.log("body", body);
   // let game_id = req.params.id;
@@ -128,28 +185,55 @@ router.put("/publice", async (req, res) => {
         status: "user updated successfully",
         data: data,
       });
-    });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode:202,
+        status: error,
+      });
+    })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode:500,
+    status: error,
+  });
+}
 });
 
 router.get("/gameandboard", async (req, res) => {
+ try {
   game
-    .aggregate([
-      {
-        $lookup: {
-          from: "boards",
-          localField: "board_id.name",
-          foreignField: "board_name",
-          as: "brd",
-        },
+  .aggregate([
+    {
+      $lookup: {
+        from: "boards",
+        localField: "board_id.name",
+        foreignField: "board_name",
+        as: "brd",
       },
-    ])
-    .then((data) => {
-      res.send({
-        statuscode: 200,
-        status: "user updated successfully",
-        data: data,
-      });
+    },
+  ])
+  .then((data) => {
+    res.send({
+      statuscode: 200,
+      status: "user updated successfully",
+      data: data,
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode:202,
+      status: error,
+    });
+  })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode:500,
+    status: error,
+  });
+ }
 });
 
 function TimeIncrement(date) {

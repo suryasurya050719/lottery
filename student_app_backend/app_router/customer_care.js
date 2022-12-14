@@ -14,11 +14,9 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 router.post("", upload.single("customerImage"), function (req, res) {
-  console.log(">file", req.file);
-  console.log(">body", req.body);
-  var originalFileName = req.file.filename;
+  try {
+    var originalFileName = req.file.filename;
   let body = req.body;
-  console.log(">>file name", originalFileName);
   let preparedata = {
     user_id: Number(body.id),
     question: body.question,
@@ -32,10 +30,24 @@ router.post("", upload.single("customerImage"), function (req, res) {
       statuscode: 200,
       status: "created successfully",
     });
-  });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  })
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
+    });
+  }
 });
 
 router.get("", async (req, res) => {
+ try {
   customCare.find().then((data) => {
     res.json({
       success: true,
@@ -43,10 +55,24 @@ router.get("", async (req, res) => {
       data: data,
       status: "created successfully",
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  })
+ } catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+ }
 });
 
 router.delete("/:id", async (req, res) => {
+try {
   let id = req.params.id;
   if (req.params.id == "") {
     res.json({
@@ -61,11 +87,25 @@ router.delete("/:id", async (req, res) => {
       statuscode: 200,
       sttus: "delete successfully",
     });
+  }).catch((error)=>{
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  })
+} catch (error) {
+  res.json({
+    success: false,
+    statuscode: 500,
+    status: error,
   });
+}
 });
 
 router.put("/:id", upload.single("customerImage"), async (req, res) => {
-  let id = req.params.id;
+  try {
+    let id = req.params.id;
   if (req.params.id == "") {
     res.json({
       success: false,
@@ -92,6 +132,19 @@ router.put("/:id", upload.single("customerImage"), async (req, res) => {
         statuscode: 200,
         status: "updated successfully",
       });
+    }).catch((error)=>{
+      res.json({
+        success: false,
+        statuscode: 202,
+        status: error,
+      });
+    })
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
     });
+  }
 });
 module.exports = router;
