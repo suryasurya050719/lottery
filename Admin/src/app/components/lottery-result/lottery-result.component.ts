@@ -36,7 +36,10 @@ export class LotteryResultComponent implements OnInit {
   gameStatus: string = '';
   status: string = '';
   currentGame: any = {};
+  activrBookingData:any={}
   inputDisabled: boolean = false;
+  ViewMorePopupPanel4:boolean=false
+  ViewMorePopupPanel5:boolean=false
   ngOnInit(): void {
     this.gameList();
   }
@@ -92,8 +95,16 @@ export class LotteryResultComponent implements OnInit {
       alert(' Please Fill All Numeric in Valid Format');
     }
   }
-  ViewMorePopup2() {
+  ViewMorePopup2(index:any) {
+   this.activrBookingData= this.previewData[index]
+   console.log("this.activrBookingData",this.activrBookingData)
     this.ViewMorePopupPanel2 = !this.ViewMorePopupPanel2;
+  }
+  ViewMorePopup4(){
+this.ViewMorePopupPanel4=true
+  }
+  ViewMorePopup5(){
+this.ViewMorePopupPanel5=true
   }
   searchData() {
     this.result_data = true;
@@ -117,6 +128,13 @@ export class LotteryResultComponent implements OnInit {
   CloseMoreViewPopup3() {
     this.ViewMorePopupPanel3 = false;
   }
+  CloseMoreViewPopup4() {
+    this.ViewMorePopupPanel4 = false;
+  }
+  CloseMoreViewPopup5() {
+    this.ViewMorePopupPanel5 = false;
+  }
+
 
   // preview
 

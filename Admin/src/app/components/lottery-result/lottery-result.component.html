@@ -312,18 +312,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of previewData">
+                  <tr *ngFor="let data of previewData;let i=index">
                     <td>Coustomer</td>
                     <td>BJCD BK{{ data.booking_id }}</td>
                     <td>BJCD C{{ data.user_id }}</td>
                     <td>sample</td>
                     <td>
-                      {{ data.created_on | date : "dd MMM yyyy hh:mm a" }}}
+                      {{ data.created_on | date : "dd MMM yyyy hh:mm a" }}
                     </td>
                     <td>
                       <button
                         class="btn btn-primary btn-sm"
-                        (click)="ViewMorePopup2()"
+                        (click)="ViewMorePopup2(i)"
                       >
                         View
                       </button>
@@ -418,36 +418,33 @@
             <thead>
               <tr>
                 <th>Game Details</th>
+                <th>Show Details</th>
                 <th>Board Details</th>
-                <th>Ticket no</th>
-                <th>Quantity</th>
-                <th>Ticket price</th>
                 <th>Total Amount</th>
-                <th>Status</th>
+                <th>Winning Number</th>
+                <th>Winning Amount</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>sample</td>
-                <td>sample</td>
-                <td>sample</td>
-                <td>sample</td>
-
-                <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
-                    <span class="input-group-addon">RS</span>
-                    <input type="text" class="form-control" />
-                  </div>
-                </td>
-                <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
-                    <span class="input-group-addon">RS</span>
-                    <input type="text" class="form-control" />
-                  </div>
-                </td>
-                <td>
-                  <span class="badge bg-primary blink_txt mb-2">Success</span>
-                </td>
+                <td>{{ activrBookingData.game_name }}</td>
+                <td>{{ activrBookingData.showTime }}</td>
+                <td>  <button
+                  class="btn btn-primary btn-sm"
+                  (click)="ViewMorePopup4()"
+                >
+                  View
+                </button></td>
+                <td>{{activrBookingData.total_price}}</td>
+                <td>   A:{{ result_numerick.A }}B:{{ result_numerick.A }}C:{{
+                  result_numerick.A
+                }}</td>
+                <td><button
+                  class="btn btn-primary btn-sm"
+                  (click)="ViewMorePopup5()"
+                >
+                  View
+                </button></td>
               </tr>
             </tbody>
           </table>
@@ -502,6 +499,83 @@
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel4">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup4()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>S.no</th>
+                <th>Board</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of activrBookingData.booking_data ;let i=index">
+                <td>{{ i+1 }}</td>
+                <td> {{data.board_name}}</td>
+                <td>{{data.ticket_number}}</td>
+                <td>{{data.ticket_count}}</td>
+
+                <td>
+                 {{data.total_price}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel5">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup5()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>S.no</th>
+                <th>Board</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Winning no</th>
+                <th>Winning amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of activrBookingData.booking_data ;let i=index">
+                <td>{{ i+1 }}</td>
+                <td> {{data.board_name}}</td>
+                <td>{{data.ticket_number}}</td>
+                <td>{{data.ticket_count}}</td>
+                <td>
+                  <div *ngFor="let num of data.show_result_number">{{num}}</div>
+                 </td>
+                <td>
+                 {{data.lottery_price}}
                 </td>
               </tr>
             </tbody>

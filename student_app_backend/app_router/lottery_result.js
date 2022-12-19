@@ -114,6 +114,7 @@ router.get("/preview", async (req, res) => {
           } else if (data2.board_name == "all board") {
           } else if (data2.board_name == "4 Digit Board Full") {
           }
+          data2["lottery_price"]=userprice
         });
         let data2 = await referal.find({
           user_id: data1.user_id,
