@@ -121,18 +121,24 @@ export class LotteryResultComponent implements OnInit {
   // preview
 
   Preview() {
-    this.lotteryResult.Preview().subscribe((data) => {
-      console.log('preview data===>', data.result);
-      this.previewData = data.result.data;
-      this.totalTickets = data.result.overallTicket;
-      this.totalCollection = data.result.overallTicetprice;
-      this.totalcomissiondetect = data.result.total_refered_comission;
-      this.netAmount = this.totalCollection - this.totalcomissiondetect;
-      this.winingPrice = data.result.overalluserprice;
-      this.totalIncome = this.netAmount - this.winingPrice;
-      this.gameStatus =
-        this.netAmount - this.winingPrice > 0 ? 'Profit' : 'Loss';
-      this.status = 'Unpublish';
-    });
+    const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
+    console.log('isempty', isEmpty);
+    if (isEmpty) {
+      this.lotteryResult.Preview().subscribe((data) => {
+        console.log('preview data===>', data.result);
+        this.previewData = data.result.data;
+        this.totalTickets = data.result.overallTicket;
+        this.totalCollection = data.result.overallTicetprice;
+        this.totalcomissiondetect = data.result.total_refered_comission;
+        this.netAmount = this.totalCollection - this.totalcomissiondetect;
+        this.winingPrice = data.result.overalluserprice;
+        this.totalIncome = this.netAmount - this.winingPrice;
+        this.gameStatus =
+          this.netAmount - this.winingPrice > 0 ? 'Profit' : 'Loss';
+        this.status = 'Unpublish';
+      });
+    } else {
+      alert(' Please Fill All Numeric in Valid Format');
+    }
   }
 }

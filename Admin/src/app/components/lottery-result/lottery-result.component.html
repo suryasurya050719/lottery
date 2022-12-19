@@ -36,7 +36,7 @@
             </select>
           </div>
         </div>
-        <div class="col-lg-3" style="margin-top: -12px">
+        <!-- <div class="col-lg-3" style="margin-top: -12px">
           <h4>Board</h4>
           <select
             name=""
@@ -54,6 +54,12 @@
               {{ data.board_name }}
             </option>
           </select>
+        </div> -->
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label> Date from </label>
+            <input type="date" class="form-control" [(ngModel)]="fromDate" />
+          </div>
         </div>
         <div class="col-lg-3" style="margin-top: -12px">
           <h4>Show time</h4>
@@ -81,12 +87,6 @@
             </mat-optgroup>
           </mat-select>
           <!-- </mat-form-field> -->
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <label> Date from </label>
-            <input type="date" class="form-control" [(ngModel)]="fromDate" />
-          </div>
         </div>
         <div class="col d-flex align-items-end pb-3 col-lg-1">
           <button
@@ -147,221 +147,24 @@
       </div>
       <div class="pb-3">
         <div class="row">
-          <div class="col-lg-3">
-            <label> Choose Board </label>
-            <div class="dropdown w-100">
-              <span
-                class="form-control cursor-pointer w-100 d-block dropdown-toggle"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+          <div class="col-lg-3" style="margin-top: -12px">
+            <h4>Board</h4>
+            <select
+              name=""
+              id=""
+              class="form-control"
+              [(ngModel)]="board_type"
+              (ngModelChange)="activeBoard()"
+            >
+              <option value="">Select</option>
+              <option value="">All</option>
+              <option
+                *ngFor="let data of currentGame.brd; let i = index"
+                [value]="i"
               >
-                Select
-              </span>
-              <div
-                class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <div class="p-2">
-                  <div class="pb-2">
-                    <h4 class="mb-0 pb-2">All, Dear</h4>
-                    <div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-2 text-dark"
-                          for="exampleCheck1"
-                          >1 Digit board</label
-                        >
-                      </div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-2 text-dark"
-                          for="exampleCheck1"
-                          >1 Digit board</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-2">
-                    <h4 class="mb-0 pb-2">Kerala Lottery</h4>
-                    <div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-2 text-dark"
-                          for="exampleCheck1"
-                          >1 Digit board</label
-                        >
-                      </div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-2 text-dark"
-                          for="exampleCheck1"
-                          >1 Digit board</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-2">
-                    <h4 class="mb-0 pb-2">Jackpot</h4>
-                    <div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-2 text-dark"
-                          for="exampleCheck1"
-                          >1 Digit board</label
-                        >
-                      </div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-2 text-dark"
-                          for="exampleCheck1"
-                          >1 Digit board</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <label> Show Timing</label>
-            <div class="dropdown w-100">
-              <span
-                class="form-control cursor-pointer w-100 d-block dropdown-toggle"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Select
-              </span>
-              <div
-                class="dropdown-menu cus_rm_drop chos_board_drop bg-white b_1"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <div class="p-2">
-                  <div class="pb-2">
-                    <h4 class="mb-0 pb-2">All, Dear</h4>
-                    <div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-4 text-dark"
-                          for="exampleCheck1"
-                          >3:00 pm</label
-                        >
-                      </div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-4 text-dark"
-                          for="exampleCheck1"
-                          >5:00 pm</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-2">
-                    <h4 class="mb-0 pb-2">Kerala Lottery</h4>
-                    <div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-4 text-dark"
-                          for="exampleCheck1"
-                          >5:00 pm</label
-                        >
-                      </div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-4 text-dark"
-                          for="exampleCheck1"
-                          >5:00 pm</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-2">
-                    <h4 class="mb-0 pb-2">Jackpot</h4>
-                    <div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-4 text-dark"
-                          for="exampleCheck1"
-                          >5:00 pm</label
-                        >
-                      </div>
-                      <div class="form-check d-flex align-items-center pl-0">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="exampleCheck1"
-                        />
-                        <label
-                          class="form-check-label pl-4 text-dark"
-                          for="exampleCheck1"
-                          >5:00 pm</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                {{ data.board_name }}
+              </option>
+            </select>
           </div>
           <div class="col-lg-3 d-flex align-items-end pb-1">
             <button class="btn btn-sm mr-3">Submit</button>
@@ -380,24 +183,6 @@
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center justify-content-end">
-              <div class="pr-3 text-center">
-                <span class="d-block">Auto</span>
-                <div class="active_chk dark_switch d-inline-block m-auto">
-                  <label class="switch">
-                    <input
-                      class="switch-input"
-                      name="IsActive"
-                      type="checkbox"
-                    />
-                    <span
-                      class="switch-label"
-                      data-on="On"
-                      data-off="Off"
-                    ></span>
-                    <span class="switch-handle"></span>
-                  </label>
-                </div>
-              </div>
               <button class="btn btn-sm mr-3">Publish</button>
               <button class="btn btn-sm">Download</button>
             </div>
