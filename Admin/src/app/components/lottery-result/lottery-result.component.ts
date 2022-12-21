@@ -35,14 +35,37 @@ export class LotteryResultComponent implements OnInit {
   totalIncome: number = 0;
   gameStatus: string = '';
   status: string = '';
+  numerick_type: string = '';
   currentGame: any = {};
-  activrBookingData:any={}
+  activrBookingData: any = {};
   inputDisabled: boolean = false;
-  ViewMorePopupPanel4:boolean=false
-  ViewMorePopupPanel5:boolean=false
+  ViewMorePopupPanel4: boolean = false;
+  ViewMorePopupPanel5: boolean = false;
+  unpublished_result: string = '';
+  unpublished_data: any = {};
+  publishedstatus: any = [];
   ngOnInit(): void {
     this.gameList();
+    this.publishedStatus();
   }
+  publishedStatus() {
+    let name =
+      this.gamelistdata[this.game_type]?.game_name !== undefined
+        ? this.gamelistdata[this.game_type]?.game_name
+        : '';
+
+    console.log('data===>>>>', name);
+    this.lotteryResult.PublishedStatus(name).subscribe((data) => {
+      console.log('published status data', data.data);
+      this.publishedstatus = data.data;
+    });
+  }
+  unpublished_status() {
+    console.log('unpublished_result', this.unpublished_result);
+    this.unpublished_data = this.publishedstatus[this.unpublished_result];
+    console.log('data', this.unpublished_data);
+  }
+
   show_time() {
     console.log('board_type', this.pokemonControl);
   }
@@ -56,6 +79,7 @@ export class LotteryResultComponent implements OnInit {
     this.toppingList = [];
     this.toppingList.push(this.gamelistdata[this.game_type]);
     this.GameName = this.gamelistdata[this.game_type].game_name;
+    this.publishedStatus();
     this.currentGame = this.gamelistdata[this.game_type];
     let lengthofdata = this.toppingList[0].brd.length;
     this.letterFormat = this.toppingList[0].brd[lengthofdata - 1].board_letters;
@@ -82,6 +106,7 @@ export class LotteryResultComponent implements OnInit {
         let array = { ...this.result_numerick, [targetName]: '' };
         console.log('array', array);
         this.result_numerick = array;
+        event.target.value = '';
         alert('Must have only one Digit Numeric');
       }
     }
@@ -95,16 +120,16 @@ export class LotteryResultComponent implements OnInit {
       alert(' Please Fill All Numeric in Valid Format');
     }
   }
-  ViewMorePopup2(index:any) {
-   this.activrBookingData= this.previewData[index]
-   console.log("this.activrBookingData",this.activrBookingData)
+  ViewMorePopup2(index: any) {
+    this.activrBookingData = this.previewData[index];
+    console.log('this.activrBookingData', this.activrBookingData);
     this.ViewMorePopupPanel2 = !this.ViewMorePopupPanel2;
   }
-  ViewMorePopup4(){
-this.ViewMorePopupPanel4=true
+  ViewMorePopup4() {
+    this.ViewMorePopupPanel4 = true;
   }
-  ViewMorePopup5(){
-this.ViewMorePopupPanel5=true
+  ViewMorePopup5() {
+    this.ViewMorePopupPanel5 = true;
   }
   searchData() {
     this.result_data = true;
@@ -135,14 +160,26 @@ this.ViewMorePopupPanel5=true
     this.ViewMorePopupPanel5 = false;
   }
 
-
   // preview
 
   Preview() {
     const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
+    const data = Object.values(this.result_numerick);
+    console.log('data', data);
     console.log('isempty', isEmpty);
     if (isEmpty) {
-      this.lotteryResult.Preview().subscribe((data) => {
+      console.log(
+        'this.unpublished_data.game_name',
+        this.unpublished_data.game_name
+      );
+      let prepareData = {
+        resultData: data,
+        game_name: this.unpublished_data.game_name,
+        show: this.unpublished_data.showTime,
+        date: this.unpublished_data.date,
+        board_name: this.boardName !== '' ? this.boardName : '',
+      };
+      this.lotteryResult.Preview(prepareData).subscribe((data) => {
         console.log('preview data===>', data.result);
         this.previewData = data.result.data;
         this.totalTickets = data.result.overallTicket;

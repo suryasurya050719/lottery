@@ -3,25 +3,50 @@ const { default: mongoose } = require("mongoose");
 const router = express.Router();
 const booking = require("../app_models/booking");
 const referal = require("../app_models/referal");
+const publishStatus = require("../app_models/publishedStatus");
 
 router.get("/preview", async (req, res) => {
-  console.log("jdfsdjkf");
-  let data_num = ["2", "4", "3"];
-  let date = new Date();
-  let show = "15:00";
-  let gameName = "Dear";
+  console.log("jdfsdjkf", req.query);
+  let data_num = req.query.resultData;
+  let date = req.query.date;
+  let show = req.query.show;
+  let gameName = req.query.game_name;
+  let lessDate = new Date(date);
+  let graterDate = new Date(date);
+  graterDate.setHours(graterDate.getHours() + 23);
+  graterDate.setMinutes(graterDate.getMinutes() + 59);
+  console.log("newDate", lessDate, graterDate);
+  let board_name = {};
+  if (req.query.board_name !== "") {
+    board_name["booking_data.board_name"] = req.query.board_name;
+  }
+  console.log("boardname", board_name);
   booking
     .aggregate([
       {
         $match: {
           // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
-          $and: [{ game_name: "Dear" }, { showTime: "18:00" }],
+          $and: [
+            { game_name: gameName },
+            { showTime: show },
+            {
+              created_on: {
+                $gte: new Date(lessDate),
+                $lte: new Date(graterDate),
+              },
+            },
+          ],
         },
       },
       {
         $unwind: {
           path: "$booking_data",
           preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          $and: [board_name],
         },
       },
       {
@@ -42,6 +67,7 @@ router.get("/preview", async (req, res) => {
       },
     ])
     .then(async (data) => {
+      console.log(data);
       var total = [];
       var total_price = 0;
       var total_refered_comission = 0;
@@ -50,7 +76,7 @@ router.get("/preview", async (req, res) => {
           {
             $match: {
               // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
-              $and: [{ game_name: "Dear" }, { showTime: "18:00" }],
+              $and: [{ game_name: gameName }, { showTime: show }],
             },
           },
           {
@@ -68,7 +94,7 @@ router.get("/preview", async (req, res) => {
           },
         ])
         .then(async (result) => {
-          // console.log("result for totalcount===>",result)
+          console.log("result for totalcount===>", result);
           total = result;
         })
         .catch((error) => {
@@ -114,7 +140,7 @@ router.get("/preview", async (req, res) => {
           } else if (data2.board_name == "all board") {
           } else if (data2.board_name == "4 Digit Board Full") {
           }
-          data2["lottery_price"]=userprice
+          data2["lottery_price"] = userprice;
         });
         let data2 = await referal.find({
           user_id: data1.user_id,
@@ -133,6 +159,8 @@ router.get("/preview", async (req, res) => {
         //   total_refered_comission + (userprice * 5) / 100;
       }
       console.log("total_refered_comission", total_refered_comission);
+      console.log("total", total);
+
       let results = {};
       results["data"] = data;
       results["overallTicket"] = total[0].totalTikect;
@@ -147,6 +175,42 @@ router.get("/preview", async (req, res) => {
         result: results,
       });
     });
+});
+
+router.get("/unpublishedShow", async (req, res) => {
+  try {
+    console.log("data", req.query.game_name);
+    let game_name = req.query.game_name;
+    let filterdata = {
+      status: false,
+    };
+    if (req.query.game_name !== "" || req.query.game_name !== null) {
+      filterdata["game_name"] = req.query.game_name;
+    }
+    publishStatus
+      .find(filterdata)
+      .then((data) => {
+        res.json({
+          success: true,
+          data: data,
+          statuscode: 200,
+          status: "Board create successfully",
+        });
+      })
+      .catch((error) => {
+        res.json({
+          success: false,
+          statuscode: 202,
+          status: error,
+        });
+      });
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
+    });
+  }
 });
 
 module.exports = router;

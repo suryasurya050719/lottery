@@ -57,16 +57,31 @@
         </div> -->
         <div class="col-lg-3">
           <div class="form-group">
-            <label> Date from </label>
-            <input type="date" class="form-control" [(ngModel)]="fromDate" />
+            <label>Unpublished Games </label>
+            <select
+              name=""
+              id=""
+              class="form-control"
+              [(ngModel)]="unpublished_result"
+              (change)="unpublished_status()"
+            >
+              <option value="">Select</option>
+              <option value="">All</option>
+              <option
+                *ngFor="let data of publishedstatus; let i = index"
+                [value]="i"
+              >
+                {{ data.date }} : {{ data.showTime }} : {{ data.game_name }}
+              </option>
+            </select>
           </div>
         </div>
-        <div class="col-lg-3" style="margin-top: -12px">
+        <!-- <div class="col-lg-3" style="margin-top: -12px">
           <h4>Show time</h4>
-          <!-- <mat-form-field
+          <mat-form-field
                   appearance="fill"
                   class="form-control cursor-pointer w-100 d-block"
-                > -->
+                >
           <mat-select
             [formControl]="pokemonControl"
             class="form-control cursor-pointer w-100 d-block"
@@ -86,9 +101,9 @@
               </mat-option>
             </mat-optgroup>
           </mat-select>
-          <!-- </mat-form-field> -->
-        </div>
-        <div class="col d-flex align-items-end pb-3 col-lg-1">
+          </mat-form-field>
+        </div> -->
+        <div class="col d-flex align-items-end pb-3 col-lg-2">
           <button
             type="submit"
             class="btn btn-primary w-100 btn_input btn-ripple"
@@ -116,7 +131,7 @@
               <div class="input-group" style="width: 150px">
                 <span class="input-group-addon">{{ data }}</span>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   [name]="data"
                   value=""
@@ -167,7 +182,7 @@
             </select>
           </div>
           <div class="col-lg-3 d-flex align-items-end pb-1">
-            <button class="btn btn-sm mr-3">Submit</button>
+            <button class="btn btn-sm mr-3" (click)="Preview()">Submit</button>
           </div>
         </div>
       </div>
@@ -312,7 +327,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of previewData;let i=index">
+                  <tr *ngFor="let data of previewData; let i = index">
                     <td>Coustomer</td>
                     <td>BJCD BK{{ data.booking_id }}</td>
                     <td>BJCD C{{ data.user_id }}</td>
@@ -429,22 +444,28 @@
               <tr>
                 <td>{{ activrBookingData.game_name }}</td>
                 <td>{{ activrBookingData.showTime }}</td>
-                <td>  <button
-                  class="btn btn-primary btn-sm"
-                  (click)="ViewMorePopup4()"
-                >
-                  View
-                </button></td>
-                <td>{{activrBookingData.total_price}}</td>
-                <td>   A:{{ result_numerick.A }}B:{{ result_numerick.A }}C:{{
-                  result_numerick.A
-                }}</td>
-                <td><button
-                  class="btn btn-primary btn-sm"
-                  (click)="ViewMorePopup5()"
-                >
-                  View
-                </button></td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="ViewMorePopup4()"
+                  >
+                    View
+                  </button>
+                </td>
+                <td>{{ activrBookingData.total_price }}</td>
+                <td>
+                  A:{{ result_numerick.A }}B:{{ result_numerick.A }}C:{{
+                    result_numerick.A
+                  }}
+                </td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="ViewMorePopup5()"
+                  >
+                    View
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -528,14 +549,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of activrBookingData.booking_data ;let i=index">
-                <td>{{ i+1 }}</td>
-                <td> {{data.board_name}}</td>
-                <td>{{data.ticket_number}}</td>
-                <td>{{data.ticket_count}}</td>
+              <tr
+                *ngFor="
+                  let data of activrBookingData.booking_data;
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ data.board_name }}</td>
+                <td>{{ data.ticket_number }}</td>
+                <td>{{ data.ticket_count }}</td>
 
                 <td>
-                 {{data.total_price}}
+                  {{ data.total_price }}
                 </td>
               </tr>
             </tbody>
@@ -566,16 +592,23 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of activrBookingData.booking_data ;let i=index">
-                <td>{{ i+1 }}</td>
-                <td> {{data.board_name}}</td>
-                <td>{{data.ticket_number}}</td>
-                <td>{{data.ticket_count}}</td>
+              <tr
+                *ngFor="
+                  let data of activrBookingData.booking_data;
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ data.board_name }}</td>
+                <td>{{ data.ticket_number }}</td>
+                <td>{{ data.ticket_count }}</td>
                 <td>
-                  <div *ngFor="let num of data.show_result_number">{{num}}</div>
-                 </td>
+                  <div *ngFor="let num of data.show_result_number">
+                    {{ num }}
+                  </div>
+                </td>
                 <td>
-                 {{data.lottery_price}}
+                  {{ data.lottery_price }}
                 </td>
               </tr>
             </tbody>

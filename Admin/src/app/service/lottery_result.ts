@@ -10,11 +10,24 @@ import { environment } from '../../environments/environment';
 export class LotteryResult {
   constructor(private http: HttpClient) {}
 
-  Preview(): Observable<any> {
+  Preview(data: any): Observable<any> {
     // console.log('filterdata service', filterdata);
     // let data = filterdata;
     let url = `${environment.apiurl}/lotery/preview`;
-    return this.http.get(url).pipe(
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  PublishedStatus(game_name: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    // let data = filterdata;
+    let data = {
+      game_name: game_name,
+    };
+    let url = `${environment.apiurl}/lotery/unpublishedShow`;
+    return this.http.get(url, { params: data }).pipe(
       map((data) => {
         return data;
       })

@@ -27,9 +27,9 @@ const creatSchema = mongoose.Schema({
       board_letters: Array,
       board_letter_formation: Array,
       show_result_number: Array,
-      first_price:Number,
-      second_price:Number,
-      third_price:Number,
+      first_price: Number,
+      second_price: Number,
+      third_price: Number,
       ticket_count: Number,
       ticket_number: Number,
       ticket_price: Number,
@@ -41,7 +41,7 @@ const creatSchema = mongoose.Schema({
   },
   created_on: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
   modified_on: {
     type: Date,
