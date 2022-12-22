@@ -1,0 +1,847 @@
+{
+	"info": {
+		"_postman_id": "d15c0d28-f767-4923-af4a-53e7b0a16c48",
+		"name": "Lottry",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18502861"
+	},
+	"item": [
+		{
+			"name": "newUserSMS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"query\":{\r\n       \"username\": \"surya\",\r\n    \"phone\": \"8680997709\",\r\n    \"role_id\": \"1\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/sms/newuserotp",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"sms",
+						"newuserotp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "excitingUserSMS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n       \"phone\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/sms/excitingUserotp",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"sms",
+						"excitingUserotp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"123123\",\r\n    \"referal_code\":\"\",\r\n    \"otp\":819518,\r\n    \"phone\": 8680997709\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/user/registor",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"user",
+						"registor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone\": \"8680997709\",\r\n    \"password\": \"123123\"\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/user/login",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ForgotPassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"phone\": \"\",\r\n          \"validOtp\": \"\",\r\n          \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/user/forgotpassword",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"user",
+						"forgotpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"amount\": \"90\",\r\n      \"user_id\": \"4\",\r\n      \"position\": \"INC\",\r\n      \"transection_from_userid\": \"4\",\r\n      \"transection_to_userid\": \"4\",\r\n      \"transection_from_type\": \"QR code\",\r\n      \"transection_to_type\": \"Wallet\",\r\n      \"Dedection_status\": \"OWN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/payment",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "singler user list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.75:4001/transection/alluser?user_id=28&phonenumber=&role_type=",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"75"
+					],
+					"port": "4001",
+					"path": [
+						"transection",
+						"alluser"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "28"
+						},
+						{
+							"key": "phonenumber",
+							"value": ""
+						},
+						{
+							"key": "role_type",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "singler user list",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.75:4001/transection/alluser?user_id=28&phonenumber=&role_type=",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"75"
+							],
+							"port": "4001",
+							"path": [
+								"transection",
+								"alluser"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "28"
+								},
+								{
+									"key": "phonenumber",
+									"value": ""
+								},
+								{
+									"key": "role_type",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "795"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"31b-xz590SGypM4evrPTFcjS56u/dMM\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 25 Sep 2022 11:38:39 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statuscode\": 200,\n    \"status\": \"transection list genetated\",\n    \"data\": [\n        {\n            \"_id\": \"632ec1b3d40059a3583f3593\",\n            \"name\": \"Broker01\",\n            \"phone\": 1234567890,\n            \"role_id\": 2,\n            \"isOtpVerify\": true,\n            \"status\": \"A\",\n            \"otp\": 801061,\n            \"modified_on\": \"2022-09-24T08:37:37.183Z\",\n            \"created_on\": \"2022-09-24T08:37:07.771Z\",\n            \"user_id\": 28,\n            \"__v\": 0,\n            \"password\": \"$2a$10$rdypSYfCFR6FRO.azg3XbeAIw.9ZjI5U27CQYQUKhnSkqwf47R7WW\",\n            \"referal_code\": \"T2810876W2378721J3850859K8436842E4172225L9572201T2459065O8330504\",\n            \"referalList\": [\n                {\n                    \"_id\": \"632ec1d1d40059a3583f359a\",\n                    \"user_id\": 28,\n                    \"refered_user_id\": 27,\n                    \"refered_role_id\": 1,\n                    \"created_on\": \"2022-09-24T08:37:37.186Z\",\n                    \"referal_id\": 13,\n                    \"__v\": 0\n                }\n            ],\n            \"walletsList\": [\n                {\n                    \"_id\": \"632ec1d1d40059a3583f3599\",\n                    \"user_id\": 28,\n                    \"current_amount\": 0,\n                    \"Referal_amount_paid\": false,\n                    \"created_on\": \"2022-09-24T08:37:37.185Z\",\n                    \"wallet_id\": 16,\n                    \"__v\": 0\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "transection list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.208.15.213:4001/transection/shared_user_list?user_id=4&graterthan&lessthan",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"transection",
+						"shared_user_list"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "4"
+						},
+						{
+							"key": "graterthan",
+							"value": ""
+						},
+						{
+							"key": "lessthan",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "transection list",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.75:4001/transection/shared_user_list?user_id=1&graterthan&lessthan",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"75"
+							],
+							"port": "4001",
+							"path": [
+								"transection",
+								"shared_user_list"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1"
+								},
+								{
+									"key": "graterthan",
+									"value": null
+								},
+								{
+									"key": "lessthan",
+									"value": null
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "4748"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"128c-WwX605I9u0PU9hLNwxWAmvCGhUo\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 25 Sep 2022 11:44:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statuscode\": 200,\n    \"status\": \"transection list genetated\",\n    \"data\": [\n        {\n            \"_id\": \"632045c038763e1bff4284fa\",\n            \"user_id\": 1,\n            \"amount\": null,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"QR code\",\n            \"transection_to_userid\": 1,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"Pending\",\n            \"created_on\": \"2022-09-13T08:56:32.416Z\",\n            \"transection_id\": 5,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63204fb0a89cb49c5d1032d7\",\n            \"user_id\": 2,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Phonepe\",\n            \"transection_to_userid\": 2,\n            \"transection_to_type\": \"QR type\",\n            \"status\": \"Pending\",\n            \"created_on\": \"2022-09-13T09:38:56.089Z\",\n            \"transection_id\": 8,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63204fb5a89cb49c5d1032db\",\n            \"user_id\": 2,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Phonepe\",\n            \"transection_to_userid\": 2,\n            \"transection_to_type\": \"QR type\",\n            \"status\": \"Pending\",\n            \"created_on\": \"2022-09-13T09:39:01.422Z\",\n            \"transection_id\": 9,\n            \"__v\": 0\n        },\n        {\n            \"TransectionStatus\": {\n                \"Merchand_upi_id\": \"Q561911142@ybl\",\n                \"id\": 41034634,\n                \"customer_vpa\": \"suryaelango050719-2@okaxis\",\n                \"customer_name\": \"SURYA ELANGOVAN\",\n                \"txnAt\": \"2022-09-13\",\n                \"Merchand_Name\": \"VS Enterprise\"\n            },\n            \"_id\": \"63204fd1a89cb49c5d1032e5\",\n            \"user_id\": 3,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Phonepe\",\n            \"transection_to_userid\": 3,\n            \"transection_to_type\": \"QR type\",\n            \"status\": \"success\",\n            \"created_on\": \"2022-09-13T09:39:29.427Z\",\n            \"transection_id\": 10,\n            \"__v\": 0\n        },\n        {\n            \"TransectionStatus\": {\n                \"Merchand_upi_id\": \"Q561911142@ybl\",\n                \"id\": 41035348,\n                \"customer_vpa\": \"suryaelango050719-2@okaxis\",\n                \"customer_name\": \"SURYA ELANGOVAN\",\n                \"txnAt\": \"2022-09-13\",\n                \"Merchand_Name\": \"VS Enterprise\"\n            },\n            \"_id\": \"632052f232b600bd57d501ed\",\n            \"user_id\": 3,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Phonepe\",\n            \"transection_to_userid\": 3,\n            \"transection_to_type\": \"QR type\",\n            \"status\": \"success\",\n            \"created_on\": \"2022-09-13T09:52:50.076Z\",\n            \"transection_id\": 11,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6321395e6592d51ca317820f\",\n            \"user_id\": 3,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 3,\n            \"transection_to_type\": \"Wallet\",\n            \"created_on\": \"2022-09-14T02:15:58.117Z\",\n            \"transection_id\": 13,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63213a03042b4edab007bfec\",\n            \"user_id\": 3,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 3,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"created_on\": \"2022-09-14T02:18:43.359Z\",\n            \"transection_id\": 15,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63213a57042b4edab007c001\",\n            \"user_id\": 3,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 3,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"created_on\": \"2022-09-14T02:20:07.456Z\",\n            \"transection_id\": 17,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63213aab042b4edab007c011\",\n            \"user_id\": 3,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 3,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"created_on\": \"2022-09-14T02:21:31.051Z\",\n            \"transection_id\": 19,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63213afc042b4edab007c026\",\n            \"user_id\": 2,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 2,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"created_on\": \"2022-09-14T02:22:52.558Z\",\n            \"transection_id\": 21,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63213b8f9ea87e6f9536a0eb\",\n            \"user_id\": 2,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 2,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"reason\": \"samle\",\n            \"created_on\": \"2022-09-14T02:25:19.431Z\",\n            \"transection_id\": 23,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63213c1f9ea87e6f9536a0fe\",\n            \"user_id\": 3,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 3,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"reason\": \"sample\",\n            \"created_on\": \"2022-09-14T02:27:43.795Z\",\n            \"transection_id\": 25,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"63216795aeb8b4105c3ebeb8\",\n            \"user_id\": 2,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 2,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"reason\": \"sample\",\n            \"created_on\": \"2022-09-14T05:33:09.791Z\",\n            \"transection_id\": 39,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"632167aaaeb8b4105c3ebec6\",\n            \"user_id\": 2,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 2,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"reason\": \"sample\",\n            \"created_on\": \"2022-09-14T05:33:30.344Z\",\n            \"transection_id\": 41,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"632167d5aeb8b4105c3ebee6\",\n            \"user_id\": 2,\n            \"amount\": 1,\n            \"position\": \"INC\",\n            \"transection_from_userid\": 1,\n            \"transection_from_type\": \"Wallet\",\n            \"transection_to_userid\": 2,\n            \"transection_to_type\": \"Wallet\",\n            \"status\": \"success\",\n            \"reason\": \"sample\",\n            \"created_on\": \"2022-09-14T05:34:13.108Z\",\n            \"transection_id\": 45,\n            \"__v\": 0\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "get game list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4001/game/gameandboard",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"game",
+						"gameandboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "account list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.208.15.213:4001/account/sharedaccountlist",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"account",
+						"sharedaccountlist"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "account list",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://3.208.15.213:4001/account/sharedaccountlist",
+							"protocol": "http",
+							"host": [
+								"3",
+								"208",
+								"15",
+								"213"
+							],
+							"port": "4001",
+							"path": [
+								"account",
+								"sharedaccountlist"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "9125"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"23a5-2Ky18HU60eNdeybqZ8o/WgVrxqw\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 06 Oct 2022 15:36:11 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statuscode\": 200,\n    \"status\": \"account updated successfully\",\n    \"data\": [\n        {\n            \"Admin\": [\n                {\n                    \"_id\": \"6335ab3010580822cd2b4e97\",\n                    \"name\": \"surya\",\n                    \"phone\": 8680997709,\n                    \"role_id\": 1,\n                    \"isOtpVerify\": true,\n                    \"status\": \"A\",\n                    \"otp\": 819518,\n                    \"modified_on\": \"2022-09-29T14:27:35.045Z\",\n                    \"created_on\": \"2022-09-29T14:26:56.691Z\",\n                    \"user_id\": 1,\n                    \"__v\": 0,\n                    \"password\": \"$2a$10$kfopLAtjKVvAvLK3AF2sxOOzRV9iTwqK4xOvxCkwEdGTFUEvljzlm\",\n                    \"referal_code\": \"A3518268B2229447R3969475B0102864G7406201T1997610R2176908S5219485\",\n                    \"List\": [\n                        {\n                            \"_id\": \"633c1a6121b375bbb85d6d15\",\n                            \"user_id\": 1,\n                            \"role_id\": 1,\n                            \"type\": \"BankAccount\",\n                            \"account_number\": \"500101010109906\",\n                            \"account_name\": \"Arun\",\n                            \"bank_name\": \"City Union\",\n                            \"branch_name\": \"Salem\",\n                            \"ifsc_code\": \"CUB00425\",\n                            \"upi_id\": \"\",\n                            \"phone\": null,\n                            \"name\": \"\",\n                            \"customer_status\": false,\n                            \"broker_status\": false,\n                            \"created_on\": \"2022-10-04T11:34:57.623Z\",\n                            \"account_id\": 1,\n                            \"__v\": 0\n                        },\n                        {\n                            \"_id\": \"633d00f021b375bbb85d6e0f\",\n                            \"user_id\": 1,\n                            \"role_id\": 1,\n                            \"type\": \"BankAccount\",\n                            \"account_number\": \"10444592021\",\n                            \"account_name\": \"Suganesh\",\n                            \"bank_name\": \"SBI\",\n                            \"branch_name\": \"Salem\",\n                            \"ifsc_code\": \"SBIN00234\",\n                            \"upi_id\": \"\",\n                            \"phone\": null,\n                            \"name\": \"\",\n                            \"customer_status\": false,\n                            \"broker_status\": true,\n                            \"created_on\": \"2022-10-05T03:58:40.748Z\",\n                            \"account_id\": 2,\n                            \"__v\": 0\n                        }\n                    ]\n                }\n            ],\n            \"Broker\": [\n                {\n                    \"_id\": \"633bcc4d8d79d2fe53c21fb6\",\n                    \"name\": \"Surya\",\n                    \"phone\": 8681049809,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": true,\n                    \"status\": \"A\",\n                    \"otp\": 363212,\n                    \"modified_on\": \"2022-10-04T06:28:14.254Z\",\n                    \"created_on\": \"2022-10-04T06:01:49.366Z\",\n                    \"user_id\": 8,\n                    \"__v\": 0,\n                    \"password\": \"$2a$10$D1CLMTy7.VgbtBggv1CJT.T2uyo/G22GnWJ26tAFerAMoHN0iJsDK\",\n                    \"referal_code\": \"U14P94E14J91\",\n                    \"List\": [\n                        {\n                            \"_id\": \"633e41743812e8cd26f67af6\",\n                            \"user_id\": 8,\n                            \"role_id\": 1,\n                            \"type\": \"BankAccount\",\n                            \"account_number\": \"50011123566\",\n                            \"account_name\": \"Arun\",\n                            \"bank_name\": \"hdfc\",\n                            \"branch_name\": \"salem\",\n                            \"ifsc_code\": \"hffc12466\",\n                            \"upi_id\": \"\",\n                            \"phone\": null,\n                            \"name\": \"\",\n                            \"customer_status\": false,\n                            \"broker_status\": false,\n                            \"created_on\": \"2022-10-06T02:46:12.444Z\",\n                            \"account_id\": 3,\n                            \"__v\": 0\n                        },\n                        {\n                            \"_id\": \"633e41a03812e8cd26f67aff\",\n                            \"user_id\": 8,\n                            \"role_id\": 1,\n                            \"type\": \"GooglePay\",\n                            \"account_number\": \"\",\n                            \"account_name\": \"\",\n                            \"bank_name\": \"\",\n                            \"branch_name\": \"\",\n                            \"ifsc_code\": \"\",\n                            \"upi_id\": \"\",\n                            \"phone\": 975789647,\n                            \"name\": \"Arun\",\n                            \"customer_status\": false,\n                            \"broker_status\": false,\n                            \"created_on\": \"2022-10-06T02:46:56.875Z\",\n                            \"account_id\": 4,\n                            \"__v\": 0\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"633d029f21b375bbb85d6e2b\",\n                    \"name\": \"Suresh\",\n                    \"phone\": 9611638428,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 724913,\n                    \"modified_on\": \"2022-10-05T04:05:51.532Z\",\n                    \"created_on\": \"2022-10-05T04:05:51.534Z\",\n                    \"user_id\": 11,\n                    \"__v\": 0,\n                    \"List\": []\n                },\n                {\n                    \"_id\": \"633d02f221b375bbb85d6e2f\",\n                    \"name\": \"Suresh\",\n                    \"phone\": 9611623971,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 287367,\n                    \"modified_on\": \"2022-10-05T04:07:14.561Z\",\n                    \"created_on\": \"2022-10-05T04:07:14.562Z\",\n                    \"user_id\": 12,\n                    \"__v\": 0,\n                    \"List\": []\n                },\n                {\n                    \"_id\": \"633d032021b375bbb85d6e33\",\n                    \"name\": \"Arun\",\n                    \"phone\": 9750059919,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 636266,\n                    \"modified_on\": \"2022-10-05T04:08:00.776Z\",\n                    \"created_on\": \"2022-10-05T04:08:00.778Z\",\n                    \"user_id\": 13,\n                    \"__v\": 0,\n                    \"List\": []\n                },\n                {\n                    \"_id\": \"633d039221b375bbb85d6e3c\",\n                    \"name\": \"Arun\",\n                    \"phone\": 9750059919,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 536447,\n                    \"modified_on\": \"2022-10-05T04:09:54.138Z\",\n                    \"created_on\": \"2022-10-05T04:09:54.138Z\",\n                    \"user_id\": 15,\n                    \"__v\": 0,\n                    \"List\": []\n                },\n                {\n                    \"_id\": \"633e32353812e8cd26f67a01\",\n                    \"name\": \"Arun\",\n                    \"phone\": 9750059919,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 710407,\n                    \"modified_on\": \"2022-10-06T01:41:09.338Z\",\n                    \"created_on\": \"2022-10-06T01:41:09.339Z\",\n                    \"user_id\": 16,\n                    \"__v\": 0,\n                    \"List\": []\n                },\n                {\n                    \"_id\": \"633e360f3812e8cd26f67a28\",\n                    \"name\": \"Arun\",\n                    \"phone\": 9750059919,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 904764,\n                    \"modified_on\": \"2022-10-06T01:57:35.907Z\",\n                    \"created_on\": \"2022-10-06T01:57:35.907Z\",\n                    \"user_id\": 17,\n                    \"__v\": 0,\n                    \"List\": []\n                },\n                {\n                    \"_id\": \"633e368b3812e8cd26f67a2c\",\n                    \"name\": \"Arun\",\n                    \"phone\": 9611623971,\n                    \"role_id\": 2,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 828508,\n                    \"modified_on\": \"2022-10-06T01:59:39.996Z\",\n                    \"created_on\": \"2022-10-06T01:59:39.997Z\",\n                    \"user_id\": 18,\n                    \"__v\": 0,\n                    \"List\": []\n                }\n            ],\n            \"Customer\": [\n                {\n                    \"_id\": \"6335b3e510580822cd2b4ea0\",\n                    \"name\": \"Sugu\",\n                    \"phone\": 9944666074,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": true,\n                    \"status\": \"A\",\n                    \"otp\": 286305,\n                    \"modified_on\": \"2022-09-29T15:05:08.491Z\",\n                    \"created_on\": \"2022-09-29T15:04:05.638Z\",\n                    \"user_id\": 2,\n                    \"__v\": 0,\n                    \"password\": \"$2a$10$oIOeFUXqR0AbOUsSkRWGnunRsWHCHqEWMJ1SpQ53c71BbObbWMwna\",\n                    \"referal_code\": \"B8813117P8389749Y8695472G1342788W1502543D3885973Z3822295L4690409\",\n                    \"List\": [\n                        {\n                            \"_id\": \"6335b3e510580822cd2b4ea0\",\n                            \"name\": \"Sugu\",\n                            \"phone\": 9944666074,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": true,\n                            \"status\": \"A\",\n                            \"otp\": 286305,\n                            \"modified_on\": \"2022-09-29T15:05:08.491Z\",\n                            \"created_on\": \"2022-09-29T15:04:05.638Z\",\n                            \"user_id\": 2,\n                            \"__v\": 0,\n                            \"password\": \"$2a$10$oIOeFUXqR0AbOUsSkRWGnunRsWHCHqEWMJ1SpQ53c71BbObbWMwna\",\n                            \"referal_code\": \"B8813117P8389749Y8695472G1342788W1502543D3885973Z3822295L4690409\"\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"6335cc3610580822cd2b4ec4\",\n                    \"name\": \"Libin\",\n                    \"phone\": 7010934307,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": true,\n                    \"status\": \"A\",\n                    \"otp\": 964777,\n                    \"modified_on\": \"2022-09-29T16:48:21.735Z\",\n                    \"created_on\": \"2022-09-29T16:47:50.197Z\",\n                    \"user_id\": 3,\n                    \"__v\": 0,\n                    \"password\": \"$2a$10$kvtUkJKZhbH3v1EXsK6zruvO12RtpP1mehLroXAS0aQagw9UIPE8m\",\n                    \"referal_code\": \"T9141178J6011730V3074528W9172277I7140263R2607446K5827296D9187571\",\n                    \"List\": [\n                        {\n                            \"_id\": \"6335cc3610580822cd2b4ec4\",\n                            \"name\": \"Libin\",\n                            \"phone\": 7010934307,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": true,\n                            \"status\": \"A\",\n                            \"otp\": 964777,\n                            \"modified_on\": \"2022-09-29T16:48:21.735Z\",\n                            \"created_on\": \"2022-09-29T16:47:50.197Z\",\n                            \"user_id\": 3,\n                            \"__v\": 0,\n                            \"password\": \"$2a$10$kvtUkJKZhbH3v1EXsK6zruvO12RtpP1mehLroXAS0aQagw9UIPE8m\",\n                            \"referal_code\": \"T9141178J6011730V3074528W9172277I7140263R2607446K5827296D9187571\"\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"63395e5310580822cd2b4efd\",\n                    \"name\": \"Testing\",\n                    \"phone\": 7904581210,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": true,\n                    \"status\": \"A\",\n                    \"otp\": 465743,\n                    \"modified_on\": \"2022-10-02T09:48:37.624Z\",\n                    \"created_on\": \"2022-10-02T09:48:03.948Z\",\n                    \"user_id\": 4,\n                    \"__v\": 0,\n                    \"password\": \"$2a$10$CGw1Xdi3zlGWla8jnAlUouKx7M.ZTLJWDBciD5f7Ym1ET1AKsM2Ra\",\n                    \"referal_code\": \"X1070749M1335687I7972926B4128428J0713561Y7213267D9294888E3546190\",\n                    \"List\": [\n                        {\n                            \"_id\": \"63395e5310580822cd2b4efd\",\n                            \"name\": \"Testing\",\n                            \"phone\": 7904581210,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": true,\n                            \"status\": \"A\",\n                            \"otp\": 465743,\n                            \"modified_on\": \"2022-10-02T09:48:37.624Z\",\n                            \"created_on\": \"2022-10-02T09:48:03.948Z\",\n                            \"user_id\": 4,\n                            \"__v\": 0,\n                            \"password\": \"$2a$10$CGw1Xdi3zlGWla8jnAlUouKx7M.ZTLJWDBciD5f7Ym1ET1AKsM2Ra\",\n                            \"referal_code\": \"X1070749M1335687I7972926B4128428J0713561Y7213267D9294888E3546190\"\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"633b0127b99102840ce7d16b\",\n                    \"name\": \"name\",\n                    \"phone\": 9047712143,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 243723,\n                    \"modified_on\": \"2022-10-03T15:35:03.303Z\",\n                    \"created_on\": \"2022-10-03T15:35:03.305Z\",\n                    \"user_id\": 5,\n                    \"__v\": 0,\n                    \"List\": [\n                        {\n                            \"_id\": \"633b0127b99102840ce7d16b\",\n                            \"name\": \"name\",\n                            \"phone\": 9047712143,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": false,\n                            \"status\": \"A\",\n                            \"otp\": 243723,\n                            \"modified_on\": \"2022-10-03T15:35:03.303Z\",\n                            \"created_on\": \"2022-10-03T15:35:03.305Z\",\n                            \"user_id\": 5,\n                            \"__v\": 0\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"633b71f5b99102840ce7d17c\",\n                    \"name\": \"Libinesh\",\n                    \"phone\": 8489440599,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 563465,\n                    \"modified_on\": \"2022-10-03T23:36:21.541Z\",\n                    \"created_on\": \"2022-10-03T23:36:21.542Z\",\n                    \"user_id\": 6,\n                    \"__v\": 0,\n                    \"password\": \"$2a$10$MVaK.KTBRFw5ahvrtmQrbey.tmXJx09tFIDqDOlSDeN.oLGLfP.fK\",\n                    \"List\": [\n                        {\n                            \"_id\": \"633b71f5b99102840ce7d17c\",\n                            \"name\": \"Libinesh\",\n                            \"phone\": 8489440599,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": false,\n                            \"status\": \"A\",\n                            \"otp\": 563465,\n                            \"modified_on\": \"2022-10-03T23:36:21.541Z\",\n                            \"created_on\": \"2022-10-03T23:36:21.542Z\",\n                            \"user_id\": 6,\n                            \"__v\": 0,\n                            \"password\": \"$2a$10$MVaK.KTBRFw5ahvrtmQrbey.tmXJx09tFIDqDOlSDeN.oLGLfP.fK\"\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"633b7970b99102840ce7d1ad\",\n                    \"name\": \"Nihil\",\n                    \"phone\": 8144720714,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 816410,\n                    \"modified_on\": \"2022-10-04T00:08:16.836Z\",\n                    \"created_on\": \"2022-10-04T00:08:16.837Z\",\n                    \"user_id\": 7,\n                    \"__v\": 0,\n                    \"List\": [\n                        {\n                            \"_id\": \"633b7970b99102840ce7d1ad\",\n                            \"name\": \"Nihil\",\n                            \"phone\": 8144720714,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": false,\n                            \"status\": \"A\",\n                            \"otp\": 816410,\n                            \"modified_on\": \"2022-10-04T00:08:16.836Z\",\n                            \"created_on\": \"2022-10-04T00:08:16.837Z\",\n                            \"user_id\": 7,\n                            \"__v\": 0\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"633c7c1e21b375bbb85d6dc4\",\n                    \"name\": \"Test\",\n                    \"phone\": 9566644187,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 504527,\n                    \"modified_on\": \"2022-10-04T18:31:58.097Z\",\n                    \"created_on\": \"2022-10-04T18:31:58.100Z\",\n                    \"user_id\": 9,\n                    \"__v\": 0,\n                    \"List\": [\n                        {\n                            \"_id\": \"633c7c1e21b375bbb85d6dc4\",\n                            \"name\": \"Test\",\n                            \"phone\": 9566644187,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": false,\n                            \"status\": \"A\",\n                            \"otp\": 504527,\n                            \"modified_on\": \"2022-10-04T18:31:58.097Z\",\n                            \"created_on\": \"2022-10-04T18:31:58.100Z\",\n                            \"user_id\": 9,\n                            \"__v\": 0\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"633c7c8221b375bbb85d6dc8\",\n                    \"name\": \"Test\",\n                    \"phone\": 9566644187,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 808038,\n                    \"modified_on\": \"2022-10-04T18:33:38.613Z\",\n                    \"created_on\": \"2022-10-04T18:33:38.615Z\",\n                    \"user_id\": 10,\n                    \"__v\": 0,\n                    \"List\": [\n                        {\n                            \"_id\": \"633c7c8221b375bbb85d6dc8\",\n                            \"name\": \"Test\",\n                            \"phone\": 9566644187,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": false,\n                            \"status\": \"A\",\n                            \"otp\": 808038,\n                            \"modified_on\": \"2022-10-04T18:33:38.613Z\",\n                            \"created_on\": \"2022-10-04T18:33:38.615Z\",\n                            \"user_id\": 10,\n                            \"__v\": 0\n                        }\n                    ]\n                },\n                {\n                    \"_id\": \"633d036a21b375bbb85d6e37\",\n                    \"name\": \"Arun\",\n                    \"phone\": 9750059919,\n                    \"role_id\": 3,\n                    \"isOtpVerify\": false,\n                    \"status\": \"A\",\n                    \"otp\": 430803,\n                    \"modified_on\": \"2022-10-05T04:09:14.839Z\",\n                    \"created_on\": \"2022-10-05T04:09:14.840Z\",\n                    \"user_id\": 14,\n                    \"__v\": 0,\n                    \"List\": [\n                        {\n                            \"_id\": \"633d036a21b375bbb85d6e37\",\n                            \"name\": \"Arun\",\n                            \"phone\": 9750059919,\n                            \"role_id\": 3,\n                            \"isOtpVerify\": false,\n                            \"status\": \"A\",\n                            \"otp\": 430803,\n                            \"modified_on\": \"2022-10-05T04:09:14.839Z\",\n                            \"created_on\": \"2022-10-05T04:09:14.840Z\",\n                            \"user_id\": 14,\n                            \"__v\": 0\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "account add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"user_id\": \"4\",\r\n        \"AccountNumber\": \"1234567890\",\r\n        \"Branchname\": \"kovai\",\r\n        \"IFSCcode\": \"ASID0001234\",\r\n        \"HolderName\": \"surya\",\r\n        \"bank_name\":\"AXIS\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/shareAccount",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"shareAccount"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "account add",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"user_id\": \"4\",\r\n        \"AccountNumber\": \"1234567890\",\r\n        \"Branchname\": \"kovai\",\r\n        \"IFSCcode\": \"ASID0001234\",\r\n        \"HolderName\": \"surya\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.208.15.213:4001/shareAccount",
+							"protocol": "http",
+							"host": [
+								"3",
+								"208",
+								"15",
+								"213"
+							],
+							"port": "4001",
+							"path": [
+								"shareAccount"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"48-u5Pvh9PbDB98/YAVf8m5GqS6hbc\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 07 Oct 2022 01:58:38 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"statuscode\": 200,\n    \"status\": \"Account create successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "4",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/shareAccount/singleuserlist?id=4",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"shareAccount",
+						"singleuserlist"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check_status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tx_id\":\"157\",\r\n    \"date\":\"27-10-2022\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/payment/check_status",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"payment",
+						"check_status"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "check_status",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tx_id\":\"157\",\r\n    \"date\":\"27-10-2022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.208.15.213:4001/payment/check_status",
+							"protocol": "http",
+							"host": [
+								"3",
+								"208",
+								"15",
+								"213"
+							],
+							"port": "4001",
+							"path": [
+								"payment",
+								"check_status"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "539"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21b-z1HEWmMjEVTVyOYwSwk51+Fem4M\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 30 Oct 2022 05:04:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statuscode\": 200,\n    \"data\": {\n        \"status\": true,\n        \"msg\": \"Transaction found\",\n        \"data\": {\n            \"id\": 43112515,\n            \"customer_vpa\": \"\",\n            \"amount\": 1,\n            \"client_txn_id\": \"157\",\n            \"customer_name\": \"pradeep kumar\",\n            \"customer_email\": \"arunkumar3d3d@gmail.com\",\n            \"customer_mobile\": \"7639385991\",\n            \"p_info\": \"Arun\",\n            \"upi_txn_id\": \"266690011477\",\n            \"status\": \"success\",\n            \"remark\": \"\",\n            \"udf1\": \"OWN\",\n            \"udf2\": \"100\",\n            \"udf3\": \"\",\n            \"redirect_url\": \"http://3.208.15.213:4001/payment/callback\",\n            \"txnAt\": \"2022-10-27\",\n            \"createdAt\": \"2022-10-27T05:39:06.000Z\",\n            \"Merchant\": {\n                \"name\": \"VS Enterprise\",\n                \"upi_id\": \"Q561911142@ybl\"\n            }\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "mobile_callback",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"statuscode\": 200,\r\n    \"data\": {\r\n        \"status\": true,\r\n        \"msg\": \"Transaction found\",\r\n        \"data\": {\r\n            \"id\": 43112515,\r\n            \"customer_vpa\": \"\",\r\n            \"amount\": 1,\r\n            \"client_txn_id\": \"157\",\r\n            \"customer_name\": \"pradeep kumar\",\r\n            \"customer_email\": \"arunkumar3d3d@gmail.com\",\r\n            \"customer_mobile\": \"7639385991\",\r\n            \"p_info\": \"Arun\",\r\n            \"upi_txn_id\": \"266690011477\",\r\n            \"status\": \"success\",\r\n            \"remark\": \"\",\r\n            \"udf1\": \"OWN\",\r\n            \"udf2\": \"100\",\r\n            \"udf3\": \"\",\r\n            \"redirect_url\": \"http://3.208.15.213:4001/payment/callback\",\r\n            \"txnAt\": \"2022-10-27\",\r\n            \"createdAt\": \"2022-10-27T05:39:06.000Z\",\r\n            \"Merchant\": {\r\n                \"name\": \"VS Enterprise\",\r\n                \"upi_id\": \"Q561911142@ybl\"\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4001/payment/mobile_callback",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"payment",
+						"mobile_callback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\":\"86\",\r\n    \"role_id\":\"3\",\r\n    \"game_id\":\"3\",\r\n    \"game_name\":\"Kerala\",\r\n    \"phone\":\"6383026630\",\r\n    \"booking_data\":[\r\n        {\r\n            \"board_name\":\"1 Digit Board\",\r\n            \"game_name\":\"Kerala\",\r\n            \"board_letters\":[\"A\",\"B\"],\r\n            \"ticket_number\":\"1\",\r\n            \"board_letter_formation\":[\"AB\",\"BA\"],\r\n            \"ticket_count\":\"5\",\r\n            \"ticket_price\":\"6\",\r\n            \"total_price\":\"12\"\r\n        },\r\n         {\r\n            \"board_name\":\"2 Digit Board\",\r\n            \"game_name\":\"Kerala\",\r\n            \"board_letters\":[\"A\",\"B\",\"c\"],\r\n             \"ticket_number\":\"2\",\r\n            \"board_letter_formation\":[\"AB\",\"BA\"],\r\n            \"ticket_count\":\"5\",\r\n            \"total_price\":\"600\",\r\n            \"ticket_price\":\"120\"\r\n        }\r\n    ],\r\n    \"total_price\":\"550\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.208.15.213:4001/booking/bookingCreate",
+					"protocol": "http",
+					"host": [
+						"3",
+						"208",
+						"15",
+						"213"
+					],
+					"port": "4001",
+					"path": [
+						"booking",
+						"bookingCreate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
