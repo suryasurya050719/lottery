@@ -26,8 +26,10 @@ export class CreateLotteryComponent implements OnInit {
     });
     // this.addCheckboxes();
   }
+  selected_board = new FormControl();
+  // selectedBoards: any = [];
   form: FormGroup;
-
+  interestFormGroup: FormGroup;
   CreateBoardPopup: boolean = false;
   t: boolean = false;
   array: any = [];
@@ -90,7 +92,7 @@ export class CreateLotteryComponent implements OnInit {
   show_date: any = [];
   // pattern edite
 
-  patternEdite:boolean=false
+  patternEdite: boolean = false;
 
   // game error validation
   GameNameError: Boolean = false;
@@ -104,9 +106,9 @@ export class CreateLotteryComponent implements OnInit {
   } = { selectedFruit: [] };
 
   // slot add popup credientials
-  showTime:string=''
-  closeShowTime:string=''
-  slotTimeList:any=[]
+  showTime: string = '';
+  closeShowTime: string = '';
+  slotTimeList: any = [];
 
   ngOnInit(): void {
     // this.CreateBoardBtn();
@@ -126,8 +128,9 @@ export class CreateLotteryComponent implements OnInit {
     return this.form.controls?.['orders'] as FormArray;
   }
   getCheckboxes() {
-    this.selectedValue = this.array.filter((x: any) => x).map((x: any) => x);
-    console.log('sdafsdf', this.selectedValue);
+    console.log('selectedValue', this.selectedValue);
+    // this.selectedValue = this.array.filter((x: any) => x).map((x: any) => x);
+    // console.log('sdafsdf', this.selectedValue);
   }
   change() {
     // alert(">>>>>>>>>>>>>>>>>>>>")
@@ -148,18 +151,17 @@ export class CreateLotteryComponent implements OnInit {
       // console.log('this.ticketLetter', this.ticketLetter);
     });
   }
-  BoardReset(){
-    this.boardName=''
-    this.ticketPatern=''
-  this.ticketValue=''
-  this.ticketname=''
-  this.ticketPrice=''
-  this.GamePrice=[]
-  this.ticketPattenArry=[]
-
+  BoardReset() {
+    this.boardName = '';
+    this.ticketPatern = '';
+    this.ticketValue = '';
+    this.ticketname = '';
+    this.ticketPrice = '';
+    this.GamePrice = [];
+    this.ticketPattenArry = [];
   }
   CreateBoardBtn() {
-    this.BoardReset()
+    this.BoardReset();
     this.CreateBoardPopup = !this.CreateBoardPopup;
     this.t = !this.t;
 
@@ -176,6 +178,10 @@ export class CreateLotteryComponent implements OnInit {
   // Create Game
   CreateGameFormPopup = false;
   CreateGameBtn() {
+    this.selectedValue = [];
+    this.GameName = '';
+    this.selected_board.reset();
+    this.slotTimeList = [];
     this.CreateGameFormPopup = !this.CreateGameFormPopup;
   }
   CloseCreateGamePopup() {
@@ -189,31 +195,31 @@ export class CreateLotteryComponent implements OnInit {
   CreatePriceAmount() {
     this.CreatePriceAmountPopup = !this.CreatePriceAmountPopup;
   }
-  CreateSlotPopup=false
-  CreateSlotTime(){
-    this.CreateSlotPopup=!this.CreateSlotPopup
+  CreateSlotPopup = false;
+  CreateSlotTime() {
+    this.CreateSlotPopup = !this.CreateSlotPopup;
   }
   ClosePricePopup() {
     this.CreatePriceAmountPopup = false;
   }
-  closeSlotPopup(){
-    this.CreateSlotPopup=false
+  closeSlotPopup() {
+    this.CreateSlotPopup = false;
   }
 
   // add ticket pattern in array
 
   AddTickPattern() {
-    if (this.ticketPatern !== '' && this.patternEdite==false) {
+    if (this.ticketPatern !== '' && this.patternEdite == false) {
       this.ticketPattenArry.push(this.ticketPatern);
       this.ticketPatern = '';
-    }else{
-      this.ticketPattenArry[this.activeticketPattern]=this.ticketPatern
+    } else {
+      this.ticketPattenArry[this.activeticketPattern] = this.ticketPatern;
       this.patternEdite = false;
-      this.activeticketPattern=''
-      this.ticketPatern=''
+      this.activeticketPattern = '';
+      this.ticketPatern = '';
     }
-    console.log("pattern array",this.ticketPattenArry)
-    console.log(" this.boardEdit", this.boardEdit)
+    console.log('pattern array', this.ticketPattenArry);
+    console.log(' this.boardEdit', this.boardEdit);
   }
 
   // add price amount
@@ -230,21 +236,25 @@ export class CreateLotteryComponent implements OnInit {
     }
     console.log('game', this.GamePrice);
   }
-  AddSlotTime(){
-   if(this.GameName==''){
- alert("Game name is required")
-   }
-   if(this.showTime!==''&&this.closeShowTime!==''&&this.GameName!==''){
-    let data={
-      id:this.slotTimeList.length+1,
-      showTime:this.showTime,
-      game_name:this.GameName,
-      closeShowTime:this.closeShowTime
+  AddSlotTime() {
+    if (this.GameName == '') {
+      alert('Game name is required');
     }
-    this.slotTimeList.push(data)
-    this.showTime=''
-    this.closeShowTime=''
-   }
+    if (
+      this.showTime !== '' &&
+      this.closeShowTime !== '' &&
+      this.GameName !== ''
+    ) {
+      let data = {
+        id: this.slotTimeList.length + 1,
+        showTime: this.showTime,
+        game_name: this.GameName,
+        closeShowTime: this.closeShowTime,
+      };
+      this.slotTimeList.push(data);
+      this.showTime = '';
+      this.closeShowTime = '';
+    }
   }
 
   BoardCreate() {
@@ -317,7 +327,7 @@ export class CreateLotteryComponent implements OnInit {
   }
   EditBoard() {
     // this.boardEdit = true;
-    this.patternEdite=true
+    this.patternEdite = true;
     this.boardName = this.activeBoarddata.board_name;
     this.ticketPattenArry = this.activeBoarddata.board_leter_format;
     this.GamePrice = this.activeBoarddata.price_amount;
@@ -332,7 +342,7 @@ export class CreateLotteryComponent implements OnInit {
       });
     }
   }
-  SlotTimeDelete(index: number){
+  SlotTimeDelete(index: number) {
     this.slotTimeList.splice(index, 1);
   }
   GamePriceDelete(index: number) {
@@ -356,7 +366,7 @@ export class CreateLotteryComponent implements OnInit {
     });
   }
   activeletterpatters(index: any) {
-    this.patternEdite=true
+    this.patternEdite = true;
     this.ticketPatern = this.ticketPattenArry[index];
     this.activeticketPattern = index;
   }
@@ -381,17 +391,19 @@ export class CreateLotteryComponent implements OnInit {
     } else {
       this.BoardIDError = false;
     }
-    if (this.slotTimeList.length ==0) {
+    if (this.slotTimeList.length == 0) {
       this.showCountError = true;
     } else {
       this.showCountError = false;
     }
-    if(    this.GameName !== '' &&
-    this.selectedValue.length !== 0 &&
-    this.slotTimeList.length!==0){
-      this.gamesubmit()
+    if (
+      this.GameName !== '' &&
+      this.selectedValue.length !== 0 &&
+      this.slotTimeList.length !== 0
+    ) {
+      this.gamesubmit();
     }
-   
+
     // if (this.showCount == '1') {
     //   console.log('sample', this.showCount, this.startDate, this.endDate);
     //   if (new Date(this.startDate) < new Date(this.endDate)) {
@@ -501,16 +513,11 @@ export class CreateLotteryComponent implements OnInit {
       color: this.color,
       show_date: this.slotTimeList,
     };
-    console.log(
-      '>>',
-      this.GameName,
-      this.array.length,
-      this.slotTimeList
-    );
+    console.log('>>', this.GameName, this.array.length, this.slotTimeList);
     if (
       this.GameName !== '' &&
       this.selectedValue.length !== 0 &&
-      this.slotTimeList.length!==0
+      this.slotTimeList.length !== 0
     ) {
       console.log('asf entered');
       if (this.gameeditable == true) {
@@ -567,7 +574,7 @@ export class CreateLotteryComponent implements OnInit {
       'yyyy-MM-ddTHH:mm:ss'
     );
     this.published = this.activegamedata.status;
-    this.slotTimeList=this.activegamedata.show_date
+    this.slotTimeList = this.activegamedata.show_date;
   }
   removeGame() {
     if (confirm('Are you sure you want to remove this Game')) {

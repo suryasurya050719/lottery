@@ -164,7 +164,7 @@
                 class="flx_1 d-flex align-items-center justify-content-center"
               >
                 <h2 class="txt_bold text-uppercase text-white mb-0 text-center">
-                  {{GameName}}
+                  {{ GameName }}
                 </h2>
               </div>
             </div>
@@ -215,11 +215,35 @@
 
               <div class="pb-2">
                 <div class="text-right">
-                  <button class="px-2 bg-primary2 text-white mb-0" (click)="CreateBoardBtn()"
-                    >Create Board</button
+                  <button
+                    class="px-2 bg-primary2 text-white mb-0"
+                    (click)="CreateBoardBtn()"
                   >
+                    Create Board
+                  </button>
                 </div>
-                <div class="dropdown w-100">
+                <!-- <div class="col-lg-2"> -->
+
+                <!-- <mat-form-field appearance="fill"> -->
+                <!-- <mat-label> Choose Board</mat-label> -->
+                <mat-select
+                  placeholder=" Choose Board"
+                  class="form-control cursor-pointer w-100 d-block"
+                  [formControl]="selected_board"
+                  [(value)]="selectedValue"
+                  (selectionChange)="getCheckboxes()"
+                  multiple
+                >
+                  <mat-option *ngFor="let item of array" [value]="item">{{
+                    item.name
+                  }}</mat-option>
+                </mat-select>
+                <!-- </mat-form-field> -->
+
+                <!-- </div> -->
+                <!-- <mat-form-field>
+                </mat-form-field> -->
+                <!-- <div class="dropdown w-100">
                   <span
                     class="form-control cursor-pointer w-100 d-block dropdown-toggle"
                     id="dropdownMenuButton"
@@ -246,7 +270,7 @@
                       <button class="btn">Submit</button>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="pb-2">
                 <div class="pb-2">
@@ -569,14 +593,9 @@
 
 <!-- Create price end -->
 
-
 <!-- create show count start -->
 
-
-<section
-  class="popup_box CreatePriceAmountPopup"
-  *ngIf="CreateSlotPopup"
->
+<section class="popup_box CreatePriceAmountPopup" *ngIf="CreateSlotPopup">
   <div
     class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
   >
@@ -604,10 +623,10 @@
             >
             <div class="input-group">
               <input
-              type="time"
-              placeholder="1st Price"
-              class="form-control bg-white"
-              name="showTime"
+                type="time"
+                placeholder="1st Price"
+                class="form-control bg-white"
+                name="showTime"
                 [(ngModel)]="closeShowTime"
               />
             </div>
@@ -628,7 +647,7 @@
             <table class="w-100">
               <tbody>
                 <tr *ngFor="let data of slotTimeList; let i = index">
-                  <td>{{data.id}}</td>
+                  <td>{{ data.id }}</td>
                   <td>{{ data.showTime }}</td>
                   <td>{{ data.closeShowTime }}</td>
                   <td width="50">
@@ -654,6 +673,5 @@
     </div>
   </div>
 </section>
-
 
 <!-- create show count end -->

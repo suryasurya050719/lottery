@@ -225,6 +225,7 @@ router.get("/referedbooking", async (req, res) => {
     if (query.phonenumber !== "" && query.phonenumber !== NaN) {
       userFilter["phone"] = Number(query.phonenumber);
     }
+    userFilter["role_id"] = 3;
 
     let searchFilters = {};
     let userfilters = {};

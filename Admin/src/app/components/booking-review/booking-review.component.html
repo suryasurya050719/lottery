@@ -153,6 +153,33 @@
           </mat-select>
           <!-- </mat-form-field> -->
         </div>
+        <div class="col-lg-2" style="margin-top: -12px">
+          <h4>Board Name</h4>
+          <!-- <mat-form-field
+            appearance="fill"
+            class="form-control cursor-pointer w-100 d-block"
+          > -->
+          <mat-select
+            [formControl]="BoardNameControler"
+            class="form-control cursor-pointer w-100 d-block"
+            (selectionChange)="board_detail()"
+            multiple
+          >
+            <mat-option>__All__</mat-option>
+            <mat-optgroup
+              *ngFor="let group of toppingList"
+              [label]="group.game_name"
+            >
+              <mat-option
+                *ngFor="let pokemon of group.board_id"
+                [value]="pokemon"
+              >
+                <div *ngIf="pokemon.checked == true">{{ pokemon.name }}</div>
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <!-- </mat-form-field> -->
+        </div>
 
         <div class="col">
           <div class="form-group">
@@ -191,7 +218,7 @@
 
         <div
           class="resul_show_panel"
-          *ngFor="let data of reviewList | paginate: config; let i = index"
+          *ngFor="let data of reviewList | paginate : config; let i = index"
         >
           <span class="cnt_result">{{ i + 1 }}</span>
 
@@ -321,7 +348,7 @@
                           : "BJCD C"
                       }}{{ data.referalList[0]?.refered_user_id }}
                     </td>
-                    <td>{{ data.created_on | date: "dd/MM/yyyy" }}</td>
+                    <td>{{ data.created_on | date : "dd/MM/yyyy" }}</td>
                     <td>
                       <button
                         (click)="ViewMorePopup(i)"
