@@ -13,10 +13,17 @@ export class BookingReviewComponent implements OnInit {
   pokemonControl = new FormControl('');
   BoardNameControler = new FormControl('');
   config: any;
+  bookingDataConfid: any;
   constructor(private booking: Booking, private board: Board) {
     this.config = {
+      id: 'pagination1',
       currentPage: 1,
       itemsPerPage: 1,
+    };
+    this.bookingDataConfid = {
+      id: 'pagination2',
+      currentPage: 1,
+      itemsPerPage: 5,
     };
   }
   referal_user_id: string = '';
@@ -60,7 +67,8 @@ export class BookingReviewComponent implements OnInit {
       this.config.currentPage = newPage;
       let currentData = this.reviewList[newPage - 1];
       this.activateUserID = currentData.user_id;
-      this.singleBookingRecords();
+      // this.singleBookingRecords(this.bookingDataConfid.currentPage);
+      this.singleBookingRecords(this.bookingDataConfid.bookingcurrentPage);
     });
   }
   show_time() {
@@ -85,7 +93,8 @@ export class BookingReviewComponent implements OnInit {
     console.log('ShowTime_details', data);
   }
   ViewMorePopupPanel = false;
-  singleBookingRecords() {
+  singleBookingRecords(newPage: number) {
+    // console.log('singleBookingRecords'), newPage;
     let data = {
       fromdate: this.fromDate !== '' ? new Date(this.fromDate) : '',
       todate: this.toDate !== '' ? new Date(this.toDate) : '',
@@ -99,6 +108,8 @@ export class BookingReviewComponent implements OnInit {
     console.log('BoardNameControler', this.BoardNameControler.value);
     this.booking.BookingList(data).subscribe((data) => {
       this.BookingListdata = data.data;
+      // this.bookingDataConfid.currentPage = newPage;
+      this.bookingDataConfid.currentPage = newPage;
       console.log('booking data', this.BookingListdata);
     });
   }
@@ -115,6 +126,7 @@ export class BookingReviewComponent implements OnInit {
     this.BookingReviewList(this.config.currentPage);
   }
   searchDataSingleBooking() {
-    this.singleBookingRecords();
+    this.singleBookingRecords(this.bookingDataConfid.bookingcurrentPage);
+    // this.singleBookingRecords(this.bookingDataConfid.currentPage);
   }
 }

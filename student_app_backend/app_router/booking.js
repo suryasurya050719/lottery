@@ -81,6 +81,7 @@ router.get("/getall", async (req, res) => {
     console.log("query fpr getall", query.show_time[0]);
 
     let searchFilter = {};
+    var board_filter_data = [];
     let created_on = {};
     if (query.user_id !== "") {
       searchFilter["user_id"] = parseInt(query.user_id);
@@ -104,37 +105,83 @@ router.get("/getall", async (req, res) => {
     // if(show_time.length>0){
 
     // }
-    console.log("query.show_time.length",query.show_time)
-    if(query.show_time!==''||query.show_time.length>0){
-      let data ={}
-      data['$in']=query.showTime
-      searchFilters["showTime"]=data
+    console.log(
+      "query.show_time.length zdfvdz",
+      query.show_time,
+      typeof query.show_time,
+      typeof query.board_name
+    );
+    if (query.show_time) {
+      //   let data ={}
+      //   data['$in']=query.showTime
+      //   searchFilters["showTime"]=data
+      if (typeof query.show_time == "object") {
+        searchFilter["showTime"] = { $in: query.show_time };
+      } else {
+        searchFilter["showTime"] = { $in: query?.show_time?.split(",") };
+      }
     }
-    if (query.board_name!==''||query.board_name.length>0){
-      let data ={}
-      data['$in']=query.board_name
-      searchFilters["board_name"]=data
+    console.log("searchFilters", searchFilter["show_time"]);
+    if (query.board_name) {
+      if (typeof query.board_name == "object") {
+        searchFilter["booking_data.board_name"] = { $in: query.board_name };
+        board_filter_data = query.board_name;
+      } else {
+        searchFilter["booking_data.board_name"] = {
+          $in: query?.board_name?.split(","),
+        };
+        board_filter_data = query?.board_name?.split(",");
+      }
     }
-    console.log(">>>>>>>>>>>>>>>")
     let searchFilters = {};
     searchFilters["$and"] = [searchFilter];
-    console.log("searchFilters", searchFilters);
+    console.log("searchFilters", JSON.stringify(searchFilters));
+    console.log("board_filter_data", board_filter_data);
+    let dbQuery = [
+      {
+        $match: searchFilters,
+      },
+      {
+        $lookup: {
+          from: "referals",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "referalList",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          user_id: 1,
+          game_id: 1,
+          game_name: 1,
+          phone: 1,
+          showTime: 1,
+          booking_data:
+            board_filter_data.length > 0
+              ? {
+                  $filter: {
+                    input: "$booking_data",
+                    as: "booking_data",
+                    cond: {
+                      $in: ["$$booking_data.board_name", board_filter_data],
+                    },
+                  },
+                }
+              : 1,
+          total_price: 1,
+          created_on: 1,
+          booking_id: 1,
+          referalList: 1,
+        },
+      },
+    ];
+    console.log("dbQuery=-====>", JSON.stringify(dbQuery));
     booking
-      .aggregate([
-        {
-          $match: searchFilters,
-        },
-        {
-          $lookup: {
-            from: "referals",
-            localField: "user_id",
-            foreignField: "user_id",
-            as: "referalList",
-          },
-        },
-      ])
+      .aggregate(dbQuery)
 
       .then((data) => {
+        console.log("data", board_filter_data.length > 0, data);
         res.json({
           success: true,
           data: data,
@@ -150,6 +197,7 @@ router.get("/getall", async (req, res) => {
         });
       });
   } catch (error) {
+    console.log("error====>", error);
     res.json({
       success: false,
       statuscode: 500,
