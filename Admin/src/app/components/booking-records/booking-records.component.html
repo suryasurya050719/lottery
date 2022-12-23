@@ -94,145 +94,59 @@
             </select>
           </div>
         </div>
-        <div class="col-3">
-          <div class="form-group">
-            <label> Show Timing </label>
-            <mat-select
-              [(ngModel)]="board_type"
-              class="form-control"
-              multiple
-              (ngModelChange)="show_time()"
+        <div class="col-lg-2" style="margin-top: -12px">
+          <h4>Show time</h4>
+          <!-- <mat-form-field
+            appearance="fill"
+            class="form-control cursor-pointer w-100 d-block"
+          > -->
+          <mat-select
+            [formControl]="pokemonControl"
+            class="form-control cursor-pointer w-100 d-block"
+            (selectionChange)="show_time()"
+            multiple
+          >
+            <mat-option>__All__</mat-option>
+            <mat-optgroup
+              *ngFor="let group of toppingList"
+              [label]="group.game_name"
             >
               <mat-option
-                *ngFor="let topping of toppingList.show_date"
-                [value]="topping.id"
-                >{{ topping.showTime }}</mat-option
+                *ngFor="let pokemon of group.show_date"
+                [value]="pokemon.showTime"
               >
-            </mat-select>
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Show Timing</mat-label>
-              <mat-select
-                [(ngModel)]="board_type"
-                class="form-control"
-                multiple
-                (ngModelChange)="show_time()"
-              >
-                <mat-option
-                  *ngFor="let topping of toppingList"
-                  [value]="topping"
-                  >{{ topping }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field> -->
-          </div>
+                {{ pokemon.showTime }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <!-- </mat-form-field> -->
         </div>
-        <div class="col-lg-3">
-          <label> Choose Board </label>
-          <div class="dropdown w-100">
-            <span
-              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+        <div class="col-lg-2" style="margin-top: -12px">
+          <h4>Board Name</h4>
+          <!-- <mat-form-field
+            appearance="fill"
+            class="form-control cursor-pointer w-100 d-block"
+          > -->
+          <mat-select
+            [formControl]="BoardNameControler"
+            class="form-control cursor-pointer w-100 d-block"
+            (selectionChange)="board_detail()"
+            multiple
+          >
+            <mat-option>__All__</mat-option>
+            <mat-optgroup
+              *ngFor="let group of toppingList"
+              [label]="group.game_name"
             >
-              Select
-            </span>
-            <div
-              class="dropdown-menu chos_board_drop cus_rm_drop bg-white b_1"
-              aria-labelledby="dropdownMenuButton"
-            >
-              <div class="p-2">
-                <div class="pb-2">
-                  <h4 class="mb-0 pb-2">All, Dear</h4>
-                  <div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-2 text-dark"
-                        for="exampleCheck1"
-                        >1 Digit board</label
-                      >
-                    </div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-2 text-dark"
-                        for="exampleCheck1"
-                        >1 Digit board</label
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="pb-2">
-                  <h4 class="mb-0 pb-2">Kerala Lottery</h4>
-                  <div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-2 text-dark"
-                        for="exampleCheck1"
-                        >1 Digit board</label
-                      >
-                    </div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-2 text-dark"
-                        for="exampleCheck1"
-                        >1 Digit board</label
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="pb-2">
-                  <h4 class="mb-0 pb-2">Jackpot</h4>
-                  <div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-2 text-dark"
-                        for="exampleCheck1"
-                        >1 Digit board</label
-                      >
-                    </div>
-                    <div class="form-check d-flex align-items-center pl-0">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        class="form-check-label pl-2 text-dark"
-                        for="exampleCheck1"
-                        >1 Digit board</label
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              <mat-option
+                *ngFor="let pokemon of group.board_id"
+                [value]="pokemon.name"
+              >
+                <div>{{ pokemon.name }}</div>
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <!-- </mat-form-field> -->
         </div>
 
         <div class="col-lg-3 d-flex align-items-end pb-3">

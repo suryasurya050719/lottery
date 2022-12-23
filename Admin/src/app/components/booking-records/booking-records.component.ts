@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Booking } from '../../service/booking';
 import { Board } from '../../service/board';
+import { FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -9,6 +11,10 @@ import { Board } from '../../service/board';
   styleUrls: ['./booking-records.component.css'],
 })
 export class BookingRecordsComponent implements OnInit {
+  pokemonControl = new FormControl('');
+  BoardNameControler = new FormControl('');
+
+
   // search filter model
   searchType: string = '';
   fromDate: string = '';
@@ -28,6 +34,7 @@ export class BookingRecordsComponent implements OnInit {
   board_type: any = [{}];
  newDate:Date=new Date()
 game_name:string=''
+GameName: string = '';
 
 
   // booking list data
@@ -46,12 +53,23 @@ game_name:string=''
     });
   }
   game() {
-    this.toppingList = this.gamelistdata[this.game_type];
-    this.game_name=this.toppingList.game_name
-    console.log('game_type', this.game_type);
+    console.log('this.game_type', typeof this.game_type);
+    if (this.game_type == '') {
+      this.toppingList = this.gamelistdata;
+      this.GameName = '';
+    } else {
+      // console.log("this.gamelistdata[this.game_type];",this.gamelistdata[this.game_type])
+      this.toppingList = [];
+      this.toppingList.push(this.gamelistdata[this.game_type]);
+      this.GameName = this.gamelistdata[this.game_type].game_name;
+    }
+    console.log(" this.toppingList", this.toppingList)
   }
   show_time() {
     console.log('board_type', this.board_type);
+  }
+  board_detail() {
+    console.log('board_type', this.BoardNameControler);
   }
   BookingList() {
     let data = {
