@@ -104,6 +104,18 @@ router.get("/getall", async (req, res) => {
     // if(show_time.length>0){
 
     // }
+    console.log("query.show_time.length",query.show_time)
+    if(query.show_time!==''||query.show_time.length>0){
+      let data ={}
+      data['$in']=query.showTime
+      searchFilters["showTime"]=data
+    }
+    if (query.board_name!==''||query.board_name.length>0){
+      let data ={}
+      data['$in']=query.board_name
+      searchFilters["board_name"]=data
+    }
+    console.log(">>>>>>>>>>>>>>>")
     let searchFilters = {};
     searchFilters["$and"] = [searchFilter];
     console.log("searchFilters", searchFilters);

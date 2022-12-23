@@ -145,7 +145,7 @@
             >
               <mat-option
                 *ngFor="let pokemon of group.show_date"
-                [value]="pokemon"
+                [value]="pokemon.showTime"
               >
                 {{ pokemon.showTime }}
               </mat-option>
@@ -172,9 +172,9 @@
             >
               <mat-option
                 *ngFor="let pokemon of group.board_id"
-                [value]="pokemon"
+                [value]="pokemon.name"
               >
-                <div *ngIf="pokemon.checked == true">{{ pokemon.name }}</div>
+                <div>{{ pokemon.name }}</div>
               </mat-option>
             </mat-optgroup>
           </mat-select>
