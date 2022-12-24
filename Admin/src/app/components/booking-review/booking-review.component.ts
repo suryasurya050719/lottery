@@ -18,7 +18,7 @@ export class BookingReviewComponent implements OnInit {
     this.config = {
       id: 'pagination1',
       currentPage: 1,
-      itemsPerPage: 1,
+      itemsPerPage: 2,
     };
     this.bookingDataConfid = {
       id: 'pagination2',

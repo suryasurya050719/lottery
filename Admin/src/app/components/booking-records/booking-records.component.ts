@@ -3,8 +3,6 @@ import { Booking } from '../../service/booking';
 import { Board } from '../../service/board';
 import { FormControl } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-booking-records',
   templateUrl: './booking-records.component.html',
@@ -13,8 +11,9 @@ import { FormControl } from '@angular/forms';
 export class BookingRecordsComponent implements OnInit {
   pokemonControl = new FormControl('');
   BoardNameControler = new FormControl('');
-
-
+  //pagination
+  config: any;
+  bookingDataConfid: any;
   // search filter model
   searchType: string = '';
   fromDate: string = '';
@@ -25,26 +24,36 @@ export class BookingRecordsComponent implements OnInit {
   phone: string = '';
   user_id: string = '';
 
-  //search filter 
+  //search filter
   user_type: any = '';
-  referal_user_id:string=''
+  referal_user_id: string = '';
   gamelistdata: any = [];
   game_type: any = '';
   toppingList: any = {};
   board_type: any = [{}];
- newDate:Date=new Date()
-game_name:string=''
-GameName: string = '';
-
+  newDate: Date = new Date();
+  game_name: string = '';
+  GameName: string = '';
 
   // booking list data
   BookingListdata: any = [];
   viewmorepopupdata: any = {};
-  constructor(private booking: Booking,private board: Board) {}
+  constructor(private booking: Booking, private board: Board) {
+    this.config = {
+      id: 'pagination1',
+      currentPage: 1,
+      itemsPerPage: 5,
+    };
+    this.bookingDataConfid = {
+      id: 'pagination2',
+      currentPage: 1,
+      itemsPerPage: 5,
+    };
+  }
 
   ngOnInit(): void {
-    this.BookingList();
-    this.gameList()
+    this.BookingList(this.config.currentPage);
+    this.gameList();
   }
   gameList() {
     this.board.GameList().subscribe((data) => {
@@ -63,7 +72,7 @@ GameName: string = '';
       this.toppingList.push(this.gamelistdata[this.game_type]);
       this.GameName = this.gamelistdata[this.game_type].game_name;
     }
-    console.log(" this.toppingList", this.toppingList)
+    console.log(' this.toppingList', this.toppingList);
   }
   show_time() {
     console.log('board_type', this.board_type);
@@ -71,7 +80,7 @@ GameName: string = '';
   board_detail() {
     console.log('board_type', this.BoardNameControler);
   }
-  BookingList() {
+  BookingList(newPage: number) {
     let data = {
       fromdate: this.fromDate !== '' ? new Date(this.fromDate) : '',
       todate: this.toDate !== '' ? new Date(this.toDate) : '',
@@ -79,8 +88,9 @@ GameName: string = '';
       phonenumber: this.phone,
       user_id: this.user_id,
     };
-    this.booking.BookingList(data).subscribe((data) => {
+    this.booking.BookingRecordsList(data).subscribe((data) => {
       this.BookingListdata = data.data;
+      this.config.currentPage = newPage;
       console.log('booking data', this.BookingListdata);
     });
   }
@@ -113,9 +123,9 @@ GameName: string = '';
     this.ViewMorePopupPanel3 = false;
   }
   Search() {
-    this.BookingList();
+    this.BookingList(this.config.currentPage);
   }
   advancesearch() {
-    this.BookingList();
+    this.BookingList(this.config.currentPage);
   }
 }

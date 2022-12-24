@@ -206,6 +206,139 @@ router.get("/getall", async (req, res) => {
   }
 });
 
+router.get("/bookingList", async (req, res) => {
+  try {
+    // let query = req.query;
+    let query = req.query;
+    console.log("query fpr getall", query);
+    console.log("query fpr getall", query.show_time);
+
+    let searchFilter = {};
+    var board_filter_data = [];
+    let created_on = {};
+    if (query.user_id !== "") {
+      searchFilter["user_id"] = parseInt(query.user_id);
+    }
+    // if (query.phonenumber !== "" && query.phonenumber !== NaN) {
+    //   searchFilter["phone"] = Number(query.phonenumber);
+    // }
+    if (query.fromdate !== "") {
+      created_on["$gt"] = new Date(query.fromdate);
+    }
+    if (query.todate !== "") {
+      created_on["$lt"] = new Date(query.todate);
+    }
+    if (query.game_name !== "") {
+      searchFilter["game_name"] = query.game_name;
+    }
+    let length = Object.keys(created_on).length;
+    if (length > 0) {
+      searchFilter["created_on"] = created_on;
+    }
+    // if(show_time.length>0){
+
+    // }
+    console.log(
+      "query.show_time.length zdfvdz",
+      query.show_time,
+      typeof query.show_time,
+      typeof query.board_name
+    );
+    if (query.show_time) {
+      //   let data ={}
+      //   data['$in']=query.showTime
+      //   searchFilters["showTime"]=data
+      if (typeof query.show_time == "object") {
+        searchFilter["showTime"] = { $in: query.show_time };
+      } else {
+        searchFilter["showTime"] = { $in: query?.show_time?.split(",") };
+      }
+    }
+    console.log("searchFilters", searchFilter["show_time"]);
+    if (query.board_name) {
+      if (typeof query.board_name == "object") {
+        searchFilter["booking_data.board_name"] = { $in: query.board_name };
+        board_filter_data = query.board_name;
+      } else {
+        searchFilter["booking_data.board_name"] = {
+          $in: query?.board_name?.split(","),
+        };
+        board_filter_data = query?.board_name?.split(",");
+      }
+    }
+    let searchFilters = {};
+    searchFilters["$and"] = [searchFilter];
+    console.log("searchFilters", JSON.stringify(searchFilters));
+    console.log("board_filter_data", board_filter_data);
+    let dbQuery = [
+      {
+        $match: searchFilters,
+      },
+      {
+        $lookup: {
+          from: "referals",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "referalList",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          user_id: 1,
+          game_id: 1,
+          game_name: 1,
+          phone: 1,
+          showTime: 1,
+          booking_data:
+            board_filter_data.length > 0
+              ? {
+                  $filter: {
+                    input: "$booking_data",
+                    as: "booking_data",
+                    cond: {
+                      $in: ["$$booking_data.board_name", board_filter_data],
+                    },
+                  },
+                }
+              : 1,
+          total_price: 1,
+          created_on: 1,
+          booking_id: 1,
+          referalList: 1,
+        },
+      },
+    ];
+    console.log("dbQuery=-====>", JSON.stringify(dbQuery));
+    booking
+      .aggregate(dbQuery)
+
+      .then((data) => {
+        console.log("data", board_filter_data.length > 0, data);
+        res.json({
+          success: true,
+          data: data,
+          statuscode: 200,
+          status: "list create successfully",
+        });
+      })
+      .catch((error) => {
+        res.json({
+          success: false,
+          statuscode: 202,
+          status: error,
+        });
+      });
+  } catch (error) {
+    console.log("error====>", error);
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
+    });
+  }
+});
+
 router.get("/bookingReview", async (req, res) => {
   try {
     let query = req.query;
