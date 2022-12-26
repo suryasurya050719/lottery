@@ -39,6 +39,9 @@ const creatSchema = mongoose.Schema({
   total_price: {
     type: Number,
   },
+  total_ticket_count:{
+type:Number
+  },
   created_on: {
     type: Date,
     default: new Date(),
