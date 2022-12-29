@@ -251,14 +251,14 @@
                         class="form-control"
                       /> -->
                       {{
-                        searchType == "2" ? (newDate | date: "dd/MM/yyyy") : ""
+                        searchType == "2" ? (newDate | date: "dd/MM/yyyy HH:mm") : ""
                       }}
                       {{
-                        searchType == "3" ? (fromDate | date: "dd/MM/yyyy") : ""
+                        searchType == "3" ? (fromDate | date: "dd/MM/yyyy HH:mm") : ""
                       }}
                       {{ searchType == "3" ? "to" : "" }}
                       {{
-                        searchType == "3" ? (toDate | date: "dd/MM/yyyy") : ""
+                        searchType == "3" ? (toDate | date: "dd/MM/yyyy HH:mm") : ""
                       }}
                     </td>
                     <td>
@@ -332,7 +332,7 @@
                           : "BJCD c"
                       }}{{ data.refered_user_id }}
                     </td>
-                    <td>{{ data.bookings.created_on | date: "dd/MM/yyyy" }}</td>
+                    <td>{{ data.bookings.created_on | date: "dd/MM/yyyy HH:mm" }}</td>
                     <td>
                       <button
                         class="btn btn-primary btn-sm"

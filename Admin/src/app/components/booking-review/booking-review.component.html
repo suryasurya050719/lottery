@@ -354,7 +354,7 @@
                           : "BJCD C"
                       }}{{ data.referalList[0]?.refered_user_id }}
                     </td>
-                    <td>{{ data.created_on | date : "dd/MM/yyyy" }}</td>
+                    <td>{{ data.created_on | date : "dd/MM/yyyy HH:mm" }}</td>
                     <td>
                       <button
                         (click)="ViewMorePopup(i)"
