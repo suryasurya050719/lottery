@@ -10,6 +10,7 @@ import { LotteryResult } from '../../service/lottery_result';
 })
 export class LotteryResultComponent implements OnInit {
   pokemonControl = new FormControl('');
+  BoardNameControler = new FormControl('');
 
   constructor(private board: Board, private lotteryResult: LotteryResult) {}
   letterFormat: any = [];
@@ -21,12 +22,15 @@ export class LotteryResultComponent implements OnInit {
   boardName: String = '';
   fromDate: any = '';
   toppingList: any = [];
+  boardList: any = [];
   gamelistdata: any = [];
   result_numerick: any = {
     A: '',
     B: '',
     C: '',
   };
+  // advance search
+  advanceSearch: boolean = false;
   totalTickets: string = '';
   totalCollection: number = 0;
   totalcomissiondetect: number = 0;
@@ -69,13 +73,19 @@ export class LotteryResultComponent implements OnInit {
   show_time() {
     console.log('board_type', this.pokemonControl);
   }
+  board_detail() {
+    console.log('board_type', this.BoardNameControler);
+  }
   game() {
     console.log('this.game_type', this.game_type);
-    // if (this.game_type == '') {
-    //   this.toppingList = this.gamelistdata;
-    //   this.GameName = '';
-    // } else {
-    // console.log("this.gamelistdata[this.game_type];",this.gamelistdata[this.game_type])
+    if (this.game_type == '') {
+      this.boardList = this.gamelistdata;
+      // this.GameName = '';
+    } else {
+      this.boardList = [];
+      this.boardList.push(this.gamelistdata[this.game_type]);
+      // this.GameName = this.gamelistdata[this.game_type].game_name;
+    }
     this.toppingList = [];
     this.toppingList.push(this.gamelistdata[this.game_type]);
     this.GameName = this.gamelistdata[this.game_type].game_name;
@@ -159,7 +169,14 @@ export class LotteryResultComponent implements OnInit {
   CloseMoreViewPopup5() {
     this.ViewMorePopupPanel5 = false;
   }
+  AdvancedSearch() {
+    this.advanceSearch = !this.advanceSearch;
 
+    console.log('this.advanceSearch', this.advanceSearch);
+  }
+  advancesearch() {
+    this.Preview();
+  }
   // preview
 
   Preview() {
@@ -177,11 +194,16 @@ export class LotteryResultComponent implements OnInit {
         game_name: this.unpublished_data.game_name,
         show: this.unpublished_data.showTime,
         date: this.unpublished_data.date,
-        board_name: this.boardName !== '' ? this.boardName : '',
+        board_name:
+          this.BoardNameControler.value.length > 0
+            ? this.BoardNameControler.value
+            : '',
       };
+      console.log('prepareData', prepareData);
       this.lotteryResult.Preview(prepareData).subscribe((data) => {
-        console.log('preview data===>', data.result);
+        console.log('preview data===>', data.result.data);
         this.previewData = data.result.data;
+        console.log('this.previewData', this.previewData);
         this.totalTickets = data.result.overallTicket;
         this.totalCollection = data.result.overallTicetprice;
         this.totalcomissiondetect = data.result.total_refered_comission;

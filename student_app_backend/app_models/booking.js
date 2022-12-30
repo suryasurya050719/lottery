@@ -18,6 +18,10 @@ const creatSchema = mongoose.Schema({
   phone: {
     type: Number,
   },
+  published_status: {
+    type: Boolean,
+    default: false,
+  },
   showTime: String,
   closeShowTime: String,
   booking_data: [
@@ -39,8 +43,8 @@ const creatSchema = mongoose.Schema({
   total_price: {
     type: Number,
   },
-  total_ticket_count:{
-type:Number
+  total_ticket_count: {
+    type: Number,
   },
   created_on: {
     type: Date,
