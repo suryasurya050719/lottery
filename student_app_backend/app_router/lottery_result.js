@@ -5,6 +5,7 @@ const booking = require("../app_models/booking");
 const referal = require("../app_models/referal");
 const publishStatus = require("../app_models/publishedStatus");
 const winning_data = require("../app_models/winning_Revords");
+const publicestatuses=require("../app_models/publishedStatus")
 
 router.get("/preview", async (req, res) => {
   console.log("jdfsdjkf", req.query);
@@ -20,7 +21,7 @@ router.get("/preview", async (req, res) => {
   let board_name = {};
   if (req.query.board_name.length > 0) {
     board_name["booking_data.board_name"] = {
-      $in: req.query.board_name,
+      $in: (typeof req.query.board_name =='string')?[req.query.board_name]:req.query.board_name,
     };
   }
   console.log("boardname", board_name);
@@ -58,6 +59,7 @@ router.get("/preview", async (req, res) => {
           game_name: { $first: "$game_name" },
           phone: { $first: "$phone" },
           showTime: { $first: "$showTime" },
+          published_status:{$first:"$published_status"},
           booking_id: { $first: "$booking_id" },
           booking_data: { $push: "$booking_data" },
           ticket_price: { $first: "$booking_data.ticket_price" },
@@ -127,6 +129,7 @@ router.get("/preview", async (req, res) => {
               if (show_result_number[i] == formation_data[i]) {
                 userprice = userprice + data2.first_price;
                 price = price + data2.first_price;
+                console.log("1 digit ",data2.first_price)
               }
             }
           } else if (data2.board_name == "2 Digit Board") {
@@ -142,6 +145,8 @@ router.get("/preview", async (req, res) => {
               if (show_result_number[i] == formation_data[i]) {
                 userprice = userprice + data2.first_price;
                 price = price + data2.first_price;
+                console.log("2 digit ",data2.first_price)
+
               }
             }
           } else if (data2.board_name == "3 digit half") {
@@ -156,6 +161,7 @@ router.get("/preview", async (req, res) => {
             let amount = boardResult(formation_data, show_result_number, data2);
             userprice = userprice + amount;
             price = price + amount;
+                console.log("3 half digit ",amount)
           } else if (data2.board_name == "3 digit full") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
@@ -170,6 +176,7 @@ router.get("/preview", async (req, res) => {
             let amount = boardResult(formation_data, show_result_number, data2);
             userprice = userprice + amount;
             price = price + amount;
+                console.log("3 ful digit ",amount)
           } else if (data2.board_name == "box") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
@@ -184,6 +191,7 @@ router.get("/preview", async (req, res) => {
             let amount = boardResult(formation_data, show_result_number, data2);
             userprice = userprice + amount;
             price = price + amount;
+                console.log("box price ",amount)
           } else if (data2.board_name == "all board") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
@@ -198,6 +206,8 @@ router.get("/preview", async (req, res) => {
             let amount = boardResult(formation_data, show_result_number, data2);
             userprice = userprice + amount;
             price = price + amount;
+                console.log("all board ",amount)
+
           } else if (data2.board_name == "4 digit") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
@@ -212,6 +222,8 @@ router.get("/preview", async (req, res) => {
             let amount = boardResult(formation_data, show_result_number, data2);
             userprice = userprice + amount;
             price = price + amount;
+                console.log("4 digits",amount)
+
           }
 
           data2["lottery_price"] = price;
@@ -254,7 +266,8 @@ router.get("/preview", async (req, res) => {
 });
 
 router.get("/Published", async (req, res) => {
-  console.log("jdfsdjkf", req.query);
+  try {
+    console.log(" publis ===>", req.query);
   let data_num = req.query.resultData;
   let date = req.query.date;
   let show = req.query.show;
@@ -305,6 +318,7 @@ router.get("/Published", async (req, res) => {
           game_name: { $first: "$game_name" },
           phone: { $first: "$phone" },
           showTime: { $first: "$showTime" },
+          published_status:{$first:"$published_status"},
           booking_id: { $first: "$booking_id" },
           booking_data: { $push: "$booking_data" },
           ticket_price: { $first: "$booking_data.ticket_price" },
@@ -315,7 +329,7 @@ router.get("/Published", async (req, res) => {
       },
     ])
     .then(async (data) => {
-      console.log(data);
+     console.log(" publis query data ===>", data);
       var total = [];
       var total_price = 0;
       var total_refered_comission = 0;
@@ -485,29 +499,56 @@ router.get("/Published", async (req, res) => {
       console.log("total", total);
 
       let results = {};
-      BookingUpdate(data);
-      results["data"] = data;
+    let bookingdata=  await BookingUpdate(data);
+      results["data"] = bookingdata;
       results["overallTicket"] = total[0].totalTikect;
       results["overallTicetprice"] = total[0].total_price;
       results["overalluserprice"] = total_price;
       results["total_refered_comission"] = total_refered_comission;
-      WiningRecordsCreate(results);
+       results["wining_booking"] = data;
+      await WiningRecordsCreate(results);
+      await published(req.query.unpublished_id)
+     console.log(" publis end data ===>", results);
+
       res.json({
         success: true,
         statuscode: 200,
         status: "preview create successfully",
         result: results,
       });
-    });
+    }).catch((error)=>{
+      console.log("error for then",error)
+    })
+  } catch (error) {
+    console.log("error for try",error)
+     res.json({
+        success: false,
+        statuscode: 500,
+        result: error,
+      });
+  }
 });
 
 router.get("/unpublishedShow", async (req, res) => {
   try {
     console.log("data", req.query.game_name);
     let game_name = req.query.game_name;
+    let min=new Date().getMinutes();
+let hours =new Date().getHours();
+let closeTime=hours+":"+min;
+console.log("Date-->",new Date().toISOString().split('T')[0]);
+console.log("closeTime-->",closeTime);
+
     let filterdata = {
       status: false,
+      $and:[
+        {closeShowTime:{$lte:closeTime}},
+        {date:{$lte:new Date().toISOString().split('T')[0]}}
+      ]
+      // date:
     };
+
+    console.log("unpublish filterdata===>",filterdata);
     if (req.query.game_name !== "" || req.query.game_name !== null) {
       filterdata["game_name"] = req.query.game_name;
     }
@@ -580,29 +621,36 @@ function boardResult(result, cus_data, data) {
   }
 }
 
+async function published(_id){
+  let res=await publicestatuses.findOneAndUpdate({_id:_id},{status:true},{new:true}).catch((error)=>{
+    console.log("published",error)
+  });
+  console.log("published status update",res)
+}
+
 async function BookingUpdate(data) {
   let id = [];
   await data.forEach((data) => {
-    id.push(data._id);
+    id.push(mongoose.Types.ObjectId(data._id));
   });
-  booking
-    .find({ _id: { $in: id } }, { published_status: true })
-    .then((data) => {
-      console.log("data", data);
-    })
-    .catch((error) => {
+  console.log("booking id",JSON.stringify(id))
+  let res=await booking
+    .updateMany({ _id: { $in: id } }, { published_status: true }).catch((error) => {
       console.log("error", error);
     });
+    let res01= await booking.find({ _id: { $in: id } }).catch((error)=>{
+      console.log("error", error);
+      
+    })
+    return res01
+    // console.log("Booking updated data", res);
 }
 
 async function WiningRecordsCreate(data) {
   let records = new winning_data(data);
-  records
-    .save()
-    .then((dataRecords) => {
-      console.log("data", dataRecords);
-    })
-    .catch((error) => {
+  let dataRecords=await records
+    .save().catch((error) => {
       console.log("error", error);
     });
+    console.log(" wining records create data", dataRecords);
 }

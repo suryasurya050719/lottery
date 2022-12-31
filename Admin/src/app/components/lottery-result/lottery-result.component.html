@@ -145,7 +145,7 @@
       </div>
       <div *ngIf="result_data">
         <button class="btn btn-sm mr-3" (click)="LockInputField()">Lock</button>
-        <button class="btn btn-sm mr-3" (click)="Preview()">Preview</button>
+        <button class="btn btn-sm mr-3" (click)="Preview(config.currentpage)">Preview</button>
       </div>
     </div>
 
@@ -204,7 +204,7 @@
             <!-- </mat-form-field> -->
           </div>
           <div class="col-lg-3 d-flex align-items-end pb-1">
-            <button class="btn btn-sm mr-3" (click)="Preview()">Submit</button>
+            <button class="btn btn-sm mr-3" (click)="Preview(config.currentpage)">Submit</button>
           </div>
         </div>
       </div>
@@ -220,10 +220,10 @@
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center justify-content-end">
-              <button class="btn btn-sm mr-3" [disabled]="advanceSearch">
+              <button class="btn btn-sm mr-3" [disabled]="advanceSearch" (click)="Published(bookingDataConfid.currentpage)">
                 Publish
               </button>
-              <button class="btn btn-sm">Download</button>
+              <!-- <button class="btn btn-sm">Download</button> -->
             </div>
           </div>
         </div>
@@ -351,7 +351,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of previewData; let i = index">
+                  <tr *ngFor="let data of previewData | paginate : config; let i = index">
                     <td>Coustomer</td>
                     <td>BJCD BK{{ data.booking_id }}</td>
                     <td>BJCD C{{ data.user_id }}</td>
@@ -378,7 +378,7 @@
                     </td> -->
                     <td>
                       <span class="badge bg-primary blink_txt mb-2"
-                        >In progress</span
+                        >{{data.published_status==true?"Published":"Unpublished"}}</span
                       >
                       <br />
                       <!-- <button
@@ -394,50 +394,20 @@
             </div>
           </div>
 
-          <nav class="Page navigation text-center pt-3 pb-3">
-            <ul
-              class="pagination justify-content-center d-flex align-items-center"
-            >
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">«</span>
-                </a>
-              </li>
-              <li class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">»</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="pl-4">
-          <nav class="Page navigation text-center pt-3 pb-3">
-            <ul
-              class="pagination justify-content-center d-flex align-items-center"
-            >
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">«</span>
-                </a>
-              </li>
-              <li class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">»</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+    <div class="Page navigation text-center pt-3 pb-3" *ngIf="publishedPaggination==false">
+      <pagination-controls
+        id="pagination1"
+        (pageChange)="Preview($event)"
+        class="my-pagination"
+      ></pagination-controls>
+    </div>
+        <div class="Page navigation text-center pt-3 pb-3" *ngIf="publishedPaggination==true">
+      <pagination-controls
+        id="pagination1"
+        (pageChange)="Published($event)"
+        class="my-pagination"
+      ></pagination-controls>
+    </div>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ const Schema = mongoose.Schema({
   total_refered_comission: {
     type: Number,
   },
-  wining_bookin: Array,
+  wining_booking: Array,
   created_on: {
     type: Date,
     default: Date.now,

@@ -40,9 +40,11 @@ router.post("/bookingCreate", async (req, res) => {
             game_id: preparedata.game_id,
             game_name: preparedata.game_name,
             showTime: preparedata.showTime,
+             closeShowTime:preparedata.closeShowTime,
             status: false,
             date: date,
           };
+          console.log("prepare data",prepare)
           let published = new publishStatus(prepare);
           await published.save().then((data) => {
             console.log("data for publice", data);

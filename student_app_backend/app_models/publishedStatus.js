@@ -16,6 +16,9 @@ const creatSchema = mongoose.Schema({
   showTime: {
     type: String,
   },
+  closeShowTime:{
+type:String,
+  },
   status: {
     type: Boolean,
     default: false,
