@@ -6,6 +6,9 @@ const referal = require("../app_models/referal");
 const publishStatus = require("../app_models/publishedStatus");
 const winning_data = require("../app_models/winning_Revords");
 const publicestatuses = require("../app_models/publishedStatus");
+const user = require("../app_models/user");
+const wallet = require("../app_models/wallet");
+const Transection = require("../app_models/transection");
 
 router.get("/preview", async (req, res) => {
   console.log("jdfsdjkf", req.query);
@@ -58,6 +61,8 @@ router.get("/preview", async (req, res) => {
         $group: {
           _id: "$_id",
           user_id: { $first: "$user_id" },
+          refered_user_id: { $first: "$refered_user_id" },
+          refered_role_id: { $first: "$refered_role_id" },
           game_id: { $first: "$game_id" },
           game_name: { $first: "$game_name" },
           phone: { $first: "$phone" },
@@ -117,7 +122,7 @@ router.get("/preview", async (req, res) => {
         await data1.booking_data.forEach((data2) => {
           var price = 0;
           // console.log("data2", data2);
-          if (data2.board_name == "1 Digit Board") {
+          if (data2.board_name == "1 Digit") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -127,23 +132,35 @@ router.get("/preview", async (req, res) => {
               data_num,
               board_leters
             );
-            console.log("formation_data", formation_data);
+            console.log(
+              "formation_data",
+              formation_data,
+              show_result_number,
+              data2.show_result_number
+            );
             for (i = 0; i < formation_data.length; i++) {
               if (show_result_number[i] == formation_data[i]) {
                 userprice = userprice + data2.first_price;
+
                 price = price + data2.first_price;
                 console.log("1 digit ", data2.first_price);
               }
             }
-          } else if (data2.board_name == "2 Digit Board") {
+          } else if (data2.board_name == "2 Digit ") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
+            let show_result_number = data2.show_result_number;
             let formation_data = Dateformation(
               formation,
               data_num,
               board_leters
             );
-            console.log("formation_data", formation_data);
+            console.log(
+              "formation_data",
+              formation_data,
+              show_result_number,
+              data2.show_result_number
+            );
             for (i = 0; i < formation_data.length; i++) {
               if (show_result_number[i] == formation_data[i]) {
                 userprice = userprice + data2.first_price;
@@ -314,6 +331,8 @@ router.get("/Published", async (req, res) => {
           $group: {
             _id: "$_id",
             user_id: { $first: "$user_id" },
+            refered_user_id: { $first: "$refered_user_id" },
+            refered_role_id: { $first: "$refered_role_id" },
             game_id: { $first: "$game_id" },
             game_name: { $first: "$game_name" },
             phone: { $first: "$phone" },
@@ -373,7 +392,7 @@ router.get("/Published", async (req, res) => {
           await data1.booking_data.forEach((data2) => {
             var price = 0;
             // console.log("data2", data2);
-            if (data2.board_name == "1 Digit Board") {
+            if (data2.board_name == "1 Digit") {
               let formation = data2.board_letter_formation;
               let board_leters = data2.board_letters;
               let show_result_number = data2.show_result_number;
@@ -395,8 +414,9 @@ router.get("/Published", async (req, res) => {
                   price = price + data2.first_price;
                 }
               }
-            } else if (data2.board_name == "2 Digit Board") {
+            } else if (data2.board_name == "2 Digit ") {
               let formation = data2.board_letter_formation;
+              let show_result_number = data2.show_result_number;
               let board_leters = data2.board_letters;
               let formation_data = Dateformation(
                 formation,
@@ -528,18 +548,21 @@ router.get("/Published", async (req, res) => {
             user_id: data1.user_id,
             refered_role_id: 2,
           });
-          console.log("data for referal==>", data2.length);
+          console.log("data for referal==>", data2);
           if (data2.length > 0) {
-            console.log("entred");
+            console.log("entred>>>");
             total_refered_comission =
               total_refered_comission + (userprice * 5) / 100;
-            console.log("entred", total_refered_comission);
-            let referedwallet = walletAdd(
-              data2[0].refered_user_if,
+            console.log("entred+++", total_refered_comission);
+            console.log("entred----", data2[0].refered_user_id);
+
+            let referedwallet = await walletAdd(
+              data2[0].refered_user_id,
               total_refered_comission,
-              true
+              true,
+              "comission amount"
             );
-            console.log("referedwallet", referedwallet);
+            console.log("referedwallet==================>>>>>>", referedwallet);
           }
           data1["userprice"] = userprice;
           total_price = total_price + userprice;
@@ -551,14 +574,6 @@ router.get("/Published", async (req, res) => {
 
         let results = {};
         let bookingdata = await BookingUpdate(data);
-        bookingdata.forEach((bookdata) => {
-          let bookingwallet = walletAdd(
-            bookdata.user_id,
-            bookdata.userprice,
-            false
-          );
-          console.log("bookingwallet",bookingwallet)
-        });
         results["data"] = bookingdata;
         results["overallTicket"] = total[0].totalTikect;
         results["overallTicetprice"] = total[0].total_price;
@@ -567,6 +582,17 @@ router.get("/Published", async (req, res) => {
         results["wining_booking"] = data;
         await WiningRecordsCreate(results);
         await published(req.query.unpublished_id);
+        console.log("results.data", results.data);
+        await results.wining_booking.forEach(async (bookdata) => {
+          console.log("==============>>>>>>>>>>>>>", bookdata.userprice);
+          let bookingwallet = await walletAdd(
+            bookdata.user_id,
+            bookdata.userprice,
+            false,
+            "price amount"
+          );
+          console.log("bookingwallet", bookingwallet);
+        });
         console.log(" publis end data ===>", results);
 
         res.json({
@@ -715,19 +741,19 @@ async function WiningRecordsCreate(data) {
   });
   console.log(" wining records create data", dataRecords);
 }
-function walletAdd(user_id, price, commission) {
+function walletAdd(user_id, price, commission, reason) {
   let amount = wallet
     .findOneAndUpdate({ user_id: user_id }, { $inc: { current_amount: price } })
     .then(async (data) => {
       user.findOne({ role_id: 1 }).then(async (res) => {
         await transectiondetails(
-          res.user_id,
-          "INC",
           price,
-          "Admin",
-          "Wallet",
-          "Sucess",
           user_id,
+          res.user_id,
+          res.role_id,
+          3,
+          reason,
+          "INC",
           commission
         );
       });
@@ -739,31 +765,32 @@ function walletAdd(user_id, price, commission) {
   return amount;
 }
 async function transectiondetails(
-  user_id,
-  position,
   amount,
-  tran_f_type,
-  tran_t_type,
-  status,
-  tran_t_userid,
+  userid,
+  tran_f_userid,
+  tran_f_roleid,
+  tran_t_roleid,
+  reason,
+  position,
   commission
 ) {
   var transectiondata = {
-    user_id: user_id,
-    position: position,
     amount: amount,
-    transection_from_userid: user_id,
+    user_id: userid,
+    transection_from_userid: tran_f_userid,
+    transection_from_roleid: tran_f_roleid,
+    transection_to_userid: userid,
+    transection_to_roleid: tran_t_roleid,
+    transection_from_type: "Admin",
+    transection_to_type: "Wallet",
+    reason: reason,
+    position: position,
     commission: commission,
-    transection_to_userid: tran_t_userid,
-    transection_from_type: tran_f_type,
-    transection_to_type: tran_t_type,
-    status: status,
   };
-
   let transection = await new Transection(transectiondata)
     .save()
     .catch((error) => {
       console.log("error for trtansection", error);
     });
-  console.log("teansection", transection);
+  console.log("transection", transection);
 }

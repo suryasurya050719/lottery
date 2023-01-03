@@ -1,9 +1,16 @@
 const { type } = require("express/lib/response");
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 
 const creatSchema = mongoose.Schema({
   booking_id: {
+    type: Number,
+  },
+  refered_user_id: {
+    type: Number,
+  },
+  refered_role_id: {
     type: Number,
   },
   user_id: {

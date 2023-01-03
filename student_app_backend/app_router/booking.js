@@ -27,7 +27,8 @@ router.post("/bookingCreate", async (req, res) => {
         console.log("wallet", walletprice);
         let preparedata = {
           user_id: data.user_id,
-          role_id: data.role_id,
+          refered_user_id: data.refered_user_id,
+          refered_role_id: data.refered_role_id,
           game_id: data.game_id,
           game_name: data.game_name,
           showTime: data.showTime,
@@ -829,13 +830,13 @@ function walletdedection(user_id, dec_amount) {
     .then(async (data) => {
       user.findOne({ role_id: 1 }).then(async (res) => {
         await transectiondetails(
-          user_id,
-          "DEC",
           dec_amount,
-          "Wallet",
-          "Admin",
-          "Sucess",
+          user_id,
           res.user_id,
+          res.role_id,
+          3,
+          "booking dedection amount",
+          "DEC",
           false
         );
       });
@@ -847,32 +848,33 @@ function walletdedection(user_id, dec_amount) {
   return amount;
 }
 async function transectiondetails(
-  user_id,
-  position,
   amount,
-  tran_f_type,
-  tran_t_type,
-  status,
-  tran_t_userid,
+  userid,
+  tran_f_userid,
+  tran_f_roleid,
+  tran_t_roleid,
+  reason,
+  position,
   commission
 ) {
   var transectiondata = {
-    user_id: user_id,
-    position: position,
     amount: amount,
-    transection_from_userid: user_id,
+    user_id: userid,
+    transection_from_userid: tran_f_userid,
+    transection_from_roleid: tran_f_roleid,
+    transection_to_userid: userid,
+    transection_to_roleid: tran_t_roleid,
+    transection_from_type: "Admin",
+    transection_to_type: "Wallet",
+    reason: reason,
+    position: position,
     commission: commission,
-    transection_to_userid: tran_t_userid,
-    transection_from_type: tran_f_type,
-    transection_to_type: tran_t_type,
-    status: status,
   };
-
   let transection = await new Transection(transectiondata)
     .save()
     .catch((error) => {
       console.log("error for trtansection", error);
     });
-  console.log("teansection", transection);
+  console.log("transection", transection);
 }
 module.exports = router;
