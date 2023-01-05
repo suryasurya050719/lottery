@@ -196,7 +196,7 @@ router.get("/preview", async (req, res) => {
             userprice = userprice + amount;
             price = price + amount;
             console.log("3 ful digit ", amount);
-          } else if (data2.board_name == "box") {
+          } else if (data2.board_name == "BOX") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -211,7 +211,7 @@ router.get("/preview", async (req, res) => {
             userprice = userprice + amount;
             price = price + amount;
             console.log("box price ", amount);
-          } else if (data2.board_name == "all board") {
+          } else if (data2.board_name == "All Board") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -226,7 +226,7 @@ router.get("/preview", async (req, res) => {
             userprice = userprice + amount;
             price = price + amount;
             console.log("all board ", amount);
-          } else if (data2.board_name == "4 digit") {
+          } else if (data2.board_name == "4 Digit") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;

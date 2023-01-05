@@ -90,7 +90,13 @@ router.post("/bookingCreate", async (req, res) => {
           status: "insufficent fund",
         });
       }
+    }).catch((error)=>{
+       res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
     });
+    })
   } catch (error) {
     res.json({
       success: false,
