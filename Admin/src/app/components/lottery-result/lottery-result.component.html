@@ -145,44 +145,73 @@
       </div>
       <div *ngIf="result_data">
         <button class="btn btn-sm mr-3" (click)="LockInputField()">Lock</button>
-        <button class="btn btn-sm mr-3" (click)="Preview()">Preview</button>
+        <button class="btn btn-sm mr-3" (click)="Preview(config.currentpage)">
+          Preview
+        </button>
       </div>
     </div>
 
     <div class="pt-5">
       <div class="d-flex align-items-center pb-2 cursor_pointer">
         <h4 class="mb-0 pr-2">Advance Search</h4>
-        <div class="active_chk dark_switch d-inline-block pt-2">
-          <label class="switch mb-0">
-            <input class="switch-input" name="IsActive" type="checkbox" />
-            <span class="switch-label" data-on="On" data-off="Off"></span>
-            <span class="switch-handle"></span>
-          </label>
+        <div class="d-block">
+          <div class="active_chk dark_switch d-inline-block m-auto">
+            <label class="switchlable">
+              <input
+                class="switch_input toggle"
+                type="checkbox"
+                [checked]="advanceSearch"
+                (click)="AdvancedSearch()"
+              />
+              <span class="slider round">
+                <span
+                  [ngClass]="{
+                    off: advanceSearch == false,
+                    on: advanceSearch == true
+                  }"
+                  >{{ advanceSearch ? "ON" : "Off" }}</span
+                >
+              </span>
+            </label>
+          </div>
         </div>
       </div>
-      <div class="pb-3">
+      <div class="pb-3" *ngIf="this.advanceSearch == true">
         <div class="row">
-          <div class="col-lg-3" style="margin-top: -12px">
-            <h4>Board</h4>
-            <select
-              name=""
-              id=""
-              class="form-control"
-              [(ngModel)]="board_type"
-              (ngModelChange)="activeBoard()"
+          <div class="col-lg-2" style="margin-top: -12px">
+            <h4>Board Name</h4>
+            <!-- <mat-form-field
+            appearance="fill"
+            class="form-control cursor-pointer w-100 d-block"
+          > -->
+            <mat-select
+              [formControl]="BoardNameControler"
+              class="form-control cursor-pointer w-100 d-block"
+              (selectionChange)="board_detail()"
+              multiple
             >
-              <option value="">Select</option>
-              <option value="">All</option>
-              <option
-                *ngFor="let data of currentGame.brd; let i = index"
-                [value]="i"
+              <mat-option>__All__</mat-option>
+              <mat-optgroup
+                *ngFor="let group of boardList"
+                [label]="group.game_name"
               >
-                {{ data.board_name }}
-              </option>
-            </select>
+                <mat-option
+                  *ngFor="let pokemon of group.board_id"
+                  [value]="pokemon.name"
+                >
+                  <div>{{ pokemon.name }}</div>
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+            <!-- </mat-form-field> -->
           </div>
           <div class="col-lg-3 d-flex align-items-end pb-1">
-            <button class="btn btn-sm mr-3" (click)="Preview()">Submit</button>
+            <button
+              class="btn btn-sm mr-3"
+              (click)="Preview(config.currentpage)"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
@@ -198,8 +227,14 @@
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center justify-content-end">
-              <button class="btn btn-sm mr-3">Publish</button>
-              <button class="btn btn-sm">Download</button>
+              <button
+                class="btn btn-sm mr-3"
+                [disabled]="advanceSearch"
+                (click)="Published(bookingDataConfid.currentpage)"
+              >
+                Publish
+              </button>
+              <!-- <button class="btn btn-sm">Download</button> -->
             </div>
           </div>
         </div>
@@ -229,12 +264,12 @@
                   <tr>
                     <td>{{ GameName }}</td>
                     <td>
-                      A:{{ result_numerick.A }}B:{{ result_numerick.A }}C:{{
-                        result_numerick.A
-                      }}
+                      <div *ngFor="let item of result_numerick | keyvalue">
+                        {{ item.key }} : {{ item.value }}
+                      </div>
                     </td>
                     <td>{{ boardName }}</td>
-                    <td>sample</td>
+                    <td>{{ unpublished_data.showTime }}</td>
                     <td>{{ totalTickets }}</td>
 
                     <td>
@@ -327,13 +362,27 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of previewData; let i = index">
+                  <tr
+                    *ngFor="
+                      let data of previewData | paginate : config;
+                      let i = index
+                    "
+                  >
                     <td>Coustomer</td>
                     <td>BJCD BK{{ data.booking_id }}</td>
                     <td>BJCD C{{ data.user_id }}</td>
-                    <td>sample</td>
                     <td>
-                      {{ data.created_on | date : "dd MMM yyyy hh:mm a" }}
+                      {{
+                        data.refered_role_id == 1
+                          ? "BJCD A"
+                          : data.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}
+                      {{ data.refered_user_id }}
+                    </td>
+                    <td>
+                      {{ data.created_on | date : "dd MMM yyyy HH:mm" }}
                     </td>
                     <td>
                       <button
@@ -353,9 +402,11 @@
                       </div>
                     </td> -->
                     <td>
-                      <span class="badge bg-primary blink_txt mb-2"
-                        >In progress</span
-                      >
+                      <span class="badge bg-primary blink_txt mb-2">{{
+                        data.published_status == true
+                          ? "Published"
+                          : "Unpublished"
+                      }}</span>
                       <br />
                       <!-- <button
                         class="btn btn-primary btn-sm"
@@ -370,50 +421,26 @@
             </div>
           </div>
 
-          <nav class="Page navigation text-center pt-3 pb-3">
-            <ul
-              class="pagination justify-content-center d-flex align-items-center"
-            >
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">«</span>
-                </a>
-              </li>
-              <li class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">»</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="pl-4">
-          <nav class="Page navigation text-center pt-3 pb-3">
-            <ul
-              class="pagination justify-content-center d-flex align-items-center"
-            >
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">«</span>
-                </a>
-              </li>
-              <li class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">»</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <div
+            class="Page navigation text-center pt-3 pb-3"
+            *ngIf="publishedPaggination == false"
+          >
+            <pagination-controls
+              id="pagination1"
+              (pageChange)="Preview($event)"
+              class="my-pagination"
+            ></pagination-controls>
+          </div>
+          <div
+            class="Page navigation text-center pt-3 pb-3"
+            *ngIf="publishedPaggination == true"
+          >
+            <pagination-controls
+              id="pagination1"
+              (pageChange)="Published($event)"
+              class="my-pagination"
+            ></pagination-controls>
+          </div>
         </div>
       </div>
     </div>
@@ -454,9 +481,9 @@
                 </td>
                 <td>{{ activrBookingData.total_price }}</td>
                 <td>
-                  A:{{ result_numerick.A }}B:{{ result_numerick.A }}C:{{
-                    result_numerick.A
-                  }}
+                  <div *ngFor="let item of result_numerick | keyvalue">
+                    {{ item.key }} : {{ item.value }}
+                  </div>
                 </td>
                 <td>
                   <button

@@ -97,7 +97,7 @@
         <div
           class="resul_show_panel"
           *ngFor="
-            let transection of alluserList | paginate: config;
+            let transection of alluserList | paginate : config;
             let i = index
           "
         >
@@ -127,7 +127,7 @@
                     <td>{{ transection.phone }}</td>
                     <td>
                       {{
-                        transection.referalList[0].refered_role_id == 1
+                        transection.referalList[0]?.refered_role_id == 1
                           ? "BJCD A"
                           : transection.referalList[0]?.refered_role_id == 2
                           ? "BJCD B"
@@ -135,7 +135,7 @@
                       }}
                       {{
                         transection.referalList.length > 0
-                          ? transection.referalList[0].refered_user_id
+                          ? transection.referalList[0]?.refered_user_id
                           : ""
                       }}
                     </td>
@@ -145,7 +145,7 @@
                           <label>Available</label>
                           <h4 class="mb-0">
                             <b>{{
-                              transection.walletsList[0].current_amount
+                              transection?.walletsList[0]?.current_amount
                             }}</b>
                           </h4>
                         </div>
@@ -184,7 +184,7 @@
               </table>
             </div>
           </div>
-          <div class="pb-3 pt-2" >
+          <div class="pb-3 pt-2">
             <div class="mb-0 pb-0">
               <h1 class="text-left"><b>Transaction Details</b></h1>
               <h4></h4>
@@ -224,12 +224,17 @@
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label> Choose TYpe </label>
-            <select name="" id="" class="form-control" [(ngModel)]="transectionType">
-              <option value="">Select</option>
-              <option value="">All</option>
-              <option value="2">Transactions Only</option>
-              <option value="3">Commissions Only</option>
-            </select>
+                    <select
+                      name=""
+                      id=""
+                      class="form-control"
+                      [(ngModel)]="transectionType"
+                    >
+                      <option value="">Select</option>
+                      <option value="">All</option>
+                      <option value="2">Transactions Only</option>
+                      <option value="3">Commissions Only</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-lg-3 d-flex align-items-end pb-3">
@@ -272,20 +277,20 @@
                     <td>
                       {{
                         transection.referalList.length > 0
-                          ? transection.referalList[0].refered_role_id == 1
+                          ? transection.referalList[0]?.refered_role_id == 1
                             ? "BJCD A"
-                            : transection.referalList[0].refered_role_id == 2
+                            : transection.referalList[0]?.refered_role_id == 2
                             ? "BJCD B"
                             : "BJCD c"
                           : ""
                       }}
                       {{
                         transection.referalList.length > 0
-                          ? transection.referalList[0].refered_user_id
+                          ? transection.referalList[0]?.refered_user_id
                           : ""
                       }}
                     </td>
-                    <td>{{ user.created_on | date: "dd/MM/yyyy" }}</td>
+                    <td>{{ user.created_on | date : "dd/MM/yyyy HH:mm" }}</td>
                     <td>
                       <div class="input-group" style="width: 150px">
                         <span class="input-group-addon">RS</span>
@@ -326,16 +331,16 @@
                     <td>
                       {{
                         transection.referalList.length > 0
-                          ? transection.referalList[0].refered_role_id == 1
+                          ? transection.referalList[0]?.refered_role_id == 1
                             ? "BJCD A"
-                            : transection.referalList[0].refered_role_id == 2
+                            : transection.referalList[0]?.refered_role_id == 2
                             ? "BJCD B"
                             : "BJCD c"
                           : ""
                       }}
                       {{
                         transection.referalList.length > 0
-                          ? transection.referalList[0].refered_user_id
+                          ? transection.referalList[0]?.refered_user_id
                           : ""
                       }}
                       <br />

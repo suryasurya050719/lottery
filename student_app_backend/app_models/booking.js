@@ -1,9 +1,16 @@
 const { type } = require("express/lib/response");
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 
 const creatSchema = mongoose.Schema({
   booking_id: {
+    type: Number,
+  },
+  refered_user_id: {
+    type: Number,
+  },
+  refered_role_id: {
     type: Number,
   },
   user_id: {
@@ -17,6 +24,10 @@ const creatSchema = mongoose.Schema({
   },
   phone: {
     type: Number,
+  },
+  published_status: {
+    type: Boolean,
+    default: false,
   },
   showTime: String,
   closeShowTime: String,
@@ -37,6 +48,9 @@ const creatSchema = mongoose.Schema({
     },
   ],
   total_price: {
+    type: Number,
+  },
+  total_ticket_count: {
     type: Number,
   },
   created_on: {

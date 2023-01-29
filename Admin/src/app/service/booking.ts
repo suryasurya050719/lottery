@@ -29,6 +29,24 @@ export class Booking {
       })
     );
   }
+  BookingRecordsList(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/booking/bookingList`;
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+    UserBasedBookingsList(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/booking/userBasedBookings`;
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
   BookingReviewList(data: any): Observable<any> {
     // console.log('filterdata service', filterdata);
     let url = `${environment.apiurl}/booking/bookingReview`;

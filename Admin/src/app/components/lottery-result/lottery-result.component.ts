@@ -10,8 +10,23 @@ import { LotteryResult } from '../../service/lottery_result';
 })
 export class LotteryResultComponent implements OnInit {
   pokemonControl = new FormControl('');
-
-  constructor(private board: Board, private lotteryResult: LotteryResult) {}
+  BoardNameControler = new FormControl('');
+  config: any;
+  bookingDataConfid:any;
+  constructor(private board: Board, private lotteryResult: LotteryResult) {
+        this.config = {
+      id: 'pagination1',
+      currentPage: 1,
+      itemsPerPage: 10,
+    };
+        this.bookingDataConfid = {
+      id: 'pagination2',
+      currentPage: 1,
+      itemsPerPage: 10,
+    };
+  }
+  previewPaggination:Boolean=false
+  publishedPaggination:Boolean=true
   letterFormat: any = [];
   previewData: any = [];
   game_type: any = '';
@@ -21,12 +36,15 @@ export class LotteryResultComponent implements OnInit {
   boardName: String = '';
   fromDate: any = '';
   toppingList: any = [];
+  boardList: any = [];
   gamelistdata: any = [];
   result_numerick: any = {
     A: '',
     B: '',
     C: '',
   };
+  // advance search
+  advanceSearch: boolean = false;
   totalTickets: string = '';
   totalCollection: number = 0;
   totalcomissiondetect: number = 0;
@@ -69,13 +87,19 @@ export class LotteryResultComponent implements OnInit {
   show_time() {
     console.log('board_type', this.pokemonControl);
   }
+  board_detail() {
+    console.log('board_type', this.BoardNameControler);
+  }
   game() {
     console.log('this.game_type', this.game_type);
-    // if (this.game_type == '') {
-    //   this.toppingList = this.gamelistdata;
-    //   this.GameName = '';
-    // } else {
-    // console.log("this.gamelistdata[this.game_type];",this.gamelistdata[this.game_type])
+    if (this.game_type == '') {
+      this.boardList = this.gamelistdata;
+      // this.GameName = '';
+    } else {
+      this.boardList = [];
+      this.boardList.push(this.gamelistdata[this.game_type]);
+      // this.GameName = this.gamelistdata[this.game_type].game_name;
+    }
     this.toppingList = [];
     this.toppingList.push(this.gamelistdata[this.game_type]);
     this.GameName = this.gamelistdata[this.game_type].game_name;
@@ -159,10 +183,19 @@ export class LotteryResultComponent implements OnInit {
   CloseMoreViewPopup5() {
     this.ViewMorePopupPanel5 = false;
   }
+  AdvancedSearch() {
+    this.advanceSearch = !this.advanceSearch;
 
+    console.log('this.advanceSearch', this.advanceSearch);
+  }
+  advancesearch() {
+    this.Preview(this.config.currentPage);
+  }
   // preview
 
-  Preview() {
+  Preview(newPage:any) {
+    this.previewPaggination=true,
+    this.publishedPaggination=false
     const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
     const data = Object.values(this.result_numerick);
     console.log('data', data);
@@ -177,11 +210,17 @@ export class LotteryResultComponent implements OnInit {
         game_name: this.unpublished_data.game_name,
         show: this.unpublished_data.showTime,
         date: this.unpublished_data.date,
-        board_name: this.boardName !== '' ? this.boardName : '',
+        board_name:
+          this.BoardNameControler.value.length > 0
+            ? this.BoardNameControler.value
+            : '',
       };
+      console.log('prepareData', prepareData);
       this.lotteryResult.Preview(prepareData).subscribe((data) => {
-        console.log('preview data===>', data.result);
+        console.log('preview data===>', data.result.data);
         this.previewData = data.result.data;
+        this.config.currentPage = newPage
+        console.log('this.previewData', this.previewData);
         this.totalTickets = data.result.overallTicket;
         this.totalCollection = data.result.overallTicetprice;
         this.totalcomissiondetect = data.result.total_refered_comission;
@@ -191,6 +230,49 @@ export class LotteryResultComponent implements OnInit {
         this.gameStatus =
           this.netAmount - this.winingPrice > 0 ? 'Profit' : 'Loss';
         this.status = 'Unpublish';
+      });
+    } else {
+      alert(' Please Fill All Numeric in Valid Format');
+    }
+  }
+  Published(newPage:any){
+        this.previewPaggination=false,
+    this.publishedPaggination=true
+    const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
+    const data = Object.values(this.result_numerick);
+    console.log('data', data);
+    console.log('isempty', isEmpty);
+    if (isEmpty) {
+      console.log(
+        'this.unpublished_data.game_name',
+        this.unpublished_data.game_name
+      );
+      let prepareData = {
+        resultData: data,
+        game_name: this.unpublished_data.game_name,
+        show: this.unpublished_data.showTime,
+        date: this.unpublished_data.date,
+        unpublished_id:this.unpublished_data._id,
+        board_name:
+          this.BoardNameControler.value.length > 0
+            ? this.BoardNameControler.value
+            : '',
+      };
+      console.log('prepareData', prepareData);
+      this.lotteryResult.Published(prepareData).subscribe((data) => {
+        console.log('preview data===>', data.result.data);
+        this.previewData = data.result.data;
+        this.bookingDataConfid.currentPage = newPage
+        console.log('this.previewData', this.previewData);
+        this.totalTickets = data.result.overallTicket;
+        this.totalCollection = data.result.overallTicetprice;
+        this.totalcomissiondetect = data.result.total_refered_comission;
+        this.netAmount = this.totalCollection - this.totalcomissiondetect;
+        this.winingPrice = data.result.overalluserprice;
+        this.totalIncome = this.netAmount - this.winingPrice;
+        this.gameStatus =
+          this.netAmount - this.winingPrice > 0 ? 'Profit' : 'Loss';
+        this.status = 'publish';
       });
     } else {
       alert(' Please Fill All Numeric in Valid Format');
