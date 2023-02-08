@@ -12,91 +12,92 @@ const { route } = require("./live_result");
 router.post("/bookingCreate", async (req, res) => {
   try {
     let data = req.body;
-    wallet.findOne({ user_id: data.user_id }).then(async (walletres) => {
-      console.log("wallet records", walletres);
-      console.log(
-        "======>",
-        walletres.current_amount > Number(data.total_price)
-      );
-      if (walletres.current_amount > Number(data.total_price)) {
-        // console.log("data", data);
-        let walletprice = walletdedection(
-          data.user_id,
-          Number(data.total_price)
+    wallet
+      .findOne({ user_id: data.user_id })
+      .then(async (walletres) => {
+        console.log("wallet records", walletres);
+        console.log(
+          "======>",
+          walletres.current_amount > Number(data.total_price)
         );
-        console.log("wallet", walletprice);
-        let preparedata = {
-          user_id: data.user_id,
-          refered_user_id: data.refered_user_id,
-          refered_role_id: data.refered_role_id,
-          game_id: data.game_id,
-          game_name: data.game_name,
-          showTime: data.showTime,
-          closeShowTime: data.closeShowTime,
-          phone: data.phone,
-          booking_data: data.booking_data,
-          total_price: data.total_price,
-          total_ticket_count: data.total_ticket_count,
-          created_on: new Date(),
-        };
-        let date = ISOtoLOCALDATE(new Date());
-        console.log("date", date);
-        publishStatus
-          .find({
+        if (walletres.current_amount > Number(data.total_price)) {
+          // console.log("data", data);
+          let walletprice = walletdedection(
+            data.user_id,
+            Number(data.total_price)
+          );
+          console.log("wallet", walletprice);
+          let preparedata = {
+            user_id: data.user_id,
             game_id: data.game_id,
             game_name: data.game_name,
             showTime: data.showTime,
-            date: date,
-          })
-          .then(async (data) => {
-            console.log("data for checking", data.length);
-            if (data.length == 0) {
-              let prepare = {
-                game_id: preparedata.game_id,
-                game_name: preparedata.game_name,
-                showTime: preparedata.showTime,
-                closeShowTime: preparedata.closeShowTime,
-                status: false,
-                date: date,
-              };
-              console.log("prepare data", prepare);
-              let published = new publishStatus(prepare);
-              await published.save().then((data) => {
-                console.log("data for publice", data);
+            closeShowTime: data.closeShowTime,
+            phone: data.phone,
+            booking_data: data.booking_data,
+            total_price: data.total_price,
+            total_ticket_count: data.total_ticket_count,
+            created_on: new Date(),
+          };
+          let date = ISOtoLOCALDATE(new Date());
+          console.log("date", date);
+          publishStatus
+            .find({
+              game_id: data.game_id,
+              game_name: data.game_name,
+              showTime: data.showTime,
+              date: date,
+            })
+            .then(async (data) => {
+              console.log("data for checking", data.length);
+              if (data.length == 0) {
+                let prepare = {
+                  game_id: preparedata.game_id,
+                  game_name: preparedata.game_name,
+                  showTime: preparedata.showTime,
+                  closeShowTime: preparedata.closeShowTime,
+                  status: false,
+                  date: date,
+                };
+                console.log("prepare data", prepare);
+                let published = new publishStatus(prepare);
+                await published.save().then((data) => {
+                  console.log("data for publice", data);
+                });
+              }
+            });
+          let boardCrate = new booking(preparedata);
+          await boardCrate
+            .save()
+            .then((data) => {
+              res.json({
+                success: true,
+                statuscode: 200,
+                status: "Booking create successfully",
               });
-            }
-          });
-        let boardCrate = new booking(preparedata);
-        await boardCrate
-          .save()
-          .then((data) => {
-            res.json({
-              success: true,
-              statuscode: 200,
-              status: "Booking create successfully",
+            })
+            .catch((error) => {
+              res.json({
+                success: false,
+                statuscode: 202,
+                status: error,
+              });
             });
-          })
-          .catch((error) => {
-            res.json({
-              success: false,
-              statuscode: 202,
-              status: error,
-            });
+        } else {
+          res.json({
+            success: false,
+            statuscode: 202,
+            status: "insufficent fund",
           });
-      } else {
+        }
+      })
+      .catch((error) => {
         res.json({
           success: false,
           statuscode: 202,
-          status: "insufficent fund",
+          status: error,
         });
-      }
-    }).catch((error)=>{
-       res.json({
-      success: false,
-      statuscode: 202,
-      status: error,
-    });
-    })
+      });
   } catch (error) {
     res.json({
       success: false,

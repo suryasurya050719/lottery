@@ -9,6 +9,8 @@ const publicestatuses = require("../app_models/publishedStatus");
 const user = require("../app_models/user");
 const wallet = require("../app_models/wallet");
 const Transection = require("../app_models/transection");
+const game = require("../app_models/game");
+const config = require("../config/config");
 
 router.get("/preview", async (req, res) => {
   console.log("jdfsdjkf", req.query);
@@ -18,6 +20,7 @@ router.get("/preview", async (req, res) => {
   let gameName = req.query.game_name;
   let lessDate = new Date(date);
   let graterDate = new Date(date);
+  var PriceDetails = [];
   graterDate.setHours(graterDate.getHours() + 23);
   graterDate.setMinutes(graterDate.getMinutes() + 59);
   console.log("newDate", lessDate, graterDate);
@@ -30,7 +33,28 @@ router.get("/preview", async (req, res) => {
           : req.query.board_name,
     };
   }
+  await game
+    .aggregate([
+      {
+        $match: {
+          $and: [{ game_name: gameName }],
+        },
+      },
+      {
+        $lookup: {
+          from: "boards",
+          localField: "board_id.name",
+          foreignField: "board_name",
+          as: "brd",
+        },
+      },
+    ])
+    .then(async (data) => {
+      console.log("data", data[0].brd);
+      PriceDetails = await data[0].brd;
+    });
   console.log("boardname", board_name);
+  console.log("PriceDetails", PriceDetails);
   booking
     .aggregate([
       {
@@ -122,7 +146,11 @@ router.get("/preview", async (req, res) => {
         await data1.booking_data.forEach((data2) => {
           var price = 0;
           // console.log("data2", data2);
-          if (data2.board_name == "1 Digit") {
+          if (data2.board_name == config.one_digit) {
+            let boardDetails = PriceDetails.find(
+              (data) => data.board_name == data2.board_name
+            );
+            console.log("boardDetails", boardDetails);
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
