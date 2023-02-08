@@ -13,7 +13,7 @@ const game = require("../app_models/game");
 const config = require("../config/config");
 
 router.get("/preview", async (req, res) => {
-  console.log("jdfsdjkf", req.query);
+  // console.log("jdfsdjkf", req.query);
   let data_num = req.query.resultData;
   let date = req.query.date;
   let show = req.query.show;
@@ -23,7 +23,7 @@ router.get("/preview", async (req, res) => {
   var PriceDetails = [];
   graterDate.setHours(graterDate.getHours() + 23);
   graterDate.setMinutes(graterDate.getMinutes() + 59);
-  console.log("newDate", lessDate, graterDate);
+  // console.log("newDate", lessDate, graterDate);
   let board_name = {};
   if (req.query.board_name.length > 0) {
     board_name["booking_data.board_name"] = {
@@ -50,11 +50,11 @@ router.get("/preview", async (req, res) => {
       },
     ])
     .then(async (data) => {
-      console.log("data", data[0].brd);
+      // console.log("data", data[0].brd);
       PriceDetails = await data[0].brd;
     });
-  console.log("boardname", board_name);
-  console.log("PriceDetails", PriceDetails);
+  // console.log("boardname", board_name);
+  // console.log("PriceDetails", PriceDetails);
   booking
     .aggregate([
       {
@@ -102,7 +102,7 @@ router.get("/preview", async (req, res) => {
       },
     ])
     .then(async (data) => {
-      console.log(data);
+      // console.log(data);
       var total = [];
       var total_price = 0;
       var total_refered_comission = 0;
@@ -129,7 +129,7 @@ router.get("/preview", async (req, res) => {
           },
         ])
         .then(async (result) => {
-          console.log("result for totalcount===>", result);
+          // console.log("result for totalcount===>", result);
           total = result;
         })
         .catch((error) => {
@@ -139,18 +139,25 @@ router.get("/preview", async (req, res) => {
             status: error,
           });
         });
-      console.log("data.length==>", data.length);
+      // console.log("data.length==>", data.length);
       for (let index = 0; index < data.length; index++) {
         let data1 = data[index];
         let userprice = 0;
-        await data1.booking_data.forEach((data2) => {
+        await data1.booking_data.forEach(async (data2) => {
           var price = 0;
           // console.log("data2", data2);
           if (data2.board_name == config.one_digit) {
-            let boardDetails = PriceDetails.find(
+            let boardDetails = await PriceDetails.find(
               (data) => data.board_name == data2.board_name
             );
-            console.log("boardDetails", boardDetails);
+            //  let price= boardDetails.price_amount.reduce((obj,item)=>Object.assign(obj,{[item.name]:[item.price]}))
+            let PriceDetalsobject = Object.assign(
+              {},
+              ...boardDetails.price_amount.map((item) => ({
+                [item.name]: item.price,
+              }))
+            );
+            console.log("price====>", PriceDetalsobject);
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -164,17 +171,37 @@ router.get("/preview", async (req, res) => {
               "formation_data",
               formation_data,
               show_result_number,
-              data2.show_result_number
+              data2.ticket_count,
+              show_result_number[0] == formation_data[0]
             );
-            for (i = 0; i < formation_data.length; i++) {
-              if (show_result_number[i] == formation_data[i]) {
-                userprice = userprice + data2.first_price;
+            // for (i = 0; i < formation_data.length; i++) {
+              if (show_result_number[0] == formation_data[0]) {
+              console.log("dfsd")
+              let name=PriceDetalsobject[config.first_price];
+              console.log("name",name)
+              let tprice =
+                 data2.ticket_count*name
+                console.log("1 digit ", tprice);
+              userprice = userprice + tprice;
 
-                price = price + data2.first_price;
-                console.log("1 digit ", data2.first_price);
-              }
+              price =  price + tprice;
+              console.log("1 digit ", tprice);
+              console.log("userprice ", userprice);
+              console.log("price", price);
             }
-          } else if (data2.board_name == "2 Digit ") {
+            // }
+          } else if (data2.board_name == config.two_digit) {
+            let boardDetails = await PriceDetails.find(
+              (data) => data.board_name == data2.board_name
+            );
+            //  let price= boardDetails.price_amount.reduce((obj,item)=>Object.assign(obj,{[item.name]:[item.price]}))
+            let PriceDetalsobject = Object.assign(
+              {},
+              ...boardDetails.price_amount.map((item) => ({
+                [item.name]: item.price,
+              }))
+            );
+            console.log("price====>", PriceDetalsobject);
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -189,13 +216,23 @@ router.get("/preview", async (req, res) => {
               show_result_number,
               data2.show_result_number
             );
-            for (i = 0; i < formation_data.length; i++) {
-              if (show_result_number[i] == formation_data[i]) {
-                userprice = userprice + data2.first_price;
-                price = price + data2.first_price;
-                console.log("2 digit ", data2.first_price);
-              }
+            if (show_result_number[0] == formation_data[0]) {
+              let tprice =
+                await data2.ticket_count * PriceDetalsobject.first_price;
+              userprice =await userprice + tprice;
+
+              price = await price + tprice;
+              console.log("1 digit ", tprice);
+              console.log("userprice ", userprice);
+              console.log("price", price);
             }
+            // for (i = 0; i < formation_data.length; i++) {
+            //   if (show_result_number[i] == formation_data[i]) {
+            //     userprice = userprice + data2.first_price;
+            //     price = price + data2.first_price;
+            //     console.log("2 digit ", data2.first_price);
+            //   }
+            // }
           } else if (data2.board_name == "3 digit half") {
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
@@ -272,6 +309,7 @@ router.get("/preview", async (req, res) => {
           }
 
           data2["lottery_price"] = price;
+          console.log("userprice...<<<>>>", userprice);
           console.log("price", price);
           console.log("data2 >>>>>>>>>>>>>>>>", data2);
         });
@@ -287,12 +325,15 @@ router.get("/preview", async (req, res) => {
           console.log("entred", total_refered_comission);
         }
         data1["userprice"] = userprice;
-        total_price = total_price + userprice;
+        total_price =await total_price + userprice;
         // total_refered_comission =
         //   total_refered_comission + (userprice * 5) / 100;
+
+        console.log("total_price....>>>>",total_price)
       }
       console.log("total_refered_comission", total_refered_comission);
       console.log("total", total);
+      console.log("total_price",total_price)
 
       let results = {};
       results["data"] = data;
