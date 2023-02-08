@@ -8,6 +8,7 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Dropdown } from 'src/app/service/dropdown';
 
 @Component({
   selector: 'app-create-lottery',
@@ -19,7 +20,8 @@ export class CreateLotteryComponent implements OnInit {
     private changeRef: ChangeDetectorRef,
     public board: Board,
     public datePipe: DatePipe,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private Dropdown:Dropdown
   ) {
     this.form = this.formBuilder.group({
       participants: new FormArray([]),
@@ -101,6 +103,11 @@ export class CreateLotteryComponent implements OnInit {
   startDateError: Boolean = false;
   endDateError: Boolean = false;
   resultDateError: Boolean = false;
+
+  // dropdown
+
+  PriceDropDown:any=[]
+  BoardDropdown:any=[]
   result: {
     selectedFruit: any;
   } = { selectedFruit: [] };
@@ -121,11 +128,25 @@ export class CreateLotteryComponent implements OnInit {
     // });
     this.BoardList();
     this.gameList();
+    this.priceDropDown();
+    this.boardDropDown()
     console.log('boardEdit', this.boardEdit);
   }
 
   get ordersFormArray() {
     return this.form.controls?.['orders'] as FormArray;
+  }
+  boardDropDown(){
+    this.Dropdown.board().subscribe((data)=>{
+      console.log("data",data)
+      this.BoardDropdown=data.data
+    })
+  }
+  priceDropDown(){
+this.Dropdown.price().subscribe((data)=>{
+  console.log("price drop",data)
+  this.PriceDropDown=data.data
+})
   }
   getCheckboxes() {
     console.log('selectedValue', this.selectedValue);

@@ -401,13 +401,31 @@
               <div class="bg-white p-2">
                 <form action="">
                   <div class="pb-2">
-                    <input
+                    <div class="form-group">
+                      <label> Game Name </label>
+                      <select
+                        type="text"
+                        placeholder="Create Board Name"
+                        id=""
+                        class="form-control"
+                        [(ngModel)]="boardName"
+                      >
+                        <option value="">Select</option>
+                        <option
+                          *ngFor="let data of BoardDropdown; let i = index"
+                          [value]="data.board"
+                        >
+                          {{ data.board }}
+                        </option>
+                      </select>
+                    </div>
+                    <!-- <input
                       type="text"
                       placeholder="Create Board Name"
                       class="form-control"
                       name="boardName"
                       [(ngModel)]="boardName"
-                    />
+                    /> -->
                     <div class="ERR_Msg text-danger" *ngIf="ticketnameError">
                       <p>boardName is required</p>
                     </div>
@@ -526,13 +544,28 @@
             <label class="d-block text-center text-white mb-0 mt-0 pb-2"
               >Title</label
             >
-            <input
+            <select
               type="text"
               placeholder="1st Price"
               class="form-control bg-white"
               name="ticketname"
               [(ngModel)]="ticketname"
-            />
+            >
+              <option value="">Select</option>
+              <option
+                *ngFor="let data of PriceDropDown; let i = index"
+                [value]="data.price"
+              >
+                {{ data.price }}
+              </option>
+            </select>
+            <!-- <input
+              type="text"
+              placeholder="1st Price"
+              class="form-control bg-white"
+              name="ticketname"
+              [(ngModel)]="ticketname"
+            /> -->
           </div>
           <div class="col-lg-6">
             <label class="d-block text-center text-white mb-0 mt-0 pb-2"
@@ -541,7 +574,7 @@
             <div class="input-group">
               <span class="input-group-addon bg-primary">RS</span>
               <input
-                type="text"
+                type="number"
                 class="form-control bg-white"
                 placeholder="1,00,000"
                 name="ticketPrice"

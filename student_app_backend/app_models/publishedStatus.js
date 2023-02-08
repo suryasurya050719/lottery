@@ -17,7 +17,7 @@ const creatSchema = mongoose.Schema({
     type: String,
   },
   closeShowTime:{
-type:String,
+    type:String,
   },
   status: {
     type: Boolean,
@@ -28,7 +28,7 @@ type:String,
   },
   created_on: {
     type: Date,
-    default: Date.now,
+    default:new Date(),
   },
 });
 autoIncrement.initialize(mongoose.connection);
