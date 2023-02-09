@@ -175,16 +175,15 @@ router.get("/preview", async (req, res) => {
               show_result_number[0] == formation_data[0]
             );
             // for (i = 0; i < formation_data.length; i++) {
-              if (show_result_number[0] == formation_data[0]) {
-              console.log("dfsd")
-              let name=PriceDetalsobject[config.first_price];
-              console.log("name",name)
-              let tprice =
-                 data2.ticket_count*name
-                console.log("1 digit ", tprice);
+            if (show_result_number[0] == formation_data[0]) {
+              console.log("dfsd");
+              let name = PriceDetalsobject[config.first_price];
+              console.log("name", name);
+              let tprice = data2.ticket_count * name;
+              console.log("1 digit ", tprice);
               userprice = userprice + tprice;
 
-              price =  price + tprice;
+              price = price + tprice;
               console.log("1 digit ", tprice);
               console.log("userprice ", userprice);
               console.log("price", price);
@@ -217,11 +216,17 @@ router.get("/preview", async (req, res) => {
               data2.show_result_number
             );
             if (show_result_number[0] == formation_data[0]) {
-              let tprice =
-                await data2.ticket_count * PriceDetalsobject.first_price;
-              userprice =await userprice + tprice;
+              console.log(
+                ">>>",
+                data2.ticket_count,
+                PriceDetalsobject,
+                config.first_price,
+                PriceDetalsobject[config.first_price]
+              );
+              let tprice = data2.ticket_count * PriceDetalsobject.first_price;
+              userprice = userprice + tprice;
 
-              price = await price + tprice;
+              price = price + tprice;
               console.log("1 digit ", tprice);
               console.log("userprice ", userprice);
               console.log("price", price);
@@ -233,7 +238,16 @@ router.get("/preview", async (req, res) => {
             //     console.log("2 digit ", data2.first_price);
             //   }
             // }
-          } else if (data2.board_name == "3 digit half") {
+          } else if (data2.board_name == config.three_half_digit) {
+            let boardDetails = await PriceDetails.find(
+              (data) => data.board_name == data2.board_name
+            );
+            let PriceDetalsobject = Object.assign(
+              {},
+              ...boardDetails.price_amount.map((item) => ({
+                [item.name]: item.price,
+              }))
+            );
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -242,41 +256,25 @@ router.get("/preview", async (req, res) => {
               data_num,
               board_leters
             );
-            let amount = boardResult(formation_data, show_result_number, data2);
-            userprice = userprice + amount;
-            price = price + amount;
-            console.log("3 half digit ", amount);
-          } else if (data2.board_name == "3 digit full") {
-            let formation = data2.board_letter_formation;
-            let board_leters = data2.board_letters;
-            let show_result_number = data2.show_result_number;
-            console.log("formated data===>", formation, data_num, board_leters);
-            let formation_data = Dateformation(
-              formation,
-              data_num,
-              board_leters
+            let amount = boardResult(
+              formation_data,
+              show_result_number,
+              PriceDetalsobject
             );
-            console.log("formation_data", formation_data);
-            let amount = boardResult(formation_data, show_result_number, data2);
-            userprice = userprice + amount;
-            price = price + amount;
-            console.log("3 ful digit ", amount);
-          } else if (data2.board_name == "BOX") {
-            let formation = data2.board_letter_formation;
-            let board_leters = data2.board_letters;
-            let show_result_number = data2.show_result_number;
-            console.log("formated data===>", formation, data_num, board_leters);
-            let formation_data = Dateformation(
-              formation,
-              data_num,
-              board_leters
+            let tprice = data2.ticket_count * amount;
+            userprice = userprice + tprice;
+            price = price + tprice;
+            console.log("3 half digit ", tprice);
+          } else if (data2.board_name == config.three_full_digit) {
+            let boardDetails = await PriceDetails.find(
+              (data) => data.board_name == data2.board_name
             );
-            console.log("formation_data", formation_data);
-            let amount = boardResult(formation_data, show_result_number, data2);
-            userprice = userprice + amount;
-            price = price + amount;
-            console.log("box price ", amount);
-          } else if (data2.board_name == "All Board") {
+            let PriceDetalsobject = Object.assign(
+              {},
+              ...boardDetails.price_amount.map((item) => ({
+                [item.name]: item.price,
+              }))
+            );
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -287,11 +285,25 @@ router.get("/preview", async (req, res) => {
               board_leters
             );
             console.log("formation_data", formation_data);
-            let amount = boardResult(formation_data, show_result_number, data2);
-            userprice = userprice + amount;
-            price = price + amount;
-            console.log("all board ", amount);
-          } else if (data2.board_name == "4 Digit") {
+            let amount = boardResult(
+              formation_data,
+              show_result_number,
+              PriceDetalsobject
+            );
+            let tprice = data2.ticket_count * amount;
+            userprice = userprice + tprice;
+            price = price + tprice;
+            console.log("3 full digit ", tprice);
+          } else if (data2.board_name == config.box_digit) {
+            let boardDetails = await PriceDetails.find(
+              (data) => data.board_name == data2.board_name
+            );
+            let PriceDetalsobject = Object.assign(
+              {},
+              ...boardDetails.price_amount.map((item) => ({
+                [item.name]: item.price,
+              }))
+            );
             let formation = data2.board_letter_formation;
             let board_leters = data2.board_letters;
             let show_result_number = data2.show_result_number;
@@ -302,10 +314,73 @@ router.get("/preview", async (req, res) => {
               board_leters
             );
             console.log("formation_data", formation_data);
-            let amount = boardResult(formation_data, show_result_number, data2);
-            userprice = userprice + amount;
-            price = price + amount;
-            console.log("4 digits", amount);
+            let amount = boardResult(
+              formation_data,
+              show_result_number,
+              PriceDetalsobject
+            );
+            let tprice = data2.ticket_count * amount;
+            userprice = userprice + tprice;
+            price = price + tprice;
+            console.log("box price ", tprice);
+          } else if (data2.board_name == config.all_board_digit) {
+            let boardDetails = await PriceDetails.find(
+              (data) => data.board_name == data2.board_name
+            );
+            let PriceDetalsobject = Object.assign(
+              {},
+              ...boardDetails.price_amount.map((item) => ({
+                [item.name]: item.price,
+              }))
+            );
+            let formation = data2.board_letter_formation;
+            let board_leters = data2.board_letters;
+            let show_result_number = data2.show_result_number;
+            console.log("formated data===>", formation, data_num, board_leters);
+            let formation_data = Dateformation(
+              formation,
+              data_num,
+              board_leters
+            );
+            console.log("formation_data", formation_data);
+            let amount = boardResult(
+              formation_data,
+              show_result_number,
+              PriceDetalsobject
+            );
+            let tprice = data2.ticket_count * amount;
+            userprice = userprice + tprice;
+            price = price + tprice;
+            console.log("all board ", tprice);
+          } else if (data2.board_name == config.four_digit) {
+            let boardDetails = await PriceDetails.find(
+              (data) => data.board_name == data2.board_name
+            );
+            let PriceDetalsobject = Object.assign(
+              {},
+              ...boardDetails.price_amount.map((item) => ({
+                [item.name]: item.price,
+              }))
+            );
+            let formation = data2.board_letter_formation;
+            let board_leters = data2.board_letters;
+            let show_result_number = data2.show_result_number;
+            console.log("formated data===>", formation, data_num, board_leters);
+            let formation_data = Dateformation(
+              formation,
+              data_num,
+              board_leters
+            );
+            console.log("formation_data", formation_data);
+            let amount = boardResult(
+              formation_data,
+              show_result_number,
+              PriceDetalsobject
+            );
+            let tprice = data2.ticket_count * amount;
+            userprice = userprice + tprice;
+            price = price + tprice;
+            console.log("4 digits", tprice);
           }
 
           data2["lottery_price"] = price;
@@ -325,15 +400,15 @@ router.get("/preview", async (req, res) => {
           console.log("entred", total_refered_comission);
         }
         data1["userprice"] = userprice;
-        total_price =await total_price + userprice;
+        total_price = total_price + userprice;
         // total_refered_comission =
         //   total_refered_comission + (userprice * 5) / 100;
 
-        console.log("total_price....>>>>",total_price)
+        console.log("total_price....>>>>", total_price);
       }
       console.log("total_refered_comission", total_refered_comission);
       console.log("total", total);
-      console.log("total_price",total_price)
+      console.log("total_price", total_price);
 
       let results = {};
       results["data"] = data;
@@ -360,16 +435,41 @@ router.get("/Published", async (req, res) => {
     let gameName = req.query.game_name;
     let lessDate = new Date(date);
     let graterDate = new Date(date);
+    var PriceDetails = [];
     graterDate.setHours(graterDate.getHours() + 23);
     graterDate.setMinutes(graterDate.getMinutes() + 59);
     console.log("newDate", lessDate, graterDate);
     let board_name = {};
     if (req.query.board_name.length > 0) {
       board_name["booking_data.board_name"] = {
-        $in: req.query.board_name,
+        $in:
+          typeof req.query.board_name == "string"
+            ? [req.query.board_name]
+            : req.query.board_name,
       };
     }
-    console.log("boardname", board_name);
+    await game
+      .aggregate([
+        {
+          $match: {
+            $and: [{ game_name: gameName }],
+          },
+        },
+        {
+          $lookup: {
+            from: "boards",
+            localField: "board_id.name",
+            foreignField: "board_name",
+            as: "brd",
+          },
+        },
+      ])
+      .then(async (data) => {
+        // console.log("data", data[0].brd);
+        PriceDetails = await data[0].brd;
+      });
+    // console.log("boardname", board_name);
+    // console.log("PriceDetails", PriceDetails);
     booking
       .aggregate([
         {
@@ -444,7 +544,7 @@ router.get("/Published", async (req, res) => {
             },
           ])
           .then(async (result) => {
-            console.log("result for totalcount===>", result);
+            // console.log("result for totalcount===>", result);
             total = result;
           })
           .catch((error) => {
@@ -454,14 +554,25 @@ router.get("/Published", async (req, res) => {
               status: error,
             });
           });
-        console.log("data.length==>", data.length);
+        // console.log("data.length==>", data.length);
         for (let index = 0; index < data.length; index++) {
           let data1 = data[index];
           let userprice = 0;
-          await data1.booking_data.forEach((data2) => {
+          await data1.booking_data.forEach(async (data2) => {
             var price = 0;
             // console.log("data2", data2);
-            if (data2.board_name == "1 Digit") {
+            if (data2.board_name == config.one_digit) {
+              let boardDetails = await PriceDetails.find(
+                (data) => data.board_name == data2.board_name
+              );
+              //  let price= boardDetails.price_amount.reduce((obj,item)=>Object.assign(obj,{[item.name]:[item.price]}))
+              let PriceDetalsobject = Object.assign(
+                {},
+                ...boardDetails.price_amount.map((item) => ({
+                  [item.name]: item.price,
+                }))
+              );
+              console.log("price====>", PriceDetalsobject);
               let formation = data2.board_letter_formation;
               let board_leters = data2.board_letters;
               let show_result_number = data2.show_result_number;
@@ -476,14 +587,38 @@ router.get("/Published", async (req, res) => {
                 data_num,
                 board_leters
               );
-              console.log("formation_data", formation_data);
-              for (i = 0; i < formation_data.length; i++) {
-                if (show_result_number[i] == formation_data[i]) {
-                  userprice = userprice + data2.first_price;
-                  price = price + data2.first_price;
-                }
+              console.log(
+                "formation_data",
+                formation_data,
+                show_result_number,
+                data2.ticket_count,
+                show_result_number[0] == formation_data[0]
+              );
+              if (show_result_number[0] == formation_data[0]) {
+                console.log("dfsd");
+                let name = PriceDetalsobject[config.first_price];
+                console.log("name", name);
+                let tprice = data2.ticket_count * name;
+                console.log("1 digit ", tprice);
+                userprice = userprice + tprice;
+
+                price = price + tprice;
+                console.log("1 digit ", tprice);
+                console.log("userprice ", userprice);
+                console.log("price", price);
               }
-            } else if (data2.board_name == "2 Digit ") {
+            } else if (data2.board_name == config.two_digit) {
+              let boardDetails = await PriceDetails.find(
+                (data) => data.board_name == data2.board_name
+              );
+              //  let price= boardDetails.price_amount.reduce((obj,item)=>Object.assign(obj,{[item.name]:[item.price]}))
+              let PriceDetalsobject = Object.assign(
+                {},
+                ...boardDetails.price_amount.map((item) => ({
+                  [item.name]: item.price,
+                }))
+              );
+              console.log("price====>", PriceDetalsobject);
               let formation = data2.board_letter_formation;
               let show_result_number = data2.show_result_number;
               let board_leters = data2.board_letters;
@@ -492,14 +627,38 @@ router.get("/Published", async (req, res) => {
                 data_num,
                 board_leters
               );
-              console.log("formation_data", formation_data);
-              for (i = 0; i < formation_data.length; i++) {
-                if (show_result_number[i] == formation_data[i]) {
-                  userprice = userprice + data2.first_price;
-                  price = price + data2.first_price;
-                }
+              console.log(
+                "formation_data",
+                formation_data,
+                show_result_number,
+                data2.show_result_number
+              );
+              if (show_result_number[0] == formation_data[0]) {
+                console.log(
+                  ">>>",
+                  data2.ticket_count,
+                  PriceDetalsobject,
+                  config.first_price,
+                  PriceDetalsobject[config.first_price]
+                );
+                let tprice = data2.ticket_count * PriceDetalsobject.first_price;
+                userprice = userprice + tprice;
+
+                price = price + tprice;
+                console.log("1 digit ", tprice);
+                console.log("userprice ", userprice);
+                console.log("price", price);
               }
-            } else if (data2.board_name == "3 digit half") {
+            } else if (data2.board_name == config.three_half_digit) {
+              let boardDetails = await PriceDetails.find(
+                (data) => data.board_name == data2.board_name
+              );
+              let PriceDetalsobject = Object.assign(
+                {},
+                ...boardDetails.price_amount.map((item) => ({
+                  [item.name]: item.price,
+                }))
+              );
               let formation = data2.board_letter_formation;
               let board_leters = data2.board_letters;
               let show_result_number = data2.show_result_number;
@@ -511,57 +670,22 @@ router.get("/Published", async (req, res) => {
               let amount = boardResult(
                 formation_data,
                 show_result_number,
-                data2
+                PriceDetalsobject
               );
-              userprice = userprice + amount;
-              price = price + amount;
-            } else if (data2.board_name == "3 digit full") {
-              let formation = data2.board_letter_formation;
-              let board_leters = data2.board_letters;
-              let show_result_number = data2.show_result_number;
-              console.log(
-                "formated data===>",
-                formation,
-                data_num,
-                board_leters
+              let tprice = data2.ticket_count * amount;
+              userprice = userprice + tprice;
+              price = price + tprice;
+              console.log("3 half digit ", tprice);
+            } else if (data2.board_name == config.three_full_digit) {
+              let boardDetails = await PriceDetails.find(
+                (data) => data.board_name == data2.board_name
               );
-              let formation_data = Dateformation(
-                formation,
-                data_num,
-                board_leters
+              let PriceDetalsobject = Object.assign(
+                {},
+                ...boardDetails.price_amount.map((item) => ({
+                  [item.name]: item.price,
+                }))
               );
-              console.log("formation_data", formation_data);
-              let amount = boardResult(
-                formation_data,
-                show_result_number,
-                data2
-              );
-              userprice = userprice + amount;
-              price = price + amount;
-            } else if (data2.board_name == "box") {
-              let formation = data2.board_letter_formation;
-              let board_leters = data2.board_letters;
-              let show_result_number = data2.show_result_number;
-              console.log(
-                "formated data===>",
-                formation,
-                data_num,
-                board_leters
-              );
-              let formation_data = Dateformation(
-                formation,
-                data_num,
-                board_leters
-              );
-              console.log("formation_data", formation_data);
-              let amount = boardResult(
-                formation_data,
-                show_result_number,
-                data2
-              );
-              userprice = userprice + amount;
-              price = price + amount;
-            } else if (data2.board_name == "all board") {
               let formation = data2.board_letter_formation;
               let board_leters = data2.board_letters;
               let show_result_number = data2.show_result_number;
@@ -580,11 +704,22 @@ router.get("/Published", async (req, res) => {
               let amount = boardResult(
                 formation_data,
                 show_result_number,
-                data2
+                PriceDetalsobject
               );
-              userprice = userprice + amount;
-              price = price + amount;
-            } else if (data2.board_name == "4 digit") {
+              let tprice = data2.ticket_count * amount;
+              userprice = userprice + tprice;
+              price = price + tprice;
+              console.log("3 full digit ", tprice);
+            } else if (data2.board_name == config.box_digit) {
+              let boardDetails = await PriceDetails.find(
+                (data) => data.board_name == data2.board_name
+              );
+              let PriceDetalsobject = Object.assign(
+                {},
+                ...boardDetails.price_amount.map((item) => ({
+                  [item.name]: item.price,
+                }))
+              );
               let formation = data2.board_letter_formation;
               let board_leters = data2.board_letters;
               let show_result_number = data2.show_result_number;
@@ -603,13 +738,84 @@ router.get("/Published", async (req, res) => {
               let amount = boardResult(
                 formation_data,
                 show_result_number,
-                data2
+                PriceDetalsobject
               );
-              userprice = userprice + amount;
-              price = price + amount;
+              let tprice = data2.ticket_count * amount;
+              userprice = userprice + tprice;
+              price = price + tprice;
+              console.log("box price ", tprice);
+            } else if (data2.board_name == config.all_board_digit) {
+              let boardDetails = await PriceDetails.find(
+                (data) => data.board_name == data2.board_name
+              );
+              let PriceDetalsobject = Object.assign(
+                {},
+                ...boardDetails.price_amount.map((item) => ({
+                  [item.name]: item.price,
+                }))
+              );
+              let formation = data2.board_letter_formation;
+              let board_leters = data2.board_letters;
+              let show_result_number = data2.show_result_number;
+              console.log(
+                "formated data===>",
+                formation,
+                data_num,
+                board_leters
+              );
+              let formation_data = Dateformation(
+                formation,
+                data_num,
+                board_leters
+              );
+              console.log("formation_data", formation_data);
+              let amount = boardResult(
+                formation_data,
+                show_result_number,
+                PriceDetalsobject
+              );
+              let tprice = data2.ticket_count * amount;
+              userprice = userprice + tprice;
+              price = price + tprice;
+              console.log("all board ", tprice);
+            } else if (data2.board_name == config.four_digit) {
+              let boardDetails = await PriceDetails.find(
+                (data) => data.board_name == data2.board_name
+              );
+              let PriceDetalsobject = Object.assign(
+                {},
+                ...boardDetails.price_amount.map((item) => ({
+                  [item.name]: item.price,
+                }))
+              );
+              let formation = data2.board_letter_formation;
+              let board_leters = data2.board_letters;
+              let show_result_number = data2.show_result_number;
+              console.log(
+                "formated data===>",
+                formation,
+                data_num,
+                board_leters
+              );
+              let formation_data = Dateformation(
+                formation,
+                data_num,
+                board_leters
+              );
+              console.log("formation_data", formation_data);
+              let amount = boardResult(
+                formation_data,
+                show_result_number,
+                PriceDetalsobject
+              );
+              let tprice = data2.ticket_count * amount;
+              userprice = userprice + tprice;
+              price = price + tprice;
+              console.log("4 digits", tprice);
             }
 
             data2["lottery_price"] = price;
+            console.log("userprice...<<<>>>", userprice);
             console.log("price", price);
             console.log("data2 >>>>>>>>>>>>>>>>", data2);
           });
@@ -637,9 +843,11 @@ router.get("/Published", async (req, res) => {
           total_price = total_price + userprice;
           // total_refered_comission =
           //   total_refered_comission + (userprice * 5) / 100;
+          console.log("total_price....>>>>", total_price);
         }
         console.log("total_refered_comission", total_refered_comission);
         console.log("total", total);
+        console.log("total_price", total_price);
 
         let results = {};
         let bookingdata = await BookingUpdate(data);
@@ -752,25 +960,33 @@ function boardResult(result, cus_data, data) {
   console.log("result data", result, cus_data, data);
   if (result[0] == cus_data[0]) {
     console.log("Matched for 1st Prize");
-    return data.first_price;
+    return data[config.first_price] !== undefined
+      ? data[config.first_price]
+      : 0;
   } else if (
     String(result[0]).substring(1, result[0].length) ==
     String(cus_data[0]).substring(1, cus_data[0].length)
   ) {
-    console.log("Matched for 2st Prize");
-    return data.second_price;
+    console.log("Matched for 2st Prize", data[config.second_price]);
+    return data[config.second_price] !== undefined
+      ? data[config.second_price]
+      : 0;
   } else if (
     String(result[0]).substring(2, result[0].length) ==
     String(cus_data[0]).substring(2, cus_data[0].length)
   ) {
     console.log("Matched for 3st Prize");
-    return data.third_price;
+    return data[config.third_price] !== undefined
+      ? data[config.third_price]
+      : 0;
   } else if (
     String(result[0]).substring(3, result[0].length) ==
     String(cus_data[0]).substring(3, cus_data[0].length)
   ) {
     console.log("Matched for 4st Prize");
-    return data.fourth_price;
+    return data[config.fourth_price] !== undefined
+      ? data[config.fourth_price]
+      : 0;
   } else {
     console.log("No Prize");
   }
