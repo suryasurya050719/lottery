@@ -343,11 +343,12 @@ router.get("/preview", async (req, res) => {
               board_leters
             );
             console.log("formation_data", formation_data);
-            let amount = boardResult(
-              formation_data,
-              show_result_number,
-              PriceDetalsobject
-            );
+           let amount= allBoards(formation_data,show_result_number,PriceDetalsobject)
+            // let amount = boardResult(
+            //   formation_data,
+            //   show_result_number,
+            //   PriceDetalsobject
+            // );
             let tprice = data2.ticket_count * amount;
             userprice = userprice + tprice;
             price = price + tprice;
@@ -412,7 +413,7 @@ router.get("/preview", async (req, res) => {
 
       let results = {};
       results["data"] = data;
-      results["overallTicket"] = total[0].totalTikect;
+      results["overallTicket"] = total[0]?.totalTikect;
       results["overallTicetprice"] = total[0].total_price;
       results["overalluserprice"] = total_price;
       results["total_refered_comission"] = total_refered_comission;
@@ -1078,4 +1079,14 @@ async function transectiondetails(
       console.log("error for trtansection", error);
     });
   console.log("transection", transection);
+}
+
+async function allBoards(array,val,price){
+for (let i = 0; i < array.length; i++) {
+  const element = array[i];
+  if (element==val[0]) {
+    return price[config.first_price]
+  }
+}
+return 0
 }

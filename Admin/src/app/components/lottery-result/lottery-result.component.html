@@ -582,9 +582,9 @@
                   let i = index
                 "
               >
-                <td>{{ i + 1 }}</td>
+                <td><div *ngFor="let val of data.board_letter_formation">{{val}}</div></td>
                 <td>{{ data.board_name }}</td>
-                <td>{{ data.ticket_number }}</td>
+                <td><div *ngFor="let val of data.show_result_number">{{val}}</div></td>
                 <td>{{ data.ticket_count }}</td>
 
                 <td>
