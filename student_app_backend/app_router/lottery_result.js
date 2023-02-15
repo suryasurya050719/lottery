@@ -343,12 +343,13 @@ router.get("/preview", async (req, res) => {
               board_leters
             );
             console.log("formation_data", formation_data);
-           let amount= allBoards(formation_data,show_result_number,PriceDetalsobject)
+           let amount=await allBoards(data_num,show_result_number,PriceDetalsobject)
             // let amount = boardResult(
             //   formation_data,
             //   show_result_number,
             //   PriceDetalsobject
             // );
+            console.log("amount",amount)
             let tprice = data2.ticket_count * amount;
             userprice = userprice + tprice;
             price = price + tprice;
@@ -1081,12 +1082,18 @@ async function transectiondetails(
   console.log("transection", transection);
 }
 
-async function allBoards(array,val,price){
-for (let i = 0; i < array.length; i++) {
-  const element = array[i];
-  if (element==val[0]) {
-    return price[config.first_price]
-  }
-}
-return 0
+async function allBoards(data,single,price){
+  console.log("data,single,price",data,single,price)
+ for(i=0;i<data.length;i++){
+       await console.log("index",i)
+        let element=data[i]
+        if(element==single[0]){
+          console.log("price[config.first_price]",price[config.first_price])
+            return await price[config.first_price]
+        }else if(i+1==data.length){
+          console.log("element",element)
+           console.log("i+1==data.length",i+1==data.length)
+            return await 0
+        }
+    }
 }
