@@ -140,6 +140,7 @@ export class UserReviewComponent implements OnInit {
     this.BrokerPopup = !this.BrokerPopup;
   }
   CloseBrokerPopup() {
+    this.otpStatus = 1
     this.BrokerPopup = false;
     this.popup = false;
   }

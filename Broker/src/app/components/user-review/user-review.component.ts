@@ -122,12 +122,17 @@ export class UserReviewComponent implements OnInit {
   //     });
   // }
   BrokerToggle(type: number) {
+      this.otpStatus=1
+    this.username=''
+    this.phonenumber=''
+    this.otp=''
     this.type = type;
-    this.form.reset();
+     this.form.reset();
     this.heading = type === 1 ? 'Create Broker' : 'Create Customer';
     this.BrokerPopup = !this.BrokerPopup;
   }
   CloseBrokerPopup() {
+     this.otpStatus=1
     this.BrokerPopup = false;
     this.popup = false;
   }
