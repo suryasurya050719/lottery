@@ -19,10 +19,13 @@ export class Dashboard {
       })
     );
   }
-  AccountList(): Observable<any> {
+  AccountList(brokerId:any): Observable<any> {
     // console.log('filterdata service', filterdata);
+    let data={
+      id:brokerId
+    }
     let url = `${environment.apiurl}/account/sharedaccountlist`;
-    return this.http.get(url).pipe(
+    return this.http.get(url, { params: data }).pipe(
       map((data) => {
         return data;
       })

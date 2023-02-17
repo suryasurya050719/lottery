@@ -18,7 +18,7 @@
       <div class="panel height2">
         <div class="bg_white p-3">
           <div class="panel-heading">
-            <h3 class="text-center txt_bold">Audience Overview</h3>
+            <h3 class="text-center txt_bold">Users Overview</h3>
           </div>
           <div class="panel-body">
             <div id="audienceOverview" class="chart-height1"></div>
@@ -303,7 +303,7 @@
   <!-- Row ends -->
   <div class="broker_row mt-1 gutter">
     <div class="panel">
-      <!-- <div class="row align-items-center">
+      <div class="row align-items-center">
         <div class="col-lg-8">
           <div class="panel-heading">
             <h3 class="text-center txt_bold mb-0">Broker Account</h3>
@@ -312,18 +312,18 @@
         <div class="col-lg-4">
           <div class="d-flex">
             <div class="flx_1">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" [(ngModel)]="searchBrokerid" />
             </div>
             <div class="flx_0">
-              <button class="btn bg-dark h-100 shadow_none btn-sm">
+              <button class="btn bg-dark h-100 shadow_none btn-sm" (click)="brokersearch()">
                 Search
               </button>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
       <div class="panel-body">
-        <div class="pb-3" *ngFor="let data of accountListBroker">
+        <div class="pb-3" *ngFor="let data of accountListBroker | paginate : config; let i = index">
           <div class="p-2 b_1">
             <div class="d-flex align-items-center">
               <div class="flx_1">
@@ -431,6 +431,13 @@
           </div>
         </div>
       </div>
+       <div class="Page navigation text-center pt-3 pb-3">
+      <pagination-controls
+        id="pagination1"
+        (pageChange)="getAccount($event)"
+        class="my-pagination"
+      ></pagination-controls>
+    </div>
     </div>
   </div>
 </div>

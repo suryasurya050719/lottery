@@ -28,7 +28,7 @@ router.post("/registor", async (req, res) => {
   user
     .findOne({ phone: body.phone })
     .then(async (data) => {
-      console.log("data", data);
+      console.log("data>>>>>>..", data);
       // console.log("data", data.length);
       // if (data.length === 0) {
       if (body.referal_code && body.referal_code !== "") {

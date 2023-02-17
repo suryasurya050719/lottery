@@ -133,6 +133,7 @@ export class UserReviewComponent implements OnInit {
     (this.username = ''), (this.phonenumber = '');
   }
   BrokerToggle(type: number) {
+     this.otpStatus = 1
     this.reset();
     this.type = type;
     this.form.reset();
@@ -217,9 +218,11 @@ export class UserReviewComponent implements OnInit {
           };
           this.login.Registor(formdata).subscribe((data) => {
             console.log('data', data);
-            alert(`${data.status}`);
+             alert(`${data.status}`);
+                 if(data.statuscode==200){
             this.BrokerPopup = false;
             this.referedUser();
+           }
           });
         } else {
           alert('password and confirmpassword is not same');

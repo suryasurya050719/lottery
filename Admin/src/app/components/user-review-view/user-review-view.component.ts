@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Login } from '../../service/login';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-user-review-view',
@@ -25,13 +26,17 @@ export class UserReviewViewComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private login: Login
+    private login: Login,
+    private clipboard: Clipboard
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     this.singleUser();
     this.referedUser();
+  }
+  copyHeroName(name:any) {
+    this.clipboard.copy(name);
   }
   singleUser() {
     this.login.singleUser(this.id).subscribe((data) => {

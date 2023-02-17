@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Dashboard } from '../../service/dashboard';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +9,17 @@ import { Dashboard } from '../../service/dashboard';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private Dashboard: Dashboard) {}
+  pokemonControl = new FormControl('');
+    config: any;
+  constructor(private Dashboard: Dashboard) {
+        this.config = {
+      id: 'pagination1',
+      currentPage: 1,
+      itemsPerPage: 5,
+    };
+  }
   count: any = [];
+  searchBrokerid:string=""
   accountListAdmin: any = [];
   accountListBroker: any = [];
   accountListBrokerList: any = [];
@@ -16,7 +27,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCount();
-    this.getAccount();
+    this.getAccount(this.config.currentPage);
     // alert(`>>>>>>>${this.checkedValue}`);
   }
   AdminAccountPopup = false;
@@ -32,14 +43,19 @@ export class DashboardComponent implements OnInit {
       this.count = data.data[0];
     });
   }
-  getAccount() {
-    this.Dashboard.AccountList().subscribe((data) => {
-      console.log('data', data.data[0]);
+  getAccount(newPage: number) {
+    this.Dashboard.AccountList(this.searchBrokerid).subscribe((data) => {
+       this.config.currentPage = newPage;
+      console.log('data>>>>>>.', data.data[0]);
       this.accountListAdmin = data.data[0].Admin[0].List;
       this.accountListBroker = data.data[0].Broker;
       this.accountListBrokerList = data.data[0].Broker[0].List;
       console.log('this.accountListAdmin', this.accountListAdmin);
+      console.log('this.accountListBroker', this.accountListBroker);
     });
+  }
+  brokersearch(){
+    this.getAccount(this.config.currentPage)
   }
   Unpublised(type: any, id: any, customer: any, broker: any) {
     // alert(`>>>>>>>>${this.checkedValue}`);
@@ -56,10 +72,10 @@ export class DashboardComponent implements OnInit {
       }
       this.Dashboard.AccountStatusChange(data).subscribe((data) => {
         console.log('data', data);
-        this.getAccount();
+        this.getAccount(this.config.currentPage);
       });
     } else {
-      this.getAccount();
+      this.getAccount(this.config.currentPage);
     }
   }
   UnpublisedMany(id: any, customer: any) {
@@ -70,7 +86,7 @@ export class DashboardComponent implements OnInit {
     console.log('data', data);
     this.Dashboard.ManyAccountStatusChange(data).subscribe((data) => {
       console.log('data', data);
-      this.getAccount();
+      this.getAccount(this.config.currentPage);
     });
   }
 }
