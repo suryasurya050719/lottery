@@ -34,6 +34,7 @@ export class WalletReivewComponent implements OnInit {
   filterdata: any = {};
   currentUserId: any = '';
   ActiveWallet: string = '';
+  ActiveWallet_role_id: string = '';
   currentpage: number = 1;
   walletList: any = [];
   walletAmount: string = '';
@@ -46,12 +47,15 @@ export class WalletReivewComponent implements OnInit {
 
   paymentForType: string = '';
   paymentForAmount: number = 0;
+  paymentForRole_id: number = 0;
+  paymentForReason: string = '';
   paymentForReferal_id: string = '';
   paymentForStatus: string = '';
 
-  onChange(newValue: string, transection: any) {
+  onChange(newValue: string, transection: any, transection_role_id: any) {
     this.selectedDevice = true;
     this.ActiveWallet = transection;
+    this.ActiveWallet_role_id = transection_role_id;
   }
   ClosePopup() {
     this.selectedDevice = '';
@@ -70,11 +74,15 @@ export class WalletReivewComponent implements OnInit {
   PaymentForPopup = false;
   PaymentForBtn(
     type: string,
+    reason: string,
     amount: number,
     referal_id: string,
-    status: string
+    status: string,
+    role_id: number
   ) {
     this.paymentForType = type;
+    this.paymentForReason = reason;
+    this.paymentForRole_id = role_id;
     this.paymentForAmount = amount;
     this.paymentForReferal_id = referal_id;
     this.paymentForStatus = status;
@@ -163,7 +171,14 @@ export class WalletReivewComponent implements OnInit {
       user_id: this.transectionUser_id,
       graterthan: this.fromDate,
       lessthan: this.toDate,
+      commission:
+        this.transectionType == '2'
+          ? false
+          : this.transectionType == '3'
+          ? true
+          : '',
     };
+    console.log('data', data);
     this.transection.singleTransectionList(data).subscribe((data) => {
       this.singleTransectionList = data.data;
       console.log('this.singleTransectionList', this.singleTransectionList);
@@ -174,7 +189,7 @@ export class WalletReivewComponent implements OnInit {
     let data = {
       amount: this.amount,
       user_id: localStorage.getItem('lottryuserid'),
-      position: 'INC',
+      position: 'ADD',
       transection_from_userid: loginUser_id,
       transection_to_userid: loginUser_id,
       transection_from_type: 'QR code',
@@ -208,7 +223,7 @@ export class WalletReivewComponent implements OnInit {
     let data = {
       amount: this.amount,
       user_id: this.ActiveWallet,
-      position: 'INC',
+      position: 'ADD',
       transection_from_userid: loginUser_id,
       transection_to_userid: this.ActiveWallet,
       transection_from_type: 'QR code',
@@ -247,11 +262,13 @@ export class WalletReivewComponent implements OnInit {
           amount: this.amount,
           user_id: this.ActiveWallet,
           transection_from_userid: localStorage.getItem('lottryuserid'),
+          transection_from_roleid: localStorage.getItem('lottryroleid'),
           transection_to_userid: this.ActiveWallet,
+          transection_to_roleid: this.ActiveWallet_role_id,
           transection_from_type: 'Wallet',
           transection_to_type: 'Wallet',
           reason: this.reason,
-          position: 'INC',
+          position: this.transectionType,
           topup: true,
         };
         this.transection.Addmony(data).subscribe((data) => {

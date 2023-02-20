@@ -5,17 +5,17 @@
     <div class="row gutter">
       <div class="col-sm-12">
         <div class="page-title">
-          <h3 class="txt_black">Dashboard</h3>
+          <h3 class="txt_black"><b>Dashboard</b></h3>
         </div>
       </div>
     </div>
   </div>
   <!-- Top Bar Ends -->
 
-<!-- Container fluid Starts -->
-<div class="container-fluid">
-  <!-- Top Bar Starts -->
-  <!-- <div class="top-bar clearfix">
+  <!-- Container fluid Starts -->
+  <div class="container-fluid">
+    <!-- Top Bar Starts -->
+    <!-- <div class="top-bar clearfix">
     <div class="row gutter">
       <div class="col-sm-12">
         <div class="page-title">
@@ -64,10 +64,10 @@
       </div>
     </div>
   </div> -->
-  <!-- Top Bar Ends -->
+    <!-- Top Bar Ends -->
 
-  <div class="row user_profile">
-    <!-- <div class="col-md-3 user_profile_list">
+    <div class="row user_profile w-100">
+      <!-- <div class="col-md-3 user_profile_list">
       <div class="">
         <h4 class="shadow_none">User Review List</h4>
       </div>
@@ -81,176 +81,173 @@
         />
       </div>
     </div> -->
-    <div class="col-md-9 up_right">
-      <!-- Row starts -->
-      <div class="row gutter">
-        <div class="col-lg-4 col-md-5 col-sm-9 col-xs-12">
-          <div class="panel h-100 mb-0 random-bg-five">
-            <div class="panel-body">
-              <span class="edit edit_fix"><i class="fa fa-pencil"></i></span>
-              <div class="user-profile clearfix">
-                <div class="user-img">
-                  <img
-                    src="../../../assets/images/thumbs/user1.png"
-                    alt="User Info"
-                  />
+      <div class="w-100">
+        <!-- Row starts -->
+        <div class="row gutter">
+          <div class="col-lg-4 col-md-5 col-sm-9 col-xs-12">
+            <div class="panel h-100 mb-0 random-bg-five">
+              <div class="panel-body">
+                <!-- <span class="edit edit_fix"><i class="fa fa-pencil"></i></span> -->
+                <div class="user-profile clearfix">
+                  <div class="user-img">
+                    <img
+                      src="../../../assets/images/thumbs/user1.png"
+                      alt="User Info"
+                    />
+                  </div>
+                  <h3>{{ this.singlrUser.name }}</h3>
+                  <h4>
+                    BJCD{{ this.singlrUser.role_id == 2 ? " B" : " C"
+                    }}{{ this.singlrUser.user_id }}
+                  </h4>
+                  <h4>{{ this.singlrUser.phone }}</h4>
                 </div>
-                <h3>{{ this.singlrUser.name }}</h3>
-                <h4>
-                  BJCD{{ this.singlrUser.role_id == 2 ? " B" : " C"
-                  }}{{ this.singlrUser.user_id }}
-                </h4>
-                <h4>{{ this.singlrUser.phone }}</h4>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-5 col-md-3 col-sm-3 col-xs-12">
-          <div class="panel height2 mb-0">
-            <div class="bank_card w-100 h-100 position-relative overflow_auto">
-              <div class="bank_card_row position-relative text-white">
-                <div class="d-flex align-items-center p-3">
-                  <!-- <div class="flx_0">
+          <div class="col-lg-5 col-md-3 col-sm-3 col-xs-12">
+            <div class="panel height2 mb-0">
+              <div
+                class="bank_card w-100 h-100 position-relative overflow_auto"
+              >
+                <div class="bank_card_row position-relative text-white">
+                  <div class="d-flex align-items-center p-3">
+                    <!-- <div class="flx_0">
                     <img
                       alt=""
                       src="../../../assets/images/144x144.png"
                       style="width: 100px"
                     />
                   </div> -->
-                  <div class="flx_1">
-                    <div class="bank_name_card card_row">
-                      <input
-                        type="text"
-                      
-                        class="card_input w-100"
-                      />
+                    <div class="flx_1">
+                      <div class="bank_name_card card_row">
+                        <input type="text" class="card_input w-100" />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="account_card card_row">
-                  <input
-                    type="text"
-                    placeholder="Enter Account Number"
-                    class="card_input w-100"
-                    [(ngModel)]="accountnumber"
-                  />
-                </div>
-                <div class="row card_row align-items-center">
-                  <div class="col-5">
-                    <div class="account_spec">
-                      <input
-                        type="text"
-                        placeholder="IFSC Code"
-                        class="card_input w-100"
-                        [(ngModel)]="ifsccode"
-                      />
+                  <div class="account_card card_row">
+                    <input
+                      type="text"
+                      placeholder="Enter Account Number"
+                      class="card_input w-100"
+                      [(ngModel)]="accountnumber"
+                    />
+                  </div>
+                  <div class="row card_row align-items-center">
+                    <div class="col-5">
+                      <div class="account_spec">
+                        <input
+                          type="text"
+                          placeholder="IFSC Code"
+                          class="card_input w-100"
+                          [(ngModel)]="ifsccode"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-7">
+                      <div class="card_expiry">
+                        <input
+                          type="text"
+                          placeholder="Branch Name"
+                          class="card_input w-100"
+                          [(ngModel)]="branchName"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div class="col-7">
-                    <div class="card_expiry">
-                      <input
-                        type="text"
-                        placeholder="Branch Name"
-                        class="card_input w-100"
-                        [(ngModel)]="branchName"
-                      />
-                    </div>
+                  <div class="card_holder_name card_row">
+                    <input
+                      type="text"
+                      placeholder="card holder"
+                      class="card_input w-100"
+                      [(ngModel)]="cardholder"
+                    />
                   </div>
-                </div>
-                <div class="card_holder_name card_row">
-                  <input
-                    type="text"
-                    placeholder="card holder"
-                    class="card_input w-100"
-                    [(ngModel)]="cardholder"
-                  />
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-12 col-xs-12">
-          <!-- Row inside row starts -->
-          <div class="d-flex flex-column h-100">
-            <div class="panel mb-0 random-bg-two flx_1 mb-2">
-              <div
-                class="panel-body text-center d-flex align-items-center justify-content-center h-100"
-              >
-                <div class="user-stats">
-                  <h1>{{ this.referedUserList.length }}</h1>
-                  <h5>Total Referrals</h5>
-                </div>
-              </div>
-            </div>
-            <div class="panel mb-0 random-bg-four flx_1 mt-2">
-              <div
-                class="panel-body text-center d-flex align-items-center justify-content-center h-100"
-              >
+          <div class="col-md-3 col-sm-12 col-xs-12">
+            <!-- Row inside row starts -->
+            <div class="d-flex flex-column h-100">
+              <div class="panel mb-0 random-bg-two flx_1 mb-2">
                 <div
-                  class="user-stats"
-                  *ngIf="
-                    this.singlrUser.referalList &&
-                    this.singlrUser.referalList.refered_user_id !== ''
-                  "
+                  class="panel-body text-center d-flex align-items-center justify-content-center h-100"
                 >
-                  <h1>{{ this.singlrUser.referalList.refered_user_id }}</h1>
-                  <h5>Referral Id</h5>
+                  <div class="user-stats">
+                    <h1>{{ this.referedUserList.length }}</h1>
+                    <h5>Total Referrals</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="panel mb-0 random-bg-four flx_1 mt-2">
+                <div
+                  class="panel-body text-center d-flex align-items-center justify-content-center h-100"
+                >
+                  <div
+                    class="user-stats"
+                    *ngIf="
+                      this.singlrUser.referalList &&
+                      this.singlrUser.referalList.refered_user_id !== ''
+                    "
+                  >
+                    <h1>{{ this.singlrUser.referalList.refered_user_id }}</h1>
+                    <h5>Referral Id</h5>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <!-- Row inside row ends -->
           </div>
-
-          <!-- Row inside row ends -->
         </div>
-      </div>
-      <!-- Row ends -->
+        <!-- Row ends -->
 
-      <!-- Row starts -->
+        <!-- Row starts -->
 
-      <div>
-        <div class="pt-4 pb-2">
-          <h3 class="txt_black">My Referrals</h3>
-        </div>
-        <div class="row gutter" *ngFor="let user of referedUserList">
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="panel users-wrapper yellow">
-              <div class="users-info clearfix">
-                <div class="users-avatar">
-                  <img
-                    src="../../../assets/images/thumbs/user12.png"
-                    class="img-fluid"
-                    alt="Arise Admin"
-                  />
+        <div>
+          <div class="pt-4 pb-2">
+            <h3 class="txt_black"><b>My Referrals</b></h3>
+          </div>
+          <div class="row gutter" *ngFor="let user of referedUserList">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="panel users-wrapper yellow">
+                <div class="users-info clearfix">
+                  <div class="users-avatar">
+                    <img
+                      src="../../../assets/images/thumbs/user12.png"
+                      class="img-fluid"
+                      alt="Arise Admin"
+                    />
+                  </div>
+                  <div class="users-detail">
+                    <h5>{{ user.name }}</h5>
+                    <p>
+                      {{ user.role_id == 2 ? "Broker" : "Coustomer" }}
+                    </p>
+                  </div>
                 </div>
-                <div class="users-detail">
-                  <h5>{{ user.name }}</h5>
-                  <p>
-                    {{ user.role_id == 2 ? "Broker" : "Coustomer" }}
-                  </p>
-                </div>
+                <ul class="users-footer clearfix">
+                  <li class="w-50">
+                    <p class="pb-1">User Id</p>
+                    <p>
+                      BJCD {{ user.role_id == 2 ? "B" : "C" }}{{ user.user_id }}
+                    </p>
+                  </li>
+                  <li class="w-50">
+                    <p class="pb-1">Contact</p>
+                    <p>{{ user.phone }}</p>
+                  </li>
+                </ul>
               </div>
-              <ul class="users-footer clearfix">
-                <li class="w-50">
-                  <p class="pb-1">User Id</p>
-                  <p>
-                    BJCD {{ user.role_id == 2 ? "B" : "C" }}{{ user.user_id }}
-                  </p>
-                </li>
-                <li class="w-50">
-                  <p class="pb-1">Contact</p>
-                  <p>{{ user.phone }}</p>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
+        <!-- Row ends -->
       </div>
-      <!-- Row ends -->
     </div>
   </div>
-</div>
-<!-- Container fluid ends -->
-
+  <!-- Container fluid ends -->
 </div>
 <!-- Container fluid ends -->

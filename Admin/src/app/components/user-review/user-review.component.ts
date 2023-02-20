@@ -97,18 +97,18 @@ export class UserReviewComponent implements OnInit {
   referedUser() {
     // var values = JSON.parse(localStorage.getItem('lottryuserid'));
     // let currentUserId = localStorage.getItem('lottryuserid')
-    if (this.user_id !== '') {
-      this.userNumberFormat = justNumbers(this.user_id);
+    if (this.user_id !== '' || this.user_id == '') {
+      // this.userNumberFormat = justNumbers(this.user_id);
     }
     console.log(
       'this.user_id',
-      this.userNumberFormat,
-      this.user_id,
-      this.phone,
-      this.role_type
+      // this.userNumberFormat
+      this.user_id
+      // this.phone,
+      // this.role_type
     );
     this.login
-      .Alluser(this.userNumberFormat, this.phone, this.role_type)
+      .Alluser(this.user_id, this.phone, this.role_type)
       .subscribe((data) => {
         console.log('data all user ', data.data);
         if (data.statuscode == 200) {
@@ -133,7 +133,7 @@ export class UserReviewComponent implements OnInit {
     (this.username = ''), (this.phonenumber = '');
   }
   BrokerToggle(type: number) {
-     this.otpStatus = 1
+    this.otpStatus = 1;
     this.reset();
     this.type = type;
     this.form.reset();
@@ -141,7 +141,7 @@ export class UserReviewComponent implements OnInit {
     this.BrokerPopup = !this.BrokerPopup;
   }
   CloseBrokerPopup() {
-    this.otpStatus = 1
+    this.otpStatus = 1;
     this.BrokerPopup = false;
     this.popup = false;
   }
@@ -218,11 +218,11 @@ export class UserReviewComponent implements OnInit {
           };
           this.login.Registor(formdata).subscribe((data) => {
             console.log('data', data);
-             alert(`${data.status}`);
-                 if(data.statuscode==200){
-            this.BrokerPopup = false;
-            this.referedUser();
-           }
+            alert(`${data.status}`);
+            if (data.statuscode == 200) {
+              this.BrokerPopup = false;
+              this.referedUser();
+            }
           });
         } else {
           alert('password and confirmpassword is not same');

@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-lg-4">
         <div class="page-title">
-          <h3>User Review</h3>
+          <h3><b>User Review</b></h3>
         </div>
       </div>
       <div class="col-lg-8">
@@ -21,7 +21,6 @@
                 [(ngModel)]="role_type"
               >
                 <option value="">Select</option>
-                <option value="2">Broker</option>
                 <option value="3">Customer</option>
               </select>
             </div>
@@ -157,9 +156,9 @@
               <p>{{ user.phone }}</p>
             </li>
             <li>
-              <a (click)="userReferal(user.user_id)" class="add-btn">
+              <!-- <a (click)="userReferal(user.user_id)" class="add-btn">
                 <i class="icon-plus3"></i>
-              </a>
+              </a> -->
             </li>
           </ul>
         </div>
@@ -225,13 +224,21 @@
           </div>
           <div class="pb-3" *ngIf="editUser !== true">
             <div class="input-group">
-              <button class="input-group-addon" *ngIf="otpStatus==1" (click)="sendOtp(2)">
+              <button
+                class="input-group-addon"
+                *ngIf="otpStatus == 1"
+                (click)="sendOtp(2)"
+              >
                 Generate OTP
               </button>
-              <button class="input-group-addon" *ngIf="otpStatus==3"(click)="sendOtp(2)">
+              <button
+                class="input-group-addon"
+                *ngIf="otpStatus == 3"
+                (click)="sendOtp(2)"
+              >
                 Resend OTP
               </button>
-              <button class="input-group-addon" *ngIf="otpStatus==2">
+              <button class="input-group-addon" *ngIf="otpStatus == 2">
                 {{ transform(counter) }}
               </button>
               <input

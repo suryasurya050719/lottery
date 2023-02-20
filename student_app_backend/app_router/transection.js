@@ -6,7 +6,7 @@ const referalFunction = require("../common/referaladdmony");
 const transection = require("../app_models/transection");
 const wallet = require("../app_models/wallet");
 const referals = require("../app_models/referal");
-
+const numberFunction = require("../common/numberFunction");
 const referralCodeGenerator = require("referral-code-generator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
@@ -131,9 +131,11 @@ router.get("/alluser", async (req, res) => {
   if (query.user_id !== "") {
     // data.user_id = { $in: query.user_id };
     // data["user_id"] = { $in: query.user_id };
-    let field = { user_id: Number(query.user_id) };
+    let num = numberFunction.justNumbers(query.user_id);
+    console.log("num", num);
+    let field = { user_id: Number(num) };
     data.push(field);
-    searchFilter["user_id"] = parseInt(query.user_id);
+    searchFilter["user_id"] = parseInt(num);
   }
   if (
     query.phonenumber !== "" &&
@@ -338,13 +340,16 @@ router.get("/singleUserList", async (req, res) => {
     filterdata["created_on"] = created_on;
   }
   console.log("filterdata", filterdata);
-  await transection.find(filterdata).sort({created_on:-1}).then((data) => {
-    res.send({
-      statuscode: 200,
-      status: "transection list genetated",
-      data: data,
+  await transection
+    .find(filterdata)
+    .sort({ created_on: -1 })
+    .then((data) => {
+      res.send({
+        statuscode: 200,
+        status: "transection list genetated",
+        data: data,
+      });
     });
-  });
 });
 
 // broker refereduser transection list
@@ -364,7 +369,8 @@ router.get("/referal_user_trans_list/:id", async (req, res) => {
   let searchFilter = {};
   let insertData = [];
   if (query.user_id !== "") {
-    insertData.push({ $eq: ["$user_id", Number(query.user_id)] });
+    let num = numberFunction.justNumbers(query.user_id);
+    insertData.push({ $eq: ["$user_id", Number(num)] });
     console.log("data", insertData);
   }
   if (query.phonenumber !== "") {

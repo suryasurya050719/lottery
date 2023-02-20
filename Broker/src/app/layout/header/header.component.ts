@@ -21,7 +21,10 @@ export class HeaderComponent implements OnInit {
   reason: string = '';
   persentage: string = '';
   percentageAmount: string = '';
-  ngOnInit(): void {}
+  userName: string | null = '';
+  ngOnInit(): void {
+    this.userName = localStorage.getItem('lottryname');
+  }
   logout() {
     this.router.navigateByUrl('/login');
     localStorage.removeItem('lottrytoken');

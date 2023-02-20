@@ -6,6 +6,7 @@ const wallet = require("../app_models/wallet");
 const referralCodeGenerator = require("referral-code-generator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
+const numberFunction = require("../common/numberFunction");
 const saltRounds = 10;
 
 router.post("/registor", async (req, res) => {
@@ -109,7 +110,7 @@ router.post("/registor", async (req, res) => {
 router.post("/login", async (req, res) => {
   let body = req.body;
   console.log("data", body);
-  if(body.phone==''){
+  if (body.phone == "") {
     res.json({
       success: false,
       statuscode: 202,
@@ -248,7 +249,9 @@ router.get("/refereduser/:id", async (req, res) => {
   let searchFilter = {};
   let insertData = [];
   if (query.user_id !== "") {
-    insertData.push({ $eq: ["$user_id", Number(query.user_id)] });
+    insertData.push({
+      $eq: ["$user_id", numberFunction.justNumbers(query.user_id)],
+    });
     console.log("data", insertData);
   }
   if (query.phone !== "") {
@@ -330,7 +333,7 @@ router.get("/all", async (req, res) => {
   let query = req.query;
   let data = {};
   if (query.user_id !== "") {
-    data.user_id = query.user_id;
+    data.user_id = numberFunction.justNumbers(query.user_id);
   } else if (query.phone !== "") {
     data.phone = query.phone;
   } else if (query.role_id !== "") {
