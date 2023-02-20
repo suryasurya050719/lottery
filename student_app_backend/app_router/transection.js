@@ -42,10 +42,10 @@ router.post("/addmony", async (req, res) => {
     reason: body.reason,
     status: "success",
   };
-  if (body.position == "INC") {
+  if (body.position == "ADD") {
     var amount = body.amount;
     // referalFunction.referalAddMony(preparedata);
-  } else if (body.position == "DEC") {
+  } else if (body.position == "DETECT") {
     var amount = -body.amount;
   }
   wallet
@@ -338,7 +338,7 @@ router.get("/singleUserList", async (req, res) => {
     filterdata["created_on"] = created_on;
   }
   console.log("filterdata", filterdata);
-  await transection.find(filterdata).then((data) => {
+  await transection.find(filterdata).sort({created_on:-1}).then((data) => {
     res.send({
       statuscode: 200,
       status: "transection list genetated",

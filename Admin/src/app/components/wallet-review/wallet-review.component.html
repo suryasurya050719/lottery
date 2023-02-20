@@ -97,7 +97,7 @@
         <div
           class="resul_show_panel"
           *ngFor="
-            let transection of alluserList | paginate : config;
+            let transection of alluserList | paginate: config;
             let i = index
           "
         >
@@ -290,14 +290,15 @@
                           : ""
                       }}
                     </td>
-                    <td>{{ user.created_on | date : "dd/MM/yyyy HH:mm" }}</td>
+                    <td>{{ user.created_on | date: "dd/MM/yyyy HH:mm" }}</td>
                     <td>
                       <div class="input-group" style="width: 150px">
                         <span class="input-group-addon">RS</span>
                         <input
                           type="text"
                           class="form-control"
-                          value="{{ user.amount }}"
+                          [style.color]="(user.position=='ADD') ? 'black' : 'red !important'"
+                          value="{{user.position=='ADD'? user.amount:'-'+(user.amount) }}"
                         />
                       </div>
                     </td>
@@ -636,8 +637,8 @@
                   [(ngModel)]="transectionType"
                 >
                   <option value="">Select</option>
-                  <option value="INC">Add fund</option>
-                  <option value="DEC">Detect fund</option>
+                  <option value="ADD">Add fund</option>
+                  <option value="DETECT">Detect fund</option>
                 </select>
                 <div class="ERR_Msg text-danger" *ngIf="TrypeError == true">
                   <p>TransectionType is required</p>

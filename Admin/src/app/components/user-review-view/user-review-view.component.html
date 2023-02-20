@@ -81,10 +81,13 @@
                     alt="User Info"
                   />
                 </div>
-                <h3>{{ this.singlrUser.name }}</h3>
+                <h3>
+                  {{ this.singlrUser.name
+                  }}<label> &nbsp; </label><mat-icon (click)="copyHeroName(this.singlrUser.user_id)">content_copy</mat-icon> 
+                </h3>
                 <h4>
                   BJCD{{ this.singlrUser.role_id == 2 ? " B" : " C"
-                  }}{{ this.singlrUser.user_id }}
+                  }} {{ this.singlrUser.user_id }}
                 </h4>
                 <h4>{{ this.singlrUser.phone }}</h4>
               </div>

@@ -38,6 +38,7 @@ import { BookingRecordsComponent } from './components/booking-records/booking-re
 import { BookingReviewComponent } from './components/booking-review/booking-review.component';
 import { MatSelectModule } from '@angular/material/select';
 import {LotteryResultComponent} from '../app/components/lottery-result/lottery-result.component'
+import {MatIconModule} from '@angular/material/icon';
 // import {MyRequestComponent} from "./components/my-request/my-request.component"
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 
@@ -79,6 +80,7 @@ import {LotteryResultComponent} from '../app/components/lottery-result/lottery-r
   imports: [
     BrowserModule,
     MatDialogModule,
+    MatIconModule,
     MatSelectModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger', // set defaults here

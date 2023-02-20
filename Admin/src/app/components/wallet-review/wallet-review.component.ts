@@ -184,7 +184,7 @@ export class WalletReivewComponent implements OnInit {
     let data = {
       amount: this.amount,
       user_id: localStorage.getItem('lottryuserid'),
-      position: 'INC',
+      position: 'ADD',
       transection_from_userid: loginUser_id,
       transection_to_userid: loginUser_id,
       transection_from_type: 'QR code',
@@ -218,7 +218,7 @@ export class WalletReivewComponent implements OnInit {
     let data = {
       amount: this.amount,
       user_id: this.ActiveWallet,
-      position: 'INC',
+      position: 'ADD',
       transection_from_userid: loginUser_id,
       transection_to_userid: this.ActiveWallet,
       transection_from_type: 'QR code',
