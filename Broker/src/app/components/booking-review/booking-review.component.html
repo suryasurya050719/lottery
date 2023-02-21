@@ -20,39 +20,176 @@
             <label> Choose User </label>
             <select name="" id="" class="form-control" [(ngModel)]="user_type">
               <option value="">Select</option>
-              <option value="1">All</option>
-              <option value="3">Customers</option>
+              <option value="1">Admin Referral</option>
+              <option value="2">Broker Referral</option>
+              <option value="3">Customer Referral</option>
             </select>
+          </div>
+        </div>
+        <div
+          class="col"
+          *ngIf="user_type == '1' || user_type == '2' || user_type == '3'"
+        >
+          <div class="form-group">
+            <label>Refered User Id </label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="referal_user_id"
+            />
           </div>
         </div>
         <div class="col">
           <div class="form-group">
-            <label> Filter </label>
-            <select name="" id="" class="form-control" [(ngModel)]="game_type">
+            <label> Game Type </label>
+            <select
+              name=""
+              id=""
+              class="form-control"
+              [(ngModel)]="game_type"
+              (ngModelChange)="game()"
+            >
               <option value="">Select</option>
               <option value="">All</option>
-              <option value="Dear">Dear</option>
-              <option value="Kerala">Kerala</option>
-              <option value="Lottery">Lottery</option>
-              <option value="Jackpot">Jackpot</option>
+              <option
+                *ngFor="let data of gamelistdata; let i = index"
+                [value]="i"
+              >
+                {{ data.game_name }}
+              </option>
             </select>
           </div>
         </div>
-        <div class="col">
-          <div class="form-group">
-            <label> Filter </label>
-            <select name="" id="" class="form-control" [(ngModel)]="board_type">
-              <option value="">Select</option>
-              <option value="">All</option>
-              <option value="">1 digit board</option>
-              <option value="">2 Digit board</option>
-            </select>
+        <!-- <div class="col-lg-2">
+          <label> Choose Show time </label>
+          <div class="dropdown w-100">
+            <span
+              class="form-control cursor-pointer w-100 d-block dropdown-toggle"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              [(ngModel)]="ShowTime_details"
+            >
+              Select
+            </span>
+            <div
+              class="dropdown-menu chos_board_drop cus_rm_drop bg-white b_1"
+              aria-labelledby="dropdownMenuButton"
+            >
+              <div class="p-2">
+                <div class="pb-2">
+                  <h4 class="mb-0 pb-2">All</h4>
+                  <div>
+                    <div class="form-check d-flex align-items-center pl-0">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                        value="All"
+                        (change)="ShowTime($event)"
+                      />
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                      >
+                        &nbsp; All</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-2" *ngFor="let data of toppingList">
+                  <h4 class="mb-0 pb-2">{{ data.game_name }}</h4>
+                  <div>
+                    <div
+                      class="form-check d-flex align-items-center pl-0"
+                      *ngFor="let time of data['show_date']"
+                    >
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                        [value]="time.showTime.showTime"
+                        (change)="ShowTime($event)"
+                      />
+                      &nbsp;
+                      <label
+                        class="form-check-label pl-2 text-dark"
+                        for="exampleCheck1"
+                      >
+                        &nbsp;{{ time.showTime }}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </div> -->
+        <div class="col-lg-2" style="margin-top: -12px">
+          <h4>Show time</h4>
+          <!-- <mat-form-field
+            appearance="fill"
+            class="form-control cursor-pointer w-100 d-block"
+          > -->
+          <mat-select
+            [formControl]="pokemonControl"
+            class="form-control cursor-pointer w-100 d-block"
+            (selectionChange)="show_time()"
+            multiple
+          >
+            <mat-option>__All__</mat-option>
+            <mat-optgroup
+              *ngFor="let group of toppingList"
+              [label]="group.game_name"
+            >
+              <mat-option
+                *ngFor="let pokemon of group.show_date"
+                [value]="pokemon.showTime"
+              >
+                {{ pokemon.showTime }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <!-- </mat-form-field> -->
         </div>
+        <div class="col-lg-2" style="margin-top: -12px">
+          <h4>Board Name</h4>
+          <!-- <mat-form-field
+            appearance="fill"
+            class="form-control cursor-pointer w-100 d-block"
+          > -->
+          <mat-select
+            [formControl]="BoardNameControler"
+            class="form-control cursor-pointer w-100 d-block"
+            (selectionChange)="board_detail()"
+            multiple
+          >
+            <mat-option>__All__</mat-option>
+            <mat-optgroup
+              *ngFor="let group of toppingList"
+              [label]="group.game_name"
+            >
+              <mat-option
+                *ngFor="let pokemon of group.board_id"
+                [value]="pokemon.name"
+              >
+                <div>{{ pokemon.name }}</div>
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <!-- </mat-form-field> -->
+        </div>
+
         <div class="col">
           <div class="form-group">
             <label> User Id </label>
-            <input type="text" class="form-control" [(ngModel)]="user_id" />
+            <input
+              type="text"
+              name=""
+              class="form-control"
+              [(ngModel)]="user_id"
+            />
           </div>
         </div>
         <div class="col">
@@ -81,7 +218,7 @@
 
         <div
           class="resul_show_panel"
-          *ngFor="let data of reviewList | paginate: config; let i = index"
+          *ngFor="let data of reviewList | paginate : config; let i = index"
         >
           <span class="cnt_result">{{ i + 1 }}</span>
 
@@ -100,15 +237,26 @@
                 <tbody>
                   <tr>
                     <td>None</td>
-                    <td>{{ data.user_id }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.phone }}</td>
                     <td>
                       {{
-                        data.referalList[0]?.refered_user_id !== ""
-                          ? data.referalList[0]?.refered_user_id
-                          : "None"
+                        data.userlist.role_id == 1
+                          ? "BJCD A"
+                          : data.userlist.role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.user_id }}
+                    </td>
+                    <td>{{ data.userlist.name }}</td>
+                    <td>{{ data.userlist.phone }}</td>
+                    <td>
+                      {{
+                        data.refered_role_id == 1
+                          ? "BJCD A"
+                          : data.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
                       }}
+                      {{ data.refered_user_id }}
                     </td>
                   </tr>
                 </tbody>
@@ -180,11 +328,33 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of BookingListdata; let i = index">
+                  <tr
+                    *ngFor="
+                      let data of BookingListdata
+                        | paginate : bookingDataConfid;
+                      let i = index
+                    "
+                  >
                     <td>None</td>
-                    <td>{{ data.user_id }}</td>
-                    <td>{{ data.referalList[0]?.refered_user_id }}</td>
-                    <td>{{ data.created_on }}</td>
+                    <td>
+                      {{
+                        data.role_id == 1
+                          ? "BJCD A"
+                          : data.role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.user_id }}
+                    </td>
+                    <td>
+                      {{
+                        data.referalList[0]?.refered_role_id == 1
+                          ? "BJCD A"
+                          : data.referalList[0]?.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.referalList[0]?.refered_user_id }}
+                    </td>
+                    <td>{{ data.created_on | date : "dd/MM/yyyy HH:mm" }}</td>
                     <td>
                       <button
                         (click)="ViewMorePopup(i)"
@@ -196,6 +366,13 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="Page navigation text-center pt-3 pb-3">
+                <pagination-controls
+                  id="pagination2"
+                  (pageChange)="singleBookingRecords($event)"
+                  class="my-pagination"
+                ></pagination-controls>
+              </div>
             </div>
           </div>
 
@@ -225,6 +402,7 @@
     </div>
     <div class="Page navigation text-center pt-3 pb-3">
       <pagination-controls
+        id="pagination1"
         (pageChange)="BookingReviewList($event)"
         class="my-pagination"
       ></pagination-controls>

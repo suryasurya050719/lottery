@@ -27,6 +27,8 @@ import { AccountAddComponent } from '../app/components/account-add/account-add.c
 import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
 import { BookingRecordsComponent } from './components/booking-records/booking-records.component';
 import { BookingReviewComponent } from './components/booking-review/booking-review.component';
+import { MatSelectModule } from '@angular/material/select';
+
 // import {RegisterComponent} from './components/register/RegisterComponent'
 // import { RouterModule } from '@angular/router';
 
@@ -56,6 +58,7 @@ import { BookingReviewComponent } from './components/booking-review/booking-revi
   imports: [
     BrowserModule,
     MatDialogModule,
+    MatSelectModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger', // set defaults here
     }),

@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
 })
 export class Booking {
   constructor(private http: HttpClient) {}
-
   //   BoardCreate(filterdata: any): Observable<any> {
   //     // console.log('filterdata service', filterdata);
   //     let data = filterdata;
@@ -29,9 +28,36 @@ export class Booking {
       })
     );
   }
+  BookingRecordsList(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/booking/bookingList`;
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  UserBasedBookingsList(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/booking/userBasedBookings`;
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
   BookingReviewList(data: any): Observable<any> {
     // console.log('filterdata service', filterdata);
     let url = `${environment.apiurl}/booking/bookingReview`;
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  ReferedBookingList(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/booking/referedbooking`;
     return this.http.get(url, { params: data }).pipe(
       map((data) => {
         return data;
