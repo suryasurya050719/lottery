@@ -4,6 +4,8 @@ const user = require("../app_models/user");
 const myRequest = require("../app_models/my_request");
 var path = require("path");
 var multer = require("multer");
+const wallet = require("../app_models/wallet");
+const Transection = require("../app_models/transection");
 
 router.post("", async (req, res) => {
   let body = req.body;
@@ -76,17 +78,44 @@ router.put("/approved", upload.single("customerImage"), async (req, res) => {
     file_name: originalFileName,
     request_status: 2,
   };
-  myRequest
-    .findOneAndUpdate({ _id: _id }, preparedata, {
-      new: true,
-    })
-    .then((data) => {
+  wallet.findOne({ user_id: body.user_id }).then((data) => {
+    console.log("data", data);
+    if (data.current_amount >= Number(req.body.amount)) {
+      wallet
+        .findOneAndUpdate(
+          { user_id: body.user_id },
+          { current_amount: data.current_amount - Number(req.body.amount) },
+          { new: true }
+        )
+        .then((result) => {
+          transaction(req.body.amount, body.user_id);
+          myRequest
+            .findOneAndUpdate({ _id: _id }, preparedata, {
+              new: true,
+            })
+            .then((data) => {
+              res.json({
+                success: true,
+                statuscode: 200,
+                status: "Board updated successfully",
+              });
+            });
+        })
+        .catch((err) => {
+          res.json({
+            success: false,
+            statuscode: 202,
+            status: err,
+          });
+        });
+    } else {
       res.json({
-        success: true,
-        statuscode: 200,
-        status: "Board updated successfully",
+        success: false,
+        statuscode: 202,
+        status: "insufficient found",
       });
-    });
+    }
+  });
 });
 
 router.put("/rejected", async (req, res) => {
@@ -115,5 +144,26 @@ router.put("/rejected", async (req, res) => {
       });
     });
 });
+
+async function transaction(amount, userid) {
+  var transectiondata = {
+    amount: amount,
+    user_id: userid,
+    transection_from_userid: 1,
+    transection_from_roleid: 1,
+    transection_to_userid: userid,
+    transection_to_roleid: 3,
+    transection_from_type: "Admin",
+    transection_to_type: "Wallet",
+    reason: "Withdraw request accept",
+    position: "DEC",
+    commission: false,
+  };
+  let transection = await new Transection(transectiondata)
+    .save()
+    .catch((error) => {
+      console.log("error for trtansection", error);
+    });
+}
 
 module.exports = router;
