@@ -91,6 +91,7 @@ router.post("/addmony", async (req, res) => {
 
 router.get("/singleuser/:id", async (req, res) => {
   let user_id = req.params.id;
+  console.log("user_id", user_id);
   if (user_id == "") {
     res.send({
       statuscode: 202,
@@ -113,7 +114,7 @@ router.get("/singleuser/:id", async (req, res) => {
       },
     ])
     .then((data) => {
-      // console.log("transection data", data);
+      console.log("transection data", data);
       res.send({
         statuscode: 200,
         status: "transection list genetated",
@@ -324,7 +325,7 @@ router.get("/singleUserList", async (req, res) => {
   let filterdata = {};
   let created_on = {};
   if (query.user_id !== "") {
-    filterdata["user_id"] = query.user_id;
+    filterdata["user_id"] = Number(query.user_id);
   }
   if (query.commission !== "") {
     filterdata["commission"] = query.commission;

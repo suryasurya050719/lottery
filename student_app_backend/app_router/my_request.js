@@ -39,6 +39,17 @@ router.get("", async (req, res) => {
     });
   });
 });
+router.get("/status", async (req, res) => {
+  let status = req.query.status;
+  myRequest.find({ user_id: req.query.user_id }).then((data) => {
+    res.json({
+      success: true,
+      statuscode: 200,
+      data: data,
+      status: "list generate successfully",
+    });
+  });
+});
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./assets");

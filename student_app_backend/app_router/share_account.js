@@ -12,7 +12,7 @@ router.post("", async (req, res) => {
     account_name: body.HolderName,
     branch_name: body.Branchname,
     ifsc_code: body.IFSCcode,
-    bank_name: body.body.bank_name,
+    bank_name: body.bank_name,
   };
   let data = new shareAccount(preparedata);
   data.save().then((insertdata) => {
