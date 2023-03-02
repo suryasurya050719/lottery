@@ -49,9 +49,10 @@ export class DashboardComponent implements OnInit {
       console.log('data>>>>>>.', data.data[0]);
       this.accountListAdmin = data.data[0].Admin[0].List;
       this.accountListBroker = data.data[0].Broker;
-      this.accountListBrokerList = data.data[0].Broker[0].List;
+      this.accountListBrokerList.push(data.data[0].Broker[0].List) ;
       console.log('this.accountListAdmin', this.accountListAdmin);
       console.log('this.accountListBroker', this.accountListBroker);
+        console.log('this.accountListBroker', this.accountListBrokerList);
     });
   }
   brokersearch(){

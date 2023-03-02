@@ -196,12 +196,12 @@ router.get("/sharedaccountlist", async (req, res) => {
                   as: "List",
                 },
               },
-              // {
-              //   $unwind: {
-              //     path: "$List",
-              //     preserveNullAndEmptyArrays: false,
-              //   },
-              // },
+              {
+                $unwind: {
+                  path: "$List",
+                  preserveNullAndEmptyArrays: false,
+                },
+              },
             ],
             Customer: [
               {
@@ -226,6 +226,7 @@ router.get("/sharedaccountlist", async (req, res) => {
         },
       ])
       .then((data) => {
+        console.log("data",data)
         res.send({
           statuscode: 200,
           status: "account updated successfully",
