@@ -73,7 +73,7 @@
         <div class="col-lg-4 col-md-5 col-sm-9 col-xs-12">
           <div class="panel h-100 mb-0 random-bg-five">
             <div class="panel-body">
-              <span class="edit edit_fix"><i class="fa fa-pencil"></i></span>
+              <span class="edit edit_fix"></span>
               <div class="user-profile clearfix">
                 <div class="user-img">
                   <img
@@ -82,12 +82,20 @@
                   />
                 </div>
                 <h3>
-                  {{ this.singlrUser.name
-                  }}<label> &nbsp; </label><mat-icon (click)="copyHeroName(this.singlrUser.user_id)">content_copy</mat-icon> 
+                  {{ this.singlrUser.name }}<label> &nbsp; </label
+                  ><mat-icon
+                    (click)="
+                      copyHeroName(
+                        this.singlrUser.user_id,
+                        this.singlrUser.role_id
+                      )
+                    "
+                    >content_copy</mat-icon
+                  >
                 </h3>
                 <h4>
-                  BJCD{{ this.singlrUser.role_id == 2 ? " B" : " C"
-                  }} {{ this.singlrUser.user_id }}
+                  BJCD{{ this.singlrUser.role_id == 2 ? " B" : " C" }}
+                  {{ this.singlrUser.user_id }}
                 </h4>
                 <h4>{{ this.singlrUser.phone }}</h4>
               </div>
