@@ -21,7 +21,14 @@ export class HeaderComponent implements OnInit {
   reason: string = '';
   persentage: string = '';
   percentageAmount: string = '';
-  ngOnInit(): void {}
+  collaps_memu: boolean = false;
+  ngOnInit(): void {
+    this.coloapsMenu();
+  }
+  coloapsMenu() {
+    console.log("this.collaps_memu",this.collaps_memu)
+    this.collaps_memu = !this.collaps_memu;
+  }
   logout() {
     this.router.navigateByUrl('/login');
     localStorage.removeItem('lottrytoken');

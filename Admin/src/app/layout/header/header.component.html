@@ -1,7 +1,7 @@
 <header id="LoadHeader" class="top_header">
   <div class="d-sm-flex align-items-center w-100">
     <div class="flx_0 pr-3">
-      <button class="collapse-menu">
+      <button class="collapse-menu" (click)="coloapsMenu()">
         <i class="fa fa-bars"></i>
       </button>
     </div>
@@ -72,9 +72,9 @@
     <div></div>
   </div>
 </header>
-<div class="vertical-nav vertical-nav-sm">
+<div  [class]="collaps_memu ? 'vertical-nav vertical-nav-sm' : 'vertical-nav '">
   <div class="user-details clearfix">
-    <a href="profile.html" class="user-img">
+    <a  class="user-img" (click)="coloapsMenu()">
       <img src="../../../assets/images/thumbs/user1.png" alt="User Info" />
       <span class="likes-info">9</span>
     </a>
