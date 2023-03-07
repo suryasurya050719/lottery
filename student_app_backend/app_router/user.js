@@ -172,13 +172,6 @@ router.get("/singleuser/:id", async (req, res) => {
       status: "user_id is required",
     });
   }
-  // user.findOne({ user_id: user_id }).then((data) => {
-  //   res.send({
-  //     statuscode: 200,
-  //     status: "single user list sucessfully given",
-  //     data: data,
-  //   });
-  // });
   user
     .aggregate([
       {
@@ -214,7 +207,7 @@ router.get("/singleuser/:id", async (req, res) => {
       },
       {
         $lookup: {
-          from: "share_accounts",
+          from: "accoounts",
           localField: "user_id",
           foreignField: "user_id",
           as: "accountList",

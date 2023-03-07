@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Login } from '../../service/login';
-import {Clipboard} from '@angular/cdk/clipboard';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-user-review-view',
@@ -35,12 +35,15 @@ export class UserReviewViewComponent implements OnInit {
     this.singleUser();
     this.referedUser();
   }
-  copyHeroName(name:any) {
-    this.clipboard.copy(name);
+  copyHeroName(name: any, role_id: any) {
+    let copyData =
+      role_id == 1 ? `BJCD A${name}` : role_id == 2 ? `BJCD B${name}` : '';
+    this.clipboard.copy(copyData);
   }
   singleUser() {
+    console.log('this.id', this.id);
     this.login.singleUser(this.id).subscribe((data) => {
-      console.log('single user', data);
+      console.log('single user', data.data);
       this.singlrUser = data.data[0];
       let lengthcheck = data.data[0].accountList.length;
       let lengthss = lengthcheck - 1;
