@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Dashboard } from '../../service/dashboard';
 import { FormControl } from '@angular/forms';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,16 +9,16 @@ import { FormControl } from '@angular/forms';
 })
 export class DashboardComponent implements OnInit {
   pokemonControl = new FormControl('');
-    config: any;
+  config: any;
   constructor(private Dashboard: Dashboard) {
-        this.config = {
+    this.config = {
       id: 'pagination1',
       currentPage: 1,
       itemsPerPage: 5,
     };
   }
   count: any = [];
-  searchBrokerid:string=""
+  searchBrokerid: string = '';
   accountListAdmin: any = [];
   accountListBroker: any = [];
   accountListBrokerList: any = [];
@@ -44,19 +43,20 @@ export class DashboardComponent implements OnInit {
     });
   }
   getAccount(newPage: number) {
+    console.log('this.searchBrokerid', this.searchBrokerid);
     this.Dashboard.AccountList(this.searchBrokerid).subscribe((data) => {
-       this.config.currentPage = newPage;
-      console.log('data>>>>>>.', data.data[0]);
+      this.config.currentPage = newPage;
+      console.log('data>>>>>>.', data.data);
       this.accountListAdmin = data.data[0].Admin[0].List;
       this.accountListBroker = data.data[0].Broker;
-      this.accountListBrokerList.push(data.data[0].Broker[0].List) ;
+      this.accountListBrokerList = data.data[0].Broker[0].List;
       console.log('this.accountListAdmin', this.accountListAdmin);
       console.log('this.accountListBroker', this.accountListBroker);
-        console.log('this.accountListBroker', this.accountListBrokerList);
+      console.log('this.accountListBroker', this.accountListBrokerList);
     });
   }
-  brokersearch(){
-    this.getAccount(this.config.currentPage)
+  brokersearch() {
+    this.getAccount(this.config.currentPage);
   }
   Unpublised(type: any, id: any, customer: any, broker: any) {
     // alert(`>>>>>>>>${this.checkedValue}`);

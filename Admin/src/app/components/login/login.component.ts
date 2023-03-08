@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('lottryname', data.data.name);
           localStorage.setItem('lottrytoken', data.token);
           localStorage.setItem('lottryreferalid', data.data.referal_code);
-          this.router.navigateByUrl('/user-review');
+          this.router.navigateByUrl('/dashboard');
         } else {
           if (data.statuscode == 400) {
             console.log('dara', data);

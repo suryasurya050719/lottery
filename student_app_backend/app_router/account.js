@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const account = require("../app_models/account");
 const user = require("../app_models/user");
+const numberFunction = require("../common/numberFunction");
 const { route } = require("./live_result");
 
 router.post("", async (req, res) => {
@@ -152,13 +153,17 @@ router.delete("/accountdelete/:id", async (req, res) => {
 });
 router.get("/sharedaccountlist", async (req, res) => {
   try {
-    console.log("req.body",Number(req.query.id))
-    let filter=[
-      { isOtpVerify: true }, {role_id: 2} 
-    ]
-    if(req.query.id!==""){
-      filter.push({user_id:Number(req.query.id)})
+    console.log("req.body", req.query.id);
+    console.log("req.body", req.query.id !== "");
+    let filter = [{ isOtpVerify: true }, { role_id: 2 }];
+    if (req.query.id !== "") {
+      // let user_id = await numberFunction.justNumbers(query.user_id);
+      console.log("id", numberFunction.justNumbers(req.query.id));
+      filter.push({
+        user_id: numberFunction.justNumbers(req.query.id),
+      });
     }
+    console.log("filter", filter);
     user
       .aggregate([
         {
@@ -186,7 +191,7 @@ router.get("/sharedaccountlist", async (req, res) => {
             ],
             Broker: [
               {
-                $match: {  $and: filter},
+                $match: { $and: filter },
               },
               {
                 $lookup: {
@@ -202,10 +207,27 @@ router.get("/sharedaccountlist", async (req, res) => {
                   preserveNullAndEmptyArrays: false,
                 },
               },
+              {
+                $group: {
+                  _id: "$_id",
+                  name: { $first: "$name" },
+                  phone: { $first: "$phone" },
+                  role_id: { $first: "$role_id" },
+                  isOtpVerify: { $first: "isOtpVerify" },
+                  status: { $first: "$status" },
+                  otp: { $first: "$otp" },
+                  modified_on: { $first: "$modified_on" },
+                  created_on: { $first: "$created_on" },
+                  user_id: { $first: "$user_id" },
+                  password: { $first: "$password" },
+                  referal_code: { $first: "$referal_code" },
+                  List: { $push: "$List" },
+                },
+              },
             ],
             Customer: [
               {
-                $match: {  $and: [{ isOtpVerify: true }, { role_id: 3 }],},
+                $match: { $and: [{ isOtpVerify: true }, { role_id: 3 }] },
               },
               {
                 $lookup: {
@@ -226,7 +248,7 @@ router.get("/sharedaccountlist", async (req, res) => {
         },
       ])
       .then((data) => {
-        console.log("data",data)
+        console.log("data", data);
         res.send({
           statuscode: 200,
           status: "account updated successfully",

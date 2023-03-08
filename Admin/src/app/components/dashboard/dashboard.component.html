@@ -332,7 +332,7 @@
       <div class="panel-body">
         <div
           *ngFor="
-            let data of accountListBroker | paginate: config;
+            let data of accountListBroker | paginate : config;
             let i = index
           "
         >
@@ -372,13 +372,13 @@
                       <div class="dropdown-menu">
                         <a
                           class="dropdown-item"
-                          (click)="UnpublisedMany(data.user_id, 1)"
+                          (click)="UnpublisedMany(data.user_id, 2)"
                         >
                           Public
                         </a>
                         <a
                           class="dropdown-item"
-                          (click)="UnpublisedMany(data.user_id, 2)"
+                          (click)="UnpublisedMany(data.user_id, 1)"
                         >
                           Unpublice
                         </a>
@@ -444,7 +444,10 @@
             </div>
           </div>
         </div>
-        <div class="pb-3 bg-white  text-center " *ngIf="accountListBroker.length == 0">
+        <div
+          class="pb-3 bg-white text-center"
+          *ngIf="accountListBroker.length == 0"
+        >
           No Data Found
         </div>
       </div>
