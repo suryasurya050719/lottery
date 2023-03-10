@@ -71,7 +71,8 @@
                 *ngFor="let data of publishedstatus; let i = index"
                 [value]="i"
               >
-                {{ data.date }} : {{ data.showTime }} : {{ data.game_name }}
+                {{ data.showTime }} :
+                {{ data.game_name }}
               </option>
             </select>
           </div>
@@ -582,9 +583,17 @@
                   let i = index
                 "
               >
-                <td><div *ngFor="let val of data.board_letter_formation">{{val}}</div></td>
+                <td>
+                  <div *ngFor="let val of data.board_letter_formation">
+                    {{ val }}
+                  </div>
+                </td>
                 <td>{{ data.board_name }}</td>
-                <td><div *ngFor="let val of data.show_result_number">{{val}}</div></td>
+                <td>
+                  <div *ngFor="let val of data.show_result_number">
+                    {{ val }}
+                  </div>
+                </td>
                 <td>{{ data.ticket_count }}</td>
 
                 <td>

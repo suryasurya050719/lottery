@@ -343,13 +343,17 @@ router.get("/preview", async (req, res) => {
               board_leters
             );
             console.log("formation_data", formation_data);
-           let amount=await allBoards(data_num,show_result_number,PriceDetalsobject)
+            let amount = await allBoards(
+              data_num,
+              show_result_number,
+              PriceDetalsobject
+            );
             // let amount = boardResult(
             //   formation_data,
             //   show_result_number,
             //   PriceDetalsobject
             // );
-            console.log("amount",amount)
+            console.log("amount", amount);
             let tprice = data2.ticket_count * amount;
             userprice = userprice + tprice;
             price = price + tprice;
@@ -898,28 +902,31 @@ router.get("/unpublishedShow", async (req, res) => {
   try {
     console.log("data", req.query.game_name);
     let game_name = req.query.game_name;
-    let min = new Date().getMinutes();
-    let hours = new Date().getHours();
-    let closeTime = hours + ":" + min;
-    console.log("Date-->", new Date().toISOString().split("T")[0]);
-    console.log("closeTime-->", closeTime);
+    console.log("new DAte", new Date());
+    let newDAte = new Date();
+    // let min = new Date().getMinutes();
+    // let hours = new Date().getHours();
+    // let closeTime = hours + ":" + min;
+    // console.log("Date-->", new Date().toISOString().split("T")[0]);
+    // console.log("closeTime-->", closeTime);
 
     let filterdata = {
       status: false,
       $and: [
-        { closeShowTime: { $lte: closeTime } },
+        { closeShowTime: { $lte: newDAte } },
         { date: { $lte: new Date().toISOString().split("T")[0] } },
       ],
       // date:
     };
 
-    console.log("unpublish filterdata===>", filterdata);
+    console.log("unpublish filterdata===>", JSON.stringify(filterdata));
     if (req.query.game_name !== "" || req.query.game_name !== null) {
       filterdata["game_name"] = req.query.game_name;
     }
     publishStatus
       .find(filterdata)
       .then((data) => {
+        console.log("data", data);
         res.json({
           success: true,
           data: data,
@@ -1082,18 +1089,18 @@ async function transectiondetails(
   console.log("transection", transection);
 }
 
-async function allBoards(data,single,price){
-  console.log("data,single,price",data,single,price)
- for(i=0;i<data.length;i++){
-       await console.log("index",i)
-        let element=data[i]
-        if(element==single[0]){
-          console.log("price[config.first_price]",price[config.first_price])
-            return await price[config.first_price]
-        }else if(i+1==data.length){
-          console.log("element",element)
-           console.log("i+1==data.length",i+1==data.length)
-            return await 0
-        }
+async function allBoards(data, single, price) {
+  console.log("data,single,price", data, single, price);
+  for (i = 0; i < data.length; i++) {
+    await console.log("index", i);
+    let element = data[i];
+    if (element == single[0]) {
+      console.log("price[config.first_price]", price[config.first_price]);
+      return await price[config.first_price];
+    } else if (i + 1 == data.length) {
+      console.log("element", element);
+      console.log("i+1==data.length", i + 1 == data.length);
+      return await 0;
     }
+  }
 }

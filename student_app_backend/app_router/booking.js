@@ -41,11 +41,19 @@ router.post("/bookingCreate", async (req, res) => {
           };
           let date = ISOtoLOCALDATE(new Date());
           console.log("date", date);
+          let newCloseDate = `${date}T${preparedata.closeShowTime}`;
+          let newShowDate = `${date}T${preparedata.showTime}`;
+          console.log("newDate", newCloseDate);
+          console.log("new Date()", new Date(newCloseDate));
+          // let min = new Date(newDate).getMinutes();
+          // let hours = new Date(newDate).getHours();
+          // let closeTime = hours + ":" + min;
+          // console.log(">>>>", closeTime);
           publishStatus
             .find({
               game_id: data.game_id,
               game_name: data.game_name,
-              showTime: data.showTime,
+              showTime: new Date(newShowDate),
               date: date,
             })
             .then(async (data) => {
@@ -54,8 +62,8 @@ router.post("/bookingCreate", async (req, res) => {
                 let prepare = {
                   game_id: preparedata.game_id,
                   game_name: preparedata.game_name,
-                  showTime: preparedata.showTime,
-                  closeShowTime: preparedata.closeShowTime,
+                  showTime: new Date(newShowDate),
+                  closeShowTime: new Date(newCloseDate),
                   status: false,
                   date: date,
                 };
@@ -92,6 +100,7 @@ router.post("/bookingCreate", async (req, res) => {
         }
       })
       .catch((error) => {
+        console.log("error", error);
         res.json({
           success: false,
           statuscode: 202,
