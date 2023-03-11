@@ -30,6 +30,7 @@ export class BookingReviewComponent implements OnInit {
   reviewList: any = [];
   BookingListdata: any = [];
   viewmorepopupdata: any = [];
+  viewMorePopupDataOne: any = [];
   activateUserID: string = '';
   // filter data
   fromDate: any = '';
@@ -93,6 +94,7 @@ export class BookingReviewComponent implements OnInit {
     console.log('ShowTime_details', data);
   }
   ViewMorePopupPanel = false;
+  ViewMorePopupPanelOne = false;
   singleBookingRecords(newPage: number) {
     // console.log('singleBookingRecords'), newPage;
     let data = {
@@ -118,9 +120,19 @@ export class BookingReviewComponent implements OnInit {
 
     this.ViewMorePopupPanel = !this.ViewMorePopupPanel;
   }
+  ViewMorePopupOne(i: any) {
+    console.log('i', i);
+    console.log('this.viewmorepopupdata', this.viewmorepopupdata);
+    this.viewMorePopupDataOne = this.viewmorepopupdata.booking_data[i];
 
+    console.log(' this.viewMorePopupDataOne', this.viewMorePopupDataOne);
+    this.ViewMorePopupPanelOne = !this.ViewMorePopupPanelOne;
+  }
   CloseMoreViewPopup() {
     this.ViewMorePopupPanel = false;
+  }
+  CloseMoreViewPopupOne() {
+    this.ViewMorePopupPanelOne = false;
   }
   searchData() {
     this.BookingReviewList(this.config.currentPage);
