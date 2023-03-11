@@ -41,6 +41,7 @@ router.post("/bookingCreate", async (req, res) => {
           };
           let date = ISOtoLOCALDATE(new Date());
           console.log("date", date);
+          //  console.log("preparedata", preparedata);
           publishStatus
             .find({
               game_id: data.game_id,
@@ -49,7 +50,7 @@ router.post("/bookingCreate", async (req, res) => {
               date: date,
             })
             .then(async (data) => {
-              console.log("data for checking", data.length);
+              console.log("data for checking", preparedata.showTime);
               if (data.length == 0) {
                 let prepare = {
                   game_id: preparedata.game_id,
@@ -112,24 +113,24 @@ router.get("/getall", async (req, res) => {
     // let query = req.query;
     let query = req.query;
     console.log("query fpr getall", query);
-    console.log("query fpr getall", query.show_time[0]);
+    // console.log("query fpr getall", query.show_time[0]);
 
     let searchFilter = {};
     var board_filter_data = [];
     let created_on = {};
-    if (query.user_id !== "") {
+    if (query.user_id !== "" &&query.user_id !== undefined) {
       searchFilter["user_id"] = parseInt(query.user_id);
     }
     // if (query.phonenumber !== "" && query.phonenumber !== NaN) {
     //   searchFilter["phone"] = Number(query.phonenumber);
     // }
-    if (query.fromdate !== "") {
+    if (query.fromdate !== "" &&query.fromdate !==undefined) {
       created_on["$gt"] = new Date(query.fromdate);
     }
-    if (query.todate !== "") {
+    if (query.todate !== ""&&query.todate !== undefined) {
       created_on["$lt"] = new Date(query.todate);
     }
-    if (query.game_name !== "") {
+    if (query.game_name !== "" && query.game_name !== undefined) {
       searchFilter["game_name"] = query.game_name;
     }
     let length = Object.keys(created_on).length;
@@ -139,12 +140,12 @@ router.get("/getall", async (req, res) => {
     // if(show_time.length>0){
 
     // }
-    console.log(
-      "query.show_time.length zdfvdz",
-      query.show_time,
-      typeof query.show_time,
-      typeof query.board_name
-    );
+    // console.log(
+    //   "query.show_time.length zdfvdz",
+    //   query.show_time,
+    //   typeof query.show_time,
+    //   typeof query.board_name
+    // );
     if (query.show_time) {
       //   let data ={}
       //   data['$in']=query.showTime
