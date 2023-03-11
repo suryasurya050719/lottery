@@ -12,21 +12,21 @@ export class LotteryResultComponent implements OnInit {
   pokemonControl = new FormControl('');
   BoardNameControler = new FormControl('');
   config: any;
-  bookingDataConfid:any;
+  bookingDataConfid: any;
   constructor(private board: Board, private lotteryResult: LotteryResult) {
-        this.config = {
+    this.config = {
       id: 'pagination1',
       currentPage: 1,
       itemsPerPage: 10,
     };
-        this.bookingDataConfid = {
+    this.bookingDataConfid = {
       id: 'pagination2',
       currentPage: 1,
       itemsPerPage: 10,
     };
   }
-  previewPaggination:Boolean=false
-  publishedPaggination:Boolean=true
+  previewPaggination: Boolean = false;
+  publishedPaggination: Boolean = true;
   letterFormat: any = [];
   previewData: any = [];
   game_type: any = '';
@@ -73,8 +73,12 @@ export class LotteryResultComponent implements OnInit {
         : '';
 
     console.log('data===>>>>', name);
-    this.lotteryResult.PublishedStatus(name).subscribe((data) => {
+    this.lotteryResult.PublishedStatus(name).subscribe(async (data) => {
       console.log('published status data', data.data);
+      await data.data.forEach((element: any) => {
+        element['showTime'] = new Date(element.showTime).toLocaleString();
+        console.log('elememt', element);
+      });
       this.publishedstatus = data.data;
     });
   }
@@ -193,9 +197,8 @@ export class LotteryResultComponent implements OnInit {
   }
   // preview
 
-  Preview(newPage:any) {
-    this.previewPaggination=true,
-    this.publishedPaggination=false
+  Preview(newPage: any) {
+    (this.previewPaggination = true), (this.publishedPaggination = false);
     const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
     const data = Object.values(this.result_numerick);
     console.log('data', data);
@@ -219,7 +222,7 @@ export class LotteryResultComponent implements OnInit {
       this.lotteryResult.Preview(prepareData).subscribe((data) => {
         console.log('preview data===>', data.result.data);
         this.previewData = data.result.data;
-        this.config.currentPage = newPage
+        this.config.currentPage = newPage;
         console.log('this.previewData', this.previewData);
         this.totalTickets = data.result.overallTicket;
         this.totalCollection = data.result.overallTicetprice;
@@ -235,9 +238,8 @@ export class LotteryResultComponent implements OnInit {
       alert(' Please Fill All Numeric in Valid Format');
     }
   }
-  Published(newPage:any){
-        this.previewPaggination=false,
-    this.publishedPaggination=true
+  Published(newPage: any) {
+    (this.previewPaggination = false), (this.publishedPaggination = true);
     const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
     const data = Object.values(this.result_numerick);
     console.log('data', data);
@@ -252,7 +254,7 @@ export class LotteryResultComponent implements OnInit {
         game_name: this.unpublished_data.game_name,
         show: this.unpublished_data.showTime,
         date: this.unpublished_data.date,
-        unpublished_id:this.unpublished_data._id,
+        unpublished_id: this.unpublished_data._id,
         board_name:
           this.BoardNameControler.value.length > 0
             ? this.BoardNameControler.value
@@ -262,7 +264,7 @@ export class LotteryResultComponent implements OnInit {
       this.lotteryResult.Published(prepareData).subscribe((data) => {
         console.log('preview data===>', data.result.data);
         this.previewData = data.result.data;
-        this.bookingDataConfid.currentPage = newPage
+        this.bookingDataConfid.currentPage = newPage;
         console.log('this.previewData', this.previewData);
         this.totalTickets = data.result.overallTicket;
         this.totalCollection = data.result.overallTicetprice;
