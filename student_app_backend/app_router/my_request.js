@@ -145,6 +145,21 @@ router.put("/rejected", async (req, res) => {
     });
 });
 
+router.get("/singleUser", (req, res) => {
+  let status = req.query.user_id;
+  console.log("status", status);
+
+  myRequest.find({ user_id: req.query.user_id }).then((data) => {
+    console.log("data", data);
+    res.json({
+      success: true,
+      statuscode: 200,
+      data: data,
+      status: "list generate successfully",
+    });
+  });
+});
+
 async function transaction(amount, userid) {
   var transectiondata = {
     amount: amount,
