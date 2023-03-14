@@ -499,7 +499,7 @@ this.Dropdown.price().subscribe((data)=>{
     //   // }
     // }
   }
-  gamesubmit() {
+ async gamesubmit() {
     // if (
     //   this.showCount == '1' ||
     //   this.showCount == '2' ||
@@ -534,7 +534,17 @@ this.Dropdown.price().subscribe((data)=>{
       color: this.color,
       show_date: this.slotTimeList,
     };
-    console.log('>>', this.GameName, this.array.length, this.slotTimeList);
+       preparedata.show_date.forEach(async (element:any) => {
+      let date = ISOtoLOCALDATE(new Date());
+      console.log("date", date);
+      //  console.log("preparedata", preparedata);
+      let newCloseDate = `${date}T${element.closeShowTime}`;
+      let newShowDate = `${date}T${element.showTime}`;
+      element.showTime = new Date( newShowDate);
+      element.closeShowTime =new Date( newCloseDate);
+    });
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>.', this.GameName, this.array.length, this.slotTimeList);
+     console.log('>>>>>>>>>>>',JSON.stringify(preparedata) );
     if (
       this.GameName !== '' &&
       this.selectedValue.length !== 0 &&
@@ -652,3 +662,17 @@ this.Dropdown.price().subscribe((data)=>{
 //   console.log('daysToDday', daysToDday);
 //   return data;
 // }
+function ISOtoLOCALDATE(params:any) {
+  let date = new Date(params);
+ let  year = date.getFullYear();
+ let  month:any = date.getMonth() + 1;
+ let  dt:any = date.getDate();
+
+  if (dt < 10) {
+    dt = "0" + dt;
+  }
+  if (month < 10) {
+   month = "0" + month;
+  }
+  return year + "-" + month + "-" + dt;
+}

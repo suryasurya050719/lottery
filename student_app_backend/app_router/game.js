@@ -19,15 +19,15 @@ router.post("/creategame", async (req, res) => {
       end_date: body.end_date,
       result_date: body.result_date,
     };
-    await data.show_date.forEach(async (element) => {
-      let date = ISOtoLOCALDATE(new Date());
-      console.log("date", date);
-      //  console.log("preparedata", preparedata);
-      let newCloseDate = `${date}T${element.closeShowTime}`;
-      let newShowDate = `${date}T${element.showTime}`;
-      element.showTime = new Date( newShowDate);
-      element.closeShowTime =new Date( newCloseDate);
-    });
+    // await data.show_date.forEach(async (element) => {
+    //   let date = ISOtoLOCALDATE(new Date());
+    //   console.log("date", date);
+    //   //  console.log("preparedata", preparedata);
+    //   let newCloseDate = `${date}T${element.closeShowTime}`;
+    //   let newShowDate = `${date}T${element.showTime}`;
+    //   element.showTime = new Date( newShowDate);
+    //   element.closeShowTime =new Date( newCloseDate);
+    // });
     let gameCreate = new game(data);
     gameCreate
       .save()
