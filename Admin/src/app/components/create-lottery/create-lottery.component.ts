@@ -525,10 +525,12 @@ this.Dropdown.price().subscribe((data)=>{
     //   };
     //   this.show_date.push(data);
     // }
+    console.log("this.array",this.array)
+     console.log("this.selectedValue",this.selectedValue)
     let preparedata = {
       game_id: this.activegamedata.game_id,
       game_name: this.GameName,
-      board_id: this.array,
+      board_id: this.selectedValue,
       status: this.published,
       showCount: this.showCount,
       color: this.color,
