@@ -41,11 +41,12 @@ router.post("/bookingCreate", async (req, res) => {
           };
           let date = ISOtoLOCALDATE(new Date());
           console.log("date", date);
+          console.log("preparedata", preparedata);
           //  console.log("preparedata", preparedata);
-          let newCloseDate = `${date}T${preparedata.closeShowTime}`;
-          let newShowDate = `${date}T${preparedata.showTime}`;
-          console.log("newDate", newCloseDate);
-          console.log("new Date()", new Date(newCloseDate));
+          // let newCloseDate = `${date}T${preparedata.closeShowTime}`;
+          // let newShowDate = `${date}T${preparedata.showTime}`;
+          // console.log("newDate", newCloseDate);
+          // console.log("new Date()", new Date(newCloseDate));
           // let min = new Date(newDate).getMinutes();
           // let hours = new Date(newDate).getHours();
           // let closeTime = hours + ":" + min;
@@ -54,7 +55,7 @@ router.post("/bookingCreate", async (req, res) => {
             .find({
               game_id: data.game_id,
               game_name: data.game_name,
-              showTime: new Date(newShowDate),
+              showTime:  preparedata.showTime,
               date: date,
             })
             .then(async (data) => {
@@ -63,12 +64,12 @@ router.post("/bookingCreate", async (req, res) => {
                 let prepare = {
                   game_id: preparedata.game_id,
                   game_name: preparedata.game_name,
-                  showTime: new Date(newShowDate),
-                  closeShowTime: new Date(newCloseDate),
+                  showTime:  preparedata.showTime,
+                  closeShowTime:  preparedata.closeShowTime,
                   status: false,
                   date: date,
                 };
-                console.log("prepare data", prepare);
+                // console.log("prepare data", prepare);
                 let published = new publishStatus(prepare);
                 await published.save().then((data) => {
                   console.log("data for publice", data);

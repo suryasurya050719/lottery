@@ -13,7 +13,8 @@ const game = require("../app_models/game");
 const config = require("../config/config");
 
 router.get("/preview", async (req, res) => {
-  // console.log("jdfsdjkf", req.query);
+ try {
+   console.log("jdfsdjkf", req.query);
   let data_num = req.query.resultData;
   let date = req.query.date;
   let show = req.query.show;
@@ -23,7 +24,7 @@ router.get("/preview", async (req, res) => {
   var PriceDetails = [];
   graterDate.setHours(graterDate.getHours() + 23);
   graterDate.setMinutes(graterDate.getMinutes() + 59);
-  // console.log("newDate", lessDate, graterDate);
+  console.log("newDate", lessDate, graterDate);
   let board_name = {};
   if (req.query.board_name.length > 0) {
     board_name["booking_data.board_name"] = {
@@ -102,7 +103,7 @@ router.get("/preview", async (req, res) => {
       },
     ])
     .then(async (data) => {
-      // console.log(data);
+      console.log(data);
       var total = [];
       var total_price = 0;
       var total_refered_comission = 0;
@@ -129,23 +130,24 @@ router.get("/preview", async (req, res) => {
           },
         ])
         .then(async (result) => {
-          // console.log("result for totalcount===>", result);
+          console.log("result for totalcount===>", result);
           total = result;
         })
         .catch((error) => {
+          console.log("error",error)
           res.json({
             success: false,
             statuscode: 202,
             status: error,
           });
         });
-      // console.log("data.length==>", data.length);
+      console.log("data.length==>", data.length);
       for (let index = 0; index < data.length; index++) {
         let data1 = data[index];
         let userprice = 0;
         await data1.booking_data.forEach(async (data2) => {
           var price = 0;
-          // console.log("data2", data2);
+          console.log("data2", data2);
           if (data2.board_name == config.one_digit) {
             let boardDetails = await PriceDetails.find(
               (data) => data.board_name == data2.board_name
@@ -430,6 +432,15 @@ router.get("/preview", async (req, res) => {
         result: results,
       });
     });
+ } catch (error) {
+  console.log("error",error)
+   res.json({
+        success: true,
+        statuscode: 200,
+        status: "Failed",
+        result: error,
+      });
+ }
 });
 
 router.get("/Published", async (req, res) => {
@@ -913,7 +924,7 @@ router.get("/unpublishedShow", async (req, res) => {
     let filterdata = {
       status: false,
       $and: [
-        { closeShowTime: { $lte: newDAte } },
+        { closeShowTime: { $lte: new Date() } },
         { date: { $lte: new Date().toISOString().split("T")[0] } },
       ],
       // date:

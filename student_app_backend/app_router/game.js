@@ -7,7 +7,7 @@ const { route } = require("./live_result");
 router.post("/creategame", async (req, res) => {
   try {
     let body = req.body;
-    console.log("data", body);
+    // console.log("data", body);
     let data = {
       game_name: body.game_name,
       board_id: body.board_id,
@@ -19,15 +19,26 @@ router.post("/creategame", async (req, res) => {
       end_date: body.end_date,
       result_date: body.result_date,
     };
-    // await data.show_date.forEach(async (element) => {
-    //   let date = ISOtoLOCALDATE(new Date());
-    //   console.log("date", date);
-    //   //  console.log("preparedata", preparedata);
-    //   let newCloseDate = `${date}T${element.closeShowTime}`;
-    //   let newShowDate = `${date}T${element.showTime}`;
-    //   element.showTime = new Date( newShowDate);
-    //   element.closeShowTime =new Date( newCloseDate);
-    // });
+    await data.show_date.forEach(async (element) => {
+      let date = ISOtoLOCALDATE(new Date());
+      console.log("date", date);
+      //  console.log("preparedata", preparedata);
+      let newCloseDate = `${date}T${element.closeShowTime}:00.000Z`;
+      let newShowDate = `${date}T${element.showTime}:00.000Z`;
+      // const nDate = new Date(newCloseDate).toLocaleString("en-US", {
+      //   timeZone: "Asia/Calcutta",
+      // });
+      console.log("nDate>>>>>>>>", JSON.stringify(newCloseDate));
+      console.log("newShowDate>>>>>>>>", JSON.stringify(newShowDate));
+      element.showTime = new Date(newShowDate);
+      element.showTime.setHours(element.showTime.getHours() - 5);
+      element.showTime.setMinutes(element.showTime.getMinutes() - 30);
+      element.closeShowTime = new Date(newCloseDate);
+      element.closeShowTime.setHours(element.closeShowTime.getHours() - 5);
+      element.closeShowTime.setMinutes(element.closeShowTime.getMinutes() - 30);
+      console.log("element", element);
+    });
+    console.log("data>>>>>>>>", JSON.stringify(data));
     let gameCreate = new game(data);
     gameCreate
       .save()

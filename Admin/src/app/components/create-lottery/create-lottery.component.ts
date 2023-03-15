@@ -536,15 +536,15 @@ this.Dropdown.price().subscribe((data)=>{
       color: this.color,
       show_date: this.slotTimeList,
     };
-       preparedata.show_date.forEach(async (element:any) => {
-      let date = ISOtoLOCALDATE(new Date());
-      console.log("date", date);
-      //  console.log("preparedata", preparedata);
-      let newCloseDate = `${date}T${element.closeShowTime}`;
-      let newShowDate = `${date}T${element.showTime}`;
-      element.showTime = new Date( newShowDate);
-      element.closeShowTime =new Date( newCloseDate);
-    });
+    //    preparedata.show_date.forEach(async (element:any) => {
+    //   let date = ISOtoLOCALDATE(new Date());
+    //   console.log("date", date);
+    //   //  console.log("preparedata", preparedata);
+    //   let newCloseDate = `${date}T${element.closeShowTime}`;
+    //   let newShowDate = `${date}T${element.showTime}`;
+    //   element.showTime = new Date( newShowDate);
+    //   element.closeShowTime =new Date( newCloseDate);
+    // });
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>.', this.GameName, this.array.length, this.slotTimeList);
      console.log('>>>>>>>>>>>',JSON.stringify(preparedata) );
     if (

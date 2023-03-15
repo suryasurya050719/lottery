@@ -75,8 +75,11 @@ export class LotteryResultComponent implements OnInit {
     console.log('data===>>>>', name);
     this.lotteryResult.PublishedStatus(name).subscribe(async (data) => {
       console.log('published status data', data.data);
-      await data.data.forEach((element: any) => {
-        element['showTime'] = new Date(element.showTime).toLocaleString();
+      await data.data.forEach(async(element: any) => {
+        console.log("element.showTime",element.showTime)
+        element.showTime.setHours(element.showTime.getHours() + 5); 
+element.showTime.setMinutes(element.showTime.getMinutes() + 30);
+        element['showTime'] = element.showTime;
         console.log('elememt', element);
       });
       this.publishedstatus = data.data;
@@ -206,7 +209,7 @@ export class LotteryResultComponent implements OnInit {
     if (isEmpty) {
       console.log(
         'this.unpublished_data.game_name',
-        this.unpublished_data.game_name
+        this.unpublished_data
       );
       let prepareData = {
         resultData: data,
