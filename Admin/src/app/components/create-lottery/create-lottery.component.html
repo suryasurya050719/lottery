@@ -62,23 +62,30 @@
             </div>
             <div class="flx_0 d-flex flex-column align-items-center">
               <div class="flx_1 text-white">
-                <!-- <div class="active_chk dark_switch d-inline-block m-auto">
-                  <label class="switch">
-                    <input
-                      class="switch-input"
-                      name="IsActive"
-                      type="checkbox"
-                      
-                    />
-                    <span
-                      class="switch-label"
-                      data-on="On"
-                      data-off="Off"
-                    ></span>
-                    <span class="switch-handle"></span>
-                  </label>
-                </div> -->
-                <div class="dropdown">
+                     <div class="d-block">
+                      <div class="active_chk dark_switch d-inline-block m-auto">
+                        <label class="switchlable">
+                          <input
+                            class="switch_input toggle"
+                            type="checkbox"
+                            [checked]="data.status"
+                            (click)="
+                              Unpublised(data.game_id, data.status)
+                            "
+                          />
+                          <span class="slider round">
+                            <span
+                              [ngClass]="{
+                                off: data.status == false,
+                                on: data.status == true
+                              }"
+                              >{{ data.status ? "ON" : "Off" }}</span
+                            >
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                <!-- <div class="dropdown">
                   <button
                     role="button"
                     data-toggle="dropdown"
@@ -94,7 +101,7 @@
                       >{{ data.status == true ? "Unpublic" : "public" }}</a
                     >
                   </div>
-                </div>
+                </div> -->
 
                 <span class="text-danger d-block text-center">{{
                   data.status !== true ? "Unpublic" : "public"

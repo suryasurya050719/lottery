@@ -51,7 +51,7 @@ router.get("/preview", async (req, res) => {
       },
     ])
     .then(async (data) => {
-      // console.log("data", data[0].brd);
+      console.log("data", data[0].brd);
       PriceDetails = await data[0].brd;
     });
   // console.log("boardname", board_name);
@@ -103,7 +103,7 @@ router.get("/preview", async (req, res) => {
       },
     ])
     .then(async (data) => {
-      console.log(data);
+      console.log("booking data",data);
       var total = [];
       var total_price = 0;
       var total_refered_comission = 0;
