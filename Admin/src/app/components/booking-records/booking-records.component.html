@@ -279,7 +279,7 @@
                       <div class="active_chk dark_switch d-inline-block m-auto">
                         <span class="badge bg-primary blink_txt mb-2">{{this.advanceSearch==true?"ON":"OFF"}}</span>
                       </div>
-                      <div class="d-block">{{this.advanceSearch==true?"Enter user id":""}}</div>
+                      <div class="d-block">{{this.advanceSearch==true?"User Id will disaplay":""}}</div>
                       <button
                         class="btn btn-primary btn-sm"
                         (click)="ViewMorePopup()"
@@ -304,7 +304,13 @@
               <table class="table no-margin">
                 <thead>
                   <tr>
-                    <th>Broker id if any</th>
+                    <th>           {{
+                        user_type == 1
+                          ? "Admin id"
+                          : user_type == 2
+                          ? "Broker id"
+                          : "customer id"
+                      }}</th>
                     <th>Booking id</th>
                     <th>User id</th>
                     <th>Referral id</th>
@@ -385,8 +391,9 @@
               <tr>
                 <th>User id</th>
                 <th>Total Tickets</th>
-                <th>Total Amount</th>
+                <th>Total Booking</th>
                 <th>Total Commission</th>
+                 <th>Net Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -404,6 +411,12 @@
                   <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
+                  </div>
+                </td>
+                                <td>
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                    <span class="input-group-addon">RS</span>
+                    <input type="text" class="form-control" [value]="data.total_price" />
                   </div>
                 </td>
               </tr>

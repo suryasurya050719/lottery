@@ -50,16 +50,16 @@ router.post("/bookingCreate", async (req, res) => {
           // let min = new Date(newDate).getMinutes();
           // let hours = new Date(newDate).getHours();
           // let closeTime = hours + ":" + min;
-          // console.log(">>>>", closeTime);
+          console.log(">>>>", data.game_id,data.game_name,new Date(preparedata.showTime));
           publishStatus
             .find({
               game_id: data.game_id,
               game_name: data.game_name,
-              showTime:  preparedata.showTime,
+              showTime:  new Date(preparedata.showTime),
               date: date,
             })
             .then(async (data) => {
-              console.log("data for checking", preparedata.showTime);
+              console.log("data for checking", data);
               if (data.length == 0) {
                 let prepare = {
                   game_id: preparedata.game_id,
@@ -75,7 +75,9 @@ router.post("/bookingCreate", async (req, res) => {
                   console.log("data for publice", data);
                 });
               }
-            });
+            }).catch((error)=>{
+              console.log("error",error)
+            })
           let boardCrate = new booking(preparedata);
           await boardCrate
             .save()
