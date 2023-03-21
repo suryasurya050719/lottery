@@ -43,6 +43,7 @@ export class LotteryResultComponent implements OnInit {
     B: '',
     C: '',
   };
+  AdminEnteredShowNumber: any = [];
   // advance search
   advanceSearch: boolean = false;
   totalTickets: string = '';
@@ -75,10 +76,10 @@ export class LotteryResultComponent implements OnInit {
     console.log('data===>>>>', name);
     this.lotteryResult.PublishedStatus(name).subscribe(async (data) => {
       console.log('published status data', data.data);
-      await data.data.forEach(async(element: any) => {
-        console.log("element.showTime",element.showTime)
-        element.showTime.setHours(element.showTime.getHours() + 5); 
-element.showTime.setMinutes(element.showTime.getMinutes() + 30);
+      await data.data.forEach(async (element: any) => {
+        console.log('element.showTime', element.showTime);
+        element.showTime.setHours(element.showTime.getHours() + 5);
+        element.showTime.setMinutes(element.showTime.getMinutes() + 30);
         element['showTime'] = element.showTime;
         console.log('elememt', element);
       });
@@ -204,13 +205,16 @@ element.showTime.setMinutes(element.showTime.getMinutes() + 30);
     (this.previewPaggination = true), (this.publishedPaggination = false);
     const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
     const data = Object.values(this.result_numerick);
+    const arr = Object.entries(this.result_numerick).map(([key, value]) => ({
+      key,
+      value,
+    }));
+    this.AdminEnteredShowNumber = arr;
+    console.log('this.result_numerick', arr);
     console.log('data', data);
     console.log('isempty', isEmpty);
     if (isEmpty) {
-      console.log(
-        'this.unpublished_data.game_name',
-        this.unpublished_data
-      );
+      console.log('this.unpublished_data.game_name', this.unpublished_data);
       let prepareData = {
         resultData: data,
         game_name: this.unpublished_data.game_name,

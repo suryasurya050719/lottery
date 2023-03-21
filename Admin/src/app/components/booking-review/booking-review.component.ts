@@ -116,7 +116,17 @@ export class BookingReviewComponent implements OnInit {
     });
   }
   ViewMorePopup(i: any) {
-    this.viewmorepopupdata = this.BookingListdata[i];
+    let overAllCount =
+      this.bookingDataConfid.currentPage * this.bookingDataConfid.itemsPerPage;
+    let indexCount = this.bookingDataConfid.itemsPerPage - i;
+
+    let index = overAllCount - indexCount;
+    // this.bookingDataConfid.currentPage < 2
+    //   ? i
+    //   : i + this.bookingDataConfid.itemsPerPage;
+    console.log('index<<<<<', indexCount, overAllCount, i);
+    console.log('index>>>>>', index);
+    this.viewmorepopupdata = this.BookingListdata[index];
 
     this.ViewMorePopupPanel = !this.ViewMorePopupPanel;
   }

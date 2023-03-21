@@ -624,6 +624,7 @@
                 <th>Ticket no</th>
                 <th>Quantity</th>
                 <th>Winning no</th>
+                <th>Board Letter</th>
                 <th>Winning amount</th>
               </tr>
             </thead>
@@ -634,12 +635,21 @@
                   let i = index
                 "
               >
-                <td>{{ i + 1 }}</td>
-                <td>{{ data.board_name }}</td>
                 <td>{{ data.ticket_number }}</td>
-                <td>{{ data.ticket_count }}</td>
+                <td>{{ data.board_name }}</td>
                 <td>
                   <div *ngFor="let num of data.show_result_number">
+                    {{ num }}
+                  </div>
+                </td>
+                <td>{{ data.ticket_count }}</td>
+                <td>
+                  <div *ngFor="let num of AdminEnteredShowNumber">
+                    {{ num.key }}:{{ num.value }}
+                  </div>
+                </td>
+                <td>
+                  <div *ngFor="let num of data.board_letter_formation">
                     {{ num }}
                   </div>
                 </td>
