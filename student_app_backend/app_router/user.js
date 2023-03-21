@@ -84,6 +84,16 @@ router.post("/registor", async (req, res) => {
               };
               let newreferal = new referal(referaldata);
               newreferal.save();
+            }else{
+              let data= user.findOne({role_id:1}).then((result)=>{
+              let referaldata = {
+                user_id: Number(data01.user_id),
+                refered_user_id: result.user_id,
+                refered_role_id: result.role_id,
+              };
+              let newreferal = new referal(referaldata);
+              newreferal.save();
+              })
             }
           });
       } else {

@@ -129,7 +129,7 @@ export class BookingRecordsComponent implements OnInit {
   ViewMorePopupPanel2 = false;
   ViewMorePopup2(i: any) {
     let overAllCount = this.config.currentPage * this.config.itemsPerPage;
-    let indexCount = this.config.itemsPerPage - (i + 1);
+    let indexCount = this.config.itemsPerPage - i ;
 
     let index = overAllCount - indexCount;
     console.log('index>>>>>>>>>>>', index);

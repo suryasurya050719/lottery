@@ -7,7 +7,14 @@ import { TicketPrice } from '../../service/ticket_price';
   styleUrls: ['./ticket-price-details.component.css'],
 })
 export class TicketPriceDetailsComponent implements OnInit {
-  constructor(private ticketPrice: TicketPrice) {}
+    config: any;
+  constructor(private ticketPrice: TicketPrice) {
+        this.config = {
+      id: 'pagination1',
+      currentPage: 1,
+      itemsPerPage: 5,
+    };
+  }
   priceAmouont: string = '';
   TicketPrice: string = '';
   Board: string = '';
@@ -15,13 +22,14 @@ export class TicketPriceDetailsComponent implements OnInit {
   EditDate: boolean = false;
   DataList: any = [];
   ActiveData: any = {};
+
   // validation
   priceAmouontError: boolean = false;
   TicketPriceError: boolean = false;
   BoardError: boolean = false;
   TitleError: boolean = false;
   ngOnInit(): void {
-    this.alldata();
+    this.alldata(this.config.currentPage);
   }
   submit() {
     if (this.priceAmouont == '') {
@@ -62,7 +70,7 @@ export class TicketPriceDetailsComponent implements OnInit {
           console.log('data', data);
           this.EditDate = false;
           alert('Ticket update successfully');
-          this.alldata();
+          this.alldata(this.config.currentPage);
         });
       } else if (this.EditDate == false) {
         // create ticket
@@ -70,14 +78,15 @@ export class TicketPriceDetailsComponent implements OnInit {
         this.ticketPrice.TicketPriceCreate(data).subscribe((data) => {
           console.log('data', data);
           alert('Ticket create successfully');
-          this.alldata();
+          this.alldata(this.config.currentPage);
         });
       }
     }
   }
-  alldata() {
+  alldata(i:any) {
     this.ticketPrice.TicketPriceList().subscribe((data) => {
       console.log('data', data);
+      this.config.currentPage = i;
       this.DataList = data.data;
     });
   }
@@ -95,7 +104,7 @@ export class TicketPriceDetailsComponent implements OnInit {
       this.ticketPrice.TicketPriceRemove(id).subscribe((data) => {
         console.log('data', data);
         alert('records delete successfully');
-        this.alldata();
+        this.alldata(this.config.currentPage);
       });
     }
   }
