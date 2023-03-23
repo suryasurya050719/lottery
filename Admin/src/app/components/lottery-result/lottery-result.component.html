@@ -68,10 +68,10 @@
               <option value="">Select</option>
               <option value="">All</option>
               <option
-                *ngFor="let data of publishedstatus; let i = index"
+                *ngFor="let data of publishedstatusHTML; let i = index"
                 [value]="i"
               >
-                {{ data.showTime }} :
+                {{ data.showTime}} :
                 {{ data.game_name }}
               </option>
             </select>

@@ -6,6 +6,8 @@ const referals = require("../app_models/referal");
 const publishStatus = require("../app_models/publishedStatus");
 const wallet = require("../app_models/wallet");
 const Transection = require("../app_models/transection");
+const numberFunction = require("../common/numberFunction");
+
 
 const { route } = require("./live_result");
 
@@ -55,7 +57,7 @@ router.post("/bookingCreate", async (req, res) => {
             .find({
               game_id: data.game_id,
               game_name: data.game_name,
-              showTime:  new Date(preparedata.showTime),
+              showTime: preparedata.showTime,
               date: date,
             })
             .then(async (data) => {
@@ -283,13 +285,13 @@ router.get("/bookingList", async (req, res) => {
     var board_filter_data = [];
     let created_on = {};
     if (query.referal_user_id !== "") {
-      referalFillter["refered_user_id"] = parseInt(referal_user_id);
+      referalFillter["refered_user_id"] = await numberFunction.justNumbers(referal_user_id);
     }
     if (query.role_id !== "") {
       referalFillter["refered_role_id"] = parseInt(role_id);
     }
     if (query.user_id !== "") {
-      userFillter["user_id"] = parseInt(user_id);
+      userFillter["user_id"] =await numberFunction.justNumbers(user_id) ;
     }
     if (query.phonenumber !== "") {
       userFillter["phone"] = parseInt(phonenumber);
@@ -720,7 +722,7 @@ router.get("/referedbooking", async (req, res) => {
     let searchFilter = {};
     let userFilter = {};
     if (query.user_id !== "") {
-      searchFilter["user_id"] = parseInt(query.user_id);
+      searchFilter["user_id"] = await numberFunction.justNumbers(query.user_id); 
     }
     if (query.refered_role_id !== "" && query.refered_role_id !== NaN) {
       searchFilter["refered_role_id"] = Number(query.refered_role_id);

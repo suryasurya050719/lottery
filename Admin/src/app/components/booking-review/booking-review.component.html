@@ -244,7 +244,13 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>None</td>
+                    <td>   {{
+                        data.refered_role_id == 1
+                          ? "BJCD A"
+                          : data.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.refered_user_id }}</td>
                     <td>
                       {{
                         data.userlist.role_id == 1

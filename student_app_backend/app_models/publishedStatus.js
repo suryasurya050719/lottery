@@ -14,10 +14,10 @@ const creatSchema = mongoose.Schema({
     type: String,
   },
   showTime: {
-    type: String,
+    type: Date,
   },
   closeShowTime: {
-    type: String,
+    type: Date,
   },
   status: {
     type: Boolean,

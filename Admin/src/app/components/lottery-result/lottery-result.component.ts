@@ -63,6 +63,7 @@ export class LotteryResultComponent implements OnInit {
   unpublished_result: string = '';
   unpublished_data: any = {};
   publishedstatus: any = [];
+  publishedstatusHTML: any = [];
   ngOnInit(): void {
     this.gameList();
     this.publishedStatus();
@@ -76,18 +77,21 @@ export class LotteryResultComponent implements OnInit {
     console.log('data===>>>>', name);
     this.lotteryResult.PublishedStatus(name).subscribe(async (data) => {
       console.log('published status data', data.data);
+      this.publishedstatus = await data.data;
       await data.data.forEach(async (element: any) => {
         console.log('element.showTime', element.showTime);
-        element.showTime.setHours(element.showTime.getHours() + 5);
-        element.showTime.setMinutes(element.showTime.getMinutes() + 30);
-        element['showTime'] = element.showTime;
+        let time = new Date(element.showTime);
+        time.setUTCHours(time.getUTCHours() + 5);
+        time.setUTCMinutes(time.getUTCMinutes() + 30);
+        element['showTime'] = await time.toUTCString();
         console.log('elememt', element);
       });
-      this.publishedstatus = data.data;
+      this.publishedstatusHTML = data.data;
     });
   }
   unpublished_status() {
     console.log('unpublished_result', this.unpublished_result);
+     console.log('unpublished_result', this.publishedstatus);
     this.unpublished_data = this.publishedstatus[this.unpublished_result];
     console.log('data', this.unpublished_data);
   }
@@ -215,10 +219,14 @@ export class LotteryResultComponent implements OnInit {
     console.log('isempty', isEmpty);
     if (isEmpty) {
       console.log('this.unpublished_data.game_name', this.unpublished_data);
+      let time =new Date(this.unpublished_data.showTime)
+             time.setUTCHours(time.getUTCHours() - 5);
+        time.setUTCMinutes(time.getUTCMinutes() - 30);
+        // element['showTime'] = await time.toUTCString();
       let prepareData = {
         resultData: data,
         game_name: this.unpublished_data.game_name,
-        show: this.unpublished_data.showTime,
+        show:  time.toISOString(),
         date: this.unpublished_data.date,
         board_name:
           this.BoardNameControler.value.length > 0
