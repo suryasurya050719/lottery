@@ -54,7 +54,7 @@ router.get("/preview", async (req, res) => {
       console.log("data", data[0].brd);
       PriceDetails = await data[0].brd;
     });
-  // console.log("boardname", board_name);
+  console.log("boardname", board_name);
   // console.log("PriceDetails", PriceDetails);
   booking
     .aggregate([
@@ -485,54 +485,54 @@ router.get("/Published", async (req, res) => {
         // console.log("data", data[0].brd);
         PriceDetails = await data[0].brd;
       });
-    // console.log("boardname", board_name);
+    console.log("boardname", board_name);
     // console.log("PriceDetails", PriceDetails);
     booking
-      .aggregate([
-        {
-          $match: {
-            // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
-            $and: [
-              { game_name: gameName },
-              { showTime: show },
-              {
-                created_on: {
-                  $gte: new Date(lessDate),
-                  $lte: new Date(graterDate),
-                },
+        .aggregate([
+      {
+        $match: {
+          // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
+          $and: [
+            { game_name: gameName },
+            { showTime: show },
+            {
+              created_on: {
+                $gte: new Date(lessDate),
+                $lte: new Date(graterDate),
               },
-            ],
-          },
+            },
+          ],
         },
-        {
-          $unwind: {
-            path: "$booking_data",
-            preserveNullAndEmptyArrays: true,
-          },
+      },
+      {
+        $unwind: {
+          path: "$booking_data",
+          preserveNullAndEmptyArrays: true,
         },
-        {
-          $match: board_name,
+      },
+      {
+        $match: board_name,
+      },
+      {
+        $group: {
+          _id: "$_id",
+          user_id: { $first: "$user_id" },
+          refered_user_id: { $first: "$refered_user_id" },
+          refered_role_id: { $first: "$refered_role_id" },
+          game_id: { $first: "$game_id" },
+          game_name: { $first: "$game_name" },
+          phone: { $first: "$phone" },
+          showTime: { $first: "$showTime" },
+          published_status: { $first: "$published_status" },
+          booking_id: { $first: "$booking_id" },
+          booking_data: { $push: "$booking_data" },
+          ticket_price: { $first: "$booking_data.ticket_price" },
+          totalTikect: { $sum: "$booking_data.ticket_count" },
+          total_price: { $sum: "$booking_data.total_price" },
+          created_on: { $first: "$created_on" },
         },
-        {
-          $group: {
-            _id: "$_id",
-            user_id: { $first: "$user_id" },
-            refered_user_id: { $first: "$refered_user_id" },
-            refered_role_id: { $first: "$refered_role_id" },
-            game_id: { $first: "$game_id" },
-            game_name: { $first: "$game_name" },
-            phone: { $first: "$phone" },
-            showTime: { $first: "$showTime" },
-            published_status: { $first: "$published_status" },
-            booking_id: { $first: "$booking_id" },
-            booking_data: { $push: "$booking_data" },
-            ticket_price: { $first: "$booking_data.ticket_price" },
-            totalTikect: { $sum: "$booking_data.ticket_count" },
-            total_price: { $sum: "$booking_data.total_price" },
-            created_on: { $first: "$created_on" },
-          },
-        },
-      ])
+      },
+    ])
       .then(async (data) => {
         console.log(" publis query data ===>", data);
         var total = [];
@@ -927,6 +927,54 @@ router.get("/unpublishedShow", async (req, res) => {
         { closeShowTime: { $lte: new Date() } },
         { date: { $lte: new Date().toISOString().split("T")[0] } },
       ],
+      // date:
+    };
+
+    console.log("unpublish filterdata===>", JSON.stringify(filterdata));
+    if (req.query.game_name !== "" || req.query.game_name !== null) {
+      filterdata["game_name"] = req.query.game_name;
+    }
+    publishStatus
+      .find(filterdata)
+      .then((data) => {
+        console.log("data", data);
+        res.json({
+          success: true,
+          data: data,
+          statuscode: 200,
+          status: "Board create successfully",
+        });
+      })
+      .catch((error) => {
+        res.json({
+          success: false,
+          statuscode: 202,
+          status: error,
+        });
+      });
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
+    });
+  }
+});
+
+router.get("/publishedShow", async (req, res) => {
+  try {
+    console.log("data", req.query.game_name);
+    let game_name = req.query.game_name;
+    console.log("new DAte", new Date());
+    let newDAte = new Date();
+    // let min = new Date().getMinutes();
+    // let hours = new Date().getHours();
+    // let closeTime = hours + ":" + min;
+    // console.log("Date-->", new Date().toISOString().split("T")[0]);
+    // console.log("closeTime-->", closeTime);
+
+    let filterdata = {
+      status: true,
       // date:
     };
 

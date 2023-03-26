@@ -27,6 +27,7 @@ import { PageGaurd } from '../guard/page_gaurd/pageGaurd';
 import { MyRequestComponent } from './components/my-request/my-request.component';
 import { MyRequestApprovedComponent } from './components/my-request-approved/my-request-approved.component';
 import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
+import { AllComponentComponent } from './components/all-component/all-component.component';
 
 const routes: Routes = [
   // No Layouts
@@ -135,6 +136,11 @@ const routes: Routes = [
       {
         path: 'user-review-view/:id',
         component: UserReviewViewComponent,
+        canActivate: [AuthGuardGuard],
+      },
+           {
+        path: 'all-notification',
+        component: AllComponentComponent,
         canActivate: [AuthGuardGuard],
       },
     ],

@@ -38,6 +38,7 @@ const Booking = require("./app_router/booking");
 const my_request = require("./app_router/my_request");
 const result = require("./app_router/lottery_result");
 const dropdown = require("./app_router/dropdown");
+const winning =require("./app_router/winning_report")
 app.use(express.json());
 app.use("/images", express.static("assets"));
 app.use("/user", user);
@@ -56,6 +57,7 @@ app.use("/booking", Booking);
 app.use("/myrequest", my_request);
 app.use("/lotery", result);
 app.use("/dropdown", dropdown);
+app.use("/winning", winning);
 
 app.listen(4001, () => {
   console.log("server connected in 4001");

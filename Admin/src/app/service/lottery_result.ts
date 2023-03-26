@@ -20,7 +20,7 @@ export class LotteryResult {
       })
     );
   }
-  
+
   Published(data: any): Observable<any> {
     // console.log('filterdata service', filterdata);
     // let data = filterdata;
@@ -38,6 +38,20 @@ export class LotteryResult {
       game_name: game_name,
     };
     let url = `${environment.apiurl}/lotery/unpublishedShow`;
+    return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  publishedStatus(game_name: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    // let data = filterdata;
+    let data = {
+      game_name: game_name,
+    };
+    let url = `${environment.apiurl}/lotery/publishedShow`;
     return this.http.get(url, { params: data }).pipe(
       map((data) => {
         return data;

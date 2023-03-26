@@ -39,6 +39,8 @@ import { BookingReviewComponent } from './components/booking-review/booking-revi
 import { MatSelectModule } from '@angular/material/select';
 import {LotteryResultComponent} from '../app/components/lottery-result/lottery-result.component'
 import {MatIconModule} from '@angular/material/icon';
+import {WinningReportComponent} from './components/winning-report/winning-report.component';
+import { AllComponentComponent } from './components/all-component/all-component.component';
 // import {MyRequestComponent} from "./components/my-request/my-request.component"
 // import { UiSwitchModule } from 'ngx-toggle-switch';
 
@@ -72,6 +74,8 @@ import {MatIconModule} from '@angular/material/icon';
     CustomerCareAddComponent,
     CountdownPipe,
     DashboardComponent,
+    WinningReportComponent,
+    AllComponentComponent,
     // UiSwitchModule,
     // ColorPickerModule,
     // NgxPaginationModule,

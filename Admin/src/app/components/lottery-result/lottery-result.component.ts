@@ -257,17 +257,24 @@ export class LotteryResultComponent implements OnInit {
     (this.previewPaggination = false), (this.publishedPaggination = true);
     const isEmpty = Object.values(this.result_numerick).every((x) => x !== '');
     const data = Object.values(this.result_numerick);
+    const arr = Object.entries(this.result_numerick).map(([key, value]) => ({
+      key,
+      value,
+    }));
+    this.AdminEnteredShowNumber = arr;
+    console.log('this.result_numerick', arr);
     console.log('data', data);
     console.log('isempty', isEmpty);
     if (isEmpty) {
-      console.log(
-        'this.unpublished_data.game_name',
-        this.unpublished_data.game_name
-      );
+        console.log('this.unpublished_data.game_name', this.unpublished_data);
+      let time =new Date(this.unpublished_data.showTime)
+             time.setUTCHours(time.getUTCHours() - 5);
+        time.setUTCMinutes(time.getUTCMinutes() - 30);
+        // element['showTime'] = await time.toUTCString();
       let prepareData = {
         resultData: data,
         game_name: this.unpublished_data.game_name,
-        show: this.unpublished_data.showTime,
+        show: time.toISOString(),
         date: this.unpublished_data.date,
         unpublished_id: this.unpublished_data._id,
         board_name:
