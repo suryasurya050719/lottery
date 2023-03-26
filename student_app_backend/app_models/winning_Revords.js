@@ -6,6 +6,18 @@ const Schema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  game_name:{
+    type:String
+  },
+  winning_number:{
+    type:Array
+  },
+  board_details:{
+    type:Array
+  },
+  show_details:{
+    type:Date
+  },
   overall_ticket: {
     type: Number,
   },

@@ -16,6 +16,36 @@
       <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1">
         <div class="col-lg-3">
           <div class="form-group">
+            <label> Choose Type </label>
+            <select name="" id="" class="form-control" [(ngModel)]="searchType">
+              <option value="1">Select</option>
+              <option value="2">Today</option>
+              <option value="3">History</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3" *ngIf="searchType == '3'">
+          <div class="form-group">
+            <label> Date from </label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="fromDate"
+            />
+          </div>
+        </div>
+        <div class="col-lg-3" *ngIf="searchType == '3'">
+          <div class="form-group">
+            <label> Date to </label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="toDate"
+            />
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
             <label> Game Name </label>
             <select
               name=""
@@ -61,7 +91,7 @@
           <button
             type="submit"
             class="btn btn-primary w-100 btn_input btn-ripple"
-            (click)="searchData()"
+            (click)="winningRecordes()"
           >
             Search
           </button>
@@ -92,21 +122,23 @@
               <table class="table no-margin td-middle">
                 <thead>
                   <tr>
-                    <th>Lottery Name</th>
-                    <th>Board</th>
-                    <th>Broker Id</th>
-                    <th>Broker Name</th>
-                    <th>Broker Phone No</th>
-                    <th>Total Ticket Booked</th>
-                    <th>Total Amount</th>
-                    <th>Total Price Amount</th>
-                    <th>Income</th>
+                    <th>Game Details</th>
+                    <th>Winning Number</th>
+                    <th>Board Details</th>
+                    <th>Show Details</th>
+                    <th>Total Tickets</th>
+                    <th>Total Collection</th>
+                    <th>Total Commission Detect</th>
+                    <th>Net Amount</th>
+                    <th>Winning Price Total</th>
+                    <th>Game Status</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Kerala Lottery</td>
+                    <td>hgv</td>
                     <td>1 Board</td>
                     <td>BJCBJ01</td>
                     <td>sample</td>
@@ -218,7 +250,7 @@
             </div>
           </div>
 
-          <nav class="Page navigation text-center pt-3 pb-3">
+          <!-- <nav class="Page navigation text-center pt-3 pb-3">
             <ul
               class="pagination justify-content-center d-flex align-items-center"
             >
@@ -238,7 +270,7 @@
                 </a>
               </li>
             </ul>
-          </nav>
+          </nav> -->
         </div>
       </div>
     </div>
