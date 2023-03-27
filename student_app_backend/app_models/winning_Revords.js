@@ -12,13 +12,14 @@ const Schema = mongoose.Schema({
   winning_number:{
     type:Array
   },
+  winning_number_letters:Object,
   board_details:{
     type:Array
   },
   show_details:{
     type:Date
   },
-  overall_ticket: {
+  overallTicket: {
     type: Number,
   },
   overallTicetprice: {

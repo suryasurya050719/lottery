@@ -894,6 +894,8 @@ router.get("/Published", async (req, res) => {
 
         let results = {};
         let bookingdata = await BookingUpdate(data);
+        console.log("req.query.winning_number_letters",JSON.parse(req.query.winning_number_letters))
+        results["winning_number_letters"]=JSON.parse(req.query.winning_number_letters)
         results["winning_number"] = data_num;
         results["game_name"] = gameName;
         results["data"] = bookingdata;

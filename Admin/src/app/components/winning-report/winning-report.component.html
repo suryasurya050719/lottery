@@ -16,7 +16,7 @@
       <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1">
         <div class="col-lg-3">
           <div class="form-group">
-            <label> Choose Type </label>
+            <label>Choose Type</label>
             <select name="" id="" class="form-control" [(ngModel)]="searchType">
               <option value="1">Select</option>
               <option value="2">Today</option>
@@ -26,7 +26,7 @@
         </div>
         <div class="col-lg-3" *ngIf="searchType == '3'">
           <div class="form-group">
-            <label> Date from </label>
+            <label>Date from</label>
             <input
               type="datetime-local"
               class="form-control"
@@ -36,7 +36,7 @@
         </div>
         <div class="col-lg-3" *ngIf="searchType == '3'">
           <div class="form-group">
-            <label> Date to </label>
+            <label>Date to</label>
             <input
               type="datetime-local"
               class="form-control"
@@ -46,7 +46,7 @@
         </div>
         <div class="col-lg-3">
           <div class="form-group">
-            <label> Game Name </label>
+            <label>Game Name</label>
             <select
               name=""
               id=""
@@ -67,7 +67,7 @@
         </div>
         <div class="col-lg-3">
           <div class="form-group">
-            <label>Unpublished Games </label>
+            <label>Unpublished Games</label>
             <select
               name=""
               id=""
@@ -137,61 +137,78 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Kerala Lottery</td>
-                    <td>hgv</td>
+                    <td>{{ winningRecords.game_name }}</td>
+                    <td>
+                      <div *ngFor="let num of winning_number_letters">
+                        {{ num.key }}:{{ num.value }}
+                      </div>
+                    </td>
                     <td>1 Board</td>
-                    <td>BJCBJ01</td>
-                    <td>sample</td>
-                    <td>898454556</td>
-                    <td>1111545</td>
-                    <td>
-                      <div
-                        class="input-group"
-                        style="width: 150px; margin: 0 auto"
-                      >
-                        <span class="input-group-addon">RS</span>
-                        <input
-                          type="text"
-                          class="form-control"
-                          value="1,25,610"
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div
-                        class="input-group"
-                        style="width: 150px; margin: 0 auto"
-                      >
-                        <span class="input-group-addon">RS</span>
-                        <input
-                          type="text"
-                          class="form-control"
-                          value="1,25,610"
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div
-                        class="input-group"
-                        style="width: 150px; margin: 0 auto"
-                      >
-                        <span class="input-group-addon">RS</span>
-                        <input
-                          type="text"
-                          class="form-control"
-                          value="1,25,610"
-                        />
-                      </div>
+                    <td>{{ winningRecords.show_details }}</td>
+                    <td>{{ totalTickets }}</td>
 
-                      <span class="badge bg-primary blink_txt mb-2">Profit</span
-                      ><br />
-
-                      <span class="badge bg-primary blink_txt mb-2">Loss</span>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto;"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [value]="totalCollection"
+                        />
+                      </div>
                     </td>
                     <td>
-                      <button class="btn btn-sm">Unpublish</button>
-                      <br />
-                      12 jun 2022 05:00PM
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto;"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [value]="totalcomissiondetect"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto;"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [value]="netAmount"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        class="input-group"
+                        style="width: 150px; margin: 0 auto;"
+                      >
+                        <span class="input-group-addon">RS</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [value]="winingPrice"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div>{{ totalIncome }}</div>
+                      <span class="badge bg-primary blink_txt mb-2">
+                        {{ gameStatus }}
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge bg-primary blink_txt mb-2">
+                        {{ status }}
+                      </span>
                     </td>
                   </tr>
                 </tbody>
@@ -210,25 +227,47 @@
               <table class="table no-margin">
                 <thead>
                   <tr>
-                    <th>Booking Id</th>
-                    <th>User Id</th>
-                    <th>Referral Id</th>
-                    <th>Date & Time</th>
+                    <th>User Type</th>
+                    <th>Booking id</th>
+                    <th>User id</th>
+                    <th>Referral id</th>
+                    <th>Date and Time</th>
                     <th>Details</th>
-                    <th>Amount</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>sample</td>
-                    <td>12 jun 2021</td>
+                  <tr
+                    *ngFor="
+                      let data of winningRecords.booking_data;
+                      let i = index
+                    "
+                  >
+                    <td>Coustomer</td>
+                    <td>BJCD BK{{ data.booking_id }}</td>
+                    <td>BJCD C{{ data.user_id }}</td>
                     <td>
-                      <button class="btn btn-primary btn-sm">View</button>
+                      {{
+                        data.refered_role_id == 1
+                          ? 'BJCD A'
+                          : data.refered_role_id == 2
+                          ? 'BJCD B'
+                          : 'BJCD C'
+                      }}
+                      {{ data.refered_user_id }}
                     </td>
                     <td>
+                      {{ data.created_on | date: 'dd MMM yyyy HH:mm' }}
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="ViewMorePopup2(i)"
+                      >
+                        View
+                      </button>
+                    </td>
+                    <!-- <td>
                       <div
                         class="input-group"
                         style="width: 150px; margin: 0 auto"
@@ -236,13 +275,22 @@
                         <span class="input-group-addon">RS</span>
                         <input type="text" class="form-control" />
                       </div>
-                    </td>
+                    </td> -->
                     <td>
-                      <span class="badge bg-primary blink_txt mb-2"
-                        >In progress</span
-                      >
+                      <span class="badge bg-primary blink_txt mb-2">
+                        {{
+                          data.published_status == true
+                            ? 'Published'
+                            : 'Unpublished'
+                        }}
+                      </span>
                       <br />
-                      <button class="btn btn-primary btn-sm">View</button>
+                      <!-- <button
+                        class="btn btn-primary btn-sm"
+                        (click)="ViewMorePopup3()"
+                      >
+                        View
+                      </button> -->
                     </td>
                   </tr>
                 </tbody>
@@ -277,3 +325,164 @@
   </div>
 </div>
 <!-- Container fluid ends -->
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel2">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup2()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>Game Details</th>
+                <th>Show Details</th>
+                <th>Board Details</th>
+                <th>Total Amount</th>
+                <th>Winning Number</th>
+                <th>Winning Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ activrBookingData.game_name }}</td>
+                <td>{{ activrBookingData.showTime }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="ViewMorePopup4()"
+                  >
+                    View
+                  </button>
+                </td>
+                <td>{{ activrBookingData.total_price }}</td>
+                <td>
+                 <div *ngFor="let num of winning_number_letters">
+                    {{ num.key }}:{{ num.value }}
+                  </div>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="ViewMorePopup5()"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel4">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup4()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>S.no</th>
+                <th>Board</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let data of activrBookingData.winning_data;
+                  let i = index
+                "
+              >
+                <td>
+                  <div *ngFor="let val of data.board_letter_formation">
+                    {{ val }}
+                  </div>
+                </td>
+                <td>{{ data.board_name }}</td>
+                <td>
+                  <div *ngFor="let val of data.show_result_number">
+                    {{ val }}
+                  </div>
+                </td>
+                <td>{{ data.ticket_count }}</td>
+
+                <td>
+                  {{ data.total_price }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel5">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper w-75 position-relative">
+      <span class="popup_close" (click)="CloseMoreViewPopup5()">x</span>
+      <div class="form_pop_he p-3">
+        <div class="table-responsive">
+          <table class="table no-margin text-center">
+            <thead>
+              <tr>
+                <th>S.no</th>
+                <th>Board</th>
+                <th>Ticket no</th>
+                <th>Quantity</th>
+                <th>Winning no</th>
+                <th>Board Letter</th>
+                <th>Winning amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let data of activrBookingData.winning_data;
+                  let i = index
+                "
+              >
+                <td>{{ data.ticket_number }}</td>
+                <td>{{ data.board_name }}</td>
+                <td>
+                  <div *ngFor="let num of data.show_result_number">
+                    {{ num }}
+                  </div>
+                </td>
+                <td>{{ data.ticket_count }}</td>
+                <td>
+                  <div *ngFor="let num of winning_number_letters">
+                    {{ num.key }}:{{ num.value }}
+                  </div>
+                </td>
+                <td>
+                  <div *ngFor="let num of data.board_letter_formation">
+                    {{ num }}
+                  </div>
+                </td>
+                <td>
+                  {{ data.lottery_price }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

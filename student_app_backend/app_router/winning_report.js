@@ -206,6 +206,7 @@ router.get('/AdminWinningResult', async (req, res) => {
             element["winning_data"] = await winningData;
             delete element.booking_data;
             if (data.length  == i+1) {
+              console.log("JSON.Stringy",JSON.stringify(data))
               res.json({
                 success: true,
                 data: data,
