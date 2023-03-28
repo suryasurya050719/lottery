@@ -114,7 +114,7 @@ router.get("/preview", async (req, res) => {
             {
               $match: {
                 // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
-                $and: [{ game_name: gameName }, { showTime: new Date(show) }],
+                $and: [{ game_name: gameName }, {showTime:new Date(show) },],
               },
             },
             {
