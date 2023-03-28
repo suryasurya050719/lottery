@@ -126,7 +126,10 @@ export class BookingReviewComponent implements OnInit {
     //   : i + this.bookingDataConfid.itemsPerPage;
     console.log('index<<<<<', indexCount, overAllCount, i);
     console.log('index>>>>>', index);
-    this.viewmorepopupdata = this.BookingListdata[index];
+    console.log("BookingListdata",this.BookingListdata)
+    this.viewmorepopupdata = this.BookingListdata[i];
+
+    console.log(" this.viewmorepopupdata ", this.viewmorepopupdata )
 
     this.ViewMorePopupPanel = !this.ViewMorePopupPanel;
   }

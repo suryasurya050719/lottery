@@ -57,22 +57,22 @@ router.get("/preview", async (req, res) => {
       });
     console.log("boardname", board_name);
     // console.log("PriceDetails", PriceDetails);
-    console.log("gameName",gameName,String(show),lessDate,graterDate)
+    console.log("gameName",gameName,new Date(show),lessDate,graterDate)
     await booking
       .aggregate([
         {
           $match: {
             // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
-            // $and: [
-               game_name: gameName ,
-               showTime:show ,
-              // {
+            $and: [
+               {game_name: gameName },
+               {showTime:new Date(show) },
+              {
                 created_on: {
                   $gte: lessDate,
                   $lte: graterDate,
                 },
-              // },
-            // ],
+              },
+            ],
           },
         },
         {
@@ -81,28 +81,28 @@ router.get("/preview", async (req, res) => {
             preserveNullAndEmptyArrays: true,
           },
         },
-        // {
-        //   $match: board_name,
-        // },
-        // {
-        //   $group: {
-        //     _id: "$_id",
-        //     user_id: { $first: "$user_id" },
-        //     refered_user_id: { $first: "$refered_user_id" },
-        //     refered_role_id: { $first: "$refered_role_id" },
-        //     game_id: { $first: "$game_id" },
-        //     game_name: { $first: "$game_name" },
-        //     phone: { $first: "$phone" },
-        //     showTime: { $first: "$showTime" },
-        //     published_status: { $first: "$published_status" },
-        //     booking_id: { $first: "$booking_id" },
-        //     booking_data: { $push: "$booking_data" },
-        //     ticket_price: { $first: "$booking_data.ticket_price" },
-        //     totalTikect: { $sum: "$booking_data.ticket_count" },
-        //     total_price: { $sum: "$booking_data.total_price" },
-        //     created_on: { $first: "$created_on" },
-        //   },
-        // },
+        {
+          $match: board_name,
+        },
+        {
+          $group: {
+            _id: "$_id",
+            user_id: { $first: "$user_id" },
+            refered_user_id: { $first: "$refered_user_id" },
+            refered_role_id: { $first: "$refered_role_id" },
+            game_id: { $first: "$game_id" },
+            game_name: { $first: "$game_name" },
+            phone: { $first: "$phone" },
+            showTime: { $first: "$showTime" },
+            published_status: { $first: "$published_status" },
+            booking_id: { $first: "$booking_id" },
+            booking_data: { $push: "$booking_data" },
+            ticket_price: { $first: "$booking_data.ticket_price" },
+            totalTikect: { $sum: "$booking_data.ticket_count" },
+            total_price: { $sum: "$booking_data.total_price" },
+            created_on: { $first: "$created_on" },
+          },
+        },
       ])
       .then(async (data) => {
         console.log("booking data", data);
@@ -114,7 +114,7 @@ router.get("/preview", async (req, res) => {
             {
               $match: {
                 // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
-                $and: [{ game_name: gameName }, { showTime: show }],
+                $and: [{ game_name: gameName }, { showTime: new Date(show) }],
               },
             },
             {
@@ -523,7 +523,7 @@ router.get("/Published", async (req, res) => {
             // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
             $and: [
               { game_name: gameName },
-              { showTime: show },
+              { showTime: new Date(show) },
               {
                 created_on: {
                   $gte: new Date(lessDate),
@@ -572,7 +572,7 @@ router.get("/Published", async (req, res) => {
             {
               $match: {
                 // _id:mongoose.Types.ObjectId('6398a1ed77aa1806cf8851a5'),
-                $and: [{ game_name: gameName }, { showTime: show }],
+                $and: [{ game_name: gameName }, { showTime: new Date(show) }],
               },
             },
             {

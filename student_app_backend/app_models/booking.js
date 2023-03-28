@@ -29,8 +29,8 @@ const creatSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  showTime: String,
-  closeShowTime: String,
+  showTime: Date,
+  closeShowTime: Date,
   booking_data: [
     {
       board_name: String,

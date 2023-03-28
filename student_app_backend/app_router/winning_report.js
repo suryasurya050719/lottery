@@ -155,7 +155,7 @@ router.get('/AdminWinningResult', async (req, res) => {
       req.query.showTime !== null ||
       req.query.showTime !== undefined
     ) {
-      prepareData['show_date'] = req.query.showTime
+      prepareData['show_date'] = new Date(req.query.showTime)
     } else {
       res.json({
         success: false,
@@ -166,7 +166,7 @@ router.get('/AdminWinningResult', async (req, res) => {
     }
     console.log(
       'fgdfg',
-      { show_details: new Date(prepareData.show_date) },
+      { show_details: prepareData.show_date },
       {
         game_name: req.query.game_name,
       },
@@ -176,7 +176,7 @@ router.get('/AdminWinningResult', async (req, res) => {
         {
           $match: {
             $and: [
-              { show_details: new Date(prepareData.show_date) },
+              { show_details: prepareData.show_date },
               {
                 game_name: req.query.game_name,
               },
@@ -190,42 +190,44 @@ router.get('/AdminWinningResult', async (req, res) => {
         },
       ])
       .then(async (data) => {
-        console.log("data.length",data.length)
+        console.log('data.length', data.length)
         // if (data.length > 0) {
-          let winningData = [];
-          for (let i = 0; i < data[0].wining_booking.length ; i++) {
-            console.log("i and length",i, data.length)
-            const element = data[0].wining_booking[i];
-            console.log("element",element)
-            await element.booking_data.forEach(async(props) => {
-                console.log("props",props)
-              if (props.lottery_price !== 0) {
-               await winningData.push(props);
-              }
-            });
-            element["winning_data"] = await winningData;
-            delete element.booking_data;
-            if (data.length  == i+1) {
-              console.log("JSON.Stringy",JSON.stringify(data))
-              res.json({
-                success: true,
-                data: data,
-                statuscode: 400,
-                status: "list generated",
-              });
+        for (let i = 0; i < data[0].wining_booking.length; i++) {
+           let winningData = []
+          console.log('i and length', i, data.length)
+          const element = data[0].wining_booking[i]
+          // console.log('element', element)
+          await element.booking_data.forEach(async (props) => {
+            // console.log('props', props)
+            if (props.lottery_price !== 0) {
+              await winningData.push(props)
             }
+          })
+          element['winning_data'] =  winningData
+          delete element.booking_data
+
+          console.log("element>>>>>>>>>",element)
+          if (data[0].wining_booking.length == i + 1) {
+            console.log('JSON.Stringy', JSON.stringify(data))
+            res.json({
+              success: true,
+              data: data,
+              statuscode: 400,
+              status: 'list generated',
+            })
           }
+        }
         // } else {
-          // res.json({
-          //   success: false,
-          //   data: {},
-          //   statuscode: 400,
-          //   status: "No Data Found",
-          // });
+        // res.json({
+        //   success: false,
+        //   data: {},
+        //   statuscode: 400,
+        //   status: "No Data Found",
+        // });
         // }
       })
       .catch((error) => {
-        console.log("error",error)
+        console.log('error', error)
         res.json({
           success: false,
           data: error,
@@ -234,7 +236,7 @@ router.get('/AdminWinningResult', async (req, res) => {
         })
       })
   } catch (error) {
-     console.log("error",error)
+    console.log('error', error)
     res.json({
       success: false,
       data: error,
