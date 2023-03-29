@@ -298,10 +298,10 @@
                           type="text"
                           class="form-control"
                           [style.color]="
-                            user.position == 'ADD' ? 'black' : 'red !important'
+                            user.position == 'ADD'|| user.position=='INC' ? 'black' : 'red !important'
                           "
                           value="{{
-                            user.position == 'ADD'
+                            user.position == 'ADD'|| user.position=='INC'
                               ? user.amount
                               : '-' + user.amount
                           }}"

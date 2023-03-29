@@ -28,6 +28,9 @@ router.post('/bookingCreate', async (req, res) => {
             Number(data.total_price),
           )
           console.log('wallet', walletprice)
+          // let formatDate=new Date()
+          // formatDate.setHours(formatDate.getHours+5)
+          // formatDate.setMinutes(formatDate.setMinutes+30)
           let date = ISOtoLOCALDATE(new Date())
           console.log('date', date)
           console.log('new Date(date)', new Date(date))
@@ -80,6 +83,7 @@ router.post('/bookingCreate', async (req, res) => {
                   closeShowTime: preparedata.closeShowTime,
                   status: false,
                   date: date,
+                  created_on:formattedDate
                 }
                 // console.log("prepare data", prepare);
                 let published = new publishStatus(prepare)
@@ -233,6 +237,11 @@ router.get('/getall', async (req, res) => {
           created_on: 1,
           booking_id: 1,
           referalList: 1,
+        },
+      },
+      {
+        $sort: {
+          created_on: -1,
         },
       },
     ]
@@ -411,7 +420,7 @@ router.get('/bookingList', async (req, res) => {
           user_id: 1,
           refered_user_id: 1,
           refered_role_id: 1,
-          created_on: 1,
+          created_on: '$bookings.created_on',
           referal_id: 1,
           user: 1,
           bookings: {
@@ -438,6 +447,11 @@ router.get('/bookingList', async (req, res) => {
             created_on: 1,
             booking_id: 1,
           },
+        },
+      },
+      {
+        $sort: {
+          created_on: -1,
         },
       },
     ]
