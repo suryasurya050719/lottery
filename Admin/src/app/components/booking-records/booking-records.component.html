@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="form-group">
-            <label> Choose Type </label>
+            <label>Choose Type</label>
             <select name="" id="" class="form-control" [(ngModel)]="searchType">
               <option value="1">Select</option>
               <option value="2">Today</option>
@@ -38,7 +38,7 @@
         </div> -->
         <div class="col-lg-3" *ngIf="searchType == '3'">
           <div class="form-group">
-            <label> Date From </label>
+            <label>Date From</label>
             <input
               type="datetime-local"
               class="form-control"
@@ -48,7 +48,7 @@
         </div>
         <div class="col-lg-3" *ngIf="searchType == '3'">
           <div class="form-group">
-            <label> Date To </label>
+            <label>Date To</label>
             <input
               type="datetime-local"
               class="form-control"
@@ -58,7 +58,7 @@
         </div>
         <div class="col">
           <div class="form-group">
-            <label> Choose User </label>
+            <label>Choose User</label>
             <select name="" id="" class="form-control" [(ngModel)]="user_type">
               <option value="">Select</option>
               <option value="1">Admin Referral</option>
@@ -72,7 +72,7 @@
           *ngIf="user_type == '1' || user_type == '2' || user_type == '3'"
         >
           <div class="form-group">
-            <label>Refered User Id </label>
+            <label>Refered User Id</label>
             <input
               type="text"
               class="form-control"
@@ -82,7 +82,7 @@
         </div>
         <div class="col-lg-3">
           <div class="form-group">
-            <label> Game Type </label>
+            <label>Game Type</label>
             <select
               name=""
               id=""
@@ -101,7 +101,7 @@
             </select>
           </div>
         </div>
-        <div class="col-lg-2" style="margin-top: -12px">
+        <div class="col-lg-2" style="margin-top: -12px;">
           <h4>Show time</h4>
           <!-- <mat-form-field
             appearance="fill"
@@ -128,7 +128,7 @@
           </mat-select>
           <!-- </mat-form-field> -->
         </div>
-        <div class="col-lg-2" style="margin-top: -12px">
+        <div class="col-lg-2" style="margin-top: -12px;">
           <h4>Board Name</h4>
           <!-- <mat-form-field
             appearance="fill"
@@ -185,8 +185,9 @@
                       off: advanceSearch == false,
                       on: advanceSearch == true
                     }"
-                    >{{ advanceSearch ? "ON" : "Off" }}</span
                   >
+                    {{ advanceSearch ? 'ON' : 'Off' }}
+                  </span>
                 </span>
               </label>
             </div>
@@ -196,13 +197,13 @@
           <div class="row" *ngIf="this.advanceSearch == true">
             <div class="col-lg-3">
               <div class="form-group">
-                <label> Enter Customer id </label>
+                <label>Enter Customer id</label>
                 <input type="text" class="form-control" [(ngModel)]="user_id" />
               </div>
             </div>
             <div class="col-lg-3">
               <div class="form-group">
-                <label> Enter Phone Number </label>
+                <label>Enter Phone Number</label>
                 <input type="text" class="form-control" [(ngModel)]="phone" />
               </div>
             </div>
@@ -251,31 +252,31 @@
                         class="form-control"
                       /> -->
                       {{
-                        searchType == "2"
-                          ? (newDate | date : "dd/MM/yyyy HH:mm")
-                          : ""
+                        searchType == '2'
+                          ? (newDate | date: 'dd/MM/yyyy HH:mm')
+                          : ''
                       }}
                       {{
-                        searchType == "3"
-                          ? (fromDate | date : "dd/MM/yyyy HH:mm")
-                          : ""
+                        searchType == '3'
+                          ? (fromDate | date: 'dd/MM/yyyy HH:mm')
+                          : ''
                       }}
-                      {{ searchType == "3" ? "to" : "" }}
+                      {{ searchType == '3' ? 'to' : '' }}
                       {{
-                        searchType == "3"
-                          ? (toDate | date : "dd/MM/yyyy HH:mm")
-                          : ""
+                        searchType == '3'
+                          ? (toDate | date: 'dd/MM/yyyy HH:mm')
+                          : ''
                       }}
                     </td>
                     <td>
-                      {{ GameName !== "" ? GameName : "All" }}
+                      {{ GameName !== '' ? GameName : 'All' }}
                     </td>
                     <td>{{ BoardNameControler.value }}</td>
                     <td>{{ this.pokemonControl.value }}</td>
                     <td>
                       <div
                         class="input-group"
-                        style="width: 150px; margin: 0 auto"
+                        style="width: 150px; margin: 0 auto;"
                       >
                         <span class="input-group-addon">RS</span>
                         <input
@@ -287,15 +288,15 @@
                     </td>
                     <td>
                       <div class="active_chk dark_switch d-inline-block m-auto">
-                        <span class="badge bg-primary blink_txt mb-2">{{
-                          this.advanceSearch == true ? "ON" : "OFF"
-                        }}</span>
+                        <span class="badge bg-primary blink_txt mb-2">
+                          {{ this.advanceSearch == true ? 'ON' : 'OFF' }}
+                        </span>
                       </div>
                       <div class="d-block">
                         {{
                           this.advanceSearch == true
-                            ? "User Id will disaplay"
-                            : ""
+                            ? 'User Id will disaplay'
+                            : ''
                         }}
                       </div>
                       <button
@@ -325,10 +326,10 @@
                     <th>
                       {{
                         user_type == 1
-                          ? "Admin id"
+                          ? 'Admin id'
                           : user_type == 2
-                          ? "Broker id"
-                          : "customer id"
+                          ? 'Broker id'
+                          : 'customer id'
                       }}
                     </th>
                     <th>Booking id</th>
@@ -342,7 +343,7 @@
                 <tbody>
                   <tr
                     *ngFor="
-                      let data of BookingListdata | paginate : config;
+                      let data of BookingListdata | paginate: config;
                       let i = index
                     "
                   >
@@ -352,14 +353,14 @@
                     <td>
                       {{
                         data.refered_role_id == 1
-                          ? "BJCD A"
+                          ? 'BJCD A'
                           : data.refered_role_id == 2
-                          ? "BJCD B"
-                          : "BJCD c"
+                          ? 'BJCD B'
+                          : 'BJCD c'
                       }}{{ data.refered_user_id }}
                     </td>
                     <td>
-                      {{ data.bookings.created_on | date : "dd/MM/yyyy HH:mm" }}
+                      {{ data.bookings.created_on | date: 'dd/MM/yyyy HH:mm' }}
                     </td>
                     <td>
                       <button
@@ -370,9 +371,9 @@
                       </button>
                     </td>
                     <td>
-                      <span class="badge bg-primary blink_txt mb-2"
-                        >In progress</span
-                      >
+                      <span class="badge bg-primary blink_txt mb-2">
+                        In progress
+                      </span>
                       <br />
                       <button
                         class="btn btn-primary btn-sm"
@@ -424,7 +425,10 @@
                 <td>{{ data.totalTikect }}</td>
 
                 <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                  <div
+                    class="input-group"
+                    style="width: 150px; margin: 0 auto;"
+                  >
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -434,13 +438,19 @@
                   </div>
                 </td>
                 <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                  <div
+                    class="input-group"
+                    style="width: 150px; margin: 0 auto;"
+                  >
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
                 </td>
                 <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                  <div
+                    class="input-group"
+                    style="width: 150px; margin: 0 auto;"
+                  >
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -472,6 +482,7 @@
                 <th>Game Details</th>
                 <th>Board Details</th>
                 <th>Ticket no</th>
+                <th>Letters</th>
                 <th>Quantity</th>
                 <th>Ticket price</th>
                 <th>Total Amount</th>
@@ -487,11 +498,23 @@
               >
                 <td>{{ data.game_name }}</td>
                 <td>{{ data.board_name }}</td>
-                <td>{{ data.ticket_number }}</td>
+                <td>
+                  <div *ngFor="let show of data.show_result_number">
+                    {{ show }}
+                  </div>
+                </td>
+                <td>
+                  <div *ngFor="let show of data.board_letter_formation">
+                    {{ show }}
+                  </div>
+                </td>
                 <td>{{ data.ticket_count }}</td>
 
                 <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                  <div
+                    class="input-group"
+                    style="width: 150px; margin: 0 auto;"
+                  >
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -501,7 +524,10 @@
                   </div>
                 </td>
                 <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                  <div
+                    class="input-group"
+                    style="width: 150px; margin: 0 auto;"
+                  >
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -557,7 +583,10 @@
                 <td>{{ data.ticket_count }}</td>
 
                 <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                  <div
+                    class="input-group"
+                    style="width: 150px; margin: 0 auto;"
+                  >
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -572,7 +601,10 @@
                 </td>
                 <td>sample</td>
                 <td>
-                  <div class="input-group" style="width: 150px; margin: 0 auto">
+                  <div
+                    class="input-group"
+                    style="width: 150px; margin: 0 auto;"
+                  >
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
@@ -604,16 +636,16 @@
             <tbody>
               <tr>
                 <td>
-                  <span class="badge bg-primary blink_txt mb-2"
-                    >In progress</span
-                  >
+                  <span class="badge bg-primary blink_txt mb-2">
+                    In progress
+                  </span>
                   <br />
                   <button class="btn btn-primary btn-sm">View</button>
                 </td>
                 <td>
-                  <span class="badge bg-primary blink_txt mb-2"
-                    >In progress</span
-                  >
+                  <span class="badge bg-primary blink_txt mb-2">
+                    In progress
+                  </span>
                   <br />
                   <button class="btn btn-primary btn-sm">View</button>
                 </td>

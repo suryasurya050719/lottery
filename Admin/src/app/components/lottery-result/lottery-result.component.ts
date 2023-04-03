@@ -225,6 +225,7 @@ export class LotteryResultComponent implements OnInit {
       // element['showTime'] = await time.toUTCString();
       let prepareData = {
         resultData: data,
+        winning_number_letters: JSON.stringify(this.result_numerick),
         game_name: this.unpublished_data.game_name,
         show: time.toISOString(),
         date: this.unpublished_data.date,
@@ -272,7 +273,7 @@ export class LotteryResultComponent implements OnInit {
       time.setUTCMinutes(time.getUTCMinutes() - 30)
       // element['showTime'] = await time.toUTCString();
       let prepareData = {
-        winning_number_letters:JSON.stringify(this.result_numerick),
+        winning_number_letters: JSON.stringify(this.result_numerick),
         resultData: data,
         game_name: this.unpublished_data.game_name,
         show: time.toISOString(),

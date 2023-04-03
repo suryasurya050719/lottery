@@ -15,8 +15,9 @@ const { query } = require('express')
 
 router.get('/preview', async (req, res) => {
   try {
-    console.log('jdfsdjkf', req.query)
+    // console.log('jdfsdjkf', req.query)
     let data_num = req.query.resultData
+    let winning_numbers=req.query.winning_number_letters
     let date = req.query.date
     let show = req.query.show
     let gameName = req.query.game_name
@@ -25,7 +26,7 @@ router.get('/preview', async (req, res) => {
     var PriceDetails = []
     graterDate.setHours(graterDate.getHours() + 23)
     graterDate.setMinutes(graterDate.getMinutes() + 59)
-    console.log('newDate', lessDate, graterDate)
+    // console.log('newDate', lessDate, graterDate)
     let board_name = {}
     if (req.query.board_name.length > 0) {
       board_name['booking_data.board_name'] = {
@@ -52,12 +53,12 @@ router.get('/preview', async (req, res) => {
         },
       ])
       .then(async (data) => {
-        console.log('data', data[0].brd)
+        // console.log('data', data[0].brd)
         PriceDetails = await data[0].brd
       })
-    console.log('boardname', board_name)
+    // console.log('boardname', board_name)
     // console.log("PriceDetails", PriceDetails);
-    console.log('gameName', gameName, new Date(show), lessDate, graterDate)
+    // console.log('gameName', gameName, new Date(show), lessDate, graterDate)
     await booking
       .aggregate([
         {
@@ -105,7 +106,7 @@ router.get('/preview', async (req, res) => {
         },
       ])
       .then(async (data) => {
-        console.log('booking data', data)
+        // console.log('booking data', data)
         var total = []
         var total_price = 0
         var total_refered_comission = 0
@@ -132,7 +133,7 @@ router.get('/preview', async (req, res) => {
             },
           ])
           .then(async (result) => {
-            console.log('result for totalcount===>', result)
+            // console.log('result for totalcount===>', result)
             total = result
           })
           .catch((error) => {
@@ -143,13 +144,13 @@ router.get('/preview', async (req, res) => {
               status: error,
             })
           })
-        console.log('data.length==>', data.length)
+        // console.log('data.length==>', data.length)
         for (let index = 0; index < data.length; index++) {
           let data1 = data[index]
           let userprice = 0
           await data1.booking_data.forEach(async (data2) => {
             var price = 0
-            console.log('data2', data2)
+            // console.log('data2', data2)
             if (data2.board_name == config.one_digit) {
               let boardDetails = await PriceDetails.find(
                 (data) => data.board_name == data2.board_name,
@@ -198,7 +199,7 @@ router.get('/preview', async (req, res) => {
                 console.log('price', price)
               }
               // }
-            } else if (data2.board_name == config.two_digit) {
+            }  else if (data2.board_name == config.two_digit) {
               let boardDetails = await PriceDetails.find(
                 (data) => data.board_name == data2.board_name,
               )
@@ -343,9 +344,11 @@ router.get('/preview', async (req, res) => {
               price = price + tprice
               console.log('box price ', tprice)
             } else if (data2.board_name == config.all_board_digit) {
+              console.log("PriceDetails>>>>>>>>",PriceDetails)
               let boardDetails = await PriceDetails.find(
                 (data) => data.board_name == data2.board_name,
               )
+              console.log("boardDetails",boardDetails)
               let PriceDetalsobject = Object.assign(
                 {},
                 ...boardDetails.price_amount.map((item) => ({
@@ -383,6 +386,8 @@ router.get('/preview', async (req, res) => {
               price = price + tprice
               console.log('all board ', tprice)
             } else if (data2.board_name == config.four_digit) {
+              console.log("data_num",data_num)
+              console.log("winning_numbers",winning_numbers)
               let boardDetails = await PriceDetails.find(
                 (data) => data.board_name == data2.board_name,
               )
@@ -401,12 +406,13 @@ router.get('/preview', async (req, res) => {
                 data_num,
                 board_leters,
               )
-              let formation_data = Dateformation(
+              let formation_data =await FourDateformation(
+                JSON.parse(winning_numbers),
                 formation,
-                data_num,
-                board_leters,
               )
-              console.log('formation_data', formation_data)
+              console.log('formation_data', formation_data,
+                show_result_number,
+                PriceDetalsobject)
               let amount = boardResult(
                 formation_data,
                 show_result_number,
@@ -477,6 +483,7 @@ router.get('/Published', async (req, res) => {
   try {
     console.log(' publis ===>', req.query)
     let data_num = req.query.resultData
+    let winning_numbers=req.query.winning_number_letters
     let date = req.query.date
     let show = req.query.show
     let gameName = req.query.game_name
@@ -657,7 +664,7 @@ router.get('/Published', async (req, res) => {
                 console.log('price', price)
               }
               // }
-            } else if (data2.board_name == config.two_digit) {
+            }  else if (data2.board_name == config.two_digit) {
               let boardDetails = await PriceDetails.find(
                 (data) => data.board_name == data2.board_name,
               )
@@ -802,9 +809,11 @@ router.get('/Published', async (req, res) => {
               price = price + tprice
               console.log('box price ', tprice)
             } else if (data2.board_name == config.all_board_digit) {
+              console.log("PriceDetails>>>>>>>>",PriceDetails)
               let boardDetails = await PriceDetails.find(
                 (data) => data.board_name == data2.board_name,
               )
+              console.log("boardDetails",boardDetails)
               let PriceDetalsobject = Object.assign(
                 {},
                 ...boardDetails.price_amount.map((item) => ({
@@ -842,6 +851,8 @@ router.get('/Published', async (req, res) => {
               price = price + tprice
               console.log('all board ', tprice)
             } else if (data2.board_name == config.four_digit) {
+              console.log("data_num",data_num)
+              console.log("winning_numbers",winning_numbers)
               let boardDetails = await PriceDetails.find(
                 (data) => data.board_name == data2.board_name,
               )
@@ -860,12 +871,13 @@ router.get('/Published', async (req, res) => {
                 data_num,
                 board_leters,
               )
-              let formation_data = Dateformation(
+              let formation_data =await FourDateformation(
+                JSON.parse(winning_numbers),
                 formation,
-                data_num,
-                board_leters,
               )
-              console.log('formation_data', formation_data)
+              console.log('formation_data', formation_data,
+                show_result_number,
+                PriceDetalsobject)
               let amount = boardResult(
                 formation_data,
                 show_result_number,
@@ -1107,6 +1119,18 @@ function Dateformation(con, assing, value) {
   })
   return result
 }
+async function FourDateformation(obj,index) {
+const result = [];
+for (let i = 0; i < index[0].length; i++) {
+  const letter = index[0][i];
+  const value = obj[letter];
+  result.push(value);
+}
+
+const str =await result.join("")
+const newStr= await[str]
+return newStr
+}
 
 function boardResult(result, cus_data, data) {
   console.log('result data', result, cus_data, data)
@@ -1137,6 +1161,7 @@ function boardResult(result, cus_data, data) {
       : 0
   } else {
     console.log('No Prize')
+    return 0
   }
 }
 
@@ -1230,16 +1255,20 @@ async function transectiondetails(
 
 async function allBoards(data, single, price) {
   console.log('data,single,price', data, single, price)
+  // console.log("single",single)
+  // let showDate=single[0]
+  // console.log("showDate",showDate)
   for (i = 0; i < data.length; i++) {
-    await console.log('index', i)
+     console.log('index', i)
     let element = data[i]
-    if (element == single[0]) {
+    console.log("element == single[0]",element , single)
+    if (element == single) {
       console.log('price[config.first_price]', price[config.first_price])
       return await price[config.first_price]
     } else if (i + 1 == data.length) {
       console.log('element', element)
       console.log('i+1==data.length', i + 1 == data.length)
-      return await 0
+      return  0
     }
   }
 }
