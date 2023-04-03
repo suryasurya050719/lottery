@@ -9,11 +9,17 @@ const creatSchema = mongoose.Schema({
   user_id: {
     type: Number,
   },
-  role_id:{
-    type:Number
+  role_id: {
+    type: Number,
   },
-  user_name:{
-  type:String
+  account_type: {
+    type: String,
+  },
+  account_details: {
+    type: String,
+  },
+  user_name: {
+    type: String,
   },
   title: {
     type: String,
@@ -31,8 +37,8 @@ const creatSchema = mongoose.Schema({
   file_name: {
     type: String,
   },
-  rejected_reason:{
-type:String
+  rejected_reason: {
+    type: String,
   },
   request_status: {
     type: Number,

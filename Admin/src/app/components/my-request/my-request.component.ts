@@ -45,6 +45,10 @@ export class MyRequestComponent implements OnInit {
       this.reject_popup = true;
     }
   }
+  cancel() {
+    this.approve_popup = false;
+    this.reject_popup = false;
+  }
   CloseMoreViewPopup3() {
     this.approve_popup = false;
   }

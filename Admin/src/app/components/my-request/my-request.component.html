@@ -76,7 +76,7 @@
                   }}</span>
                 </td>
                 <td>
-                  <span class="d-block">{{ data.title }}</span>
+                  <span class="d-block">{{ data.account_type }}</span>
                 </td>
                 <td>
                   <span class="badge bg-primary blink_txt mb-2">{{
@@ -110,7 +110,7 @@
                 </td>
                 <td class="bg-white text-left text_dark_all">
                   <b class="d-block pb-2 text_dark_all">Details</b>
-                  {{ data.details }}
+                  {{ data.account_details }}
                 </td>
                 <td class="bg-white text_dark_all">
                   <span>Action</span>
@@ -155,13 +155,27 @@
               <p>File required</p>
             </div>
           </div>
-          <div class="text-center">
-            <input
-              type="submit"
-              class="btn"
-              value="submit"
-              (click)="Onsubmit()"
-            />
+          <div
+            class="text-center"
+            style="display: flex; justify-content: space-around"
+          >
+            <div>
+              <input
+                type=""
+                class="btn"
+                value="Cancel"
+                (click)="cancel()"
+                style="width: 100px"
+              />
+            </div>
+            <div>
+              <input
+                type="submit"
+                class="btn"
+                value="submit"
+                (click)="Onsubmit()"
+              />
+            </div>
           </div>
         </form>
       </div>
@@ -188,13 +202,27 @@
               <p>Reason required</p>
             </div>
           </div>
-          <div class="text-center">
-            <input
-              type="submit"
-              class="btn"
-              value="submit"
-              (click)="rejected()"
-            />
+          <div
+            class="text-center"
+            style="display: flex; justify-content: space-around"
+          >
+            <div>
+              <input
+                type=""
+                class="btn"
+                value="Cancel"
+                (click)="cancel()"
+                style="width: 100px"
+              />
+            </div>
+            <div>
+              <input
+                type="submit"
+                class="btn"
+                value="submit"
+                (click)="rejected()"
+              />
+            </div>
           </div>
         </form>
       </div>
