@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const mongourl = "mongodb://localhost/nodejs_LC";
+const mongourl = "mongodb://127.0.0.1:27017/nodejs_LC";
 const cors = require("cors");
 const router = express.Router();
 
