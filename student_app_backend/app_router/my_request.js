@@ -6,6 +6,8 @@ var path = require("path");
 var multer = require("multer");
 const wallet = require("../app_models/wallet");
 const Transection = require("../app_models/transection");
+const { Notification } = require("../common/Notification");
+
 
 router.post("", async (req, res) => {
   let body = req.body;
@@ -21,6 +23,10 @@ router.post("", async (req, res) => {
       amount: body.amount,
       phone: data.phone,
     };
+    Notification(
+      preparedata.user_id,
+      `Successfully Withdraw Request Created`
+    );
     let insertData = new myRequest(preparedata);
     insertData.save().then((data) => {
       res.json({
@@ -90,6 +96,10 @@ router.put("/approved", upload.single("customerImage"), async (req, res) => {
           { new: true }
         )
         .then((result) => {
+          Notification(
+            body.user_id,
+            `Successfully Withdraw Request Approved`
+          );
           transaction(req.body.amount, body.user_id);
           myRequest
             .findOneAndUpdate({ _id: _id }, preparedata, {
@@ -139,6 +149,10 @@ router.put("/rejected", async (req, res) => {
       new: true,
     })
     .then((data) => {
+      Notification(
+        data[0].user_id,
+        `Sorry Your Request Rejected`
+      );
       res.json({
         success: true,
         statuscode: 200,

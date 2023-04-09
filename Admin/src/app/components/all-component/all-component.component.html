@@ -6,18 +6,18 @@
       <thead>
         <tr>
           <th>S.No</th>
-          <th>Notification Title</th>
+          <th>User Name</th>
           <th>Notification Description</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>0</td>
+        <tr *ngFor="let data of GetListDate; let i = index">
+          <td>{{i+1}}</td>
           <td>
-            auto
+            {{data.user_name}}
           </td>
           <td>
-            auto
+            {{data.message}}
           </td>
         </tr>
       </tbody>

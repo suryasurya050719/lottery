@@ -43,6 +43,10 @@ router.post("/creategame", async (req, res) => {
     gameCreate
       .save()
       .then((data) => {
+        // Notification(
+        //   data[0].user_id,
+        //   `Sorry Your Request Rejected`
+        // );
         res.json({
           success: true,
           statuscode: 200,

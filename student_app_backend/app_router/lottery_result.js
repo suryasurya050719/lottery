@@ -12,6 +12,7 @@ const Transection = require("../app_models/transection");
 const game = require("../app_models/game");
 const config = require("../config/config");
 const { query } = require("express");
+const { Notification } = require("../common/Notification");
 
 router.get("/preview", async (req, res) => {
   try {
@@ -917,11 +918,18 @@ router.get("/Published", async (req, res) => {
           //   total_refered_comission + (userprice * 5) / 100;
 
           console.log("total_price....>>>>", total_price);
+            let date = ISOtoLOCALDATE(data1.showTime);
+            Notification(
+              data1.user_id,
+              `Result Published${data1.game_name} Show ${date}`
+            );
+            if (total_price > 0) {
+              Notification(data1.user_id, `Earned ${total_price} `);
+            }
         }
         console.log("total_refered_comission", total_refered_comission);
         console.log("total", total);
         console.log("total_price", total_price);
-
         let results = {};
         let bookingdata = await BookingUpdate(data);
         console.log(
@@ -988,7 +996,7 @@ router.get("/unpublishedShow", async (req, res) => {
     // let closeTime = hours + ":" + min;
     // console.log("Date-->", new Date().toISOString().split("T")[0]);
     // console.log("closeTime-->", closeTime);
-    console.log("newDAte",newDAte)
+    console.log("newDAte", newDAte);
     let filterdata = {
       status: false,
       $and: [

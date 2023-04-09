@@ -28,6 +28,7 @@ import { MyRequestComponent } from './components/my-request/my-request.component
 import { MyRequestApprovedComponent } from './components/my-request-approved/my-request-approved.component';
 import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
 import { AllComponentComponent } from './components/all-component/all-component.component';
+import { HowToPlayComponent } from './components/how-to-play/how-to-play.component';
 
 const routes: Routes = [
   // No Layouts
@@ -100,6 +101,10 @@ const routes: Routes = [
       {
         path: 'customer-care-add',
         component: CustomerCareAddComponent,
+      },
+      {
+        path: 'how_to_play',
+        component: HowToPlayComponent,
       },
       {
         path: 'our-information-add',

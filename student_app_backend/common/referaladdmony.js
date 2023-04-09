@@ -1,6 +1,7 @@
 const transection = require("../app_models/transection");
 const wallet = require("../app_models/wallet");
 const user = require("../app_models/user");
+const { Notification } = require("../common/Notification");
 const { model } = require("mongoose");
 
 function referalAddMony(formdata) {
@@ -54,6 +55,10 @@ function referalAddMony(formdata) {
         wallet
           .findOneAndUpdate({ user_id: referal_user_id }, walletdata)
           .then(async (walletdata) => {
+            Notification(
+              referal_user_id,
+              `Successfully Referral Amount ${incAmouont} Added in Wallet`
+            );
             await wallet
               .findOneAndUpdate(
                 { user_id: preparedata.user_id },

@@ -7,6 +7,7 @@ const referralCodeGenerator = require("referral-code-generator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 const numberFunction = require("../common/numberFunction");
+const { Notification } = require("../common/Notification");
 const saltRounds = 10;
 
 router.post("/registor", async (req, res) => {
@@ -84,16 +85,32 @@ router.post("/registor", async (req, res) => {
               };
               let newreferal = new referal(referaldata);
               newreferal.save();
-            }else{
-              let data= user.findOne({role_id:1}).then((result)=>{
-              let referaldata = {
-                user_id: Number(data01.user_id),
-                refered_user_id: result.user_id,
-                refered_role_id: result.role_id,
-              };
-              let newreferal = new referal(referaldata);
-              newreferal.save();
-              })
+              if (referaldata.refered_role_id == 1) {
+                Notification(
+                  referal_user_data.user_id,
+                  `You Have One Referral  ${
+                    data01.user_id == 3 ? "BJCd C" : "BJCD B"
+                  }${referaldata.user_id}`
+                );
+              }
+            } else {
+              let data = user.findOne({ role_id: 1 }).then((result) => {
+                let referaldata = {
+                  user_id: Number(data01.user_id),
+                  refered_user_id: result.user_id,
+                  refered_role_id: result.role_id,
+                };
+                let newreferal = new referal(referaldata);
+                newreferal.save();
+                if (referaldata.refered_role_id == 1) {
+                  Notification(
+                    result.user_id,
+                    `You Have One Referral ${
+                      data01.user_id == 3 ? "BJCd C" : "BJCD B"
+                    }${referaldata.user_id}`
+                  );
+                }
+              });
             }
           });
       } else {
@@ -499,4 +516,107 @@ router.get("/allbrokercustomercount", async (req, res) => {
     });
 });
 
+router.put("/changePassword", async (req, res) => {
+  try {
+    if (
+      req.body.user_id !== "" &&
+      req.body.user_id !== null &&
+      req.body.user_id !== undefined
+    ) {
+      if (
+        req.body.password !== "" &&
+        req.body.password !== null &&
+        req.body.password !== undefined
+      ) {
+        if (
+          req.body.old_password !== "" &&
+          req.body.old_password !== null &&
+          req.body.old_password !== undefined
+        ) {
+          let userdata = await user.findOne({ user_id: req.body.user_id });
+          console.log("userdata", userdata);
+          let old_password = req.body.old_password;
+          bcrypt.compare(
+            old_password,
+            userdata.password,
+            async function (err, data) {
+              if (err) {
+                console.log("err", err);
+                res.json({
+                  success: false,
+                  data: user,
+                  statuscode: 202,
+                  status: "Decrypting error",
+                });
+              } else {
+                if (data) {
+                  const hashedPassword = await bcrypt.hash(
+                    req.body.password,
+                    15
+                  );
+                  user
+                    .updateOne(
+                      {
+                        user_id: userdata.user_id,
+                      },
+                      {
+                        password: hashedPassword,
+                      }
+                    )
+                    .then((user) => {
+                      res.json({
+                        success: true,
+                        data: {},
+                        statuscode: 200,
+                        status: "Password updated successfully",
+                      });
+                    })
+                    .catch((err) => {
+                      console.log("err", err);
+                      res.json({
+                        success: false,
+                        data: {},
+                        statuscode: 202,
+                        status: "Can't update password",
+                      });
+                    });
+                } else {
+                  res.json({
+                    success: false,
+                    data: {},
+                    statuscode: 202,
+                    status: "Incorrect password",
+                  });
+                }
+              }
+            }
+          );
+        } else {
+          res.send({
+            statuscode: 202,
+            status: "old_password is required",
+          });
+        }
+      } else {
+        res.send({
+          statuscode: 202,
+          status: "password is required",
+        });
+      }
+    } else {
+      res.send({
+        statuscode: 202,
+        status: "user id is required",
+      });
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.json({
+      success: false,
+      data: {},
+      statuscode: 501,
+      status: "failed",
+    });
+  }
+});
 module.exports = router;

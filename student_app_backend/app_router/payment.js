@@ -9,6 +9,8 @@ const key = require("../config/config.js").paymentKey;
 const request = require("request");
 const axios = require("axios");
 const moment = require("moment");
+const { Notification } = require("../common/Notification");
+
 const saltRounds = 10;
 
 router.post("", async (req, res) => {
@@ -57,6 +59,7 @@ router.post("", async (req, res) => {
   let newtransection = new transection(preparedata);
   await newtransection.save().then(async (data) => {
     let userdata = data;
+    console.log("data.user_id",data.user_id)
     user.find({ user_id: data.user_id }).then(async (datas) => {
       console.log("data", datas, userdata);
       let user = datas[0];
@@ -147,6 +150,10 @@ router.get("/callback", async (req, res) => {
                     referalFunction.referalAddMony(preparedata);
                   }
                 }
+                Notification(
+                  item02.user_id,
+                  `Successfully  ${item01.amount} Added in Wallet`
+                );
               });
             res.redirect("http://localhost:4200/wallet");
           });
@@ -226,6 +233,10 @@ router.post("/mobile_callback", async (req, res) => {
             };
             referalFunction.referalAddMony(preparedata);
           }
+          Notification(
+            preparedata.user_id,
+            `Successfully ${preparedata.amount} Added in Wallet`
+          );
           res.send({
             statuscode: 200,
             status: "Money Add successfully",
