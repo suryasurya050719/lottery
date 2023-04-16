@@ -57,10 +57,11 @@ router.get("/allbrokerslist", async (req, res) => {
     });
   }
 });
-router.get("/ownaccountlist/:id", async (req, res) => {
+router.post("/ownaccountlist", async (req, res) => {
   try {
-    let user_id = req.params.id;
-    if (req.params.id == "") {
+    let user_id = req.body.user_id;
+    console.log("user_id",user_id)
+    if (user_id == "") {
       res.json({
         success: false,
         statuscode: 202,
@@ -126,10 +127,10 @@ router.put("/updateaccount", async (req, res) => {
     });
   }
 });
-router.delete("/accountdelete/:id", async (req, res) => {
+router.delete("/accountdelete", async (req, res) => {
   try {
-    let account_id = req.params.id;
-    if (req.params.id == "") {
+    let account_id = req.body.account_id;
+    if (account_id == "") {
       res.json({
         success: false,
         statuscode: 202,

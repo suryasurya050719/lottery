@@ -52,6 +52,14 @@ export class Login {
       })
     );
   }
+  singleUserBankAccountOnly(id: number): Observable<any> {
+    let url = `${environment.apiurl}/user/singleuserbankAccount/${id}`;
+    return this.http.get(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
   referedUser(
     id: any,

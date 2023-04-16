@@ -256,6 +256,74 @@ router.get("/singleuser/:id", async (req, res) => {
     });
 });
 
+router.get("/singleuserbankAccount/:id", async (req, res) => {
+  let user_id = req.params.id;
+  if (user_id == "") {
+    res.send({
+      statuscode: 202,
+      status: "user_id is required",
+    });
+  }
+  console.log("user_id>>>>>>>>>>>>>>>>>>",user_id)
+  user
+    .aggregate([
+      {
+        $match: { user_id: Number(user_id)},
+      },
+      {
+        $lookup: {
+          from: "referals",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "referalList",
+        },
+      },
+      {
+        $unwind: {
+          path: "$referalList",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "wallets",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "walletList",
+        },
+      },
+      {
+        $unwind: {
+          path: "$walletList",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "accoounts",
+          localField: "user_id",
+          foreignField: "user_id",
+          pipeline: [{ $match: {type:1} }],
+          as: "accountList",
+        },
+      },
+      // {
+      //   $unwind: {
+      //     path: "$walletList",
+      //     preserveNullAndEmptyArrays: true,
+      //   },
+      // },
+    ])
+    .then((data) => {
+      res.send({
+        statuscode: 200,
+        status: "refered user list sucessfully given",
+        data: data,
+      });
+    });
+});
+
+
 router.get("/refereduser/:id", async (req, res) => {
   let user_id = req.params.id;
   if (user_id == "") {

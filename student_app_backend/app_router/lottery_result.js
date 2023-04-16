@@ -918,14 +918,23 @@ router.get("/Published", async (req, res) => {
           //   total_refered_comission + (userprice * 5) / 100;
 
           console.log("total_price....>>>>", total_price);
-            let date = ISOtoLOCALDATE(data1.showTime);
-            Notification(
-              data1.user_id,
-              `Result Published${data1.game_name} Show ${date}`
-            );
-            if (total_price > 0) {
-              Notification(data1.user_id, `Earned ${total_price} `);
-            }
+          // let date = toString();
+          var dateObj = new Date(data1.showTime);
+          dateObj.setUTCHours(dateObj.getUTCHours + 5);
+          dateObj.setUTCMinutes(dateObj.getUTCMinutes + 30);
+            console.log("newdate",newdate)
+          var month = dateObj.getUTCMonth() + 1; //months from 1-12
+          var day = dateObj.getUTCDate();
+          var year = dateObj.getUTCFullYear();
+          console.log("newdate",newdate)
+          var newdate = year + "/" + month + "/" + day;
+          Notification(
+            data1.user_id,
+            `Result Published  ${data1.game_name} Show ${data1.showTime}`
+          );
+          if (total_price > 0) {
+            Notification(data1.user_id, `Earned ${total_price} `);
+          }
         }
         console.log("total_refered_comission", total_refered_comission);
         console.log("total", total);
@@ -1149,7 +1158,6 @@ async function FourDateformation(obj, index) {
   const newStr = await [str];
   return newStr;
 }
-
 function boardResult(result, cus_data, data) {
   console.log("result data", result, cus_data, data);
   if (result[0] == cus_data[0]) {
@@ -1186,7 +1194,6 @@ function boardResult(result, cus_data, data) {
     return 0;
   }
 }
-
 async function published(_id) {
   let res = await publicestatuses
     .findOneAndUpdate({ _id: _id }, { status: true }, { new: true })
@@ -1195,7 +1202,6 @@ async function published(_id) {
     });
   console.log("published status update", res);
 }
-
 async function BookingUpdate(data) {
   let id = [];
   await data.forEach((data) => {
@@ -1213,7 +1219,6 @@ async function BookingUpdate(data) {
   return res01;
   // console.log("Booking updated data", res);
 }
-
 async function WiningRecordsCreate(data) {
   let records = new winning_data(data);
   let dataRecords = await records.save().catch((error) => {
@@ -1264,6 +1269,7 @@ async function transectiondetails(
     transection_from_type: "Admin",
     transection_to_type: "Wallet",
     reason: reason,
+    status: "success",
     position: position,
     commission: commission,
   };
@@ -1274,7 +1280,6 @@ async function transectiondetails(
     });
   console.log("transection", transection);
 }
-
 async function allBoards(data, single, price) {
   console.log("data,single,price", data, single, price);
   // console.log("single",single)

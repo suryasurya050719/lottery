@@ -13,7 +13,10 @@
   width: 57px;
   height: 28px;
 }
-
+.form_pop_he {
+  height: 400px;
+  overflow: auto;
+}
 .switch_input {
   opacity: 0;
   width: 0;

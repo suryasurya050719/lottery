@@ -13,7 +13,7 @@ const creatSchema = mongoose.Schema({
     type: Number,
   },
   type: {
-    type: String,
+    type: Number,
   },
   account_number: {
     type: String,

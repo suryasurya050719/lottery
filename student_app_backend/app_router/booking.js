@@ -932,6 +932,7 @@ async function transectiondetails(
     transection_to_roleid: tran_t_roleid,
     transection_from_type: "Admin",
     transection_to_type: "Wallet",
+    status:"success",
     reason: reason,
     position: position,
     commission: commission,

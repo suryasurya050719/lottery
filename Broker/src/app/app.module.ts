@@ -28,6 +28,7 @@ import { DashboardComponent } from '../app/components/dashboard/dashboard.compon
 import { BookingRecordsComponent } from './components/booking-records/booking-records.component';
 import { BookingReviewComponent } from './components/booking-review/booking-review.component';
 import { MatSelectModule } from '@angular/material/select';
+import {WinningReportComponent} from "../app/components/winning-report/winning-report.component"
 
 // import {RegisterComponent} from './components/register/RegisterComponent'
 // import { RouterModule } from '@angular/router';
@@ -47,6 +48,7 @@ import { MatSelectModule } from '@angular/material/select';
     UserReviewViewComponent,
     ForgetPasswordComponent,
     WalletComponent,
+    WinningReportComponent,
     CustomerCareListComponent,
     GameCentreComponent,
     TicketPriceDetailsComponent,

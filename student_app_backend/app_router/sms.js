@@ -15,232 +15,248 @@ const saltRounds = 10;
 const { uniqueId } = require("../common/uniqueId");
 
 router.post("/newuserotp", async (req, res) => {
-try {
-  console.log("data ", req.body);
-  let body = req.body;
-  if (req.body.phone == "") {
-    res.json({
-      success: false,
-      statuscode: 400,
-      status: "Phone number is required",
-    });
-  }
-  user.findOne({ phone: req.body.phone }).then((data) => {
-    console.log(data);
-    if (data == null || data.isOtpVerify == false) {
-     if (data==null) {
-            let preparedata = {
-        name: body.username,
-        phone: body.phone,
-        role_id: body.role_id,
-        otp: uniqueId(6),
-        modified_on: new Date(),
-      };
-      console.log("aprepardate", preparedata);
-      let inser = new user(preparedata);
-      let data = inser.save().then((data) => {
-        let name = data.name;
-        let otp = data.otp;
-        var msg = urlencode(
-          `Dear ${name}
-Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
-        );
-        var number = data.phone;
-        var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";
-        console.log("message ", msg);
-        var sender = "VSEMSG";
-        var data =
-          "apikey=" +
-          apikey +
-          "&sender=" +
-          sender +
-          "&numbers=" +
-          number +
-          "&message=" +
-          msg;
-        var options = {
-          host: "api.textlocal.in",
-          path: "/send?" + data,
-        };
-        callback = function (response) {
-          var str = "";
-          //another chunk of data has been recieved, so append it to `str`
-          response.on("data", function (chunk) {
-            str += chunk;
-          });
-          //the whole response has been received, so we just print it out here
-          response.on("end", function () {
-            console.log("str>>>>",str);
-          });
-        };
-        // console.log('hello js'))
-        https.request(options, callback).end();
-        //url encode instalation need to use $ npm install urlencode
-        res.json({
-          success: false,
-          statuscode: 200,
-          status: "otp generated successfully",
-        });
-      });
-     }else{
-      //       let preparedata = {
-      //   name: body.username,
-      //   phone: body.phone,
-      //   role_id: body.role_id,
-      //   otp: uniqueId(6),
-      //   modified_on: new Date(),
-      // };
-      // console.log("aprepardate", preparedata);
-      // let inser = new user(preparedata);
-      // let data = inser.save()
-      let insert=user.findOneAndUpdate({phone: body.phone},{ otp: uniqueId(6)},{new:true})
-      .then((data) => {
-        console.log("data",data)
-        let name = data.name;
-        let otp = data.otp;
-        var msg = urlencode(
-          `Dear ${name}
-Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
-        );
-        var number = data.phone;
-        var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";
-        console.log("message ", msg);
-        var sender = "VSEMSG";
-        var data =
-          "apikey=" +
-          apikey +
-          "&sender=" +
-          sender +
-          "&numbers=" +
-          number +
-          "&message=" +
-          msg;
-        var options = {
-          host: "api.textlocal.in",
-          path: "/send?" + data,
-        };
-        callback = function (response) {
-          var str = "";
-          //another chunk of data has been recieved, so append it to `str`
-          response.on("data", function (chunk) {
-            str += chunk;
-          });
-          //the whole response has been received, so we just print it out here
-          response.on("end", function () {
-            console.log("str>>>>",str);
-          });
-        };
-        // console.log('hello js'))
-        https.request(options, callback).end();
-        //url encode instalation need to use $ npm install urlencode
-        res.json({
-          success: false,
-          statuscode: 200,
-          status: "otp generated successfully",
-        });
-      });
-     }
-    } else {
+  try {
+    console.log("data ", req.body);
+    let body = req.body;
+    if (req.body.phone == "") {
       res.json({
         success: false,
         statuscode: 400,
-        status: `${
-          data.role_id == 2
-            ? "The number you entered, already registered with us as Broker"
-            : data.role_id == 3
-            ? "The number you entered, already registered with us as Customer"
-            : "The number you entered, already registered "
-        }`,
+        status: "Phone number is required",
       });
     }
-  });
-} catch (error) {
-  res.json({
-    success: false,
-    statuscode: 202,
-    status: error,
-  });
-}
-});
-
-router.post("/excitingUserotp", async (req, res) => {
-try {
-  if (req.body.phone == "") {
-    res.json({
-      success: false,
-      statuscode: 400,
-      status: "Phone number is required",
-    });
-  }
-  user
-    .findOneAndUpdate(
-      { phone: req.body.phone },
-      { otp: uniqueId(6) },
-      { new: true }
-    )
-    .then((data) => {
-      if (data !== null || data.isOtpVerify == false) {
-        console.log("data", data);
-        let name = data.name;
-        let otp = data.otp;
-        var msg = urlencode(
-          `Dear ${name}
+    user.findOne({ phone: req.body.phone }).then((data) => {
+      console.log(data);
+      if (data == null || data.isOtpVerify == false) {
+        if (data == null) {
+          let preparedata = {
+            name: body.username,
+            phone: body.phone,
+            role_id: body.role_id,
+            otp: uniqueId(6),
+            modified_on: new Date(),
+          };
+          console.log("aprepardate", preparedata);
+          let inser = new user(preparedata);
+          let data = inser.save().then((data) => {
+            let name = data.name;
+            let otp = data.otp;
+            var msg = urlencode(
+              `Dear ${name}
 Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
-        );
-        var number = data.phone;
-        var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";
-        console.log("message ", msg);
-        var sender = "VSEMSG";
-        var data =
-          "apikey=" +
-          apikey +
-          "&sender=" +
-          sender +
-          "&numbers=" +
-          number +
-          "&message=" +
-          msg;
-        var options = {
-          host: "api.textlocal.in",
-          path: "/send?" + data,
-        };
-        callback = function (response) {
-          var str = "";
-          //another chunk of data has been recieved, so append it to `str`
-          response.on("data", function (chunk) {
-            str += chunk;
+            );
+            var number = data.phone;
+            var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";
+            console.log("message ", msg);
+            var sender = "VSEMSG";
+            var data =
+              "apikey=" +
+              apikey +
+              "&sender=" +
+              sender +
+              "&numbers=" +
+              number +
+              "&message=" +
+              msg;
+            var options = {
+              host: "api.textlocal.in",
+              path: "/send?" + data,
+            };
+            let CallBackoo = "";
+            callback = async function (response, error) {
+              console.log("error", error);
+              var str = "";
+              //another chunk of data has been recieved, so append it to `str`
+              response.on("data", function (chunk) {
+                str += chunk;
+              });
+              //the whole response has been received, so we just print it out here
+              response.on("end",async function () {
+                // if (str !== "" || str != null || str != undefined) {
+                //   res.json({
+                //     success: false,
+                //     statuscode: 200,
+                //     status: "Check Your Internet Connection",
+                //   });
+                // }
+                CallBackoo = str;
+                console.log("str>>>>", str);
+              });
+            };
+            console.log("CallBackoo",CallBackoo)
+            // console.log('hello js'))
+            https.request(options, callback).end();
+            //url encode instalation need to use $ npm install urlencode
+            res.json({
+              success: false,
+              statuscode: 200,
+              status: "otp generated successfully",
+            });
           });
-          //the whole response has been received, so we just print it out here
-          response.on("end", function () {
-            console.log(str);
-          });
-        };
-        // console.log('hello js'))
-        https.request(options, callback).end();
-        // url encode instalation need to use $ npm install urlencode
-        res.json({
-          success: false,
-          statuscode: 200,
-          status: "otp generated successfully",
-        });
+        } else {
+          //       let preparedata = {
+          //   name: body.username,
+          //   phone: body.phone,
+          //   role_id: body.role_id,
+          //   otp: uniqueId(6),
+          //   modified_on: new Date(),
+          // };
+          // console.log("aprepardate", preparedata);
+          // let inser = new user(preparedata);
+          // let data = inser.save()
+          let insert = user
+            .findOneAndUpdate(
+              { phone: body.phone },
+              { otp: uniqueId(6) },
+              { new: true }
+            )
+            .then((data) => {
+              console.log("data", data);
+              let name = data.name;
+              let otp = data.otp;
+              var msg = urlencode(
+                `Dear ${name}
+Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
+              );
+              var number = data.phone;
+              var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";
+              console.log("message ", msg);
+              var sender = "VSEMSG";
+              var data =
+                "apikey=" +
+                apikey +
+                "&sender=" +
+                sender +
+                "&numbers=" +
+                number +
+                "&message=" +
+                msg;
+              var options = {
+                host: "api.textlocal.in",
+                path: "/send?" + data,
+              };
+              callback = function (response) {
+                var str = "";
+                //another chunk of data has been recieved, so append it to `str`
+                response.on("data", function (chunk) {
+                  str += chunk;
+                });
+                //the whole response has been received, so we just print it out here
+                response.on("end", function () {
+                  console.log("str>>>>", str);
+                });
+              };
+              // console.log('hello js'))
+              https.request(options, callback).end();
+              //url encode instalation need to use $ npm install urlencode
+              res.json({
+                success: false,
+                statuscode: 200,
+                status: "otp generated successfully",
+              });
+            });
+        }
       } else {
         res.json({
           success: false,
           statuscode: 400,
-          status: "Accoount not excite with us ",
+          status: `${
+            data.role_id == 2
+              ? "The number you entered, already registered with us as Broker"
+              : data.role_id == 3
+              ? "The number you entered, already registered with us as Customer"
+              : "The number you entered, already registered "
+          }`,
         });
       }
-    })
-    .catch((data) => {
-      console.log("sdkjdk", data);
     });
-} catch (error) {
-  res.json({
-    success: false,
-    statuscode: 202,
-    status: error,
-  });
-}
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  }
+});
+
+router.post("/excitingUserotp", async (req, res) => {
+  try {
+    if (req.body.phone == "") {
+      res.json({
+        success: false,
+        statuscode: 400,
+        status: "Phone number is required",
+      });
+    }
+    user
+      .findOneAndUpdate(
+        { phone: req.body.phone },
+        { otp: uniqueId(6) },
+        { new: true }
+      )
+      .then((data) => {
+        if (data !== null || data.isOtpVerify == false) {
+          console.log("data", data);
+          let name = data.name;
+          let otp = data.otp;
+          var msg = urlencode(
+            `Dear ${name}
+Your verification code for Account Activation is ${otp}. Please do not share this to anyone unless you not initiate. VS Enterprises`
+          );
+          var number = data.phone;
+          var apikey = "NTQzMDM1NDQzODQ0Nzc3NzU0NmI3NTU3NDUzOTY0NTI=";
+          console.log("message ", msg);
+          var sender = "VSEMSG";
+          var data =
+            "apikey=" +
+            apikey +
+            "&sender=" +
+            sender +
+            "&numbers=" +
+            number +
+            "&message=" +
+            msg;
+          var options = {
+            host: "api.textlocal.in",
+            path: "/send?" + data,
+          };
+          callback = function (response) {
+            var str = "";
+            //another chunk of data has been recieved, so append it to `str`
+            response.on("data", function (chunk) {
+              str += chunk;
+            });
+            //the whole response has been received, so we just print it out here
+            response.on("end", function () {
+              console.log(str);
+            });
+          };
+          // console.log('hello js'))
+          https.request(options, callback).end();
+          // url encode instalation need to use $ npm install urlencode
+          res.json({
+            success: false,
+            statuscode: 200,
+            status: "otp generated successfully",
+          });
+        } else {
+          res.json({
+            success: false,
+            statuscode: 400,
+            status: "Accoount not excite with us ",
+          });
+        }
+      })
+      .catch((data) => {
+        console.log("sdkjdk", data);
+      });
+  } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 202,
+      status: error,
+    });
+  }
 });
 
 module.exports = router;

@@ -12,21 +12,20 @@ const { Notification } = require("../common/Notification");
 router.post("", async (req, res) => {
   let body = req.body;
   user.findOne({ user_id: body.user_id }).then((data) => {
+    console.log("data",data)
     let preparedata = {
       user_id: body.user_id,
       role_id: data.role_id,
       account_type: body.account_type,
       account_details: body.account_details,
       user_name: data.name,
-      title: body.title,
-      details: body.details,
       amount: body.amount,
       phone: data.phone,
     };
-    Notification(
-      preparedata.user_id,
-      `Successfully Withdraw Request Created`
-    );
+    // Notification(
+    //   preparedata.user_id,
+    //   `Successfully Withdraw Request Created`
+    // );
     let insertData = new myRequest(preparedata);
     insertData.save().then((data) => {
       res.json({
