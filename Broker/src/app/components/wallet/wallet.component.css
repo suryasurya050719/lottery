@@ -4,3 +4,6 @@
 .plus_bank_icon{
   font-size: 25px;
 }
+.modal-backdrop{
+  opacity:0 !important;
+}

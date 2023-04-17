@@ -277,13 +277,13 @@ router.get("/BrokerWinningResult", async (req, res) => {
     ) {
       prepareData["user_id"] = req.query.user_id;
     }
-    console.log(
-      "fgdfg",
-      { show_details: prepareData.show_date },
-      {
-        game_name: req.query.game_name,
-      }
-    );
+    // console.log(
+    //   "fgdfg",
+    //   { show_details: prepareData.show_date },
+    //   {
+    //     game_name: req.query.game_name,
+    //   }
+    // );
     winningReport
       .aggregate([
         {
@@ -369,7 +369,11 @@ router.get("/BrokerWinningResult", async (req, res) => {
         },
       ])
       .then(async (data) => {
-        console.log("data.length", data.length);
+        console.log("data.length", data[0]);
+        let overalluserprice = 0;
+        let overallTicetprice = 0;
+        let overallTicket=0
+        let total_refered_comission=0
         // if (data.length > 0) {
         for (let i = 0; i < data[0].wining_booking.length; i++) {
           let winningData = [];
@@ -380,14 +384,26 @@ router.get("/BrokerWinningResult", async (req, res) => {
             // console.log('props', props)
             if (props.lottery_price !== 0) {
               await winningData.push(props);
+              overalluserprice = overalluserprice + props.lottery_price;
             }
           });
           element["winning_data"] = winningData;
           delete element.booking_data;
+          overallTicetprice = element.total_price + overallTicetprice;
+          overallTicket = element.totalTikect + overallTicket;
 
           console.log("element>>>>>>>>>", element);
+          console.log("overalluserprice", overalluserprice);
+          console.log("overallTicetprice", overallTicetprice);
+          console.log("overallTicket", overallTicket);
+          console.log("total_refered_comission", total_refered_comission);
+          console.log("data",data)
+          data[0].overalluserprice=overalluserprice
+          data[0].overallTicetprice=overallTicetprice
+          data[0].overallTicket=overallTicket
+          data[0].total_refered_comission=total_refered_comission
           if (data[0].wining_booking.length == i + 1) {
-            console.log("JSON.Stringy", JSON.stringify(data));
+            // console.log("JSON.Stringy", JSON.stringify(data));
             res.json({
               success: true,
               data: data,

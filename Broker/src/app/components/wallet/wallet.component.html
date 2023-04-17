@@ -28,6 +28,7 @@
             class="btn btn-primary w-100 btn_input btn-ripple"
             data-toggle="modal"
             data-target="#WithdrawPopup"
+            (click)="widrawOpen()"
           >
             Withdraw
           </button>
@@ -298,7 +299,7 @@
                       }} -->
               {{ transectionlist.referalList }}
             </td>
-            <td>{{ user.created_on | date: "dd/MM/yyyy" }}</td>
+            <td>{{ user.created_on | date : "dd/MM/yyyy" }}</td>
             <td>
               <div class="input-group" style="width: 150px">
                 <span class="input-group-addon">RS</span>
@@ -382,6 +383,7 @@
   tabindex="-1"
   role="dialog"
   aria-hidden="true"
+  *ngIf="popUp"
 >
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content bg-white">
@@ -399,24 +401,68 @@
       <div class="modal-body">
         <form>
           <div class="pb-3">
+            <div class="form-group">
+              <label>Amount</label>
+              <div class="pt-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="Amount"
+                  style="width: 434px"
+                />
+                <!-- <div
+                  class="ERR_Msg text-danger"
+                  *ngIf="
+                    (form.controls['AccountNumber']?.touched &&
+                      form.controls['AccountNumber'].invalid) ||
+                    (isSubmited == true &&
+                      form.controls['AccountNumber'].invalid)
+                  "
+                >
+                  <p>Account Number is required</p>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="pb-3">
             <label for="" class="d-block pb-1">Select Account</label>
 
             <div class="d-flex align-items-center">
               <div class="flx_1 pr-2">
-                <select name="" id="" class="form-control" >
-                  <option value="" *ngFor="let data of ownAccountList" >{{data.account_number}}</option>
+                <select
+                  name=""
+                  id=""
+                  class="form-control"
+                  [(ngModel)]="AccountDetails"
+                >
+                  <option
+                    [value]="i"
+                    *ngFor="let data of ownAccountList; let i = index"
+                  >
+                    {{ data.account_number }}/{{
+                      data.type == 1
+                        ? "Bank Account"
+                        : data.type == 2
+                        ? "GooglePay"
+                        : data.type == 3
+                        ? "Phone-pe"
+                        : data.type == 4
+                        ? "Paytm"
+                        : "UPI"
+                    }}
+                  </option>
                 </select>
               </div>
-              <div class="flx_0">
-                <i
-                  class="fa fa-plus-circle fs-3 text-success plus_bank_icon cursor-pointer"
-                  data-toggle="modal"
-                  data-target="#PopupBankAdd"
-                ></i>
+              <div>
+                <a [routerLink]="['/payment-profile']">
+                  <i class="fa fa-plus-circle text-success plus_bank_icon"></i>
+                </a>
               </div>
             </div>
           </div>
-          <button class="btn btn-primary btn-ripple">Submit</button>
+          <button class="btn btn-primary btn-ripple" (click)="myrequest()">
+            Submit
+          </button>
         </form>
       </div>
     </div>
@@ -426,7 +472,7 @@
 <!-- Bank Add Popup popup -->
 
 <div
-  class="modal fade"
+  class="modal"
   id="PopupBankAdd"
   tabindex="-1"
   role="dialog"
@@ -456,14 +502,9 @@
               [(ngModel)]="AccountNumber"
             />
           </div>
-          <div
-          class="ERR_Msg text-danger"
-          *ngIf="
-          AccountNumberError
-          "
-        >
-          <p>AccountNumber is required</p>
-        </div>
+          <div class="ERR_Msg text-danger" *ngIf="AccountNumberError">
+            <p>AccountNumber is required</p>
+          </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">Branch Name</label>
             <input
@@ -473,14 +514,9 @@
               [(ngModel)]="Branchname"
             />
           </div>
-          <div
-          class="ERR_Msg text-danger"
-          *ngIf="
-          BranchnameError
-          "
-        >
-          <p>Branchname is required</p>
-        </div>
+          <div class="ERR_Msg text-danger" *ngIf="BranchnameError">
+            <p>Branchname is required</p>
+          </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">IFSC Code</label>
             <input
@@ -490,14 +526,9 @@
               [(ngModel)]="IFSCcode"
             />
           </div>
-          <div
-          class="ERR_Msg text-danger"
-          *ngIf="
-          IFSCcodeError
-          "
-        >
-          <p>IFSCcode is required</p>
-        </div>
+          <div class="ERR_Msg text-danger" *ngIf="IFSCcodeError">
+            <p>IFSCcode is required</p>
+          </div>
           <div class="pb-3">
             <label for="" class="d-block pb-1">Holder Name</label>
             <input
@@ -506,14 +537,9 @@
               name="HolderName"
               [(ngModel)]="HolderName"
             />
-            <div
-            class="ERR_Msg text-danger"
-            *ngIf="
-            HolderNameError
-            "
-          >
-            <p>HolderName is required</p>
-          </div>
+            <div class="ERR_Msg text-danger" *ngIf="HolderNameError">
+              <p>HolderName is required</p>
+            </div>
           </div>
           <button class="btn btn-primary btn-ripple" (click)="Addaccount()">
             Save

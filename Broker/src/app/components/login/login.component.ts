@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('lottryroleid', data.data.role_id);
           localStorage.setItem('lottryname', data.data.name);
           localStorage.setItem('lottrytoken', data.token);
+          localStorage.setItem('lottryphone', data.data.phone);
           localStorage.setItem('lottryreferalid', data.data.referal_code);
           this.router.navigateByUrl('/user-review');
         } else {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Transection } from '../../service/transection';
 import { Dashboard } from '../../service/dashboard';
-import { SharedAccount } from '../../service/shared_account';
+import { Account } from '../../service/accoount';
 
 @Component({
   selector: 'app-wallet',
@@ -12,7 +12,7 @@ export class WalletComponent implements OnInit {
   constructor(
     private transection: Transection,
     private Dashboard: Dashboard,
-    private SharedAccount: SharedAccount
+    private Account: Account
   ) {}
   filterdata: any = {};
   alluserList: any = [];
@@ -43,7 +43,10 @@ export class WalletComponent implements OnInit {
   paymentForReferal_id: string = '';
   paymentForStatus: string = '';
 
-  ownAccountList:any=[]
+  ownAccountList: any = [];
+  Amount: String = '';
+  AccountDetails: any = '';
+  popUp: Boolean = false;
 
   ngOnInit(): void {
     this.alluser();
@@ -51,7 +54,7 @@ export class WalletComponent implements OnInit {
     this.singleuser();
     this.singleTransection();
     this.getAccount();
-    this.getwidrowaccoount()
+    this.getwidrowaccoount();
   }
   AddFundPanel = false;
 
@@ -182,16 +185,17 @@ export class WalletComponent implements OnInit {
   getAccount() {
     this.Dashboard.AccountList().subscribe((data) => {
       console.log('data', data.data[0]);
-      this.accountListAdmin = data.data[0].Admin[0].List;
+      this.accountListAdmin = data.data[0]?.Admin[0].List;
       console.log('this.accountListAdmin', this.accountListAdmin);
     });
   }
-  getwidrowaccoount(){
-    let data =Number(localStorage.getItem("lottryuserid"))
-    this.SharedAccount.OwnAccountList(data).subscribe((data)=>{
-      console.log(">>",data)
-      this.ownAccountList=data.data
-    })
+  getwidrowaccoount() {
+    let data = Number(localStorage.getItem('lottryuserid'));
+    console.log('data', data);
+    this.Account.OwnAccountList(data).subscribe((data) => {
+      console.log('>>', data);
+      this.ownAccountList = data.data;
+    });
   }
   Addaccount() {
     if (this.AccountNumber == '') {
@@ -228,7 +232,7 @@ export class WalletComponent implements OnInit {
         HolderName: this.HolderName,
       };
       console.log('data', data);
-      this.SharedAccount.AccountCreate(data).subscribe((data) => {
+      this.Account.AccountCreate(data).subscribe((data) => {
         console.log('data', data);
         this.AccountReset();
       });
@@ -239,5 +243,38 @@ export class WalletComponent implements OnInit {
     this.Branchname = '';
     this.IFSCcode = '';
     this.HolderName = '';
+  }
+  myrequest() {
+    console.log('this.Amount', this.Amount);
+    console.log('this.AccountDetails', this.AccountDetails);
+    let Account = this.ownAccountList[this.AccountDetails];
+    let prepareDate = {
+      user_id: localStorage.getItem('lottryuserid'),
+      role_id: 3,
+      account_type:Account.type,
+      account_details:
+        Account.type == 1
+          ? Account.account_number
+          : Account.type == 2
+          ? Account.phone
+          : Account.type == 3
+          ? Account.phone
+          : Account.type == 4
+          ? Account.phone
+          : Account.upi_id,
+      user_name: localStorage.getItem('lottryname'),
+      amount: this.Amount,
+      phone: localStorage.getItem('lottryphone'),
+    };
+    this.Account.WidrawRequest(prepareDate).subscribe((data) => {
+      console.log('Data', data);
+      this.popUp = !this.popUp;
+      window.location.reload();
+    });
+  }
+  widrawOpen() {
+    console.log('this.popUp', this.popUp);
+    this.popUp = !this.popUp;
+    console.log('this.popUp', this.popUp);
   }
 }

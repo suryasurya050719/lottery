@@ -134,7 +134,7 @@
                       <th>Show Details</th>
                       <th>Total Tickets</th>
                       <th>Total Collection</th>
-                      <th>Total Commission Detect</th>
+                      <!-- <th>Total Commission Detect</th> -->
                       <th>Net Amount</th>
                       <th>Winning Price Total</th>
                       <th>Game Status</th>
@@ -166,7 +166,7 @@
                           />
                         </div>
                       </td>
-                      <td>
+                      <!-- <td>
                         <div
                           class="input-group"
                           style="width: 150px; margin: 0 auto;"
@@ -178,7 +178,7 @@
                             [value]="totalcomissiondetect"
                           />
                         </div>
-                      </td>
+                      </td> -->
                       <td>
                         <div
                           class="input-group"
@@ -284,11 +284,7 @@
                       </td> -->
                       <td>
                         <span class="badge bg-primary blink_txt mb-2">
-                          {{
-                            data.published_status == true
-                              ? 'Published'
-                              : 'Unpublished'
-                          }}
+                         Published
                         </span>
                         <br />
                         <!-- <button

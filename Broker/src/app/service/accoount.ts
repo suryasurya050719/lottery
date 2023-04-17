@@ -22,8 +22,8 @@ export class Account {
   }
   OwnAccountList(id: number): Observable<any> {
     // console.log('filterdata service', filterdata);
-    let url = `${environment.apiurl}/account/ownaccountlist/${id}`;
-    return this.http.get(url).pipe(
+    let url = `${environment.apiurl}/account/ownaccountlist`;
+    return this.http.post(url,{user_id:id}).pipe(
       map((data) => {
         return data;
       })
@@ -55,6 +55,18 @@ export class Account {
       status: status,
     };
     return this.http.put(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  WidrawRequest(prepareData:any): Observable<any> {
+    let url = `${environment.apiurl}/myrequest`;
+    // let data = {
+    //   game_id: id,
+    //   status: status,
+    // };
+    return this.http.post(url, prepareData).pipe(
       map((data) => {
         return data;
       })

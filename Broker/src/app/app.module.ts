@@ -29,6 +29,10 @@ import { BookingRecordsComponent } from './components/booking-records/booking-re
 import { BookingReviewComponent } from './components/booking-review/booking-review.component';
 import { MatSelectModule } from '@angular/material/select';
 import {WinningReportComponent} from "../app/components/winning-report/winning-report.component"
+import {MyRequestComponent} from "../app/components/my-request/my-request.component"
+import {MyRequestApprovedComponent} from "../app/components/my-request-approved/my-request-approved.component"
+import {MyRequestRejectedComponent} from "../app/components/my-request-rejected/my-request-rejected.component"
+
 
 // import {RegisterComponent} from './components/register/RegisterComponent'
 // import { RouterModule } from '@angular/router';
@@ -37,6 +41,9 @@ import {WinningReportComponent} from "../app/components/winning-report/winning-r
   declarations: [
     AppComponent,
     MainComponent,
+    MyRequestComponent,
+    MyRequestApprovedComponent,
+    MyRequestRejectedComponent,
     HeaderComponent,
     AsideComponent,
     BookingRecordsComponent,

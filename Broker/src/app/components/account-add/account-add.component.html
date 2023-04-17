@@ -28,11 +28,11 @@
                 (change)="textfun()"
               >
                 <option value="">Select</option>
-                <option value="BankAccount">Bank Account</option>
-                <option value="GooglePay">Google Pay</option>
-                <option value="Phone-pe">Phone-pe</option>
-                <option value="Paytm">Paytm</option>
-                <option value="UPI">UPI</option>
+                <option value="1">Bank Account</option>
+                <option value="2">Google Pay</option>
+                <option value="3">Phone-pe</option>
+                <option value="4">Paytm</option>
+                <option value="5">UPI</option>
               </select>
               <div
                 class="ERR_Msg text-danger"
@@ -46,7 +46,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+          <div class="col-lg-3" *ngIf="Type == '1'">
             <div class="form-group">
               <label>Account Number</label>
               <div class="pt-2">
@@ -69,7 +69,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+          <div class="col-lg-3" *ngIf="Type == '1'">
             <div class="form-group">
               <label>Account Name</label>
               <div class="pt-2">
@@ -91,7 +91,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+          <div class="col-lg-3" *ngIf="Type == '1'">
             <div class="form-group">
               <label>Bank Name</label>
               <div class="pt-2">
@@ -113,7 +113,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+          <div class="col-lg-3" *ngIf="Type == '1'">
             <div class="form-group">
               <label>Branch Name</label>
               <div class="pt-2">
@@ -136,7 +136,7 @@
             </div>
           </div>
 
-          <div class="col-lg-3" *ngIf="Type == 'BankAccount'">
+          <div class="col-lg-3" *ngIf="Type == '1'">
             <div class="form-group">
               <label>IFSC</label>
               <div class="pt-2">
@@ -159,7 +159,7 @@
             </div>
           </div>
 
-          <div class="col-lg-3" *ngIf="Type == 'UPI'">
+          <div class="col-lg-3" *ngIf="Type == '5'">
             <div class="form-group">
               <label>Enter UPI Id</label>
               <div class="pt-2">
@@ -180,7 +180,7 @@
 
           <div
             class="col-lg-3"
-            *ngIf="Type == 'GooglePay' || Type == 'Phone-pe' || Type == 'Paytm'"
+            *ngIf="Type == '2' || Type == '3' || Type == '4'"
           >
             <div class="form-group">
               <label>Phone Number</label>
@@ -206,7 +206,7 @@
 
           <div
             class="col-lg-3"
-            *ngIf="Type == 'GooglePay' || Type == 'Phone-pe' || Type == 'Paytm'"
+            *ngIf="Type == '2' || Type == '3' || Type == '4'"
           >
             <div class="form-group">
               <label>Enter Name</label>

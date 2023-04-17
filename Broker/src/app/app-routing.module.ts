@@ -24,6 +24,9 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 // import { BookingReviewComponent } from './components/booking-review/booking-review.component';
 import { WalletComponent } from '../app/components/wallet/wallet.component';
 import { AccountAddComponent } from './components/account-add/account-add.component';
+import { MyRequestComponent } from './components/my-request/my-request.component';
+import { MyRequestApprovedComponent } from './components/my-request-approved/my-request-approved.component';
+import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
 
 const routes: Routes = [
   // No Layouts
@@ -101,14 +104,18 @@ const routes: Routes = [
         path: 'customer-care-list',
         component: CustomerCareListComponent,
       },
-      // {
-      //   path: 'customer-care-add',
-      //   component: CustomerCareAddComponent,
-      // },
-      // {
-      //   path: 'our-information-add',
-      //   component: OurInformationAddComponent,
-      // },
+      {
+        path:'my-request',
+        component:MyRequestComponent
+      },
+      {
+        path:'my-request-approved',
+        component:MyRequestApprovedComponent
+      },
+      {
+        path:'my-request-rejected',
+        component:MyRequestRejectedComponent
+      },
       {
         path: 'profile',
         component: ProfileComponent,

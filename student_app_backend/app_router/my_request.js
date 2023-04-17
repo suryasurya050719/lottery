@@ -8,11 +8,10 @@ const wallet = require("../app_models/wallet");
 const Transection = require("../app_models/transection");
 const { Notification } = require("../common/Notification");
 
-
 router.post("", async (req, res) => {
   let body = req.body;
   user.findOne({ user_id: body.user_id }).then((data) => {
-    console.log("data",data)
+    console.log("data", data);
     let preparedata = {
       user_id: body.user_id,
       role_id: data.role_id,
@@ -39,14 +38,19 @@ router.post("", async (req, res) => {
 
 router.get("", async (req, res) => {
   let status = req.query.status;
-  myRequest.find({ request_status: Number(status) }).then((data) => {
-    res.json({
-      success: true,
-      statuscode: 200,
-      data: data,
-      status: "list generate successfully",
+  myRequest
+    .find({
+      request_status: Number(status),
+      ...(req.query.user_id && { user_id: req.query.user_id }),
+    })
+    .then((data) => {
+      res.json({
+        success: true,
+        statuscode: 200,
+        data: data,
+        status: "list generate successfully",
+      });
     });
-  });
 });
 router.get("/status", async (req, res) => {
   let status = req.query.status;
@@ -95,10 +99,7 @@ router.put("/approved", upload.single("customerImage"), async (req, res) => {
           { new: true }
         )
         .then((result) => {
-          Notification(
-            body.user_id,
-            `Successfully Withdraw Request Approved`
-          );
+          // Notification(body.user_id, `Successfully Withdraw Request Approved`);
           transaction(req.body.amount, body.user_id);
           myRequest
             .findOneAndUpdate({ _id: _id }, preparedata, {
@@ -148,10 +149,7 @@ router.put("/rejected", async (req, res) => {
       new: true,
     })
     .then((data) => {
-      Notification(
-        data[0].user_id,
-        `Sorry Your Request Rejected`
-      );
+      // Notification(data[0].user_id, `Sorry Your Request Rejected`);
       res.json({
         success: true,
         statuscode: 200,

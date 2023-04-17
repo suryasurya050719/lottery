@@ -72,7 +72,7 @@ router.post("", async (req, res) => {
         customer_name: user.name,
         customer_email: "arunkumar3d3d@gmail.com",
         customer_mobile: `${user.phone}`,
-        redirect_url: "http://192.168.0.75:4001/payment/callback",
+        redirect_url: "http://54.234.103.68:4001/payment/callback",
         udf1: body.Dedection_status,
         udf2: body.transection_from_userid,
       };
@@ -155,7 +155,7 @@ router.get("/callback", async (req, res) => {
                   `Successfully  ${item01.amount} Added in Wallet`
                 );
               });
-            res.redirect("http://localhost:4200/wallet");
+            res.redirect("http://bjcd-broker.s3-website-ap-southeast-1.amazonaws.com/wallet");
           });
       });
   });
