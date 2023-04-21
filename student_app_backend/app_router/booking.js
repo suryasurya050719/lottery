@@ -7,7 +7,7 @@ const publishStatus = require("../app_models/publishedStatus");
 const wallet = require("../app_models/wallet");
 const Transection = require("../app_models/transection");
 const numberFunction = require("../common/numberFunction");
-const { Notification } = require("../common/Notification");
+// const { Notification } = require("../common/Notification");
 
 
 const { route } = require("./live_result");
@@ -30,12 +30,12 @@ router.post("/bookingCreate", async (req, res) => {
             Number(data.total_price)
           );
           console.log("wallet", walletprice);
-          Notification(
-            data.user_id,
-            `You Have One Referral  ${
-              data.total_price
-            } Detected`
-          );
+          // Notification(
+          //   data.user_id,
+          //   `You Have One Referral  ${
+          //     data.total_price
+          //   } Detected`
+          // );
           // let formatDate=new Date()
           // formatDate.setHours(formatDate.getHours+5)
           // formatDate.setMinutes(formatDate.setMinutes+30)

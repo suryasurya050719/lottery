@@ -12,7 +12,7 @@ const Transection = require("../app_models/transection");
 const game = require("../app_models/game");
 const config = require("../config/config");
 const { query } = require("express");
-const { Notification } = require("../common/Notification");
+// const { Notification } = require("../common/Notification");
 
 router.get("/preview", async (req, res) => {
   try {
@@ -928,13 +928,13 @@ router.get("/Published", async (req, res) => {
           var year = dateObj.getUTCFullYear();
           console.log("newdate",newdate)
           var newdate = year + "/" + month + "/" + day;
-          Notification(
-            data1.user_id,
-            `Result Published  ${data1.game_name} Show ${data1.showTime}`
-          );
-          if (total_price > 0) {
-            Notification(data1.user_id, `Earned ${total_price} `);
-          }
+          // Notification(
+          //   data1.user_id,
+          //   `Result Published  ${data1.game_name} Show ${data1.showTime}`
+          // );
+          // if (total_price > 0) {
+          //   Notification(data1.user_id, `Earned ${total_price} `);
+          // }
         }
         console.log("total_refered_comission", total_refered_comission);
         console.log("total", total);

@@ -59,7 +59,7 @@ router.post("", async (req, res) => {
   let newtransection = new transection(preparedata);
   await newtransection.save().then(async (data) => {
     let userdata = data;
-    console.log("data.user_id",data.user_id)
+    console.log("data.user_id", data.user_id);
     user.find({ user_id: data.user_id }).then(async (datas) => {
       console.log("data", datas, userdata);
       let user = datas[0];
@@ -113,17 +113,25 @@ router.get("/callback", async (req, res) => {
       .then(async (data) => {
         console.log("dtaa", data.data);
         let item = data.data;
-        let preparedata = {
-          status: "success",
-          TransectionStatus: {
-            id: item.data.id,
-            customer_vpa: item.data.customer_vpa,
-            customer_name: item.data.customer_name,
-            txnAt: item.data.txnAt,
-            Merchand_Name: item.data.Merchant.name,
-            Merchand_upi_id: item.data.Merchant.upi_id,
-          },
-        };
+        if (item.status == true) {
+          var preparedata = {
+            status: "success",
+            TransectionStatus: {
+              id: item.data.id,
+              customer_vpa: item.data.customer_vpa,
+              customer_name: item.data.customer_name,
+              txnAt: item.data.txnAt,
+              Merchand_Name: item.data.Merchant.name,
+              Merchand_upi_id: item.data.Merchant.upi_id,
+            },
+          };
+        } else {
+          res.send({
+            statuscode: 500,
+            status: data.msg,
+            // data: data,
+          });
+        }
         await transection
           .findOneAndUpdate(
             { transection_id: item.data.client_txn_id },
@@ -150,12 +158,14 @@ router.get("/callback", async (req, res) => {
                     referalFunction.referalAddMony(preparedata);
                   }
                 }
-                Notification(
-                  item02.user_id,
-                  `Successfully  ${item01.amount} Added in Wallet`
-                );
+                // Notification(
+                //   item02.user_id,
+                //   `Successfully  ${item01.amount} Added in Wallet`
+                // );
               });
-            res.redirect("http://bjcd-broker.s3-website-ap-southeast-1.amazonaws.com/wallet");
+            res.redirect(
+              "http://bjcd-broker.s3-website-ap-southeast-1.amazonaws.com/wallet"
+            );
           });
       });
   });
@@ -233,10 +243,10 @@ router.post("/mobile_callback", async (req, res) => {
             };
             referalFunction.referalAddMony(preparedata);
           }
-          Notification(
-            preparedata.user_id,
-            `Successfully ${preparedata.amount} Added in Wallet`
-          );
+          // Notification(
+          //   preparedata.user_id,
+          //   `Successfully ${preparedata.amount} Added in Wallet`
+          // );
           res.send({
             statuscode: 200,
             status: "Money Add successfully",

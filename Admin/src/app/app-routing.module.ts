@@ -29,6 +29,8 @@ import { MyRequestApprovedComponent } from './components/my-request-approved/my-
 import { MyRequestRejectedComponent } from './components/my-request-rejected/my-request-rejected.component';
 import { AllComponentComponent } from './components/all-component/all-component.component';
 import { HowToPlayComponent } from './components/how-to-play/how-to-play.component';
+import { ApkComponent } from './components/apk/apk.component';
+
 
 const routes: Routes = [
   // No Layouts
@@ -137,6 +139,10 @@ const routes: Routes = [
       {
         path:'my-request-rejected',
         component:MyRequestRejectedComponent
+      },
+      {
+        path:'my-apk',
+        component:ApkComponent
       },
       {
         path: 'user-review-view/:id',

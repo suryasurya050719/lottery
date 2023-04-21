@@ -41,6 +41,8 @@ const result = require("./app_router/lottery_result");
 const dropdown = require("./app_router/dropdown");
 const winning =require("./app_router/winning_report")
 const Notification =require("./app_router/notification")
+const APK =require("./app_router/apk")
+
 app.use(express.json());
 app.use("/images", express.static("assets"));
 app.use("/user", user);
@@ -62,6 +64,8 @@ app.use("/lotery", result);
 app.use("/dropdown", dropdown);
 app.use("/winning", winning);
 app.use("/notification", Notification);
+app.use("/apk", APK);
+
 
 app.listen(4001, () => {
   console.log("server connected in 4001");

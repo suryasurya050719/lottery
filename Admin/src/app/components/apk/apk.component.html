@@ -1,0 +1,136 @@
+<!-- Container fluid Starts -->
+<div class="container-fluid">
+  <!-- Top Bar Starts -->
+  <!-- <div class="top-bar clearfix">
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_black_2">APK</h3>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <!-- Top Bar Ends -->
+
+  <div class="mp_panel">
+    <h4>APK</h4>
+
+    <div class="pb-2">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Hint </label>
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              [(ngModel)]="title"
+            />
+            <div class="ERR_Msg text-danger" *ngIf="titleError">
+              <p>title is required</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <!-- <div class="pb-2"> -->
+            <!-- <div class="row"> -->
+                    <!-- <div class="col-lg-6"> -->
+                      <div class="pb-3">
+                        <span class="pb-2 d-block">Related Articles</span>
+                        <input
+                          type="file"
+                          name=""
+                          id=""
+                          class="form-control"
+                          name="File"
+                          [(ngModel)]="File"
+                          (change)="Filedata($event)"
+                        />
+                        <div class="ERR_Msg text-danger" *ngIf="FileError">
+                          <p>File required</p>
+                        </div>
+                      </div>
+                    </div>
+                   
+                    <!-- <div class="col-lg-2 d-flex align-items-end pb-3">
+                        <button type="submit" class="btn btn-primary w-100 btn_input btn-ripple" (click)="submit()">Submit</button>
+                    </div> -->
+                  
+                   
+            <!-- </div> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <div class="col-lg-2 d-flex align-items-end pb-3">
+          <button
+            class="btn btn-primary w-100 btn_input btn-ripple"
+            (click)="submit()"
+          >
+            {{ Edite == true ? "update" : "Post" }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-3 pt-2">
+      <div class="mb-0 pb-0">
+        <h4 class="text-left">Available Links</h4>
+      </div>
+
+      <div class="panel-body pb-0 table-responsive product_table">
+        <table class="table no-margin">
+          <thead>
+            <tr>
+              <th width="50" align="center">Edit</th>
+              <th>Title</th>
+              <th>URL</th>
+              <th width="50" align="center">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of list; let i = index">
+              <td align="center">
+                <i
+                  class="fa fa-pencil-square-o h5 text-success"
+                  (click)="Edit(i)"
+                ></i>
+              </td>
+              <td>{{ data.hint }}</td>
+              <td style="color: blue !important">
+                <a [href]="Link + data.file_name" style="color: blue !important">{{
+                  Link + data.file_name
+                }}</a>
+              </td>
+              <td align="center">
+                <i
+                  class="fa fa-trash h5 text-danger"
+                  (click)="delete(data.apk_id)"
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- <nav class="Page navigation text-center pt-3 pb-3">
+      <ul class="pagination justify-content-center d-flex align-items-center">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">«</span>
+          </a>
+        </li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">»</span>
+          </a>
+        </li>
+      </ul>
+    </nav> -->
+  </div>
+</div>
+<!-- Container fluid ends -->

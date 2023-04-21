@@ -78,6 +78,7 @@ router.post("/registor", async (req, res) => {
               //data: data,
             });
             if (body.referal_code !== "") {
+              console.log("data for user",data01)
               let referaldata = {
                 user_id: Number(data01.user_id),
                 refered_user_id: referal_user_data.user_id,
@@ -85,15 +86,16 @@ router.post("/registor", async (req, res) => {
               };
               let newreferal = new referal(referaldata);
               newreferal.save();
-              if (referaldata.refered_role_id == 1) {
-                Notification(
-                  referal_user_data.user_id,
-                  `You Have One Referral  ${
-                    data01.user_id == 3 ? "BJCd C" : "BJCD B"
-                  }${referaldata.user_id}`
-                );
-              }
+              // if (referaldata.refered_role_id == 1) {
+              //   Notification(
+              //     referal_user_data.user_id,
+              //     `You Have One Referral  ${
+              //       data01.user_id == 3 ? "BJCd C" : "BJCD B"
+              //     }${referaldata.user_id}`
+              //   );
+              // }
             } else {
+              console.log("data for user",data01)
               let data = user.findOne({ role_id: 1 }).then((result) => {
                 let referaldata = {
                   user_id: Number(data01.user_id),
@@ -102,14 +104,14 @@ router.post("/registor", async (req, res) => {
                 };
                 let newreferal = new referal(referaldata);
                 newreferal.save();
-                if (referaldata.refered_role_id == 1) {
-                  Notification(
-                    result.user_id,
-                    `You Have One Referral ${
-                      data01.user_id == 3 ? "BJCd C" : "BJCD B"
-                    }${referaldata.user_id}`
-                  );
-                }
+                // if (referaldata.refered_role_id == 1) {
+                //   Notification(
+                //     result.user_id,
+                //     `You Have One Referral ${
+                //       data01.user_id == 3 ? "BJCd C" : "BJCD B"
+                //     }${referaldata.user_id}`
+                //   );
+                // }
               });
             }
           });
