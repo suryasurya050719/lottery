@@ -1061,19 +1061,19 @@ router.get("/publishedShow", async (req, res) => {
     let createdOn = {};
 
     if (req.query.game_name == "" || req.query.game_name == null) {
-      res.json({
+      return res.json({
         success: true,
-        data: data,
+        data: {},
         statuscode: 200,
         status: "game name is required",
       });
     } else {
       filterdata["game_name"] = req.query.game_name;
     }
-    if (req.query.fromDate == "" || req.query.fromDate == null) {
-      res.json({
+    if (req.query?.fromDate == "" || req.query?.fromDate == null) {
+      return res.json({
         success: true,
-        data: data,
+        data: {},
         statuscode: 200,
         status: "from Date is required",
       });
@@ -1082,10 +1082,10 @@ router.get("/publishedShow", async (req, res) => {
         new Date(req.query.fromDate).setUTCHours(0, 0, 0)
       );
     }
-    if (req.query.toDate == "" || req.query.toDate == null) {
-      res.json({
+    if (req.query?.toDate == "" || req.query?.toDate == null) {
+      return res.json({
         success: true,
-        data: data,
+        data: {},
         statuscode: 200,
         status: "from Date is required",
       });
@@ -1101,7 +1101,7 @@ router.get("/publishedShow", async (req, res) => {
     }
     console.log("createdOn", createdOn);
     console.log("unpublish filterdata===>", JSON.stringify(filterdata));
-    publishStatus
+   await publishStatus
       .aggregate([
         {
           $match: filterdata,
@@ -1124,6 +1124,93 @@ router.get("/publishedShow", async (req, res) => {
         });
       });
   } catch (error) {
+    console.log("error",error)
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
+    });
+  }
+});
+router.get("/MobilePublishedShow", async (req, res) => {
+  try {
+    console.log("data", req.query.game_name);
+    let game_name = req.query.game_name;
+    console.log("new DAte", req.query);
+    let newDAte = new Date();
+    await newDAte.setUTCHours(newDAte.getUTCHours() + 5);
+    await newDAte.setUTCMinutes(newDAte.getUTCMinutes() + 30);
+    let filterdata = {
+      status: true,
+      // date:
+    };
+    let createdOn = {};
+
+    if (req.query.game_name == "" || req.query.game_name == null) {
+      return res.json({
+        success: true,
+        data: {},
+        statuscode: 200,
+        status: "game name is required",
+      });
+    } else {
+      filterdata["game_name"] = req.query.game_name;
+    }
+    // if (req.query?.fromDate == "" || req.query?.fromDate == null) {
+    //   return res.json({
+    //     success: true,
+    //     data: {},
+    //     statuscode: 200,
+    //     status: "from Date is required",
+    //   });
+    // } else {
+    //   createdOn["$gte"] = new Date(
+    //     new Date(req.query.fromDate).setUTCHours(0, 0, 0)
+    //   );
+    // }
+    // if (req.query?.toDate == "" || req.query?.toDate == null) {
+    //   return res.json({
+    //     success: true,
+    //     data: {},
+    //     statuscode: 200,
+    //     status: "from Date is required",
+    //   });
+    // } else {
+    //   createdOn["$lte"] = new Date(
+    //     new Date(req.query.toDate).setUTCHours(23, 59, 59)
+    //   );
+    // }
+    // let objectLength = Object.keys(createdOn).length;
+    // console.log("objectLength", objectLength);
+    // if (objectLength > 0) {
+    //   filterdata["created_on"] = createdOn;
+    // }
+    // console.log("createdOn", createdOn);
+    console.log("unpublish filterdata===>", JSON.stringify(filterdata));
+   await publishStatus
+      .aggregate([
+        {
+          $match: filterdata,
+        },
+      ])
+      .then((data) => {
+        console.log("data", data);
+        res.json({
+          success: true,
+          data: data,
+          statuscode: 200,
+          status: "Board create successfully",
+        });
+      })
+      .catch((error) => {
+        res.json({
+          success: false,
+          statuscode: 202,
+          status: error,
+        });
+      });
+  } catch (error) {
+    console.log("error",error)
     res.json({
       success: false,
       statuscode: 500,

@@ -11,6 +11,7 @@ const saltRounds = 10;
 
 router.post("/lotteryResult", async (req, res) => {
   try {
+    console.log("body",req.body)
     let prepareData = {};
     if (
       req.body.user_id !== "" ||
@@ -18,36 +19,67 @@ router.post("/lotteryResult", async (req, res) => {
       req.body.user_id !== undefined
     ) {
       prepareData["user_id"] = req.body.user_id;
+    }else{
+      // console.log("dtaa", data);
+      return res.json({
+        success: false,
+        data: {},
+        statuscode: 400,
+        status: "user id required",
+      });
     }
+    if (
+      req.body.showTime 
+    ) {
+      console.log(">>>>")
+      prepareData["show_date"] = req.body.showTime;
+    }else{
+      console.log("sdfsd")
+      // console.log("dtaa", data);
+      return res.json({
+        success: false,
+        data: {},
+        statuscode: 400,
+        status: "show time required",
+      });
+    }
+    let query=[
+      {
+        $match:{
+          show_details: new Date(req.body.showTime)
+        }
+      },
+      {
+        $unwind: {
+          path: "$wining_booking",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          $and: [{ "wining_booking.user_id": prepareData.user_id }],
+        },
+      },
+      {
+        $sort: {
+          created_on: -1,
+        },
+      },
+    ]
+    console.log("query",query)
     winningReport
-      .aggregate([
-        {
-          $unwind: {
-            path: "$wining_booking",
-            preserveNullAndEmptyArrays: true,
-          },
-        },
-        {
-          $match: {
-            $and: [{ "wining_booking.user_id": prepareData.user_id }],
-          },
-        },
-        {
-          $sort: {
-            created_on: -1,
-          },
-        },
-      ])
+      .aggregate(query)
       .then((data) => {
-        console.log("dtaa", data);
+        console.log("dtaa>>>>", data);
         res.json({
-          success: false,
+          success: true,
           data: data,
-          statuscode: 400,
+          statuscode: 200,
           status: "list generated",
         });
       })
       .catch((error) => {
+        console.log("error",error)
         res.json({
           success: false,
           data: error,
@@ -56,6 +88,7 @@ router.post("/lotteryResult", async (req, res) => {
         });
       });
   } catch (error) {
+    console.log("error",error)
     res.json({
       success: false,
       data: error,
@@ -64,7 +97,6 @@ router.post("/lotteryResult", async (req, res) => {
     });
   }
 });
-
 router.post("/winningResult", async (req, res) => {
   try {
     let prepareData = {};
@@ -145,7 +177,6 @@ router.post("/winningResult", async (req, res) => {
     });
   }
 });
-
 router.get("/AdminWinningResult", async (req, res) => {
   try {
     console.log("req.query", req.query);

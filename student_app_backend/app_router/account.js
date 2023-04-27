@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const account = require("../app_models/account");
+const referral = require("../app_models/referal");
 const user = require("../app_models/user");
 const numberFunction = require("../common/numberFunction");
 const { route } = require("./live_result");
@@ -60,7 +61,7 @@ router.get("/allbrokerslist", async (req, res) => {
 router.post("/ownaccountlist", async (req, res) => {
   try {
     let user_id = req.body.user_id;
-    console.log("user_id",user_id)
+    console.log("user_id", user_id);
     if (user_id == "") {
       res.json({
         success: false,
@@ -264,6 +265,71 @@ router.get("/sharedaccountlist", async (req, res) => {
         });
       });
   } catch (error) {
+    res.json({
+      success: false,
+      statuscode: 500,
+      status: error,
+    });
+  }
+});
+
+router.get("/CoustomerVisibleAccountList", async (req, res) => {
+  try {
+    console.log("data", req.query);
+    let data = {};
+    if (req.query.user_id) {
+      data["user_id"] = req.query.user_id;
+    } else {
+      return res.json({
+        success: false,
+        statuscode: 400,
+        status: "User Id Required",
+      });
+    }
+    let admin = await account.aggregate([
+      {
+        $match: {
+          $and: [{ customer_status: true }, { role_id: 1 }],
+        },
+      },
+    ]);
+    let Broker = await referral.aggregate([
+      {
+        $lookup: {
+          from: "accoounts",
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "result",
+        },
+      },
+      {
+        $unwind: {
+          path: "$result",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          user_id: Number(req.query.user_id),
+        },
+      },
+      {
+        $group: {
+          _id: "$user_id",
+          BrokerList: { $push: "$result" },
+        },
+      },
+    ]);
+    // let [adminList,BrokerList]=Promise.all([admin,Broker])
+    res.json({
+      success: true,
+      statuscode: 200,
+      data: admin.concat(Broker[0].BrokerList),
+      status: "List Generted",
+    });
+    console.log("adminList,BrokerList", admin, Broker);
+  } catch (error) {
+    console.log("error", error);
     res.json({
       success: false,
       statuscode: 500,
