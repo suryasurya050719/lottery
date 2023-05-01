@@ -47,6 +47,7 @@ router.post("", async (req, res) => {
     transection_to_userid: body.transection_to_userid,
     transection_from_type: body.transection_from_type,
     transection_to_type: "UPI TOP UP",
+    reason: "UPI Topup",
     status: "Pending",
   };
   if (body.position == "INC") {

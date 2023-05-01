@@ -922,7 +922,7 @@ function walletdedection(user_id, dec_amount) {
           res.user_id,
           res.role_id,
           3,
-          "booking dedection amount",
+          "Ticket bookings",
           "DEC",
           false
         );
@@ -932,7 +932,7 @@ function walletdedection(user_id, dec_amount) {
           res.user_id,
           res.role_id,
           3,
-          "booking amount",
+          "Ticket bookings",
           "ADD",
           false
         );
@@ -995,7 +995,7 @@ async function Commission(user_id, dec_amount) {
             res.user_id,
             res.role_id,
             3,
-            "booking Commission amount",
+            "Commission",
             "ADD",
             true
           );
@@ -1005,7 +1005,7 @@ async function Commission(user_id, dec_amount) {
             res.user_id,
             res.role_id,
             3,
-            "booking Commission amount",
+            "Commission",
             "DEC",
             true
           );
