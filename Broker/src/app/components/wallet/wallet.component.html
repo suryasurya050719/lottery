@@ -276,7 +276,7 @@
           <tr>
             <th>Transaction Id</th>
             <th>UserId</th>
-            <th>Referral Id</th>
+            <!-- <th>Referral Id</th> -->
             <th>Date &amp; Time</th>
             <th>Amount</th>
             <th>Payment From</th>
@@ -287,16 +287,19 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of singleTransectionList">
-            <td>{{ user.transection_id }}</td>
-            <td>{{ user.user_id }}</td>
+            <td>BJCD T{{ user.transection_id }}</td>
             <td>
-              <!-- {{
+              BJCD{{ user.transection_to_roleid == 2 ? " B" : " C"
+              }}{{ user.user_id }}
+            </td>
+            <!-- <td>
+              {{
                         transection.referalList.length > 0
                           ? transection.referalList[0].refered_user_id
                           : ""
-                      }} -->
+                      }}
               {{ transectionlist.referalList }}
-            </td>
+            </td> -->
             <td>{{ user.created_on | date : "dd/MM/yyyy" }}</td>
             <td>
               <div class="input-group" style="width: 150px">
@@ -304,17 +307,40 @@
                 <input
                   type="text"
                   class="form-control"
-                  value="{{ user.amount }}"
+                  [style.color]="
+                    user.position == 'ADD' || user.position == 'INC'
+                      ? 'black'
+                      : 'red !important'
+                  "
+                  value="{{
+                    user.position == 'ADD' || user.position == 'INC'
+                      ? user.amount
+                      : '-' + user.amount
+                  }}"
                 />
               </div>
             </td>
             <td>
+              {{
+                user.transection_from_roleid == 1
+                  ? "BJCD A"
+                  : user.transection_from_roleid == 2
+                  ? "BJCD B"
+                  : "BJCD C"
+              }}
               {{ user.transection_from_userid }}
               <span class="badge bg-primary blink_txt">{{
                 user.transection_from_type
               }}</span>
             </td>
             <td>
+              {{
+                user.transection_to_roleid == 1
+                  ? "BJCD A"
+                  : user.transection_to_roleid == 2
+                  ? "BJCD B"
+                  : "BJCD C"
+              }}
               {{ user.transection_to_userid }}
               <span class="badge bg-primary blink_txt">{{
                 user.transection_to_type
@@ -331,14 +357,7 @@
               <button
                 type="button"
                 class="mt-2 btn btn-primary btn-sm btn-ripple ViewPaymentForBtn"
-                (click)="
-                  PaymentForBtn(
-                    user.reason,
-                    user.amount,
-
-                    user.status
-                  )
-                "
+                (click)="PaymentForBtn()"
               >
                 View
               </button>

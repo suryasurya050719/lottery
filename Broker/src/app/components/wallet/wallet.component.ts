@@ -172,10 +172,12 @@ export class WalletComponent implements OnInit {
   }
   singleTransection() {
     let currentUser_id = localStorage.getItem('lottryuserid');
+    console.log("currentUser_id",currentUser_id)
     let data = {
       user_id: currentUser_id,
       graterthan: this.toDate,
       lessthan: this.fromDate,
+      commission:""
     };
     this.transection.singleTransectionList(data).subscribe((data: any) => {
       this.singleTransectionList = data.data;

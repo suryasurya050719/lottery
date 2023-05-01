@@ -110,9 +110,33 @@
                                     : 'UPI'}}/{{data.amount}}</span>
 
                             </td>
-                            <td>
-                              <span  class="badge bg-primary blink_txt mb-2">{{data.user_name}}</span>
-                            </td>
+                            <td class="bg-white text-left text_dark_all">
+              
+                                <div *ngIf="data.account?.type == 1">
+                                  <b class="d-block pb-2 text_dark_all">Details</b>
+                                  Bank Name: {{ data.account?.bank_name }}<br />
+                                  Accoount Number: {{ data.account?.account_number }}<br />
+                                  IFSC Code {{ data.account?.ifsc_code }}
+                                </div>
+                                <div
+                                  *ngIf="
+                                    data.account?.type == 2 ||
+                                    data.account?.type == 3 ||
+                                    data.account?.type == 4
+                                  "
+                                >
+                                  <b class="d-block pb-2 text_dark_all">Details</b>
+                                  Phone: {{ data.account?.phone }}<br />
+                                </div>
+                                <div *ngIf="data.account?.type == 5">
+                                  <b class="d-block pb-2 text_dark_all">Details</b>
+                                  UPI: {{ data.account?.upi_id }}<br />
+                                </div>
+                                <!-- {{data.account}} -->
+                                <div *ngIf="data.account.type !== 'undefind'">
+                                  {{ data.account_number }}
+                                </div>
+                              </td>
 
 
 

@@ -345,6 +345,7 @@ router.get("/singleUserList", async (req, res) => {
     .find(filterdata)
     .sort({ created_on: -1 })
     .then((data) => {
+      console.log("data",data)
       res.send({
         statuscode: 200,
         status: "transection list genetated",
