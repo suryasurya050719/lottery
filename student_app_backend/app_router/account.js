@@ -155,16 +155,16 @@ router.delete("/accountdelete", async (req, res) => {
 });
 router.get("/sharedaccountlist", async (req, res) => {
   try {
-    console.log("req.body", req.query.id);
+    console.log("req.body", req.query);
     console.log("req.body", req.query.id !== "");
     let filter = [{ isOtpVerify: true }, { role_id: 2 }];
-    if (req.query.id !== "") {
-      // let user_id = await numberFunction.justNumbers(query.user_id);
-      console.log("id", numberFunction.justNumbers(req.query.id));
-      filter.push({
-        user_id: numberFunction.justNumbers(req.query.id),
-      });
-    }
+    // if (req.query.id !== "") {
+    //   // let user_id = await numberFunction.justNumbers(query.user_id);
+    //   console.log("id", numberFunction.justNumbers(req.query.id));
+    //   filter.push({
+    //     user_id: numberFunction.justNumbers(req.query.id),
+    //   });
+    // }
     console.log("filter", filter);
     user
       .aggregate([
@@ -212,6 +212,7 @@ router.get("/sharedaccountlist", async (req, res) => {
               {
                 $group: {
                   _id: "$_id",
+                  account_id:{$first:"$account_id"},
                   name: { $first: "$name" },
                   phone: { $first: "$phone" },
                   role_id: { $first: "$role_id" },
@@ -265,6 +266,7 @@ router.get("/sharedaccountlist", async (req, res) => {
         });
       });
   } catch (error) {
+    console.log("error",error)
     res.json({
       success: false,
       statuscode: 500,

@@ -93,14 +93,14 @@
                 >
                   <i class="fa fa-university bank_img text-dark"></i>
                 </div>
-                <div class="flx_1" *ngIf="user.type == 'BankAccount'">
+                <div class="flx_1" *ngIf="user.type == '1'">
                   <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
                   <span class="d-block" style="color: balck">{{
                     user.account_number
                   }}</span>
                   <span class="d-block">{{ user.account_name }}</span>
                 </div>
-                <div class="flx_1" *ngIf="user.type == 'UPI'">
+                <div class="flx_1" *ngIf="user.type == '5'">
                   <b class="d-block mb-0 txt_blue txt_bold">{{ user.type }}</b>
                   <span class="d-block" style="color: balck">{{
                     user.upi_id
@@ -110,9 +110,9 @@
                 <div
                   class="flx_1"
                   *ngIf="
-                    user.type == 'Phone-pe' ||
-                    user.type == 'GooglePay' ||
-                    user.type == 'Paytm'
+                    user.type == '2' ||
+                    user.type == '3' ||
+                    user.type == '4'
                   "
                 >
                   <b class="d-block mb-0 txt_blue txt_bold">{{ user.type }}</b>
@@ -400,12 +400,22 @@
                     >
                       <i class="fa fa-university bank_img text-dark"></i>
                     </div>
-                    <div class="flx_1">
-                      <b class="d-block mb-0 txt_blue txt_bold">{{
-                        data.type
-                      }}</b>
+                    <div class="flx_1" *ngIf="data.type==1">
+                      <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
                       <span class="d-block">{{ data.account_number }}</span>
                       <span class="d-block">{{ data.bank_name }}</span>
+                    </div>
+                    <div class="flx_1" *ngIf="data.type==2||data.type==3||data.type==4">
+                      <b class="d-block mb-0 txt_blue txt_bold">{{
+                        data.name
+                      }}</b>
+                      <span class="d-block">{{ data.phone }}</span>
+                      <!-- <span class="d-block">{{ data.bank_name }}</span> -->
+                    </div>
+                    <div class="flx_1" *ngIf="data.type==5">
+                      <b class="d-block mb-0 txt_blue txt_bold">UPI</b>
+                      <span class="d-block">{{ data.upi_id }}</span>
+                      <!-- <span class="d-block">{{ data.bank_name }}</span> -->
                     </div>
                     <div class="flx_0 pr-2 text-center">
                       <div class="pb-2">

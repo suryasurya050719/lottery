@@ -166,15 +166,13 @@
               <div
                 class="border p-2 mb-2"
                 *ngIf="
-                  (data.type == 'Phone-pe' ||
-                    data.type == 'GooglePay' ||
-                    data.type == 'Paytm') &&
+                  (data.type == '2' || data.type == '3' || data.type == '4') &&
                   data.broker_status == true
                 "
               >
                 <div class="row">
                   <div class="col-lg-6 border-right">
-                    <b>Gpay</b>
+                    <b>{{ data.name }}</b>
                   </div>
                   <div class="col-lg-6">
                     <b>+91 {{ data.phone }}</b>
@@ -183,7 +181,7 @@
               </div>
               <div
                 class="border p-2 mb-2"
-                *ngIf="data.type == 'BankAccount' && data.broker_status == true"
+                *ngIf="data.type == '1' && data.broker_status == true"
               >
                 <div class="row">
                   <div class="col-lg-6 border-right">
@@ -200,7 +198,7 @@
               </div>
               <div
                 class="border p-2 mb-2"
-                *ngIf="data.type == 'UPI' && data.broker_status == true"
+                *ngIf="data.type == '5' && data.broker_status == true"
               >
                 <div class="row">
                   <div class="col-lg-6 border-right">
@@ -439,7 +437,17 @@
                     [value]="i"
                     *ngFor="let data of ownAccountList; let i = index"
                   >
-                    {{ data.account_number }}/{{
+                    {{
+                      data.type == 1
+                        ? data.account_number
+                        : data.type == 2
+                        ? data.phone
+                        : data.type == 3
+                        ? data.phone
+                        : data.type == 4
+                        ? data.phone
+                        : data.upi_id
+                    }}/{{
                       data.type == 1
                         ? "Bank Account"
                         : data.type == 2

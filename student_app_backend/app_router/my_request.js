@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const user = require("../app_models/user");
 const myRequest = require("../app_models/my_request");
+const Account = require("../app_models/account");
 var path = require("path");
 var multer = require("multer");
 const wallet = require("../app_models/wallet");
@@ -10,27 +11,31 @@ const { Notification } = require("../common/Notification");
 
 router.post("", async (req, res) => {
   let body = req.body;
+  console.log("body>>>>>>>>>>>>>>>>>>>>>>>>>>", body);
   user.findOne({ user_id: body.user_id }).then((data) => {
     console.log("data", data);
-    let preparedata = {
-      user_id: body.user_id,
-      role_id: data.role_id,
-      account_type: body.account_type,
-      account_details: body.account_details,
-      user_name: data.name,
-      amount: body.amount,
-      phone: data.phone,
-    };
-    // Notification(
-    //   preparedata.user_id,
-    //   `Successfully Withdraw Request Created`
-    // );
-    let insertData = new myRequest(preparedata);
-    insertData.save().then((data) => {
-      res.json({
-        success: true,
-        statuscode: 200,
-        status: "request create successfully",
+    Account.findOne({ account_id: body.account_id }).then((result) => {
+      let preparedata = {
+        user_id: body.user_id,
+        account: result,
+        role_id: data.role_id,
+        account_type: body.account_type,
+        account_details: body.account_details,
+        user_name: data.name,
+        amount: body.amount,
+        phone: data.phone,
+      };
+      // Notification(
+      //   preparedata.user_id,
+      //   `Successfully Withdraw Request Created`
+      // );
+      let insertData = new myRequest(preparedata);
+      insertData.save().then((data) => {
+        res.json({
+          success: true,
+          statuscode: 200,
+          status: "request create successfully",
+        });
       });
     });
   });

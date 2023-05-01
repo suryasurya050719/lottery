@@ -184,7 +184,7 @@ export class WalletComponent implements OnInit {
   }
   getAccount() {
     this.Dashboard.AccountList().subscribe((data) => {
-      console.log('data', data.data[0]);
+      console.log('data', data);
       this.accountListAdmin = data.data[0]?.Admin[0].List;
       console.log('this.accountListAdmin', this.accountListAdmin);
     });
@@ -193,7 +193,7 @@ export class WalletComponent implements OnInit {
     let data = Number(localStorage.getItem('lottryuserid'));
     console.log('data', data);
     this.Account.OwnAccountList(data).subscribe((data) => {
-      console.log('>>', data);
+      console.log('>> ownAccountList', data);
       this.ownAccountList = data.data;
     });
   }
@@ -251,6 +251,7 @@ export class WalletComponent implements OnInit {
     let prepareDate = {
       user_id: localStorage.getItem('lottryuserid'),
       role_id: 3,
+      account_id:Account.account_id,
       account_type:Account.type,
       account_details:
         Account.type == 1

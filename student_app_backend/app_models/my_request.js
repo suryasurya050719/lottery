@@ -9,6 +9,9 @@ const creatSchema = mongoose.Schema({
   user_id: {
     type: Number,
   },
+  account: {
+    type: Object,
+  },
   role_id: {
     type: Number,
   },

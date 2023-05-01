@@ -48,7 +48,8 @@ export class DashboardComponent implements OnInit {
     this.AdminAccountPopup = false;
   }
   singleUser() {
-    this.login.singleUser(this.id).subscribe((data) => {
+    console.log("localStorage.getItem('lottryuserid')",this.id)
+    this.login.singleUserBankAccountOnly(this.id).subscribe((data) => {
       console.log('single user', data);
       this.singlrUser = data.data[0];
       let lengthcheck = data.data[0].accountList.length;
