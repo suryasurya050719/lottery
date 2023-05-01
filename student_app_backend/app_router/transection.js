@@ -48,7 +48,27 @@ router.post("/addmony", async (req, res) => {
   } else if (body.position == "DETECT") {
     var amount = -body.amount;
   }
-  wallet
+  if (body.Admin) {
+    var preparedata = {
+      user_id: body.user_id,
+      position: body.position,
+      amount: body.amount,
+      transection_from_userid: body.transection_from_userid,
+      transection_from_roleid: body.transection_from_roleid,
+      commission: false,
+      transection_to_userid: body.transection_to_userid,
+      transection_to_roleid: body.transection_to_roleid,
+      transection_from_type: body.transection_from_type,
+      transection_to_type: body.transection_to_type,
+      reason: body.reason,
+      status: "success",
+    };
+    let newtransection = new transection(preparedata);
+    await newtransection.save().then((data)=>{
+      console.log("data",data)
+    })
+  }else{
+    wallet
     .updateOne({ user_id: body.user_id }, { $inc: { current_amount: amount } })
     .then(async (data) => {
       if (body.topup) {
@@ -80,13 +100,16 @@ router.post("/addmony", async (req, res) => {
           });
       }
       let newtransection = new transection(preparedata);
-      await newtransection.save();
+      await newtransection.save().then((data)=>{
+        console.log("data",data)
+      })
       res.send({
         statuscode: 200,
         status: "Money Add successfully",
         //data: data,
       });
     });
+  }
 });
 
 router.get("/singleuser/:id", async (req, res) => {

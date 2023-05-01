@@ -262,6 +262,7 @@ export class WalletReivewComponent implements OnInit {
         transection_from_type: 'Wallet',
         transection_to_type: 'Wallet',
         reason: this.reason,
+        Admin:false,
         position: this.transectionType,
       };
       this.transection.Addmony(data).subscribe((data) => {
@@ -275,7 +276,8 @@ export class WalletReivewComponent implements OnInit {
           transection_from_type: 'Wallet',
           transection_to_type: 'Wallet',
           reason: this.reason,
-          position: "DETECT",
+          Admin:true,
+          position: this.transectionType=="ADD"?"DETECT":"ADD",
         };
         this.transection.Addmony(PrepareDate).subscribe((data) => {
           console.log('data for payment', data);

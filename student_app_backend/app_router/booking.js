@@ -982,7 +982,7 @@ async function Commission(user_id, dec_amount) {
     console.log("PercentageAmount", Number(PercentageAmount.toFixed(1)));
     let amount = wallet
       .findOneAndUpdate(
-        { user_id: user_id },
+        { user_id: referalsData.refered_user_id },
         { $inc: { current_amount: Number(PercentageAmount.toFixed(1)) } },
         { new: true }
       )
