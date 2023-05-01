@@ -33,7 +33,8 @@ function referalAddMony(formdata) {
       // console.log("referal data", data);
       if (
         data[0].userlist.refered_user_id &&
-        data[0].userlist.refered_user_id !== ""
+        data[0].userlist.refered_user_id !== "" &&
+        data[0].userlist.refered_role_id == 3
       ) {
         let referal_user_id = data[0].userlist.refered_user_id;
         // console.log("uderid", referal_user_id);
@@ -43,7 +44,7 @@ function referalAddMony(formdata) {
           position: "INC",
           amount: incAmouont,
           transection_from_userid: user_id,
-          commission:true,
+          commission: true,
           transection_to_userid: referal_user_id,
           transection_from_type: "Gpay",
           transection_to_type: "Wallet",

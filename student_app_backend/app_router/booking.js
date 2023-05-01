@@ -28,7 +28,9 @@ router.post("/bookingCreate", async (req, res) => {
             data.user_id,
             Number(data.total_price)
           );
+          let commission = Commission(data.user_id, Number(data.total_price));
           console.log("wallet", walletprice);
+          console.log("commission", commission);
           // Notification(
           //   data.user_id,
           //   `You Have One Referral  ${
@@ -200,9 +202,9 @@ router.get("/getall", async (req, res) => {
         searchFilter["showTime"] = { $in: new Date(query.show_time) };
       } else {
         let data = [];
-        let arrayData =await query?.show_time?.split(",");
+        let arrayData = await query?.show_time?.split(",");
         for (let i = 0; i < arrayData.length; i++) {
-          const element =await arrayData[i];
+          const element = await arrayData[i];
           data.push(new Date(element));
         }
         searchFilter["showTime"] = { $in: data };
@@ -374,13 +376,13 @@ router.get("/bookingList", async (req, res) => {
         bookingFilter["showTime"] = { $in: query.show_time };
       } else {
         let data = [];
-        let arrayData =await query?.show_time?.split(",");
+        let arrayData = await query?.show_time?.split(",");
         for (let i = 0; i < arrayData.length; i++) {
-          const element =await arrayData[i];
+          const element = await arrayData[i];
           data.push(new Date(element));
         }
         // searchFilter["showTime"] = { $in: data };
-        bookingFilter["showTime"] = { $in: data};
+        bookingFilter["showTime"] = { $in: data };
       }
     }
     // console.log("searchFilters", searchFilter["show_time"]);
@@ -595,14 +597,14 @@ router.get("/userBasedBookings", async (req, res) => {
       if (typeof query.show_time == "object") {
         bookingFilter["showTime"] = { $in: new Date(query.show_time) };
       } else {
-         let preData = [];
-        let arrayData =await query?.show_time?.split(",");
+        let preData = [];
+        let arrayData = await query?.show_time?.split(",");
         for (let i = 0; i < arrayData.length; i++) {
-          const element =await arrayData[i];
+          const element = await arrayData[i];
           preData.push(new Date(element));
         }
         // searchFilter["showTime"] = { $in: data };
-        bookingFilter["showTime"] =await { $in: preData };
+        bookingFilter["showTime"] = await { $in: preData };
       }
     }
     if (query.board_name) {
@@ -924,6 +926,16 @@ function walletdedection(user_id, dec_amount) {
           "DEC",
           false
         );
+        await transectiondetails(
+          dec_amount,
+          res.user_id,
+          res.user_id,
+          res.role_id,
+          3,
+          "booking amount",
+          "ADD",
+          false
+        );
       });
     })
     .catch((error) => {
@@ -962,5 +974,48 @@ async function transectiondetails(
       console.log("error for trtansection", error);
     });
   console.log("transection", transection);
+}
+async function Commission(user_id, dec_amount) {
+  let referalsData = await referals.findOne({ user_id: user_id });
+  if (referalsData.refered_role_id == 2) {
+    let PercentageAmount = (5 / 100) * dec_amount;
+    console.log("PercentageAmount", Number(PercentageAmount.toFixed(1)));
+    let amount = wallet
+      .findOneAndUpdate(
+        { user_id: user_id },
+        { $inc: { current_amount: Number(PercentageAmount.toFixed(1)) } },
+        { new: true }
+      )
+      .then(async (data) => {
+        console.log("data for referasll", data);
+        await user.findOne({ role_id: 1 }).then(async (res) => {
+          await transectiondetails(
+            Number(PercentageAmount.toFixed(1)),
+            referalsData.refered_user_id,
+            res.user_id,
+            res.role_id,
+            3,
+            "booking Commission amount",
+            "ADD",
+            true
+          );
+          await transectiondetails(
+            Number(PercentageAmount.toFixed(1)),
+            res.user_id,
+            res.user_id,
+            res.role_id,
+            3,
+            "booking Commission amount",
+            "DEC",
+            true
+          );
+        });
+      })
+      .catch((error) => {
+        console.log("error for wallet dedection", error);
+      });
+    console.log("amount", amount);
+    return amount;
+  }
 }
 module.exports = router;
