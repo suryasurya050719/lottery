@@ -16,6 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
@@ -67,6 +68,7 @@ import {MyRequestRejectedComponent} from "../app/components/my-request-rejected/
   imports: [
     BrowserModule,
     MatDialogModule,
+    MatIconModule,
     MatSelectModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger', // set defaults here

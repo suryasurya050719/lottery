@@ -269,10 +269,34 @@ export class WalletReivewComponent implements OnInit {
           transection_to_type: 'Wallet',
           reason: this.reason,
           position: this.transectionType,
-          topup: true,
+          topup: false,
         };
         this.transection.Addmony(data).subscribe((data) => {
           console.log('data for payment', data);
+          let prepareData = {
+            amount: this.amount,
+            user_id: localStorage.getItem('lottryuserid'),
+            transection_from_userid: localStorage.getItem('lottryuserid'),
+            transection_from_roleid: localStorage.getItem('lottryroleid'),
+            transection_to_userid: this.ActiveWallet,
+            transection_to_roleid: this.ActiveWallet_role_id,
+            transection_from_type: 'Wallet',
+            transection_to_type: 'Wallet',
+            reason: this.reason,
+            position: "DETECT",
+            topup: false,
+          };
+          this.transection.Addmony(prepareData).subscribe((data) => {
+            console.log('data for payment', data);
+            this.ClosePopupInfo();
+            this.singleTransection();
+            this.singleUserLIst();
+            this.alluser(this.currentpage);
+            // this.paymenturlshow = true;
+            // let paymentUrl = data.data.data.payment_url;
+            // this.paymenturl = paymentUrl;
+            // window.open(`${paymentUrl}`, '_self');
+          });
           this.ClosePopupInfo();
           this.singleTransection();
           this.singleUserLIst();
@@ -282,6 +306,7 @@ export class WalletReivewComponent implements OnInit {
           // this.paymenturl = paymentUrl;
           // window.open(`${paymentUrl}`, '_self');
         });
+        
       } else {
         alert('your wallet is to low please check your wallet');
       }

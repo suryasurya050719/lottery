@@ -34,10 +34,12 @@ router.post("/registor", async (req, res) => {
       // console.log("data", data.length);
       // if (data.length === 0) {
       if (body.referal_code && body.referal_code !== "") {
+        console.log("body.referal_code",body.referal_code)
         await user
           .findOne({ referal_code: body.referal_code })
           .then((data) => {
             referal_user_data = data;
+            console.log("referal_user_data for first",referal_user_data)
           })
           .catch((err) => {
             return res.status(201).json({ success: false, message: err });
@@ -78,7 +80,8 @@ router.post("/registor", async (req, res) => {
               //data: data,
             });
             if (body.referal_code !== "") {
-              console.log("data for user",data01)
+              console.log("data for user referred",data01)
+              console.log("referal_user_data",referal_user_data)
               let referaldata = {
                 user_id: Number(data01.user_id),
                 refered_user_id: referal_user_data.user_id,
@@ -324,8 +327,6 @@ router.get("/singleuserbankAccount/:id", async (req, res) => {
       });
     });
 });
-
-
 router.get("/refereduser/:id", async (req, res) => {
   let user_id = req.params.id;
   if (user_id == "") {

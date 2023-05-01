@@ -125,7 +125,7 @@ export class WinningReportComponent implements OnInit {
     }
 
     this.lotteryResult.winningRecord(prepareData).subscribe(async (data) => {
-      console.log('data', data.data)
+      console.log('data for winning records', data.data)
       // let result =this.winningRecords[0]
       data.data[0]['booking_data'] = []
       data.data[0].wining_booking.forEach((winningData: any) => {

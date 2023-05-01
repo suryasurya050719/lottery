@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Dashboard } from '../../service/dashboard';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Login } from '../../service/login';
+import { Clipboard } from '@angular/cdk/clipboard';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +30,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private login: Login
+    private login: Login,
+    private clipboard: Clipboard
   ) {}
   accountListAdmin: any = [];
   ngOnInit(): void {
@@ -57,6 +60,11 @@ export class DashboardComponent implements OnInit {
       this.branchName = this.sharedAccount.branch_name;
       this.cardholder = this.sharedAccount.account_name;
     });
+  }
+  copyHeroName(name: any, role_id: any) {
+    let copyData =name
+      // role_id == 1 ? `BJCD A${name}` : role_id == 2 ? `BJCD B${name}` : '';
+    this.clipboard.copy(copyData);
   }
   changeFn() {
     this.referedUser();

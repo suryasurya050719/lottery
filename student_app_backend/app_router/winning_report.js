@@ -315,6 +315,7 @@ router.get("/BrokerWinningResult", async (req, res) => {
     //     game_name: req.query.game_name,
     //   }
     // );
+    console.log("refered_user_id",prepareData)
     winningReport
       .aggregate([
         {

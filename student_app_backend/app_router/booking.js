@@ -9,7 +9,6 @@ const Transection = require("../app_models/transection");
 const numberFunction = require("../common/numberFunction");
 // const { Notification } = require("../common/Notification");
 
-
 const { route } = require("./live_result");
 
 router.post("/bookingCreate", async (req, res) => {
@@ -193,16 +192,23 @@ router.get("/getall", async (req, res) => {
     //   typeof query.board_name
     // );
     if (query.show_time) {
-      //   let data ={}
-      //   data['$in']=query.showTime
-      //   searchFilters["showTime"]=data
+      // let data ={}
+      // data['$in']=query.showTime
+      // searchFilters["showTime"]=data
+      console.log("xkfnv>>>>>>>>>", typeof query.show_time == "object");
       if (typeof query.show_time == "object") {
-        searchFilter["showTime"] = { $in: query.show_time };
+        searchFilter["showTime"] = { $in: new Date(query.show_time) };
       } else {
-        searchFilter["showTime"] = { $in: query?.show_time?.split(",") };
+        let data = [];
+        let arrayData =await query?.show_time?.split(",");
+        for (let i = 0; i < arrayData.length; i++) {
+          const element =await arrayData[i];
+          data.push(new Date(element));
+        }
+        searchFilter["showTime"] = { $in: data };
       }
     }
-    console.log("searchFilters", searchFilter["show_time"]);
+    console.log("searchFilters", searchFilter);
     if (query.board_name) {
       if (typeof query.board_name == "object") {
         searchFilter["booking_data.board_name"] = { $in: query.board_name };
@@ -367,7 +373,14 @@ router.get("/bookingList", async (req, res) => {
       if (typeof query.show_time == "object") {
         bookingFilter["showTime"] = { $in: query.show_time };
       } else {
-        bookingFilter["showTime"] = { $in: query?.show_time?.split(",") };
+        let data = [];
+        let arrayData =await query?.show_time?.split(",");
+        for (let i = 0; i < arrayData.length; i++) {
+          const element =await arrayData[i];
+          data.push(new Date(element));
+        }
+        // searchFilter["showTime"] = { $in: data };
+        bookingFilter["showTime"] = { $in: data};
       }
     }
     // console.log("searchFilters", searchFilter["show_time"]);
@@ -580,12 +593,18 @@ router.get("/userBasedBookings", async (req, res) => {
       //   data['$in']=query.showTime
       //   searchFilters["showTime"]=data
       if (typeof query.show_time == "object") {
-        bookingFilter["showTime"] = { $in: query.show_time };
+        bookingFilter["showTime"] = { $in: new Date(query.show_time) };
       } else {
-        bookingFilter["showTime"] = { $in: query?.show_time?.split(",") };
+         let preData = [];
+        let arrayData =await query?.show_time?.split(",");
+        for (let i = 0; i < arrayData.length; i++) {
+          const element =await arrayData[i];
+          preData.push(new Date(element));
+        }
+        // searchFilter["showTime"] = { $in: data };
+        bookingFilter["showTime"] =await { $in: preData };
       }
     }
-    // console.log("searchFilters", searchFilter["show_time"]);
     if (query.board_name) {
       if (typeof query.board_name == "object") {
         // bookingFilter["booking_data.board_name"] = { $in: query.board_name };
@@ -662,7 +681,7 @@ router.get("/userBasedBookings", async (req, res) => {
         },
       },
     ];
-    // console.log("dbQuery=-====>", JSON.stringify(dbQuery));
+    console.log("dbQuery=-====>", JSON.stringify(dbQuery));
     referals
       .aggregate(dbQuery)
 
@@ -932,7 +951,7 @@ async function transectiondetails(
     transection_to_roleid: tran_t_roleid,
     transection_from_type: "Admin",
     transection_to_type: "Wallet",
-    status:"success",
+    status: "success",
     reason: reason,
     position: position,
     commission: commission,

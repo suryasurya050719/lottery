@@ -34,7 +34,7 @@ export class BookingReviewComponent implements OnInit {
   // filter data
   fromDate: any = '';
   toDate: any = '';
-  user_type: any = '';
+  user_type: any = '2';
   game_type: any = '';
   board_type: any = [{}];
   user_id: any = '';
