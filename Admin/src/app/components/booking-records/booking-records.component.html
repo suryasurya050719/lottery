@@ -372,12 +372,12 @@
                     </td>
                     <td>
                       <span class="badge bg-primary blink_txt mb-2">
-                        In progress
+                       {{data.published_status==true?"Published":"Unpublished"}}
                       </span>
                       <br />
                       <button
                         class="btn btn-primary btn-sm"
-                        (click)="ViewMorePopup4(i)"
+                        (click)="WinOrLossGetApi(i)"
                       >
                         View
                       </button>
@@ -637,17 +637,17 @@
               <tr>
                 <td>
                   <span class="badge bg-primary blink_txt mb-2">
-                    In progress
+                    {{BookingWin}}
                   </span>
                   <br />
-                  <button class="btn btn-primary btn-sm">View</button>
+                  <!-- <button class="btn btn-primary btn-sm">View</button> -->
                 </td>
                 <td>
                   <span class="badge bg-primary blink_txt mb-2">
-                    In progress
+                    {{BookingLoss}}
                   </span>
                   <br />
-                  <button class="btn btn-primary btn-sm">View</button>
+                  <!-- <button class="btn btn-primary btn-sm">View</button> -->
                 </td>
               </tr>
             </tbody>

@@ -453,6 +453,7 @@ router.get("/bookingList", async (req, res) => {
           refered_user_id: 1,
           refered_role_id: 1,
           created_on: "$bookings.created_on",
+          published_status:"$bookings.published_status",
           referal_id: 1,
           user: 1,
           bookings: {

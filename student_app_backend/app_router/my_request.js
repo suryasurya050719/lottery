@@ -14,21 +14,17 @@ router.post("", async (req, res) => {
   console.log("body>>>>>>>>>>>>>>>>>>>>>>>>>>", body);
   user.findOne({ user_id: body.user_id }).then((data) => {
     console.log("data", data);
-    Account.findOne({ account_id: body.account_id }).then((result) => {
-      let preparedata = {
-        user_id: body.user_id,
-        account: result,
-        role_id: data.role_id,
-        account_type: body.account_type,
-        account_details: body.account_details,
-        user_name: data.name,
-        amount: body.amount,
-        phone: data.phone,
-      };
-      // Notification(
-      //   preparedata.user_id,
-      //   `Successfully Withdraw Request Created`
-      // );
+    let preparedata = {
+      user_id: body.user_id,
+      ...(!body.account_id> 0 && { account: body.account }),
+      role_id: data.role_id,
+      account_type: body.account_type,
+      account_details: body.account_details,
+      user_name: data.name,
+      amount: body.amount,
+      phone: data.phone,
+    };
+    if (!body.account_id) {
       let insertData = new myRequest(preparedata);
       insertData.save().then((data) => {
         res.json({
@@ -37,7 +33,23 @@ router.post("", async (req, res) => {
           status: "request create successfully",
         });
       });
-    });
+    } else {
+      Account.findOne({ account_id: body.account_id }).then((result) => {
+        // Notification(
+        //   preparedata.user_id,
+        //   `Successfully Withdraw Request Created`
+        // );
+        preparedata["account"] = result;
+        let insertData = new myRequest(preparedata);
+        insertData.save().then((data) => {
+          res.json({
+            success: true,
+            statuscode: 200,
+            status: "request create successfully",
+          });
+        });
+      });
+    }
   });
 });
 

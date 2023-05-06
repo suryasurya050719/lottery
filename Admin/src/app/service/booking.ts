@@ -38,10 +38,19 @@ export class Booking {
       })
     );
   }
-    UserBasedBookingsList(data: any): Observable<any> {
+  UserBasedBookingsList(data: any): Observable<any> {
     // console.log('filterdata service', filterdata);
     let url = `${environment.apiurl}/booking/userBasedBookings`;
     return this.http.get(url, { params: data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  WinLossGetApi(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/winning/BookingStatus`;
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })

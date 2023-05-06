@@ -11,7 +11,7 @@ const saltRounds = 10;
 
 router.post("/lotteryResult", async (req, res) => {
   try {
-    console.log("body",req.body)
+    console.log("body", req.body);
     let prepareData = {};
     if (
       req.body.user_id !== "" ||
@@ -19,7 +19,7 @@ router.post("/lotteryResult", async (req, res) => {
       req.body.user_id !== undefined
     ) {
       prepareData["user_id"] = req.body.user_id;
-    }else{
+    } else {
       // console.log("dtaa", data);
       return res.json({
         success: false,
@@ -28,13 +28,11 @@ router.post("/lotteryResult", async (req, res) => {
         status: "user id required",
       });
     }
-    if (
-      req.body.showTime 
-    ) {
-      console.log(">>>>")
+    if (req.body.showTime) {
+      console.log(">>>>");
       prepareData["show_date"] = req.body.showTime;
-    }else{
-      console.log("sdfsd")
+    } else {
+      console.log("sdfsd");
       // console.log("dtaa", data);
       return res.json({
         success: false,
@@ -43,11 +41,11 @@ router.post("/lotteryResult", async (req, res) => {
         status: "show time required",
       });
     }
-    let query=[
+    let query = [
       {
-        $match:{
-          show_details: new Date(req.body.showTime)
-        }
+        $match: {
+          show_details: new Date(req.body.showTime),
+        },
       },
       {
         $unwind: {
@@ -65,8 +63,8 @@ router.post("/lotteryResult", async (req, res) => {
           created_on: -1,
         },
       },
-    ]
-    console.log("query",query)
+    ];
+    console.log("query", query);
     winningReport
       .aggregate(query)
       .then((data) => {
@@ -79,7 +77,7 @@ router.post("/lotteryResult", async (req, res) => {
         });
       })
       .catch((error) => {
-        console.log("error",error)
+        console.log("error", error);
         res.json({
           success: false,
           data: error,
@@ -88,7 +86,7 @@ router.post("/lotteryResult", async (req, res) => {
         });
       });
   } catch (error) {
-    console.log("error",error)
+    console.log("error", error);
     res.json({
       success: false,
       data: error,
@@ -315,7 +313,7 @@ router.get("/BrokerWinningResult", async (req, res) => {
     //     game_name: req.query.game_name,
     //   }
     // );
-    console.log("refered_user_id",prepareData)
+    console.log("refered_user_id", prepareData);
     winningReport
       .aggregate([
         {
@@ -404,8 +402,8 @@ router.get("/BrokerWinningResult", async (req, res) => {
         console.log("data.length", data[0]);
         let overalluserprice = 0;
         let overallTicetprice = 0;
-        let overallTicket=0
-        let total_refered_comission=0
+        let overallTicket = 0;
+        let total_refered_comission = 0;
         // if (data.length > 0) {
         for (let i = 0; i < data[0].wining_booking.length; i++) {
           let winningData = [];
@@ -429,11 +427,11 @@ router.get("/BrokerWinningResult", async (req, res) => {
           console.log("overallTicetprice", overallTicetprice);
           console.log("overallTicket", overallTicket);
           console.log("total_refered_comission", total_refered_comission);
-          console.log("data",data)
-          data[0].overalluserprice=overalluserprice
-          data[0].overallTicetprice=overallTicetprice
-          data[0].overallTicket=overallTicket
-          data[0].total_refered_comission=total_refered_comission
+          console.log("data", data);
+          data[0].overalluserprice = overalluserprice;
+          data[0].overallTicetprice = overallTicetprice;
+          data[0].overallTicket = overallTicket;
+          data[0].total_refered_comission = total_refered_comission;
           if (data[0].wining_booking.length == i + 1) {
             // console.log("JSON.Stringy", JSON.stringify(data));
             res.json({
@@ -452,6 +450,103 @@ router.get("/BrokerWinningResult", async (req, res) => {
         //   status: "No Data Found",
         // });
         // }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        res.json({
+          success: false,
+          data: error,
+          statuscode: 400,
+          status: "list generated",
+        });
+      });
+  } catch (error) {
+    console.log("error", error);
+    res.json({
+      success: false,
+      data: error,
+      statuscode: 400,
+      status: "list generated",
+    });
+  }
+});
+router.post("/BookingStatus", async (req, res) => {
+  try {
+    console.log("body", req.body);
+    let prepareData = {};
+    if (
+      req.body.booking_id !== "" ||
+      req.body.booking_id !== null ||
+      req.body.booking_id !== undefined
+    ) {
+      prepareData["booking_id"] = req.body.booking_id;
+    } else {
+      // console.log("dtaa", data);
+      return res.json({
+        success: false,
+        data: {},
+        statuscode: 400,
+        status: "user id required",
+      });
+    }
+    if (req.body.showTime) {
+      console.log(">>>>");
+      prepareData["show_date"] = req.body.showTime;
+    } else {
+      console.log("sdfsd");
+      // console.log("dtaa", data);
+      return res.json({
+        success: false,
+        data: {},
+        statuscode: 400,
+        status: "show time required",
+      });
+    }
+    let query = [
+      {
+        $match: {
+          show_details: new Date(req.body.showTime),
+        },
+      },
+      {
+        $unwind: {
+          path: "$wining_booking",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          $and: [{ "wining_booking.booking_id": prepareData.booking_id }],
+        },
+      },
+      {
+        $sort: {
+          created_on: -1,
+        },
+      },
+    ];
+    console.log("query", JSON.stringify(query));
+    winningReport
+      .aggregate(query)
+      .then((data) => {
+        console.log("dtaa>>>>", data);
+        let prepareResultDate = {
+          Win: 0,
+          Loss: 0,
+        };
+        data[0]?.wining_booking?.booking_data?.forEach(async (data) => {
+          if (data.lottery_price !== 0) {
+            prepareResultDate.Win =  prepareResultDate.Win + 1;
+          } else {
+            prepareResultDate.Loss =  prepareResultDate.Loss + 1;
+          }
+        });
+        res.json({
+          success: true,
+          data: prepareResultDate,
+          statuscode: 200,
+          status: "list generated",
+        });
       })
       .catch((error) => {
         console.log("error", error);
