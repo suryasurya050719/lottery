@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Transection } from '../../service/transection';
+import { InstandFound } from '../../service/InstandFound';
+
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private transection: Transection
+    private transection: Transection,
+    private instandFound:InstandFound
   ) {}
   OtpSubmitInfo: boolean = false;
   paymenturlshow: boolean = false;
@@ -22,8 +25,28 @@ export class HeaderComponent implements OnInit {
   persentage: string = '';
   percentageAmount: string = '';
   collaps_memu: boolean = false;
+  InstandFoundStatus:Boolean=false
+  InstandFoundId:string=""
   ngOnInit(): void {
     this.coloapsMenu();
+    this.InstandFoundList()
+  }
+  InstandFoundList(){
+    this.instandFound.list().subscribe((data)=>{
+      console.log("data",data)
+      this.InstandFoundStatus=data.data[0].instandFound_status
+      this.InstandFoundId=data.data[0]._id
+    })
+  }
+  InstandFoundStatusChange(){
+  let data ={
+    _id:this.InstandFoundId,
+    instandFound_status:this.InstandFoundStatus
+  }
+  this.instandFound.update(data).subscribe((result)=>{
+    alert("Instand Found Updated Successfully")
+    this.InstandFoundList()
+  })
   }
   coloapsMenu() {
     console.log("this.collaps_memu",this.collaps_memu)

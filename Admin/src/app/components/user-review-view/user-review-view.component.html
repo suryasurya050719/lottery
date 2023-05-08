@@ -86,13 +86,14 @@
                   ><mat-icon
                     (click)="
                       copyHeroName(
-                        this.singlrUser.user_id,
+                        this.singlrUser.referal_code,
                         this.singlrUser.role_id
                       )
                     "
                     >content_copy</mat-icon
                   >
                 </h3>
+                <h4>{{this.singlrUser.referal_code}}</h4>
                 <h4>
                   BJCD{{ this.singlrUser.role_id == 2 ? " B" : " C" }}
                   {{ this.singlrUser.user_id }}

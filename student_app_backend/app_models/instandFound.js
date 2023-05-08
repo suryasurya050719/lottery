@@ -3,28 +3,11 @@ const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 
 const creatSchema = mongoose.Schema({
-  notification_id: {
+  instandFound_id: {
     type: Number,
   },
-  user_id: {
-    type: Number,
-  },
-  user_name: {
-    type: String,
-  },
-  message: {
-    type: String,
-  },
-  customer_status:{
-    type:Boolean,
-    default:false
-  },
-  broker_status:{
-    type:Boolean,
-    default:false
-  },
-  admin_status:{
-    type:Boolean,
+  instandFound_status: {
+    type: Boolean,
     default:false
   },
   created_on: {
@@ -38,9 +21,9 @@ const creatSchema = mongoose.Schema({
 autoIncrement.initialize(mongoose.connection);
 creatSchema.plugin(autoIncrement.plugin, {
   model: "post",
-  field: "notification_id",
+  field: "instandFound_id",
   startAt: 1,
   incrementBy: 1,
 });
 
-module.exports = mongoose.model("notification", creatSchema);
+module.exports = mongoose.model("instandFound", creatSchema);

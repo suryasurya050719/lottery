@@ -36,8 +36,8 @@ export class UserReviewViewComponent implements OnInit {
     this.referedUser();
   }
   copyHeroName(name: any, role_id: any) {
-    let copyData =
-      role_id == 1 ? `BJCD A${name}` : role_id == 2 ? `BJCD B${name}` : '';
+    let copyData =name
+      // role_id == 1 ? `BJCD A${name}` : role_id == 2 ? `BJCD B${name}` : '';
     this.clipboard.copy(copyData);
   }
   singleUser() {

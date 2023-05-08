@@ -12,6 +12,34 @@
     <div class="flx_1">
       <!-- Header actions starts -->
       <ul id="header-actions" class="clearfix">
+        <li class="list-box hidden-xs dropdown mr-3" style="margin-top: 11px;">
+          <div class="active_chk dark_switch d-inline-block m-auto">
+            <label class="switchlable">
+              <input
+                class="switch_input toggle"
+                type="checkbox"
+                [checked]="InstandFoundStatus"
+                (click)="InstandFoundStatusChange()"
+              />
+              <span class="slider round">
+                <!-- [checked]="advanceSearch" -->
+                <!-- (click)="AdvancedSearch()" -->
+                <!-- <span
+                 class="off"
+                > -->
+                <span
+                  [ngClass]="{
+                    off: InstandFoundStatus == false,
+                    on: InstandFoundStatus == true
+                  }"
+                >
+                  {{ InstandFoundStatus ? 'ON' : 'Off' }}
+                </span>
+              </span>
+            </label>
+          </div>
+          <span class="d-block pt-1" style="margin-top: -9px;color: white;">Instan Found</span>
+        </li>
         <li class="list-box hidden-xs dropdown mr-3">
           <a [routerLink]="['/my-request']" role="button" class="">
             <span class="minw_auto arrow_hide hed_act_img position-relative">

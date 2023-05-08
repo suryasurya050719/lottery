@@ -42,6 +42,7 @@ const dropdown = require("./app_router/dropdown");
 const winning =require("./app_router/winning_report")
 const Notification =require("./app_router/notification")
 const APK =require("./app_router/apk")
+const InstandFound =require("./app_router/instandFound")
 
 app.use(express.json());
 app.use("/images", express.static("assets"));
@@ -65,6 +66,7 @@ app.use("/dropdown", dropdown);
 app.use("/winning", winning);
 app.use("/notification", Notification);
 app.use("/apk", APK);
+app.use("/instandFound",InstandFound)
 
 
 app.listen(4001, () => {

@@ -89,7 +89,7 @@ router.post("/registor", async (req, res) => {
               };
               let newreferal = new referal(referaldata);
               newreferal.save();
-              // if (referaldata.refered_role_id == 1) {
+              // if (referaldata?.refered_role_id == 1) {
               //   Notification(
               //     referal_user_data.user_id,
               //     `You Have One Referral  ${
