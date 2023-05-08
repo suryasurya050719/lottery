@@ -98,14 +98,16 @@
                   <span class="d-block" style="color: balck">{{
                     user.account_number
                   }}</span>
+                  <span class="d-block">{{ user.bank_name }}</span>
                   <span class="d-block">{{ user.account_name }}</span>
+                  <span class="d-block">{{ user.branch_name }}</span>
+                  <span class="d-block">{{ user.ifsc_code }}</span>                    
                 </div>
                 <div class="flx_1" *ngIf="user.type == '5'">
                   <b class="d-block mb-0 txt_blue txt_bold">{{ user.type }}</b>
                   <span class="d-block" style="color: balck">{{
                     user.upi_id
                   }}</span>
-                  <!-- <span class="d-block">{{ user.account_name }}</span> -->
                 </div>
                 <div
                   class="flx_1"
@@ -404,13 +406,15 @@
                       <b class="d-block mb-0 txt_blue txt_bold">Bank Account</b>
                       <span class="d-block">{{ data.account_number }}</span>
                       <span class="d-block">{{ data.bank_name }}</span>
-                    </div>
+                      <span class="d-block">{{ data.account_name }}</span>
+                      <span class="d-block">{{ data.branch_name }}</span>
+                      <span class="d-block">{{ data.ifsc_code }}</span>                    </div>
                     <div class="flx_1" *ngIf="data.type==2||data.type==3||data.type==4">
                       <b class="d-block mb-0 txt_blue txt_bold">{{
                         data.name
                       }}</b>
                       <span class="d-block">{{ data.phone }}</span>
-                      <!-- <span class="d-block">{{ data.bank_name }}</span> -->
+                      <span class="d-block">{{ data.name }}</span>
                     </div>
                     <div class="flx_1" *ngIf="data.type==5">
                       <b class="d-block mb-0 txt_blue txt_bold">UPI</b>

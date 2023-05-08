@@ -110,7 +110,7 @@
           <ul class="dropdown-menu sm">
             <li class="dropdown-content">
               <a [routerLink]="['/payment-profile']">Payment Profile</a>
-              <a>Change Password</a>
+              <a (click)="ChangePassword()">Change Password</a>
               <a (click)="logout()">Logout</a>
             </li>
           </ul>
@@ -260,7 +260,98 @@
   </div>
 </section>
 <!-- Otp submit after end -->
+ <!-- popup start-->
+ 
+ <section class="popup_box AddUserPopup " *ngIf="BrokerPopup" style="z-index:99999999;">
+  <div
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
+  >
+    <div class="pop_wrapper popup_w position-relative">
+      <span
+        class="popup_close CloseTransRefunPopup"
+        (click)="CloseBrokerPopup()"
+        >x</span
+      >
+      <div class="form_pop_he p-3">
+        <div>
+          <h4 class="py-2 txt_bold">Change Password</h4>
+        </div>
+        <form [formGroup]="form">
+          <div class="pb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="oldPassword"
+              placeholder="Enter Old Password"
+              [(ngModel)]="oldPassword"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['oldPassword']?.touched &&
+                form.controls['oldPassword'].invalid
+              "
+            >
+              <p>oldPassword is required</p>
+            </div>
+          </div>
+          <div class="pb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="newPassword"
+              placeholder="Enter New Password"
+              [(ngModel)]="newPassword"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['newPassword']?.touched &&
+                form.controls['newPassword'].invalid
+              "
+            >
+              <p>newPassword is required</p>
+            </div>
+          </div>
+          <div class="pb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="confirmPassword"
+              placeholder="Enter Confirm Password"
+              [(ngModel)]="confirmPassword"
+            />
+            <div
+              class="ERR_Msg text-danger"
+              *ngIf="
+                form.controls['confirmPassword']?.touched &&
+                form.controls['confirmPassword'].invalid
+              "
+            >
+              <p>confirmPassword is required</p>
+            </div>
+          </div>
 
+          <div class="text-center d-flex flex-row justify-content-between">
+            <button class="btn btn-primary mr-3" (click)="CloseBrokerPopup()">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!form.valid"
+              (click)="onSubmit()"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <!-- popup End -->
 <!-- ancher tag dynamiv -->
 <div *ngIf="paymenturlshow">
   <a href="{{ paymenturl }}">{{ paymenturl }}</a>

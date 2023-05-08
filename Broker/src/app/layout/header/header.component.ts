@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Transection } from '../../service/transection';
+import { Login } from '../../service/login';
+
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +18,12 @@ import { Transection } from '../../service/transection';
 export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
+    private login:Login,
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private transection: Transection
   ) {}
+  form: FormGroup;
   OtpSubmitInfo: boolean = false;
   paymenturlshow: boolean = false;
   paymenturl: string = '';
@@ -22,7 +33,22 @@ export class HeaderComponent implements OnInit {
   persentage: string = '';
   percentageAmount: string = '';
   userName: string | null = '';
+  BrokerPopup:Boolean=false
+  oldPassword:string=""
+  newPassword:string=""
+  confirmPassword:string=""
   ngOnInit(): void {
+    this.form = this.formBuilder.group(
+      {
+        oldPassword: ['', Validators.required],
+        newPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+      }
+      // {
+      //   validators: [Validation.match('password', 'confirmPassword')] [routerLink]="['/user-review-view']"
+      // }
+    );
+    this.form.reset()
     this.userName = localStorage.getItem('lottryname');
   }
   logout() {
@@ -50,5 +76,37 @@ export class HeaderComponent implements OnInit {
       // this.paymenturl = paymentUrl;
       window.open(`${paymentUrl}`, '_self');
     });
+  }
+  ChangePassword(){
+    this.form.reset()
+    this.BrokerPopup=!this.BrokerPopup
+  }
+  onSubmit(){
+   if (this.newPassword== this.confirmPassword) {
+    let data ={
+      user_id:localStorage.getItem("lottryuserid"),
+      password:this.newPassword,
+      old_password:this.oldPassword,
+    }
+    this.login.ChangePassword(data).subscribe((result)=>{
+      console.log("result",result)
+      console.log("result",result.success)
+      console.log("result",result)
+
+      if (result.success==false) {
+        alert(`${result.status}`)
+      }else{
+        alert("Password Updated")
+      }
+      // alert("Password Updated")
+      this.CloseBrokerPopup()
+    })
+   }else{
+    alert("New Password and Confirm Password must be same")
+   }
+  }
+  CloseBrokerPopup(){
+    this.form.reset()
+    this.BrokerPopup=!this.BrokerPopup
   }
 }

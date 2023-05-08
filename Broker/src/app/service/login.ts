@@ -121,4 +121,12 @@ export class Login {
       })
     );
   }
+  ChangePassword(data:any): Observable<any> {
+    let url = `${environment.apiurl}/user/changePassword`;
+    return this.http.put(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

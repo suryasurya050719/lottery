@@ -351,7 +351,7 @@ router.get("/singleUserList", async (req, res) => {
     filterdata["user_id"] = Number(query.user_id);
   }
   if (query.commission !== "") {
-    filterdata["commission"] = query.commission;
+    filterdata["commission"] = Boolean(query.commission);
   }
   if (query.graterthan !== "") {
     created_on["$lte"] = new Date(query.graterthan);
