@@ -1,196 +1,177 @@
- <!-- Container fluid Starts -->
- <div class="container-fluid">
-
-
-
+<!-- Container fluid Starts -->
+<div class="container-fluid">
   <!-- Top Bar Starts -->
   <div class="top-bar clearfix">
-      <div class="row gutter">
-          <div class="col-lg-12">
-              <div class="page-title">
-                  <h3 class="txt_black_2">My Request</h3>
-              </div>
-          </div>
-
+    <div class="row gutter">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 class="txt_black_2">My Request</h3>
+        </div>
       </div>
+    </div>
   </div>
   <!-- Top Bar Ends -->
 
-
   <div class="mp_panel">
-
-
-      <div class="row">
-          <div class="col-lg-4 col-md-6 col-6 text-center pb-4">
-
-              <div class="info_product text-center yellow_panel">
-                  <a [routerLink]="['/my-request']">
-                      <h6 class="txt_normal text-white">Withdraw Request</h6>
-                      <div class="text-center">
-                        <i class="fa fa-arrow-circle-right arrow_mer text-white"></i>
-                    </div>
-                  </a>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-6 text-center pb-4 text-white">
-
-              <div class="info_product text-center yellow_panel">
-                  <a [routerLink]="['/my-request-approved']">
-                      <h6 class="txt_normal text-white">Approved</h6>
-                      <div class="text-center">
-                        <i class="fa fa-arrow-circle-right arrow_mer text-white"></i>
-                    </div>
-                  </a>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-6 text-center pb-4">
-
-              <div class="info_product text-center yellow_panel">
-                  <a [routerLink]="['/my-request-rejected']">
-                      <h6 class="txt_normal text-white">Rejected</h6>
-                      <div class=" text-center">
-                        <i class="fa fa-arrow-circle-down arrow_mer text-white"></i>
-                    </div>
-                  </a>
-              </div>
-          </div>
-
-      </div>
-
-
-
-
-   
-      <div class="resul_show_panel" *ngFor="let data of MyRequestList; let i=index">
-        <span class="cnt_result">{{i+1}}</span>
-
-        <div class="pb-3">
-
-
-
-
-            <div class="table-responsive product_table td_center text_white_all">
-                <table class="table no-margin">
-                    <thead>
-                        <tr>
-                            <th width="180">Withdraw id
-
-                            </th>
-                            <th width="180">Date & Time
-
-                            </th>
-                            <th>Title
-
-                            </th>
-
-                            <th width="150">User Name
-
-                            </th>
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="td_yellow">
-                            <td>
-                                <span class="d-block">BJCD W{{data.withdraw_id}}</span>
-                            </td>
-
-                            <td>
-                                <span class="d-block">{{data.created_on | date: "dd/MM/yyyy"}}</span>
-                            </td>
-                            <td>
-                                <span class="d-block">{{ data.account_type == 1
-                                    ? 'Bank Account'
-                                    : data.account_type == 2
-                                    ? 'GooglePay'
-                                    : data.account_type == 3
-                                    ? 'Phone-pe'
-                                    : data.account_type == 4
-                                    ? 'Paytm'
-                                    : 'UPI'}}/{{data.amount}}</span>
-
-                            </td>
-                            <td class="bg-white text-left text_dark_all">
-              
-                                <div *ngIf="data.account?.type == 1">
-                                  <b class="d-block pb-2 text_dark_all">Details</b>
-                                  Bank Name: {{ data.account?.bank_name }}<br />
-                                  Accoount Number: {{ data.account?.account_number }}<br />
-                                  IFSC Code {{ data.account?.ifsc_code }}
-                                </div>
-                                <div
-                                  *ngIf="
-                                    data.account?.type == 2 ||
-                                    data.account?.type == 3 ||
-                                    data.account?.type == 4
-                                  "
-                                >
-                                  <b class="d-block pb-2 text_dark_all">Details</b>
-                                  Phone: {{ data.account?.phone }}<br />
-                                </div>
-                                <div *ngIf="data.account?.type == 5">
-                                  <b class="d-block pb-2 text_dark_all">Details</b>
-                                  UPI: {{ data.account?.upi_id }}<br />
-                                </div>
-                                <!-- {{data.account}} -->
-                                <div *ngIf="data.account.type !== 'undefind'">
-                                  {{ data.account_number }}
-                                </div>
-                              </td>
-
-
-
-                        </tr>
-                        <tr class="td_yellow">
-                            <td colspan="2">
-                                <div class="d-flex">
-
-                                    <div class='flx_1 text-left'>
-                                        <div>
-                                            <b class="pr-2 flx_w1">User Id</b> : <span>   {{
-                                             data.role_id == 1 ? "BJCD A" : data.role_id == 2 ? "BJCD B": "BJCD C"
-                                            }}
-                                            {{data.user_id}}
-                                              </span>
-                                        </div>
-                                        <div>
-                                          <b class="pr-2 flx_w1">Phone</b> : <span>
-                                             {{data.phone}}</span>
-                                      </div>
-                                    </div>
-
-                                </div>
-                            </td>
-                            <td class="bg-white text-left text_dark_all">
-                                <b class="d-block pb-2 text_dark_all">Details</b>
-                                {{data.details}}
-                            </td>
-                            <td class="bg-white ">
-                                
-                                    <span  class="badge bg-primary blink_txt mb-2">Rejected</span>
-                                  
-                            </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-6 text-center pb-4">
+        <div class="info_product text-center yellow_panel">
+          <a [routerLink]="['/my-request']">
+            <h6 class="txt_normal text-white">Withdraw Request</h6>
+            <div class="text-center">
+              <i class="fa fa-arrow-circle-right arrow_mer text-white"></i>
             </div>
+          </a>
         </div>
-
-
-
-
+      </div>
+      <div class="col-lg-4 col-md-6 col-6 text-center pb-4 text-white">
+        <div class="info_product text-center yellow_panel">
+          <a [routerLink]="['/my-request-approved']">
+            <h6 class="txt_normal text-white">Approved</h6>
+            <div class="text-center">
+              <i class="fa fa-arrow-circle-right arrow_mer text-white"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-6 text-center pb-4">
+        <div class="info_product text-center yellow_panel">
+          <a [routerLink]="['/my-request-rejected']">
+            <h6 class="txt_normal text-white">Rejected</h6>
+            <div class="text-center">
+              <i class="fa fa-arrow-circle-down arrow_mer text-white"></i>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
 
+    <div
+      class="resul_show_panel"
+      *ngFor="let data of MyRequestList; let i = index"
+    >
+      <span class="cnt_result">{{ i + 1 }}</span>
 
+      <div class="pb-3">
+        <div class="table-responsive product_table td_center text_white_all">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th width="180">Withdraw id</th>
+                <th width="180">Date & Time</th>
+                <th>Title</th>
 
+                <th width="150">User Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="td_yellow">
+                <td>
+                  <span class="d-block">BJCD W{{ data.withdraw_id }}</span>
+                </td>
+
+                <td>
+                  <span class="d-block">{{
+                    data.created_on | date : "dd/MM/yyyy"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="d-block"
+                    >{{
+                      data.account_type == 1
+                        ? "Bank Account"
+                        : data.account_type == 2
+                        ? "GooglePay"
+                        : data.account_type == 3
+                        ? "Phone-pe"
+                        : data.account_type == 4
+                        ? "Paytm"
+                        : "UPI"
+                    }}/{{ data.amount }}</span
+                  >
+                </td>
+                <td>
+                  <span class="badge bg-primary blink_txt mb-2">{{
+                    data.user_name
+                  }}</span>
+                </td>
+              </tr>
+              <tr class="td_yellow">
+                <td colspan="2">
+                  <div class="d-flex">
+                    <div class="flx_1 text-left">
+                      <div>
+                        <b class="pr-2 flx_w1">User Id</b> :
+                        <span>
+                          {{
+                            data.role_id == 1
+                              ? "BJCD A"
+                              : data.role_id == 2
+                              ? "BJCD B"
+                              : "BJCD C"
+                          }}
+                          {{ data.user_id }}
+                        </span>
+                      </div>
+                      <div>
+                        <b class="pr-2 flx_w1">Phone</b> :
+                        <span> {{ data.phone }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="bg-white text-left text_dark_all">
+                  <div *ngIf="data.account?.type == 1">
+                    <b class="d-block pb-2 text_dark_all">Details</b>
+                    Bank Name: {{ data.account?.bank_name }}<br />
+                    Accoount Number: {{ data.account?.account_number }}<br />
+                    IFSC Code {{ data.account?.ifsc_code }}
+                  </div>
+                  <div
+                    *ngIf="
+                      data.account?.type == 2 ||
+                      data.account?.type == 3 ||
+                      data.account?.type == 4
+                    "
+                  >
+                    <b class="d-block pb-2 text_dark_all">Details</b>
+                    Phone: {{ data.account?.phone }}<br />
+                    Phone: {{ data.account?.name }}
+                  </div>
+                  <div *ngIf="data.account?.type == 5">
+                    <b class="d-block pb-2 text_dark_all">Details</b>
+                    UPI: {{ data.account?.upi_id }}<br />
+                  </div>
+                  <!-- {{data.account}} -->
+                  <div *ngIf="data.account.type !== 'undefind'">
+                    {{ data.account_number }}
+                  </div>
+                </td>
+                <!-- <td
+                  class="bg-white text-left text_dark_all"
+                  *ngIf="data.account?.type !== 1"
+                >
+                  <div >
+                    {{ data.account_number }}
+                  </div>
+                </td> -->
+                <td class="bg-white text_dark_all">
+                  <span>Action</span>
+                  <select
+                    name=""
+                    id=""
+                    class="form-control"
+                  >
+                    <option value="0">Select</option>
+                    <option value="2">Reject</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
-
-
-
-
 </div>
 <!-- Container fluid ends -->
-

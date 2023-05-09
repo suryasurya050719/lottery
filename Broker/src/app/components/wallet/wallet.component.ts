@@ -172,12 +172,12 @@ export class WalletComponent implements OnInit {
   }
   singleTransection() {
     let currentUser_id = localStorage.getItem('lottryuserid');
-    console.log("currentUser_id",currentUser_id)
+    console.log('currentUser_id', currentUser_id);
     let data = {
       user_id: currentUser_id,
       graterthan: this.toDate,
       lessthan: this.fromDate,
-      commission:""
+      commission: '',
     };
     this.transection.singleTransectionList(data).subscribe((data: any) => {
       this.singleTransectionList = data.data;
@@ -253,8 +253,8 @@ export class WalletComponent implements OnInit {
     let prepareDate = {
       user_id: localStorage.getItem('lottryuserid'),
       role_id: 3,
-      account_id:Account.account_id,
-      account_type:Account.type,
+      account_id: Account.account_id,
+      account_type: Account.type,
       account_details:
         Account.type == 1
           ? Account.account_number
@@ -271,8 +271,12 @@ export class WalletComponent implements OnInit {
     };
     this.Account.WidrawRequest(prepareDate).subscribe((data) => {
       console.log('Data', data);
-      this.popUp = !this.popUp;
-      window.location.reload();
+      if (data.statuscode !== 202) {
+        this.popUp = !this.popUp;
+        window.location.reload();
+      } else {
+        alert('Insufficient found');
+      }
     });
   }
   widrawOpen() {

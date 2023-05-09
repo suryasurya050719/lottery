@@ -476,6 +476,31 @@
                         : data.type == 4
                         ? "Paytm"
                         : "UPI"
+                    }}/ {{
+                      data.type == 1
+                        ? data.account_name
+                        : data.type == 2
+                        ? data.name
+                        : data.type == 3
+                        ? data.name
+                        : data.type == 4
+                        ? data.name
+                        : ""
+                    }}
+                    {{
+                      data.type == 1
+                        ? data.bank_name
+                        : ""
+                    }}
+                    {{
+                      data.type == 1
+                        ? data.branch_name
+                        : ""
+                    }}
+                    {{
+                      data.type == 1
+                        ? data.ifsc_code
+                        : ""
                     }}
                   </option>
                 </select>

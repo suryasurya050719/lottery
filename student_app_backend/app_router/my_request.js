@@ -13,43 +13,53 @@ router.post("", async (req, res) => {
   let body = req.body;
   console.log("body>>>>>>>>>>>>>>>>>>>>>>>>>>", body);
   user.findOne({ user_id: body.user_id }).then((data) => {
-    console.log("data", data);
-    let preparedata = {
-      user_id: body.user_id,
-      ...(!body.account_id> 0 && { account: body.account }),
-      role_id: data.role_id,
-      account_type: body.account_type,
-      account_details: body.account_details,
-      user_name: data.name,
-      amount: body.amount,
-      phone: data.phone,
-    };
-    if (!body.account_id) {
-      let insertData = new myRequest(preparedata);
-      insertData.save().then((data) => {
-        res.json({
-          success: true,
-          statuscode: 200,
-          status: "request create successfully",
-        });
-      });
-    } else {
-      Account.findOne({ account_id: body.account_id }).then((result) => {
-        // Notification(
-        //   preparedata.user_id,
-        //   `Successfully Withdraw Request Created`
-        // );
-        preparedata["account"] = result;
-        let insertData = new myRequest(preparedata);
-        insertData.save().then((data) => {
-          res.json({
-            success: true,
-            statuscode: 200,
-            status: "request create successfully",
+    wallet.findOne({ user_id: body.user_id }).then((result) => {
+      if (result.current_amount >= body.amount) {
+        console.log("data", data);
+        let preparedata = {
+          user_id: body.user_id,
+          ...(!body.account_id > 0 && { account: body.account }),
+          role_id: data.role_id,
+          account_type: body.account_type,
+          account_details: body.account_details,
+          user_name: data.name,
+          amount: body.amount,
+          phone: data.phone,
+        };
+        if (!body.account_id) {
+          let insertData = new myRequest(preparedata);
+          insertData.save().then((data) => {
+            res.json({
+              success: true,
+              statuscode: 200,
+              status: "request create successfully",
+            });
           });
+        } else {
+          Account.findOne({ account_id: body.account_id }).then((result) => {
+            // Notification(
+            //   preparedata.user_id,
+            //   `Successfully Withdraw Request Created`
+            // );
+            preparedata["account"] = result;
+            let insertData = new myRequest(preparedata);
+            insertData.save().then((data) => {
+              res.json({
+                success: true,
+                statuscode: 200,
+                status: "request create successfully",
+              });
+            });
+          });
+        }
+      } else {
+        res.json({
+          success: false,
+          statuscode: 202,
+          status: "insufficient found",
         });
-      });
-    }
+      }
+    });
   });
 });
 
@@ -60,6 +70,7 @@ router.get("", async (req, res) => {
       request_status: Number(status),
       ...(req.query.user_id && { user_id: req.query.user_id }),
     })
+    .sort({ created_on: -1 })
     .then((data) => {
       res.json({
         success: true,
@@ -71,14 +82,17 @@ router.get("", async (req, res) => {
 });
 router.get("/status", async (req, res) => {
   let status = req.query.status;
-  myRequest.find({ user_id: req.query.user_id }).then((data) => {
-    res.json({
-      success: true,
-      statuscode: 200,
-      data: data,
-      status: "list generate successfully",
+  myRequest
+    .find({ user_id: req.query.user_id })
+    .sort({ created_on: -1 })
+    .then((data) => {
+      res.json({
+        success: true,
+        statuscode: 200,
+        data: data,
+        status: "list generate successfully",
+      });
     });
-  });
 });
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -106,45 +120,48 @@ router.put("/approved", upload.single("customerImage"), async (req, res) => {
     file_name: originalFileName,
     request_status: 2,
   };
-  wallet.findOne({ user_id: body.user_id }).then((data) => {
-    console.log("data", data);
-    if (data.current_amount >= Number(req.body.amount)) {
-      wallet
-        .findOneAndUpdate(
-          { user_id: body.user_id },
-          { current_amount: data.current_amount - Number(req.body.amount) },
-          { new: true }
-        )
-        .then((result) => {
-          // Notification(body.user_id, `Successfully Withdraw Request Approved`);
-          transaction(req.body.amount, body.user_id);
-          myRequest
-            .findOneAndUpdate({ _id: _id }, preparedata, {
-              new: true,
-            })
-            .then((data) => {
-              res.json({
-                success: true,
-                statuscode: 200,
-                status: "Board updated successfully",
+  wallet
+    .findOne({ user_id: body.user_id })
+    .sort({ created_on: -1 })
+    .then((data) => {
+      console.log("data", data);
+      if (data.current_amount >= Number(req.body.amount)) {
+        wallet
+          .findOneAndUpdate(
+            { user_id: body.user_id },
+            { current_amount: data.current_amount - Number(req.body.amount) },
+            { new: true }
+          )
+          .then((result) => {
+            // Notification(body.user_id, `Successfully Withdraw Request Approved`);
+            transaction(req.body.amount, body.user_id);
+            myRequest
+              .findOneAndUpdate({ _id: _id }, preparedata, {
+                new: true,
+              })
+              .then((data) => {
+                res.json({
+                  success: true,
+                  statuscode: 200,
+                  status: "Board updated successfully",
+                });
               });
+          })
+          .catch((err) => {
+            res.json({
+              success: false,
+              statuscode: 202,
+              status: err,
             });
-        })
-        .catch((err) => {
-          res.json({
-            success: false,
-            statuscode: 202,
-            status: err,
           });
+      } else {
+        res.json({
+          success: false,
+          statuscode: 202,
+          status: "insufficient found",
         });
-    } else {
-      res.json({
-        success: false,
-        statuscode: 202,
-        status: "insufficient found",
-      });
-    }
-  });
+      }
+    });
 });
 
 router.put("/rejected", async (req, res) => {
@@ -179,15 +196,18 @@ router.get("/singleUser", (req, res) => {
   let status = req.query.user_id;
   console.log("status", status);
 
-  myRequest.find({ user_id: req.query.user_id }).then((data) => {
-    console.log("data", data);
-    res.json({
-      success: true,
-      statuscode: 200,
-      data: data,
-      status: "list generate successfully",
+  myRequest
+    .find({ user_id: req.query.user_id })
+    .sort({ created_on: -1 })
+    .then((data) => {
+      console.log("data", data);
+      res.json({
+        success: true,
+        statuscode: 200,
+        data: data,
+        status: "list generate successfully",
+      });
     });
-  });
 });
 
 async function transaction(amount, userid) {
@@ -203,6 +223,7 @@ async function transaction(amount, userid) {
     reason: "Withdraw request accept",
     position: "DEC",
     commission: false,
+    status: "success",
   };
   let transection = await new Transection(transectiondata)
     .save()

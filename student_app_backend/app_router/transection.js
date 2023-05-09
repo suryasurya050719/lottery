@@ -64,51 +64,54 @@ router.post("/addmony", async (req, res) => {
       status: "success",
     };
     let newtransection = new transection(preparedata);
-    await newtransection.save().then((data)=>{
-      console.log("data",data)
-    })
-  }else{
-    wallet
-    .updateOne({ user_id: body.user_id }, { $inc: { current_amount: amount } })
-    .then(async (data) => {
-      if (body.topup) {
-        await wallet
-          .findOneAndUpdate(
-            { user_id: body.transection_from_userid },
-            { $inc: { current_amount: -amount } },
-            { new: true }
-          )
-          .then(async (data) => {
-            console.log("sdjafhskdjf>>>", data);
-            var preparedatadec = {
-              user_id: body.user_id,
-              position: "DEC",
-              amount: body.amount,
-              transection_from_userid: body.transection_from_userid,
-              transection_to_userid: body.transection_to_userid,
-              transection_from_type: body.transection_from_type,
-              transection_to_type: body.transection_to_type,
-              commission: false,
-              reason: body.reason,
-              status: "success",
-            };
-            let newtransection = new transection(preparedatadec);
-            await newtransection.save();
-          })
-          .catch((err) => {
-            console.log(">>>>>>err", err);
-          });
-      }
-      let newtransection = new transection(preparedata);
-      await newtransection.save().then((data)=>{
-        console.log("data",data)
-      })
-      res.send({
-        statuscode: 200,
-        status: "Money Add successfully",
-        //data: data,
-      });
+    await newtransection.save().then((data) => {
+      console.log("data", data);
     });
+  } else {
+    wallet
+      .updateOne(
+        { user_id: body.user_id },
+        { $inc: { current_amount: amount } }
+      )
+      .then(async (data) => {
+        if (body.topup) {
+          await wallet
+            .findOneAndUpdate(
+              { user_id: body.transection_from_userid },
+              { $inc: { current_amount: -amount } },
+              { new: true }
+            )
+            .then(async (data) => {
+              console.log("sdjafhskdjf>>>", data);
+              var preparedatadec = {
+                user_id: body.user_id,
+                position: "DEC",
+                amount: body.amount,
+                transection_from_userid: body.transection_from_userid,
+                transection_to_userid: body.transection_to_userid,
+                transection_from_type: body.transection_from_type,
+                transection_to_type: body.transection_to_type,
+                commission: false,
+                reason: body.reason,
+                status: "success",
+              };
+              let newtransection = new transection(preparedatadec);
+              await newtransection.save();
+            })
+            .catch((err) => {
+              console.log(">>>>>>err", err);
+            });
+        }
+        let newtransection = new transection(preparedata);
+        await newtransection.save().then((data) => {
+          console.log("data", data);
+        });
+        res.send({
+          statuscode: 200,
+          status: "Money Add successfully",
+          //data: data,
+        });
+      });
   }
 });
 
@@ -351,7 +354,7 @@ router.get("/singleUserList", async (req, res) => {
     filterdata["user_id"] = Number(query.user_id);
   }
   if (query.commission !== "") {
-    filterdata["commission"] = Boolean(query.commission);
+    filterdata["commission"] = query.commission == "true" ? true : false;
   }
   if (query.graterthan !== "") {
     created_on["$lte"] = new Date(query.graterthan);
@@ -368,7 +371,7 @@ router.get("/singleUserList", async (req, res) => {
     .find(filterdata)
     .sort({ created_on: -1 })
     .then((data) => {
-      console.log("data",data)
+      console.log("data", data);
       res.send({
         statuscode: 200,
         status: "transection list genetated",
