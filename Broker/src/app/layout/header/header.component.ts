@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit {
   percentageAmount: string = '';
   userName: string | null = '';
   BrokerPopup:Boolean=false
+  collaps_memu: boolean = true;
   oldPassword:string=""
   newPassword:string=""
   confirmPassword:string=""
@@ -80,6 +81,10 @@ export class HeaderComponent implements OnInit {
   ChangePassword(){
     this.form.reset()
     this.BrokerPopup=!this.BrokerPopup
+  }
+  coloapsMenu() {
+    console.log("this.collaps_memu",this.collaps_memu)
+    this.collaps_memu = !this.collaps_memu;
   }
   onSubmit(){
    if (this.newPassword== this.confirmPassword) {
