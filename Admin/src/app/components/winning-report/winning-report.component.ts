@@ -164,7 +164,7 @@ export class WinningReportComponent implements OnInit {
       'this.winningRecords.wining_booking',
       this.winningRecords.booking_data[index],
     )
-    this.activrBookingData = this.winningRecords.booking_data[0]
+    this.activrBookingData = this.winningRecords.booking_data[index]
     console.log('this.activrBookingData', this.activrBookingData)
     this.ViewMorePopupPanel2 = !this.ViewMorePopupPanel2
   }

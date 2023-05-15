@@ -68,12 +68,12 @@ router.get("/preview", async (req, res) => {
             $and: [
               { game_name: gameName },
               { showTime: new Date(show) },
-              {
-                created_on: {
-                  $gte: lessDate,
-                  $lte: graterDate,
-                },
-              },
+              // {
+              //   created_on: {
+              //     $gte: lessDate,
+              //     $lte: graterDate,
+              //   },
+              // },
             ],
           },
         },
@@ -536,12 +536,12 @@ router.get("/Published", async (req, res) => {
             $and: [
               { game_name: gameName },
               { showTime: new Date(show) },
-              {
-                created_on: {
-                  $gte: lessDate,
-                  $lte: graterDate,
-                },
-              },
+              // {
+              //   created_on: {
+              //     $gte: lessDate,
+              //     $lte: graterDate,
+              //   },
+              // },
             ],
           },
         },
