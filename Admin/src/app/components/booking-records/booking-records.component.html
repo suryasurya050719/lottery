@@ -253,18 +253,18 @@
                       /> -->
                       {{
                         searchType == '2'
-                          ? (newDate | date: 'dd/MM/yyyy HH:mm')
+                          ? (newDate | date: 'dd MMM yyyy HH:mm')
                           : ''
                       }}
                       {{
                         searchType == '3'
-                          ? (fromDate | date: 'dd/MM/yyyy HH:mm')
+                          ? (fromDate | date: 'dd MMM yyyy HH:mm')
                           : ''
                       }}
                       {{ searchType == '3' ? 'to' : '' }}
                       {{
                         searchType == '3'
-                          ? (toDate | date: 'dd/MM/yyyy HH:mm')
+                          ? (toDate | date: 'dd MMM yyyy HH:mm')
                           : ''
                       }}
                     </td>
@@ -360,7 +360,7 @@
                       }}{{ data.refered_user_id }}
                     </td>
                     <td>
-                      {{ data.bookings.created_on | date: 'M/d/yy, H:mm a' }}
+                      {{ data.bookings.created_on | date: 'dd MMM yyyy HH:mm' }}
                     </td>
                     <td>
                       <button

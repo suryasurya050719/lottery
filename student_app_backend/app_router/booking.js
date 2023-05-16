@@ -67,7 +67,7 @@ router.post("/bookingCreate", async (req, res) => {
             booking_data: data.booking_data,
             total_price: data.total_price,
             total_ticket_count: data.total_ticket_count,
-            created_on: created_on,
+            created_on: new Date(),
           };
           console.log("preparedata", preparedata);
           //  console.log("preparedata", preparedata);

@@ -120,7 +120,7 @@
                 *ngFor="let pokemon of group.show_date"
                 [value]="pokemon.showTime"
               >
-                {{ pokemon.showTime }}
+                {{ pokemon.showTime |date:"dd MMM yyyy HH:mm" }}
               </mat-option>
             </mat-optgroup>
           </mat-select>
@@ -250,18 +250,18 @@
                       /> -->
                       {{
                         searchType == "2"
-                          ? (newDate | date : "dd/MM/yyyy HH:mm")
+                          ? (newDate | date : "dd MMM yyyy HH:mm")
                           : ""
                       }}
                       {{
                         searchType == "3"
-                          ? (fromDate | date : "dd/MM/yyyy HH:mm")
+                          ? (fromDate | date : "dd MMM yyyy HH:mm")
                           : ""
                       }}
                       {{ searchType == "3" ? "to" : "" }}
                       {{
                         searchType == "3"
-                          ? (toDate | date : "dd/MM/yyyy HH:mm")
+                          ? (toDate | date : "dd MMM yyyy HH:mm")
                           : ""
                       }}
                     </td>
@@ -345,7 +345,7 @@
                       }}{{ data.refered_user_id }}
                     </td>
                     <td>
-                      {{ data.bookings.created_on | date : "dd/MM/yyyy HH:mm" }}
+                      {{ data.bookings.created_on | date : "dd MMM yyyy HH:mm" }}
                     </td>
                     <td>
                       <button
@@ -357,7 +357,7 @@
                     </td>
                     <td>
                       <span class="badge bg-primary blink_txt mb-2"
-                        >In progress</span
+                        > {{data.published_status==true?"Published":"Unpublished"}}</span
                       >
                       <br />
                       <button

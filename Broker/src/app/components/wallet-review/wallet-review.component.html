@@ -266,7 +266,7 @@
                           : ""
                       }}
                     </td> -->
-                    <td>{{ user.created_on | date : "dd/MM/yyyy" }}</td>
+                    <td>{{ user.created_on | date : "dd MMM yyyy HH:mm" }}</td>
                     <td>
                       <div class="input-group" style="width: 150px">
                         <span class="input-group-addon">RS</span>
@@ -274,10 +274,10 @@
                           type="text"
                           class="form-control"
                           [style.color]="
-                            user.position == 'ADD' ? 'black' : 'red !important'
+                          user.position == 'ADD'|| user.position=='INC'? 'black' : 'red !important'
                           "
                           value="{{
-                            user.position == 'ADD'
+                            user.position == 'ADD'|| user.position=='INC'
                               ? user.amount
                               : '-' + user.amount
                           }}"

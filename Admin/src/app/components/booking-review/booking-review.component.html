@@ -372,8 +372,8 @@
                       }}{{ data.referalList[0]?.refered_user_id }}
                     </td>
                     <td>{{ data.game_name }}</td>
-                    <td>{{ data.showTime }}</td>
-                    <td>{{ data.created_on | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td>{{ data.showTime | date:"dd MMM yyyy HH:mm" }}</td>
+                    <td>{{ data.created_on | date: 'dd MMM yyyy HH:mm' }}</td>
                     <td>
                       <button
                         (click)="ViewMorePopup(i)"
