@@ -39,21 +39,13 @@
         <div class="col-lg-3" *ngIf="searchType == '3'">
           <div class="form-group">
             <label>Date From</label>
-            <input
-              type="date"
-              class="form-control"
-              [(ngModel)]="fromDate"
-            />
+            <input type="date" class="form-control" [(ngModel)]="fromDate" />
           </div>
         </div>
         <div class="col-lg-3" *ngIf="searchType == '3'">
           <div class="form-group">
             <label>Date To</label>
-            <input
-              type="date"
-              class="form-control"
-              [(ngModel)]="toDate"
-            />
+            <input type="date" class="form-control" [(ngModel)]="toDate" />
           </div>
         </div>
         <div class="col">
@@ -101,7 +93,7 @@
             </select>
           </div>
         </div>
-        <div class="col-lg-2" style="margin-top: -12px;">
+        <div class="col-lg-2" style="margin-top: -12px">
           <h4>Show time</h4>
           <!-- <mat-form-field
             appearance="fill"
@@ -122,13 +114,13 @@
                 *ngFor="let pokemon of group.show_date"
                 [value]="pokemon.showTime"
               >
-                {{ pokemon.showTime }}
+                {{ pokemon.showTime | date : "dd MMM yyyy HH:mm" }}
               </mat-option>
             </mat-optgroup>
           </mat-select>
           <!-- </mat-form-field> -->
         </div>
-        <div class="col-lg-2" style="margin-top: -12px;">
+        <div class="col-lg-2" style="margin-top: -12px">
           <h4>Board Name</h4>
           <!-- <mat-form-field
             appearance="fill"
@@ -186,7 +178,7 @@
                       on: advanceSearch == true
                     }"
                   >
-                    {{ advanceSearch ? 'ON' : 'Off' }}
+                    {{ advanceSearch ? "ON" : "Off" }}
                   </span>
                 </span>
               </label>
@@ -252,31 +244,35 @@
                         class="form-control"
                       /> -->
                       {{
-                        searchType == '2'
-                          ? (newDate | date: 'dd MMM yyyy HH:mm')
-                          : ''
+                        searchType == "2"
+                          ? (newDate | date : "dd MMM yyyy HH:mm")
+                          : ""
                       }}
                       {{
-                        searchType == '3'
-                          ? (fromDate | date: 'dd MMM yyyy HH:mm')
-                          : ''
+                        searchType == "3"
+                          ? (fromDate | date : "dd MMM yyyy HH:mm")
+                          : ""
                       }}
-                      {{ searchType == '3' ? 'to' : '' }}
+                      {{ searchType == "3" ? "to" : "" }}
                       {{
-                        searchType == '3'
-                          ? (toDate | date: 'dd MMM yyyy HH:mm')
-                          : ''
+                        searchType == "3"
+                          ? (toDate | date : "dd MMM yyyy HH:mm")
+                          : ""
                       }}
                     </td>
                     <td>
-                      {{ GameName !== '' ? GameName : 'All' }}
+                      {{ GameName !== "" ? GameName : "All" }}
                     </td>
                     <td>{{ BoardNameControler.value }}</td>
-                    <td>{{ this.pokemonControl.value }}</td>
+                    <td>
+                      {{
+                        this.pokemonControl.value | date : "dd MMM yyyy HH:mm"
+                      }}
+                    </td>
                     <td>
                       <div
                         class="input-group"
-                        style="width: 150px; margin: 0 auto;"
+                        style="width: 150px; margin: 0 auto"
                       >
                         <span class="input-group-addon">RS</span>
                         <input
@@ -289,14 +285,14 @@
                     <td>
                       <div class="active_chk dark_switch d-inline-block m-auto">
                         <span class="badge bg-primary blink_txt mb-2">
-                          {{ this.advanceSearch == true ? 'ON' : 'OFF' }}
+                          {{ this.advanceSearch == true ? "ON" : "OFF" }}
                         </span>
                       </div>
                       <div class="d-block">
                         {{
                           this.advanceSearch == true
-                            ? 'User Id will disaplay'
-                            : ''
+                            ? "User Id will disaplay"
+                            : ""
                         }}
                       </div>
                       <button
@@ -326,10 +322,12 @@
                     <th>
                       {{
                         user_type == 1
-                          ? 'Admin id'
+                          ? "Admin id"
                           : user_type == 2
-                          ? 'Broker id'
-                          : 'customer id'
+                          ? "Broker id"
+                          : user_type == 2
+                          ? "customer id"
+                          : "Referral id"
                       }}
                     </th>
                     <th>Booking id</th>
@@ -343,24 +341,32 @@
                 <tbody>
                   <tr
                     *ngFor="
-                      let data of BookingListdata | paginate: config;
+                      let data of BookingListdata | paginate : config;
                       let i = index
                     "
                   >
-                    <td>None</td>
+                    <td> {{
+                      data.refered_role_id == 1
+                        ? "BJCD A"
+                        : data.refered_role_id == 2
+                        ? "BJCD B"
+                        : "BJCD c"
+                    }}{{ data.refered_user_id }}</td>
                     <td>BJCD Bk{{ data.bookings.booking_id }}</td>
                     <td>BJCD c{{ data.user_id }}</td>
                     <td>
                       {{
                         data.refered_role_id == 1
-                          ? 'BJCD A'
+                          ? "BJCD A"
                           : data.refered_role_id == 2
-                          ? 'BJCD B'
-                          : 'BJCD c'
+                          ? "BJCD B"
+                          : "BJCD c"
                       }}{{ data.refered_user_id }}
                     </td>
                     <td>
-                      {{ data.bookings.created_on | date: 'dd MMM yyyy HH:mm' }}
+                      {{
+                        data.bookings.created_on | date : "dd MMM yyyy HH:mm"
+                      }}
                     </td>
                     <td>
                       <button
@@ -372,7 +378,11 @@
                     </td>
                     <td>
                       <span class="badge bg-primary blink_txt mb-2">
-                       {{data.published_status==true?"Published":"Unpublished"}}
+                        {{
+                          data.published_status == true
+                            ? "Published"
+                            : "Unpublished"
+                        }}
                       </span>
                       <br />
                       <button
@@ -425,10 +435,7 @@
                 <td>{{ data.totalTikect }}</td>
 
                 <td>
-                  <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto;"
-                  >
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -438,19 +445,13 @@
                   </div>
                 </td>
                 <td>
-                  <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto;"
-                  >
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
                 </td>
                 <td>
-                  <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto;"
-                  >
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -511,10 +512,7 @@
                 <td>{{ data.ticket_count }}</td>
 
                 <td>
-                  <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto;"
-                  >
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -524,10 +522,7 @@
                   </div>
                 </td>
                 <td>
-                  <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto;"
-                  >
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -550,7 +545,7 @@
 
 <section class="popup_box ViewMorePopupPanel" *ngIf="ViewMorePopupPanel3">
   <div
-    class="popup_info d-flex align-items-center justify-content-center w-100 h-100 "
+    class="popup_info d-flex align-items-center justify-content-center w-100 h-100"
   >
     <div class="pop_wrapper w-75 position-relative">
       <span class="popup_close" (click)="CloseMoreViewPopup3()">x</span>
@@ -583,10 +578,7 @@
                 <td>{{ data.ticket_count }}</td>
 
                 <td>
-                  <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto;"
-                  >
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input
                       type="text"
@@ -601,10 +593,7 @@
                 </td>
                 <td>sample</td>
                 <td>
-                  <div
-                    class="input-group"
-                    style="width: 150px; margin: 0 auto;"
-                  >
+                  <div class="input-group" style="width: 150px; margin: 0 auto">
                     <span class="input-group-addon">RS</span>
                     <input type="text" class="form-control" />
                   </div>
@@ -637,14 +626,14 @@
               <tr>
                 <td>
                   <span class="badge bg-primary blink_txt mb-2">
-                    {{BookingWin}}
+                    {{ BookingWin }}
                   </span>
                   <br />
                   <!-- <button class="btn btn-primary btn-sm">View</button> -->
                 </td>
                 <td>
                   <span class="badge bg-primary blink_txt mb-2">
-                    {{BookingLoss}}
+                    {{ BookingLoss }}
                   </span>
                   <br />
                   <!-- <button class="btn btn-primary btn-sm">View</button> -->

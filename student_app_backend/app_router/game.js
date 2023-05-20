@@ -126,13 +126,35 @@ router.put("/updategame", async (req, res) => {
       status: body.status,
       showCount: body.showCount,
       color: body.color,
+      show_date: body.show_date,
       stacrt_date: body.stacrt_date,
       end_date: body.end_date,
       result_date: body.result_date,
     };
+    await preparedata.show_date.forEach(async (element) => {
+      let date = ISOtoLOCALDATE(new Date());
+      console.log("date", date);
+      //  console.log("preparedata", preparedata);
+      let newCloseDate = `${date}T${element.closeShowTime}:00.000Z`;
+      let newShowDate = `${date}T${element.showTime}:00.000Z`;
+      // const nDate = new Date(newCloseDate).toLocaleString("en-US", {
+      //   timeZone: "Asia/Calcutta",
+      // });
+      console.log("nDate>>>>>>>>", JSON.stringify(newCloseDate));
+      console.log("newShowDate>>>>>>>>", JSON.stringify(newShowDate));
+      element.showTime = new Date(newShowDate);
+      element.showTime.setHours(element.showTime.getHours() - 5);
+      element.showTime.setMinutes(element.showTime.getMinutes() - 30);
+      element.closeShowTime = new Date(newCloseDate);
+      element.closeShowTime.setHours(element.closeShowTime.getHours() - 5);
+      element.closeShowTime.setMinutes(element.closeShowTime.getMinutes() - 30);
+      console.log("element", element);
+    });
+    console.log("data>>>>>>>>", JSON.stringify(preparedata));
     game
       .findOneAndUpdate({ game_id: board_id }, preparedata, { new: true })
       .then((data) => {
+        console.log("data",data)
         res.json({
           success: true,
           statuscode: 200,
@@ -140,6 +162,7 @@ router.put("/updategame", async (req, res) => {
         });
       })
       .catch((error) => {
+        console.log("error",error)
         res.json({
           success: false,
           statuscode: 202,
@@ -147,6 +170,7 @@ router.put("/updategame", async (req, res) => {
         });
       });
   } catch (error) {
+    console.log("error",error)
     res.json({
       success: false,
       statuscode: 500,

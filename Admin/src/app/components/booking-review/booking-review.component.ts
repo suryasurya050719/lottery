@@ -97,6 +97,7 @@ export class BookingReviewComponent implements OnInit {
   ViewMorePopupPanelOne = false;
   singleBookingRecords(newPage: number) {
     // console.log('singleBookingRecords'), newPage;
+    console.log('new Date(this.fromDate)', new Date(this.fromDate));
     let data = {
       fromdate: this.fromDate !== '' ? new Date(this.fromDate) : '',
       todate: this.toDate !== '' ? new Date(this.toDate) : '',
@@ -108,6 +109,7 @@ export class BookingReviewComponent implements OnInit {
     };
     console.log('pokemonControl', this.pokemonControl.value);
     console.log('BoardNameControler', this.BoardNameControler.value);
+    console.log('this.toDate', data);
     this.booking.BookingList(data).subscribe((data) => {
       this.BookingListdata = data.data;
       // this.bookingDataConfid.currentPage = newPage;
@@ -115,6 +117,26 @@ export class BookingReviewComponent implements OnInit {
       console.log('booking data', this.BookingListdata);
     });
   }
+  ISTToUTC(data: any) {
+    var dateStr = data;
+    var dateObj = new Date(dateStr);
+
+    // Get the timestamp
+    var timestamp = dateObj.getTime();
+
+    // Get the time zone offset in minutes
+    var offset = dateObj.getTimezoneOffset();
+
+    // Convert the timestamp to UTC
+    var utcTimestamp = timestamp - offset * 60 * 1000;
+
+    // Create a new Date object with the UTC timestamp
+    var utcDateObj = new Date(utcTimestamp);
+
+    console.log(utcDateObj);
+    return utcDateObj;
+  }
+
   ViewMorePopup(i: any) {
     let overAllCount =
       this.bookingDataConfid.currentPage * this.bookingDataConfid.itemsPerPage;
@@ -126,10 +148,10 @@ export class BookingReviewComponent implements OnInit {
     //   : i + this.bookingDataConfid.itemsPerPage;
     console.log('index<<<<<', indexCount, overAllCount, i);
     console.log('index>>>>>', index);
-    console.log("BookingListdata",this.BookingListdata)
+    console.log('BookingListdata', this.BookingListdata);
     this.viewmorepopupdata = this.BookingListdata[i];
 
-    console.log(" this.viewmorepopupdata ", this.viewmorepopupdata )
+    console.log(' this.viewmorepopupdata ', this.viewmorepopupdata);
 
     this.ViewMorePopupPanel = !this.ViewMorePopupPanel;
   }

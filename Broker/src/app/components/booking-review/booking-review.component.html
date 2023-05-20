@@ -147,7 +147,7 @@
                 *ngFor="let pokemon of group.show_date"
                 [value]="pokemon.showTime"
               >
-                {{ pokemon.showTime }}
+                {{ pokemon.showTime | date : "dd MMM yyyy HH:mm" }}
               </mat-option>
             </mat-optgroup>
           </mat-select>
@@ -335,7 +335,15 @@
                       let i = index
                     "
                   >
-                    <td>None</td>
+                    <td>
+                      {{
+                        data.referalList[0]?.refered_role_id == 1
+                          ? "BJCD A"
+                          : data.referalList[0]?.refered_role_id == 2
+                          ? "BJCD B"
+                          : "BJCD C"
+                      }}{{ data.referalList[0]?.refered_user_id }}
+                    </td>
                     <td>
                       {{
                         data.role_id == 1

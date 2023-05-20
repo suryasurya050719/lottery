@@ -147,7 +147,7 @@
                 *ngFor="let pokemon of group.show_date"
                 [value]="pokemon.showTime"
               >
-                {{ pokemon.showTime }}
+                {{ pokemon.showTime |  date: 'dd MMM yyyy HH:mm'}}
               </mat-option>
             </mat-optgroup>
           </mat-select>

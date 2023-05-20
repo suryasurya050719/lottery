@@ -172,10 +172,10 @@ router.get("/getall", async (req, res) => {
     //   searchFilter["phone"] = Number(query.phonenumber);
     // }
     if (query.fromdate !== "" && query.fromdate !== undefined) {
-      created_on["$gt"] = new Date(query.fromdate);
+      created_on["$gt"] = new Date(query.fromdate.setHours(0, 0, 0));
     }
     if (query.todate !== "" && query.todate !== undefined) {
-      created_on["$lt"] = new Date(query.todate);
+      created_on["$lt"] = new Date(query.todate.setHours(23, 59, 59));
     }
     if (query.game_name !== "" && query.game_name !== undefined) {
       searchFilter["game_name"] = query.game_name;

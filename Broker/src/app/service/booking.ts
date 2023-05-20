@@ -64,6 +64,15 @@ export class Booking {
       })
     );
   }
+  WinLossGetApi(data: any): Observable<any> {
+    // console.log('filterdata service', filterdata);
+    let url = `${environment.apiurl}/winning/BookingStatus`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
   //   BoardUpdate(filterdata: any): Observable<any> {
   //     // console.log('filterdata service', filterdata);
   //     let data = filterdata;

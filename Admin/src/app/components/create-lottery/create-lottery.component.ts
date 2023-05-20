@@ -21,7 +21,7 @@ export class CreateLotteryComponent implements OnInit {
     public board: Board,
     public datePipe: DatePipe,
     private formBuilder: FormBuilder,
-    private Dropdown:Dropdown
+    private Dropdown: Dropdown
   ) {
     this.form = this.formBuilder.group({
       participants: new FormArray([]),
@@ -106,8 +106,8 @@ export class CreateLotteryComponent implements OnInit {
 
   // dropdown
 
-  PriceDropDown:any=[]
-  BoardDropdown:any=[]
+  PriceDropDown: any = [];
+  BoardDropdown: any = [];
   result: {
     selectedFruit: any;
   } = { selectedFruit: [] };
@@ -129,24 +129,24 @@ export class CreateLotteryComponent implements OnInit {
     this.BoardList();
     this.gameList();
     this.priceDropDown();
-    this.boardDropDown()
+    this.boardDropDown();
     console.log('boardEdit', this.boardEdit);
   }
 
   get ordersFormArray() {
     return this.form.controls?.['orders'] as FormArray;
   }
-  boardDropDown(){
-    this.Dropdown.board().subscribe((data)=>{
-      console.log("data",data)
-      this.BoardDropdown=data.data
-    })
+  boardDropDown() {
+    this.Dropdown.board().subscribe((data) => {
+      console.log('data', data);
+      this.BoardDropdown = data.data;
+    });
   }
-  priceDropDown(){
-this.Dropdown.price().subscribe((data)=>{
-  console.log("price drop",data)
-  this.PriceDropDown=data.data
-})
+  priceDropDown() {
+    this.Dropdown.price().subscribe((data) => {
+      console.log('price drop', data);
+      this.PriceDropDown = data.data;
+    });
   }
   getCheckboxes() {
     console.log('selectedValue', this.selectedValue);
@@ -499,7 +499,7 @@ this.Dropdown.price().subscribe((data)=>{
     //   // }
     // }
   }
- async gamesubmit() {
+  async gamesubmit() {
     // if (
     //   this.showCount == '1' ||
     //   this.showCount == '2' ||
@@ -525,8 +525,9 @@ this.Dropdown.price().subscribe((data)=>{
     //   };
     //   this.show_date.push(data);
     // }
-    console.log("this.array",this.array)
-     console.log("this.selectedValue",this.selectedValue)
+    console.log('this.array', this.array);
+    console.log('this.selectedValue', this.selectedValue);
+    console.log('this.slotTimeList', this.slotTimeList);
     let preparedata = {
       game_id: this.activegamedata.game_id,
       game_name: this.GameName,
@@ -545,8 +546,13 @@ this.Dropdown.price().subscribe((data)=>{
     //   element.showTime = new Date( newShowDate);
     //   element.closeShowTime =new Date( newCloseDate);
     // });
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>.', this.GameName, this.array.length, this.slotTimeList);
-     console.log('>>>>>>>>>>>',JSON.stringify(preparedata) );
+    console.log(
+      '>>>>>>>>>>>>>>>>>>>>>>>>>.',
+      this.GameName,
+      this.array.length,
+      this.slotTimeList
+    );
+    console.log('>>>>>>>>>>>', JSON.stringify(preparedata));
     if (
       this.GameName !== '' &&
       this.selectedValue.length !== 0 &&
@@ -607,7 +613,21 @@ this.Dropdown.price().subscribe((data)=>{
       'yyyy-MM-ddTHH:mm:ss'
     );
     this.published = this.activegamedata.status;
-    this.slotTimeList = this.activegamedata.show_date;
+    this.slotTimeList=[]
+    this.activegamedata.show_date.forEach(async(elememt: any) => {
+      console.log("elememt",elememt)
+      let data = {
+        id: elememt.id,
+        showTime:await this.datePipe.transform(elememt.showTime, 'HH:mm'),
+        game_name: elememt.game_name,
+        closeShowTime:await this.datePipe.transform(
+          elememt.closeShowTime,
+          'HH:mm'
+        ),
+      };
+      this.slotTimeList.push(data);
+    });
+    // this.slotTimeList = this.activegamedata.show_date;
   }
   removeGame() {
     if (confirm('Are you sure you want to remove this Game')) {
@@ -664,17 +684,17 @@ this.Dropdown.price().subscribe((data)=>{
 //   console.log('daysToDday', daysToDday);
 //   return data;
 // }
-function ISOtoLOCALDATE(params:any) {
+function ISOtoLOCALDATE(params: any) {
   let date = new Date(params);
- let  year = date.getFullYear();
- let  month:any = date.getMonth() + 1;
- let  dt:any = date.getDate();
+  let year = date.getFullYear();
+  let month: any = date.getMonth() + 1;
+  let dt: any = date.getDate();
 
   if (dt < 10) {
-    dt = "0" + dt;
+    dt = '0' + dt;
   }
   if (month < 10) {
-   month = "0" + month;
+    month = '0' + month;
   }
-  return year + "-" + month + "-" + dt;
+  return year + '-' + month + '-' + dt;
 }

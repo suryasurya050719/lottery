@@ -567,5 +567,71 @@ router.post("/BookingStatus", async (req, res) => {
     });
   }
 });
+router.post("/lotteryResultNumber", async (req, res) => {
+  try {
+    console.log("body", req.body);
+    let prepareData = {};
+    if (req.body.showTime) {
+      console.log(">>>>");
+      prepareData["show_date"] = req.body.showTime;
+    } else {
+      console.log("sdfsd");
+      // console.log("dtaa", data);
+      return res.json({
+        success: false,
+        data: {},
+        statuscode: 400,
+        status: "show time required",
+      });
+    }
+    let query = [
+      {
+        $match: {
+          show_details: new Date(req.body.showTime),
+        },
+      },
+      {
+        $unwind: {
+          path: "$wining_booking",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $sort: {
+          created_on: -1,
+        },
+      },
+    ];
+    console.log("query", query);
+    winningReport
+      .aggregate(query)
+      .then((data) => {
+        console.log("dtaa>>>>", data[0].winning_number_letters);
+        res.json({
+          success: true,
+          data: data[0].winning_number_letters,
+          statuscode: 200,
+          status: "list generated",
+        });
+      })
+      .catch((error) => {
+        console.log("error", error);
+        res.json({
+          success: false,
+          data: error,
+          statuscode: 400,
+          status: "list generated",
+        });
+      });
+  } catch (error) {
+    console.log("error", error);
+    res.json({
+      success: false,
+      data: error,
+      statuscode: 400,
+      status: "list generated",
+    });
+  }
+});
 
 module.exports = router;

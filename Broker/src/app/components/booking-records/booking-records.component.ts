@@ -41,6 +41,9 @@ export class BookingRecordsComponent implements OnInit {
   userbasedBooking: any = [];
   viewmorepopupdata: any = {};
   TotalBookingAmount: number = 0;
+
+  BookingWin: number = 0;
+  BookingLoss: number = 0;
   constructor(private booking: Booking, private board: Board) {
     this.config = {
       id: 'pagination1',
@@ -147,9 +150,9 @@ export class BookingRecordsComponent implements OnInit {
     this.ViewMorePopupPanel3 = false;
   }
   ViewMorePopupPanel4 = false;
-  ViewMorePopup4(i: any) {
-    this.viewmorepopupdata = this.BookingListdata[i];
-    console.log('this.viewmorepopupdata', this.viewmorepopupdata);
+  ViewMorePopup4() {
+    // this.viewmorepopupdata = this.BookingListdata[i];
+    // console.log('this.viewmorepopupdata', this.viewmorepopupdata);
     this.ViewMorePopupPanel4 = !this.ViewMorePopupPanel4;
   }
   CloseMoreViewPopup4() {
@@ -160,5 +163,27 @@ export class BookingRecordsComponent implements OnInit {
   }
   advancesearch() {
     this.BookingList(this.config.currentPage);
+  }
+  WinOrLossGetApi(i: any) {
+    let overAllCount = this.config.currentPage * this.config.itemsPerPage;
+    let indexCount = this.config.itemsPerPage - i;
+
+    let index = overAllCount - indexCount;
+    console.log('index>>>>>>>>>>>', index);
+    // console.log("index",i)
+    this.viewmorepopupdata = this.BookingListdata[index];
+    console.log('this.viewmorepopupdata', this.viewmorepopupdata);
+    let data = {
+      booking_id: this.viewmorepopupdata.bookings.booking_id,
+      showTime: this.viewmorepopupdata.bookings.showTime,
+    };
+    this.BookingWin = 0;
+    this.BookingLoss = 0;
+    this.booking.WinLossGetApi(data).subscribe((result) => {
+      console.log('result', result);
+      this.BookingWin = result.data.Win;
+      this.BookingLoss = result.data.Loss;
+      this.ViewMorePopup4();
+    });
   }
 }
