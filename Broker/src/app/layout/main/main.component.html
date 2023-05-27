@@ -1,5 +1,5 @@
-<app-header></app-header>
-<div class="dashboard-wrapper">
+<app-header (childEvent)="addName($event)"></app-header>
+<div class="dashboard-wrapper" [ngClass]="status ? 'dashboard-wrapper-lg' : ''">
   <router-outlet></router-outlet>
 </div>
 

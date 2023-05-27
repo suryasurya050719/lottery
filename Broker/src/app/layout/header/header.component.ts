@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Transection } from '../../service/transection';
 
@@ -8,6 +8,7 @@ import { Transection } from '../../service/transection';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  navStatus: boolean = true;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -21,7 +22,11 @@ export class HeaderComponent implements OnInit {
   reason: string = '';
   persentage: string = '';
   percentageAmount: string = '';
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.router.events.subscribe((val) => {
+      this.navStatus = true;
+    });
+  }
   logout() {
     this.router.navigateByUrl('/login');
     localStorage.removeItem('lottrytoken');
@@ -47,5 +52,11 @@ export class HeaderComponent implements OnInit {
       // this.paymenturl = paymentUrl;
       window.open(`${paymentUrl}`, '_self');
     });
+  }
+  @Output() childEvent = new EventEmitter();
+
+  nav_menu() {
+    this.childEvent.emit('test');
+    this.navStatus = !this.navStatus;
   }
 }

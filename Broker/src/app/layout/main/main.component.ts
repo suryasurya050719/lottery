@@ -11,5 +11,10 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  status:boolean = false
+  addName(value: string) {
+    this.status = !this.status
+
+ }
 
 }

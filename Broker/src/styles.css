@@ -9,7 +9,7 @@ body, html {
 body {
 	margin: 0;
 	padding: 0;
-  padding-top: 60px;
+  padding-top: 50px;
 	font: normal 14px 'Open Sans', sans-serif;
 	line-height: 1.6;
   background: #ffffff;
@@ -461,10 +461,10 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.25); }
 
 @media (max-width: 992px) {
   .top_header {
-  padding: 0 95px 0 35px; } }
+  padding: 0 10px 0 10px; } }
 @media (max-width: 767px) {
   .top_header {
-  padding: 0 95px 0 20px; } }
+  padding: 0 10px 0 10px; } }
 .logo {
 margin: 0;
 float: left;
@@ -6394,6 +6394,8 @@ border-radius:5px;
   padding: 0px 12px 3px 12px;
   cursor: pointer;
   top: -18px;
+  width: 25px;
+height: 25px;
 }
 .m_out_close{
   background: #ffffff;
@@ -7085,3 +7087,72 @@ padding: 10px 10px 10px 10px;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.login_bg{
+margin-top: -50px !important;
+height: 128% !important
+}
+@media only screen and (max-width:979px){
+  #box{
+   max-width: 360px !important;
+width: 100% !important;
+left: 2% !important;
+margin: 0 auto !important;
+top: 4% !important;
+  }
+  #top_header h5{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  .form-block{
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+  #box input, .btn_login{
+    width: 100% !important
+  }
+  #inputs{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .top_header .collapse-menu{
+    display: block !important;
+  }
+  .vertical-nav:not(.vertical-nav-sm){
+    left: 0 !important;
+  }
+  .top_header{
+    padding-left: 0 !important;
+    padding-right: 10px !important;
+  }
+  .heaed_ul{
+    display: flex;
+align-items: center;
+justify-content: center;
+  }
+  .heaed_ul ul{
+    margin: 0 auto !important;
+  }
+  ul#header-actions li.list-box{
+    margin-right: 1px !important;
+  }
+  ul#header-actions li.list-box a{
+    padding: 5px !important;
+  }
+  .m_label{
+    display: none !important;
+  }
+  ul#header-actions{
+    float: none !important;
+    width: 100% !important;
+  }
+  .logo_row{
+    padding-left: 2px !important;
+  }
+  .popup_w{
+    width: 92% !important;
+  }
+  .mDblock{
+    display: block !important;
+  }
+}

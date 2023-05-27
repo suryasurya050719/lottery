@@ -1,22 +1,22 @@
 <header id="LoadHeader" class="top_header">
-  <div class="d-sm-flex align-items-center w-100">
-    <div class="flx_0 pr-3">
-      <button class="collapse-menu">
+  <div class="d-flex align-items-center w-100">
+    <div class="flx_0 pr-lg-3">
+      <button class="collapse-menu" (click)="nav_menu()">
         <i class="fa fa-bars"></i>
       </button>
     </div>
-    <div class="flx_0">
+    <div class="flx_0 logo_row">
       <a href="#" class=""> logo </a>
     </div>
     <div class="flx_1">
       <!-- Header actions starts -->
-      <ul id="header-actions" class="clearfix">
+      <ul id="header-actions" class="clearfix heaed_ul">
         <li class="list-box hidden-xs dropdown mr-3">
           <a [routerLink]="['/wallet']" role="button" class="">
             <span class="minw_auto arrow_hide hed_act_img position-relative">
               <i class="fa fa-credit-card"></i>
             </span>
-            <span class="d-block pt-1">Wallet</span>
+            <span class="d-block pt-1 m_label">Wallet</span>
           </a>
         </li>
         <li class="list-box hidden-xs dropdown mr-3">
@@ -25,7 +25,7 @@
               <i class="fa fa-bell-o"></i>
               <span class="info-label blue-bg">0</span>
             </span>
-            <span class="d-block">Notifications</span>
+            <span class="d-block m_label">Notifications</span>
           </a>
         </li>
 
@@ -53,18 +53,14 @@
             </li>
           </ul>
         </li>
-        <li>
-          <button type="button" id="toggleMenu" class="toggle-menu">
-            <i class="collapse-menu-icon"></i>
-          </button>
-        </li>
+
       </ul>
       <!-- Header actions ends -->
     </div>
     <div></div>
   </div>
 </header>
-<div class="vertical-nav vertical-nav-sm">
+<div class="vertical-nav" [ngClass]="navStatus ? 'vertical-nav-sm' : ''">
   <div class="user-details clearfix">
     <a href="profile.html" class="user-img">
       <img src="../../../assets/images/thumbs/user1.png" alt="User Info" />
