@@ -40,8 +40,6 @@ export class LotteryResultComponent implements OnInit {
   gamelistdata: any = []
   result_numerick: any = {
     A: '',
-    B: '',
-    C: '',
   }
   AdminEnteredShowNumber: any = []
   // advance search
@@ -118,6 +116,7 @@ export class LotteryResultComponent implements OnInit {
     this.publishedStatus()
     this.currentGame = this.gamelistdata[this.game_type]
     let lengthofdata = this.toppingList[0].brd.length
+    console.log(" this.toppingList[0].brd", this.toppingList[0].brd)
     this.letterFormat = this.toppingList[0].brd[lengthofdata - 1].board_letters
     console.log('data', this.letterFormat)
     // }

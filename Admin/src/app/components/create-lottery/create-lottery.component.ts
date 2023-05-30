@@ -374,6 +374,7 @@ export class CreateLotteryComponent implements OnInit {
   BoardList() {
     this.board.BoardList().subscribe(async (data: any) => {
       this.BoardListdata = data.data;
+      console.log(" this.BoardListdata", this.BoardListdata)
       await this.BoardListdata.forEach((element: any) => {
         let name = element.board_name;
         let data: any = {};
@@ -597,7 +598,8 @@ export class CreateLotteryComponent implements OnInit {
     this.activegamedata = this.GameListdata[index];
     console.log('activegamedata', this.activegamedata);
     this.GameName = this.activegamedata.game_name;
-    this.array = this.activegamedata.board_id;
+    this.selectedValue = this.activegamedata.board_id;
+    console.log("edit this.selectedValue", this.selectedValue)
     this.showCount = this.activegamedata.showCount;
     this.color = this.activegamedata.color;
     this.startDate = this.datePipe.transform(
