@@ -7088,3 +7088,80 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.login_bg{
+margin-top: -50px !important;
+height: 128% !important
+}
+@media only screen and (max-width:979px){
+  #box{
+   max-width: 360px !important;
+width: 100% !important;
+left: 2% !important;
+margin: 0 auto !important;
+top: 4% !important;
+  }
+  #top_header h5{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  .form-block{
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+  #box input, .btn_login{
+    width: 100% !important
+  }
+  #inputs{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .top_header .collapse-menu{
+    display: block !important;
+  }
+  .vertical-nav:not(.vertical-nav-sm){
+    left: 0 !important;
+  }
+  .top_header{
+    padding-left: 0 !important;
+    padding-right: 10px !important;
+  }
+  .heaed_ul{
+    display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto !important;
+  }
+  .heaed_ul ul{
+    margin: 0 auto !important;
+  }
+  ul#header-actions li.list-box{
+    margin-right: 1px !important;
+  }
+  ul#header-actions li.list-box a{
+    padding: 5px !important;
+  }
+  .m_label{
+    display: none !important;
+  }
+  ul#header-actions{
+    float: none !important;
+    width: 100% !important;
+  }
+  .logo_row{
+    padding-left: 2px !important;
+  }
+  .popup_w{
+    width: 92% !important;
+  }
+  .mDblock{
+    display: block !important;
+  }
+  ul#header-actions li.list-box a{
+    min-width: auto !important;
+  }
+  .popup_close{
+    width: 25px !important;
+    height: 25px !important;
+
+  }
+}

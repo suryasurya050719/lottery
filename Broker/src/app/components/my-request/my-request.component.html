@@ -14,7 +14,7 @@
 
   <div class="mp_panel">
     <div class="row">
-      <div class="col-lg-4 col-md-6 col-6 text-center pb-4">
+      <div class="col-lg-4 col-md-6 col-xs-12 text-center mb-4">
         <div class="info_product text-center yellow_panel">
           <a [routerLink]="['/my-request']">
             <h6 class="txt_normal text-white">Withdraw Request</h6>
@@ -24,7 +24,7 @@
           </a>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 col-6 text-center pb-4 text-white">
+      <div class="col-lg-4 col-md-6 col-xs-12 text-center mb-4 text-white">
         <div class="info_product text-center yellow_panel">
           <a [routerLink]="['/my-request-approved']">
             <h6 class="txt_normal text-white">Approved</h6>
@@ -34,7 +34,7 @@
           </a>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 col-6 text-center pb-4">
+      <div class="col-lg-4 col-md-6 col-xs-12 text-center mb-4">
         <div class="info_product text-center yellow_panel">
           <a [routerLink]="['/my-request-rejected']">
             <h6 class="txt_normal text-white">Rejected</h6>
@@ -87,7 +87,7 @@
                     : 'UPI'}}/{{data.amount}}</span>
                 </td>
                 <td class="bg-white text-left text_dark_all">
-              
+
                   <div *ngIf="data.account?.type == 1">
                     <b class="d-block pb-2 text_dark_all">Details</b>
                     Bank Name: {{ data.account?.bank_name }}<br />
