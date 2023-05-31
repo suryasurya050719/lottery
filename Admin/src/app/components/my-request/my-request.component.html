@@ -121,7 +121,6 @@
                   </div>
                 </td>
                 <td class="bg-white text-left text_dark_all">
-              
                   <div *ngIf="data.account?.type == 1">
                     <b class="d-block pb-2 text_dark_all">Details</b>
                     Bank Name: {{ data.account?.bank_name }}<br />
@@ -144,7 +143,7 @@
                     UPI: {{ data.account?.upi_id }}<br />
                   </div>
                   <!-- {{data.account}} -->
-                  <div *ngIf="data.account.type !== 'undefind'">
+                  <div *ngIf="data?.account?.type !== 'undefind'">
                     {{ data.account_number }}
                   </div>
                 </td>

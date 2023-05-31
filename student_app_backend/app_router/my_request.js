@@ -104,7 +104,7 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 router.put("/approved", upload.single("customerImage"), async (req, res) => {
-  var originalFileName = req.file.originalname;
+  var originalFileName = req.file.filename;
   console.log("data", originalFileName);
   let body = req.body;
   console.log("data", body);
