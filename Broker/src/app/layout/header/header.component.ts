@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Transection } from '../../service/transection';
 import { Login } from '../../service/login';
@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private transection: Transection
   ) {}
+  @Output() childEvent = new EventEmitter();
+
   form: FormGroup;
   OtpSubmitInfo: boolean = false;
   paymenturlshow: boolean = false;
@@ -51,6 +53,10 @@ export class HeaderComponent implements OnInit {
     );
     this.form.reset()
     this.userName = localStorage.getItem('lottryname');
+    this.router.events.subscribe((val) => {
+      console.log('val',val);
+      this.collaps_memu = true;
+    });
   }
   logout() {
     this.router.navigateByUrl('/login');
@@ -85,6 +91,7 @@ export class HeaderComponent implements OnInit {
   coloapsMenu() {
     console.log("this.collaps_memu",this.collaps_memu)
     this.collaps_memu = !this.collaps_memu;
+    this.childEvent.emit('test');
   }
   onSubmit(){
    if (this.newPassword== this.confirmPassword) {
@@ -114,4 +121,8 @@ export class HeaderComponent implements OnInit {
     this.form.reset()
     this.BrokerPopup=!this.BrokerPopup
   }
+
+
+
+
 }

@@ -14,8 +14,8 @@
 
   <div class="mp_panel">
     <div class="pb-2">
-      <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1">
-        <!-- <div class="col">
+      <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1 mDblock">
+        <!-- <div class="col mb-3">
           <div class="form-group">
             <label> Choose User </label>
             <select name="" id="" class="form-control" [(ngModel)]="user_type">
@@ -27,7 +27,7 @@
           </div>
         </div> -->
         <!-- <div
-          class="col"
+          class="col mb-3"
           *ngIf="user_type == '1' || user_type == '2' || user_type == '3'"
         >
           <div class="form-group">
@@ -39,7 +39,7 @@
             />
           </div>
         </div> -->
-        <div class="col">
+        <div class="col mb-3">
           <div class="form-group">
             <label> Game Type </label>
             <select
@@ -60,7 +60,7 @@
             </select>
           </div>
         </div>
-        <!-- <div class="col-lg-2">
+        <!-- <div class="col-lg-2 mb-3">
           <label> Choose Show time </label>
           <div class="dropdown w-100">
             <span
@@ -126,8 +126,8 @@
             </div>
           </div>
         </div> -->
-        <div class="col-lg-2" style="margin-top: -12px">
-          <h4>Show time</h4>
+        <div class="col-lg-2 mb-3">
+          <label>Show time</label>
           <!-- <mat-form-field
             appearance="fill"
             class="form-control cursor-pointer w-100 d-block"
@@ -153,8 +153,8 @@
           </mat-select>
           <!-- </mat-form-field> -->
         </div>
-        <div class="col-lg-2" style="margin-top: -12px">
-          <h4>Board Name</h4>
+        <div class="col-lg-2 mb-3">
+          <label>Board Name</label>
           <!-- <mat-form-field
             appearance="fill"
             class="form-control cursor-pointer w-100 d-block"
@@ -181,7 +181,7 @@
           <!-- </mat-form-field> -->
         </div>
 
-        <div class="col">
+        <div class="col mb-3">
           <div class="form-group">
             <label> User Id </label>
             <input
@@ -192,13 +192,13 @@
             />
           </div>
         </div>
-        <div class="col">
+        <div class="col mb-3">
           <div class="form-group">
             <label> Phone Number </label>
             <input type="text" class="form-control" [(ngModel)]="phone" />
           </div>
         </div>
-        <div class="col d-flex align-items-end pb-3">
+        <div class="col d-flex align-items-end pb-4 mb-2">
           <button
             type="submit"
             class="btn btn-primary w-100 btn_input btn-ripple"
