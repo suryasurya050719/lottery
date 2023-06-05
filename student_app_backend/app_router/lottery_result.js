@@ -18,7 +18,17 @@ router.get("/preview", async (req, res) => {
   try {
     console.log("jdfsdjkf", req.query);
     let data_num = req.query.resultData;
-    let winning_numbers = req.query.winning_number_letters;
+    console.log(
+      "req.query.winning_number_letters",
+      req.query.winning_number_letters
+    );
+    let winning_number_formation = await WinningNumberFormatter(
+      req.query.winning_number_letters
+    );
+    // const cleanedStr = winning_number_formation.replace(/^{ '(.+)' }$/, "$1");
+    console.log("cleanedStr", winning_number_formation);
+    let winning_numbers = winning_number_formation;
+    console.log("winning_numbers", winning_numbers);
     let date = req.query.date;
     let show = req.query.show;
     let gameName = req.query.game_name;
@@ -407,6 +417,7 @@ router.get("/preview", async (req, res) => {
                 data_num,
                 board_leters
               );
+              console.log("JSON.parse(winning_numbers)", winning_numbers);
               let formation_data = await FourDateformation(
                 JSON.parse(winning_numbers),
                 formation
@@ -487,7 +498,13 @@ router.get("/Published", async (req, res) => {
   try {
     console.log(" publis ===>", req.query);
     let data_num = req.query.resultData;
-    let winning_numbers = req.query.winning_number_letters;
+    let winning_number_formation = await WinningNumberFormatter(
+      req.query.winning_number_letters
+    );
+    // const cleanedStr = winning_number_formation.replace(/^{ '(.+)' }$/, "$1");
+    console.log("cleanedStr", winning_number_formation);
+    let winning_numbers = winning_number_formation;
+    console.log("winning_numbers", winning_numbers);
     let date = req.query.date;
     let show = req.query.show;
     let gameName = req.query.game_name;
@@ -922,11 +939,11 @@ router.get("/Published", async (req, res) => {
           var dateObj = new Date(data1.showTime);
           dateObj.setUTCHours(dateObj.getUTCHours + 5);
           dateObj.setUTCMinutes(dateObj.getUTCMinutes + 30);
-            console.log("newdate",newdate)
+          console.log("newdate", newdate);
           var month = dateObj.getUTCMonth() + 1; //months from 1-12
           var day = dateObj.getUTCDate();
           var year = dateObj.getUTCFullYear();
-          console.log("newdate",newdate)
+          console.log("newdate", newdate);
           var newdate = year + "/" + month + "/" + day;
           // Notification(
           //   data1.user_id,
@@ -1101,7 +1118,7 @@ router.get("/publishedShow", async (req, res) => {
     }
     console.log("createdOn", createdOn);
     console.log("unpublish filterdata===>", JSON.stringify(filterdata));
-   await publishStatus
+    await publishStatus
       .aggregate([
         {
           $match: filterdata,
@@ -1124,7 +1141,7 @@ router.get("/publishedShow", async (req, res) => {
         });
       });
   } catch (error) {
-    console.log("error",error)
+    console.log("error", error);
     res.json({
       success: false,
       statuscode: 500,
@@ -1187,7 +1204,7 @@ router.get("/MobilePublishedShow", async (req, res) => {
     // }
     // console.log("createdOn", createdOn);
     console.log("unpublish filterdata===>", JSON.stringify(filterdata));
-   await publishStatus
+    await publishStatus
       .aggregate([
         {
           $match: filterdata,
@@ -1210,7 +1227,7 @@ router.get("/MobilePublishedShow", async (req, res) => {
         });
       });
   } catch (error) {
-    console.log("error",error)
+    console.log("error", error);
     res.json({
       success: false,
       statuscode: 500,
@@ -1385,4 +1402,22 @@ async function allBoards(data, single, price) {
       return 0;
     }
   }
+}
+async function WinningNumberFormatter(params) {
+  const str = params;
+
+  // Parse the string into a JavaScript object
+  const obj = JSON.parse(str);
+
+  // Get the sorted property names
+  const sortedKeys = Object.keys(obj).sort();
+
+  // Create a new object with the sorted properties
+  const sortedObj = {};
+  sortedKeys.forEach((key) => {
+    sortedObj[key] = obj[key];
+  });
+  const jsonString = JSON.stringify(sortedObj);
+  console.log("sortedObj", jsonString);
+  return jsonString;
 }
