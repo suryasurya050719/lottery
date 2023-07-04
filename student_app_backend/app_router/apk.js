@@ -4,9 +4,9 @@ var multer = require("multer");
 var path = require("path");
 const Apk = require("../app_models/apk");
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./assets");
+    cb(null, path.join(__dirname, "..",'assets'));
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -15,6 +15,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 router.post("/create", upload.single("apkFile"), function (req, res) {
   try {
+    console.log("__dirname",__dirname)
     var originalFileName = req.file.filename;
     let body = req.body;
     console.log("body", body);
